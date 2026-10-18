@@ -28,6 +28,31 @@ std::string read_file_to_string(const std::string& path) {
     return ss.str();
 }
 
+bool parse_cli_dimension(const std::string& str, const std::string& flag_name, int& out_val) {
+    if (str.empty()) {
+        std::cerr << "Error: " << flag_name << " requires an argument\n";
+        return false;
+    }
+    size_t pos = 0;
+    int val = 0;
+    try {
+        val = std::stoi(str, &pos);
+    } catch (...) {
+        std::cerr << "Error: invalid integer for " << flag_name << ": " << str << "\n";
+        return false;
+    }
+    if (pos != str.size()) {
+        std::cerr << "Error: invalid integer with trailing characters for " << flag_name << ": " << str << "\n";
+        return false;
+    }
+    if (val < 1 || val > 16384) {
+        std::cerr << "Error: " << flag_name << " must be between 1 and 16384, got: " << val << "\n";
+        return false;
+    }
+    out_val = val;
+    return true;
+}
+
 int run_demo(const std::string& out_path) {
     lmv::Surface surface(500, 350);
     auto canvas = surface.canvas();
@@ -93,14 +118,7 @@ int run_render(int argc, char* argv[]) {
                 std::cerr << "Error: --width requires an argument\n";
                 return 1;
             }
-            try {
-                opt_width = std::stoi(argv[++i]);
-                if (opt_width <= 0) {
-                    std::cerr << "Error: --width must be positive\n";
-                    return 1;
-                }
-            } catch (...) {
-                std::cerr << "Error: invalid integer for --width\n";
+            if (!parse_cli_dimension(argv[++i], "--width", opt_width)) {
                 return 1;
             }
         } else if (arg == "--height") {
@@ -108,14 +126,7 @@ int run_render(int argc, char* argv[]) {
                 std::cerr << "Error: --height requires an argument\n";
                 return 1;
             }
-            try {
-                opt_height = std::stoi(argv[++i]);
-                if (opt_height <= 0) {
-                    std::cerr << "Error: --height must be positive\n";
-                    return 1;
-                }
-            } catch (...) {
-                std::cerr << "Error: invalid integer for --height\n";
+            if (!parse_cli_dimension(argv[++i], "--height", opt_height)) {
                 return 1;
             }
         } else if (arg == "--background") {
@@ -136,28 +147,45 @@ int run_render(int argc, char* argv[]) {
 
     float orig_w = svg.width();
     float orig_h = svg.height();
+
+    // Check finiteness of intrinsic dimensions
+    if (!std::isfinite(orig_w) || !std::isfinite(orig_h)) {
+        throw lmv::Error("SVG intrinsic dimensions must be finite numbers");
+    }
+
     int w = opt_width;
     int h = opt_height;
 
     if (w == 0 && h == 0) {
+        if (orig_w < 1.0f || orig_w > 16384.0f || orig_h < 1.0f || orig_h > 16384.0f) {
+            throw lmv::Error("SVG intrinsic dimensions outside valid range [1, 16384]; specify --width and --height");
+        }
         w = static_cast<int>(std::round(orig_w));
         h = static_cast<int>(std::round(orig_h));
     } else if (w > 0 && h == 0) {
         if (orig_w > 0.0f && orig_h > 0.0f) {
-            h = static_cast<int>(std::round(orig_h * (static_cast<float>(w) / orig_w)));
+            double calc_h = std::round(static_cast<double>(orig_h) * (static_cast<double>(w) / orig_w));
+            if (!std::isfinite(calc_h) || calc_h < 1.0 || calc_h > 16384.0) {
+                throw lmv::Error("Calculated height from SVG aspect ratio outside valid range [1, 16384]");
+            }
+            h = static_cast<int>(calc_h);
         } else {
             h = w;
         }
     } else if (h > 0 && w == 0) {
         if (orig_w > 0.0f && orig_h > 0.0f) {
-            w = static_cast<int>(std::round(orig_w * (static_cast<float>(h) / orig_h)));
+            double calc_w = std::round(static_cast<double>(orig_w) * (static_cast<double>(h) / orig_h));
+            if (!std::isfinite(calc_w) || calc_w < 1.0 || calc_w > 16384.0) {
+                throw lmv::Error("Calculated width from SVG aspect ratio outside valid range [1, 16384]");
+            }
+            w = static_cast<int>(calc_w);
         } else {
             w = h;
         }
     }
 
-    if (w <= 0 || h <= 0) {
-        throw lmv::Error("SVG has no intrinsic dimensions; specify --width and --height");
+    if (w < 1 || h < 1 || w > 16384 || h > 16384) {
+        throw lmv::Error("Final render dimensions outside valid range [1, 16384]");
     }
 
     lmv::Surface surface(w, h);

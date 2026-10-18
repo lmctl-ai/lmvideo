@@ -174,7 +174,7 @@ void test_primitives_probes() {
 }
 
 // ----------------------------------------------------------------------------
-// Test 3: Text measurement & ink bounding box
+// Test 3: Text measurement & ink bounding box + embolden ink check
 // ----------------------------------------------------------------------------
 void test_text_measurement_and_ink() {
     lmv::Font font(24.0f);
@@ -220,10 +220,24 @@ void test_text_measurement_and_ink() {
     CHECK(get_pixel(bytes, 200, 100, 10, 90) == lmv::Color(0, 0, 0, 255), "no ink at (10, 90)");
     CHECK(get_pixel(bytes, 200, 100, 190, 10) == lmv::Color(0, 0, 0, 255), "no ink at (190, 10)");
 
-    // Embolden check
+    // Embolden check: render with bold font and assert strictly more rendered ink
+    lmv::Surface surf_bold(200, 100);
+    surf_bold.canvas().clear(lmv::Color(0, 0, 0, 255));
     font.embolden(true);
-    float wb = font.measure("Hello");
-    CHECK(wb >= w1, "emboldened font width >= normal width");
+    surf_bold.canvas().draw_text("Hello", 50, 60, font, p);
+
+    std::string bold_bytes = surf_bold.rgba();
+    int bold_ink_pixels = 0;
+    for (int y = 0; y < 100; ++y) {
+        for (int x = 0; x < 200; ++x) {
+            lmv::Color c = get_pixel(bold_bytes, 200, 100, x, y);
+            if (c.r > 20 || c.g > 20 || c.b > 20) {
+                bold_ink_pixels++;
+            }
+        }
+    }
+    CHECK(bold_ink_pixels > ink_pixels, "emboldened font renders strictly more ink pixels than normal font");
+    CHECK(bold_bytes != bytes, "emboldened font produces distinct pixel bytes from normal font");
 }
 
 // ----------------------------------------------------------------------------
@@ -379,9 +393,14 @@ void test_golden_check(bool generate_golden) {
     rendered.canvas().clear(lmv::Color(0, 0, 0, 0));
     rendered.canvas().draw_svg(svg, 0, 0, static_cast<float>(w), static_cast<float>(h));
 
-    if (generate_golden || !file_exists(png_path)) {
+    if (generate_golden) {
         rendered.write_png(png_path);
         std::cout << "# Generated golden PNG: " << png_path << "\n";
+    }
+
+    if (!file_exists(png_path)) {
+        CHECK(false, "golden PNG " + png_path + " missing (use --generate-golden to generate)");
+        return;
     }
 
     lmv::Image golden_img = lmv::Image::from_file(png_path);
@@ -424,6 +443,196 @@ void test_golden_check(bool generate_golden) {
           std::to_string(diff_pct) + "%, " + std::to_string(differing_pixels) + " pixels)");
 }
 
+// ----------------------------------------------------------------------------
+// Test 7 (Finding 1): Semi-transparent exact readback in unpremultiplied RGBA
+// ----------------------------------------------------------------------------
+void test_unpremul_readback() {
+    lmv::Surface surf1(1, 1);
+    surf1.canvas().clear(lmv::Color(255, 0, 0, 128));
+    std::string b1 = surf1.rgba();
+    CHECK(get_pixel(b1, 1, 1, 0, 0) == lmv::Color(255, 0, 0, 128),
+          "Surface.rgba() returns exact straight-alpha RGBA for Color(255, 0, 0, 128)");
+
+    lmv::Surface surf2(1, 1);
+    surf2.canvas().clear(lmv::Color(0, 0, 255, 128));
+    std::string b2 = surf2.rgba();
+    CHECK(get_pixel(b2, 1, 1, 0, 0) == lmv::Color(0, 0, 255, 128),
+          "Surface.rgba() returns exact straight-alpha RGBA for Color(0, 0, 255, 128)");
+}
+
+// ----------------------------------------------------------------------------
+// Test 8 (Finding 2): Font copy independence
+// ----------------------------------------------------------------------------
+void test_font_copy_independence() {
+    lmv::Font a(32.0f);
+    lmv::Font b = a;
+    a.embolden(true);
+
+    lmv::Font c(32.0f); // Fresh unemboldened font
+
+    lmv::Paint p;
+    p.color(lmv::Color(255, 255, 255, 255)).antialias(true);
+
+    lmv::Surface surf_b(160, 60);
+    surf_b.canvas().clear(lmv::Color(0, 0, 0, 255));
+    surf_b.canvas().draw_text("Test", 20, 40, b, p);
+
+    lmv::Surface surf_c(160, 60);
+    surf_c.canvas().clear(lmv::Color(0, 0, 0, 255));
+    surf_c.canvas().draw_text("Test", 20, 40, c, p);
+
+    CHECK(surf_b.rgba() == surf_c.rgba(), "copied font b remains unemboldened when a is emboldened");
+
+    lmv::Surface surf_a(160, 60);
+    surf_a.canvas().clear(lmv::Color(0, 0, 0, 255));
+    surf_a.canvas().draw_text("Test", 20, 40, a, p);
+
+    CHECK(surf_a.rgba() != surf_b.rgba(), "emboldened font a produces distinct output from copy b");
+}
+
+// ----------------------------------------------------------------------------
+// Test 9 (Finding 3): Truncated image rejection in from_bytes and from_file
+// ----------------------------------------------------------------------------
+void test_truncated_image_rejection() {
+    lmv::Surface surf(32, 32);
+    surf.canvas().clear(lmv::Color(255, 0, 0, 255));
+    std::string valid_png = surf.encode_png();
+    CHECK(valid_png.size() > 20, "valid PNG created for truncation test");
+
+    std::string trunc_png = valid_png.substr(0, valid_png.size() / 2);
+
+    bool threw_bytes = false;
+    try {
+        lmv::Image::from_bytes(trunc_png);
+    } catch (const lmv::Error&) {
+        threw_bytes = true;
+    }
+    CHECK(threw_bytes, "Image::from_bytes throws lmv::Error on truncated PNG data");
+
+    const std::string tmp_path = "/tmp/lmv_test_truncated.png";
+    {
+        std::ofstream out(tmp_path, std::ios::binary);
+        out.write(trunc_png.data(), trunc_png.size());
+    }
+
+    bool threw_file = false;
+    try {
+        lmv::Image::from_file(tmp_path);
+    } catch (const lmv::Error&) {
+        threw_file = true;
+    }
+    CHECK(threw_file, "Image::from_file throws lmv::Error on truncated PNG file");
+    std::remove(tmp_path.c_str());
+}
+
+// ----------------------------------------------------------------------------
+// Test 10 (Finding 5): SVG preserveAspectRatio support
+// ----------------------------------------------------------------------------
+void test_svg_preserve_aspect_ratio() {
+    // 100x100 SVG with default xMidYMid meet drawn into 200x100 -> centered at [50, 150]
+    std::string svg_meet =
+        "<svg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">\n"
+        "  <rect width=\"100\" height=\"100\" fill=\"#ff0000\" />\n"
+        "</svg>";
+    lmv::Svg svg1 = lmv::Svg::parse(svg_meet);
+    lmv::Surface surf1(200, 100);
+    surf1.canvas().clear(lmv::Color(0, 0, 0, 0));
+    surf1.canvas().draw_svg(svg1, 0, 0, 200, 100);
+    std::string b1 = surf1.rgba();
+
+    // Sidebars should be transparent, center should be red
+    CHECK(get_pixel(b1, 200, 100, 25, 50).a == 0,
+          "preserveAspectRatio meet: left sidebar at (25, 50) is transparent");
+    lmv::Color center_c = get_pixel(b1, 200, 100, 100, 50);
+    CHECK(center_c.r > 200 && center_c.a == 255,
+          "preserveAspectRatio meet: center at (100, 50) is red");
+    CHECK(get_pixel(b1, 200, 100, 175, 50).a == 0,
+          "preserveAspectRatio meet: right sidebar at (175, 50) is transparent");
+
+    // preserveAspectRatio="none" -> stretched across all 200 pixels
+    std::string svg_none =
+        "<svg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
+        "  <rect width=\"100\" height=\"100\" fill=\"#ff0000\" />\n"
+        "</svg>";
+    lmv::Svg svg2 = lmv::Svg::parse(svg_none);
+    lmv::Surface surf2(200, 100);
+    surf2.canvas().clear(lmv::Color(0, 0, 0, 0));
+    surf2.canvas().draw_svg(svg2, 0, 0, 200, 100);
+    std::string b2 = surf2.rgba();
+
+    lmv::Color c_left = get_pixel(b2, 200, 100, 25, 50);
+    CHECK(c_left.r > 200 && c_left.a == 255,
+          "preserveAspectRatio none: left at (25, 50) is filled red");
+}
+
+// ----------------------------------------------------------------------------
+// Test 11 (Finding 6): Lone explicit SVG dimension derived from viewBox
+// ----------------------------------------------------------------------------
+void test_svg_lone_explicit_dimension() {
+    std::string svg_w100 = "<svg width=\"100\" viewBox=\"0 0 50 50\" xmlns=\"http://www.w3.org/2000/svg\"></svg>";
+    lmv::Svg s1 = lmv::Svg::parse(svg_w100);
+    CHECK(s1.width() == 100.0f && s1.height() == 100.0f,
+          "<svg width=\"100\" viewBox=\"0 0 50 50\"> reports 100x100");
+
+    std::string svg_h80 = "<svg height=\"80\" viewBox=\"0 0 40 20\" xmlns=\"http://www.w3.org/2000/svg\"></svg>";
+    lmv::Svg s2 = lmv::Svg::parse(svg_h80);
+    CHECK(s2.width() == 160.0f && s2.height() == 80.0f,
+          "<svg height=\"80\" viewBox=\"0 0 40 20\"> reports 160x80 (aspect ratio 2:1)");
+}
+
+// ----------------------------------------------------------------------------
+// Test 12 (Finding 7): Invalid numeric and path inputs rejection
+// ----------------------------------------------------------------------------
+void test_invalid_numeric_and_path_validation() {
+    float inf = std::numeric_limits<float>::infinity();
+    float nan = std::numeric_limits<float>::quiet_NaN();
+
+    bool threw = false;
+    try {
+        lmv::Paint().stroke_width(inf);
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Paint().stroke_width(+inf) throws lmv::Error");
+
+    threw = false;
+    try {
+        lmv::Paint().dash(inf, 1.0f);
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Paint().dash(+inf, 1) throws lmv::Error");
+
+    threw = false;
+    try {
+        lmv::Paint().blur(inf);
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Paint().blur(+inf) throws lmv::Error");
+
+    threw = false;
+    try {
+        lmv::Path().add_circle(10.0f, 10.0f, nan);
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Path().add_circle(..., NaN) throws lmv::Error");
+
+    threw = false;
+    try {
+        lmv::Surface surf(50, 50);
+        surf.canvas().draw_circle(10.0f, 10.0f, -1.0f, lmv::Paint());
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Canvas.draw_circle(..., -1) throws lmv::Error");
+
+    threw = false;
+    try {
+        lmv::Svg s = lmv::Svg::parse("<svg width=\"10\" height=\"10\" xmlns=\"http://www.w3.org/2000/svg\"></svg>");
+        lmv::Surface surf(50, 50);
+        surf.canvas().draw_svg(s, 0.0f, 0.0f, nan, 10.0f);
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Canvas.draw_svg(..., NaN, 10) throws lmv::Error");
+
+    threw = false;
+    try {
+        lmv::Path::from_svg("   ");
+    } catch (const lmv::Error&) { threw = true; }
+    CHECK(threw, "Path::from_svg(\"   \") throws lmv::Error");
+}
+
 } // namespace
 
 int main(int argc, char* argv[]) {
@@ -440,6 +649,12 @@ int main(int argc, char* argv[]) {
     test_png_jpeg_round_trip();
     test_svg_parsing_and_errors();
     test_golden_check(generate_golden);
+    test_unpremul_readback();
+    test_font_copy_independence();
+    test_truncated_image_rejection();
+    test_svg_preserve_aspect_ratio();
+    test_svg_lone_explicit_dimension();
+    test_invalid_numeric_and_path_validation();
 
     if (g_fail_count == 0) {
         std::cout << "PASS " << g_pass_count << " checks\n";

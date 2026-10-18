@@ -44,7 +44,7 @@ fetch_skia:
 $(BUILD):
 	@mkdir -p $(BUILD)
 
-$(BUILD)/lmvideo.o: cpp/lmvideo.cpp cpp/lmvideo.hpp | $(BUILD) fetch_skia
+$(BUILD)/lmvideo.o: cpp/lmvideo.cpp cpp/lmvideo.hpp assets/fonts/DejaVuSans.ttf | $(BUILD) fetch_skia
 	$(CXX) $(CXXFLAGS) $(SKIA_INCLUDES) -c cpp/lmvideo.cpp -o $@
 
 # The encoder (ffmpeg CLI pipe) is Skia-free; it is part of the library archive.

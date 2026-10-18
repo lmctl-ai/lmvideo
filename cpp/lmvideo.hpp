@@ -123,7 +123,7 @@ public:
     Impl& impl() { return *pimpl_; }
 
 private:
-    std::shared_ptr<Impl> pimpl_;
+    std::unique_ptr<Impl> pimpl_;
 };
 
 // Immutable decoded image handle.
@@ -187,6 +187,7 @@ public:
     void draw_text(const std::string& text, float x, float y, const Font& f, const Paint& p);
     void draw_image(const Image& img, float x, float y);
     void draw_image_rect(const Image& img, float x, float y, float w, float h);
+    // Draws the SVG fit into the (x, y, w, h) rectangle, honoring the SVG's preserveAspectRatio attribute
     void draw_svg(const Svg& svg, float x, float y, float w, float h);
     void save();
     void restore();

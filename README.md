@@ -38,7 +38,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 
 - **Skia is bindable the way Skija binds it, without a JNI layer** (Phase 1). Prebuilt JetBrains skia-pack static libraries (the same source Skija
   downloads), a Skia-free public header (`cpp/lmvideo.hpp`: `Surface`, `Canvas`, `Paint`, `Path`, `Font`, `Image`, `Svg`, `Color`) and one TU
-  (`cpp/lmvideo.cpp`) that includes Skia. 56 checks: exact pixels at probe points, text ink inside the expected box, PNG/JPEG round trips,
+  (`cpp/lmvideo.cpp`) that includes Skia. 77 checks: exact pixels at probe points, text ink inside the expected box, PNG/JPEG round trips,
   SVG (rect, circle, path, text), error paths, and a golden image with tolerance.
 - **ffmpeg works as an encoder without libav headers** (Phase 2). `lmv::Encoder` pipes RGBA frames to the `ffmpeg` CLI (fork/exec, no shell) and
   `probe_video` / `decode_frame` read back facts with ffprobe/ffmpeg. 15 checks, including a lossless FFV1 round trip where decoded frames are
@@ -52,7 +52,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 
     ok 1 - cpp/dslvm.hpp matches sdk.lock (2b28058f6d1c)
     ok 2 - library, CLI, tests and DSL host build
-    ok 3 - skia_test: PASS 56 checks
+    ok 3 - skia_test: PASS 77 checks
     ok 4 - lmvideo demo writes a valid 500x350 PNG
     ok 5 - lmvideo render: SVG -> 200x120 PNG
     ok 6 - CLI exit codes: 1 usage, 3 runtime error
@@ -60,7 +60,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
     ok 8 - image.lms: 640x360 PNG with the sun, gradient and translucent card at the expected pixels
     ok 9 - image.lms: a second run gives identical pixels (deterministic, no system fonts)
     ok 10 - image.lms: ${} literals (size 200x100, title, path) reach the host
-    ok 11 - svg.lms: SVG scaled into a rect on a canvas the chunk also draws on
+    ok 11 - svg.lms: SVG fitted into a rect on a canvas the chunk also draws on
     ok 12 - video.lms: mp4 is h264 320x180, 60 frames, 2.0 s        (ffprobe: codec_name=h264 width=320 height=180 nb_read_frames=60 duration=2.000000)
     ok 13 - video.lms: frame 0 and frame 59 decode to the expected ball position and colours
     ok 14 - seven ill-typed chunks are rejected at lmscript check time with located errors

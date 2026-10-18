@@ -74,7 +74,7 @@ expect_px "$WORK/svg.png" 140 100 231 76 60 3        # the red #e74c3c rounded r
 expect_px "$WORK/svg.png" 320 100 241 196 15 3       # the yellow #f1c40f circle
 expect_px "$WORK/svg.png" 10 3 51 51 51 2            # the DSL's own bar on top
 expect_px "$WORK/svg.png" 5 200 255 255 255 0        # white margin outside the SVG
-ok "svg.lms: SVG scaled into a rect on a canvas the chunk also draws on"
+ok "svg.lms: SVG fitted into a rect on a canvas the chunk also draws on"
 
 # 6. video.lms -> mp4: the host owns the frame loop.
 compile examples/video.lms "$WORK/video.dslb" "$WORK/video.mp4" 60 30 >/dev/null || fail "compile video.lms"
