@@ -36,7 +36,7 @@ LINK_SKIA := -Wl,--start-group $(SKIA_LIBS) -Wl,--end-group -lpthread -ldl
 
 .PHONY: all test clean fetch_skia
 
-all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test
+all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/encoder_test $(BUILD)/lmvideohost
 
 fetch_skia:
 	@scripts/fetch-skia.sh --quiet
@@ -47,7 +47,11 @@ $(BUILD):
 $(BUILD)/lmvideo.o: cpp/lmvideo.cpp cpp/lmvideo.hpp | $(BUILD) fetch_skia
 	$(CXX) $(CXXFLAGS) $(SKIA_INCLUDES) -c cpp/lmvideo.cpp -o $@
 
-$(BUILD)/liblmvideo.a: $(BUILD)/lmvideo.o
+# The encoder (ffmpeg CLI pipe) is Skia-free; it is part of the library archive.
+$(BUILD)/encoder.o: cpp/encoder.cpp cpp/encoder.hpp cpp/lmvideo.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Icpp -c cpp/encoder.cpp -o $@
+
+$(BUILD)/liblmvideo.a: $(BUILD)/lmvideo.o $(BUILD)/encoder.o
 	ar rcs $@ $^
 
 $(BUILD)/lmvideo_cli.o: cpp/lmvideo_cli.cpp cpp/lmvideo.hpp | $(BUILD)
@@ -62,8 +66,21 @@ $(BUILD)/skia_test.o: tests/skia_test.cpp cpp/lmvideo.hpp | $(BUILD)
 $(BUILD)/skia_test: $(BUILD)/skia_test.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
 	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/skia_test.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
-test: $(BUILD)/skia_test
-	@$<
+$(BUILD)/encoder_test.o: tests/encoder_test.cpp cpp/encoder.hpp cpp/lmvideo.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Icpp -c tests/encoder_test.cpp -o $@
+
+$(BUILD)/encoder_test: $(BUILD)/encoder_test.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
+	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/encoder_test.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
+
+# The DSL host: implements schema/lmvideo.dsl.json over the library (dslvm.hpp is vendored, pinned by sdk.lock).
+$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -c cpp/host.cpp -o $@
+
+$(BUILD)/lmvideohost: $(BUILD)/host.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
+	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/host.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
+
+test: $(BUILD)/skia_test $(BUILD)/encoder_test
+	@$(BUILD)/skia_test && $(BUILD)/encoder_test
 
 clean:
 	rm -rf $(BUILD)

@@ -17,6 +17,10 @@ echo "=== Running unit and golden tests ==="
 "$TMP_BUILD/skia_test"
 echo "ok 2 - skia_test passed"
 
+echo "=== Running ffmpeg encoder tests ==="
+"$TMP_BUILD/encoder_test"
+echo "ok 2b - encoder_test passed"
+
 echo "=== Running CLI demo command ==="
 "$TMP_BUILD/lmvideo" demo "$TMP_BUILD/demo.png"
 [ -f "$TMP_BUILD/demo.png" ]
