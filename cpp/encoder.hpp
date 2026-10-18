@@ -33,6 +33,8 @@ class Encoder {
   int width_, height_, frames_ = 0;
   int pipe_fd_ = -1;      // ffmpeg's stdin
   int pid_ = -1;
+  std::string path_;
+  std::string temp_out_path_;
   std::string log_path_;  // ffmpeg's stderr is collected in this temp file
   bool finished_ = false;
 };

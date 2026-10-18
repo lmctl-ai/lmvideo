@@ -17,7 +17,7 @@ owns the process, the output file and the frame loop, and an lmscript `_dsl_` ch
 
     scripts/fetch-skia.sh                  # one-time: downloads the pinned prebuilt Skia (49.7 MB zip, 179 MB unpacked) into third_party/ (gitignored)
     nice make                              # build/liblmvideo.a, lmvideo (CLI), lmvideohost (DSL host), skia_test, encoder_test
-    nice bash test.sh                      # 16 end-to-end checks (builds in a temp dir; needs ffmpeg, ffprobe, python3, LMSCRIPT_BIN)
+    nice bash test.sh                      # 19 end-to-end checks (builds in a temp dir; needs ffmpeg, ffprobe, python3, LMSCRIPT_BIN)
 
     # CLI, no DSL
     build/lmvideo demo build/demo.png
@@ -41,7 +41,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
   (`cpp/lmvideo.cpp`) that includes Skia. 77 checks: exact pixels at probe points, text ink inside the expected box, PNG/JPEG round trips,
   SVG (rect, circle, path, text), error paths, and a golden image with tolerance.
 - **ffmpeg works as an encoder without libav headers** (Phase 2). `lmv::Encoder` pipes RGBA frames to the `ffmpeg` CLI (fork/exec, no shell) and
-  `probe_video` / `decode_frame` read back facts with ffprobe/ffmpeg. 15 checks, including a lossless FFV1 round trip where decoded frames are
+  `probe_video` / `decode_frame` read back facts with ffprobe/ffmpeg. 32 checks, including a lossless FFV1 round trip where decoded frames are
   bit-identical to the drawn frames, and h264 frame count, duration and pixels.
 - **The DSL drives drawing and animation** (Phase 3). `schema/lmvideo.dsl.json` (9 object types, 60 methods, 20 functions, 3 context names) is implemented by
   `cpp/host.cpp`; three lmscript examples compile against it with `${}` literals for size, colours, title, frame count, fps and paths.
@@ -56,7 +56,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
     ok 4 - lmvideo demo writes a valid 500x350 PNG
     ok 5 - lmvideo render: SVG -> 200x120 PNG
     ok 6 - CLI exit codes: 1 usage, 3 runtime error
-    ok 7 - encoder_test: PASS 15 checks
+    ok 7 - encoder_test: PASS 32 checks
     ok 8 - image.lms: 640x360 PNG with the sun, gradient and translucent card at the expected pixels
     ok 9 - image.lms: a second run gives identical pixels (deterministic, no system fonts)
     ok 10 - image.lms: ${} literals (size 200x100, title, path) reach the host
@@ -66,7 +66,10 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
     ok 14 - seven ill-typed chunks are rejected at lmscript check time with located errors
     ok 15 - host refuses a schema-hash mismatch and a truncated file (exit 1, nothing drawn)
     ok 16 - host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (exit 3); out.fail (exit 4)
-    PASS 16 checks
+    ok 17 - hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)
+    ok 18 - the host refuses to start when the schema has a method its registry lacks (registry/schema self-check, exit 1)
+    ok 19 - NaN colour factor and an unwritable image path are errors (exit 3); out.fail during a video leaves no partial file
+    PASS 19 checks
 
 ## The DSL chunk (examples/video.lms, the body)
 
@@ -99,7 +102,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 | `cpp/lmvideo.hpp`, `cpp/lmvideo.cpp` | the library: Skia-free value-class API, the only TU that includes Skia; embedded DejaVu Sans via `.incbin`; SVG through `SkSVGDOM` |
 | `cpp/lmvideo_cli.cpp` | CLI `lmvideo render IN.svg OUT.png [--width W] [--height H] [--background C]`, `lmvideo demo OUT.png` |
 | `cpp/encoder.hpp`, `cpp/encoder.cpp` | `lmv::Encoder` (ffmpeg pipe), `probe_video`, `decode_frame`; Skia-free |
-| `cpp/host.cpp` | the DSL host (registry = implementation of the schema, setup pass, frame loop) |
+| `cpp/host.cpp`, `cpp/schema.hpp` | the DSL host (registry = implementation of the schema, setup pass, frame loop) and its small schema reader (signature checks, registry self-check) |
 | `cpp/dslvm.hpp`, `sdk.lock`, `scripts/sync-sdk.sh` | shared runtime vendored from [lmctlhq/cpp-dsl-sdk](https://github.com/lmctlhq/cpp-dsl-sdk) by pinned sha256 (`test.sh` fails on drift) |
 | `schema/lmvideo.dsl.json` | the contract (types Paint, Path, Font, Image, Svg, Canvas, Surface, Video, Output; functions; context `canvas`, `video`, `out`) |
 | `examples/image.lms`, `video.lms`, `svg.lms` | lmscript scripts (strict syntax, `_dsl_` block, `${}` literals) |
@@ -123,7 +126,7 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 
 ## Findings for the lmscript team (Phase 4: what the DSL needs for drawing and animation)
 
-Evidence: the three examples, the schema (9 types, 60 methods, 20 functions), 7 compile-time and 7 run-time negative tests.
+Evidence: the three examples, the schema (9 types, 60 methods, 20 functions), 7 compile-time and 10 run-time negative tests, and two independent model reviews (library and host) whose findings are fixed with tests.
 
 1. **The host-owned frame loop works and is the right model (R12).** The chunk is a pure per-frame function of `video.t()`/`video.index()`;
    the host does clear, run, encode 60 times in 0.24 s total (VM overhead is negligible next to rasterization and x264). The DSL needed no loop to animate.
@@ -161,7 +164,15 @@ Evidence: the three examples, the schema (9 types, 60 methods, 20 functions), 7 
 9. **Video size and encoding settings are plain int/string setters** (`size`, `fps`, `frames`, `crf`, `output`); the host validates (even sizes for yuv420p, ranges,
    extension to codec) and reports with the method name, which matches the POC error style (exit 3). Resource limits (8192 px per side, 100000 frames,
    16384 px in the library) are host policy, as in poc-curl.
-10. **What did NOT need the DSL to change:** int/float/string/bool, `if/else`, `+` on strings and `str()` (frame counter text), method chains, handle-valued locals.
+10. **The VM verifier is type-free, so the host must type-check (a security finding for the SDK).** `dslvm.hpp` verifies names and arities, never argument types,
+    and the schema hash only proves WHICH schema the bytecode was compiled against. A reviewer hand-built bytecode with the correct hash that passed a `Path` where
+    `Canvas.rect` wants a `Paint`; it verified and the host segfaulted (exit 139) on a `static_cast`. lmscript never emits such code, but the file format is a trust
+    boundary (R03: loadable by anyone, R09 untrusted DSL). lmvideo's answer is host-side: `cpp/schema.hpp` reads the signatures, `Registrar` checks every argument and
+    result against them at call time (test 17), and a startup self-check refuses to run when registry and schema disagree on names, arities or context (test 18; the
+    POC finding "the host cannot check its own registry against the schema" is closed this way, ~120 lines). Recommendation: move both into `cpp-dsl-sdk` (parse the
+    schema in `Program::load`, verify argument types statically from the bytecode's constant pool and a typed stack, or at least check kinds at CALL_*), so no host
+    has to remember to do it.
+11. **What did NOT need the DSL to change:** int/float/string/bool, `if/else`, `+` on strings and `str()` (frame counter text), method chains, handle-valued locals.
     Language v3 was sufficient for the three examples apart from the loop and maths questions above.
 
 ## Limits and not done

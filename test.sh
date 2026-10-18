@@ -57,8 +57,9 @@ expect_px "$WORK/image.png" 5 5 30 60 114 4          # gradient start #1e3c72 (t
 expect_px "$WORK/image.png" 635 355 42 82 152 4      # gradient end #2a5298 (bottom-right corner)
 expect_px "$WORK/image.png" 120 250 219 71 113 12    # translucent #ef476f over the gradient
 ok "image.lms: 640x360 PNG with the sun, gradient and translucent card at the expected pixels"
-cp "$WORK/image.png" "$WORK/image1.png"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$SCHEMA" >/dev/null 2>&1
+mv "$WORK/image.png" "$WORK/image1.png"
+"$HOST" --dsl "$WORK/image.dslb" --schema "$SCHEMA" >/dev/null 2>&1 || fail "second host run failed"
+[ -f "$WORK/image.png" ] || fail "second run did not produce image.png"
 [ "$($PNGPX "$WORK/image.png" --sha256)" = "$($PNGPX "$WORK/image1.png" --sha256)" ] || fail "two runs differ"
 ok "image.lms: a second run gives identical pixels (deterministic, no system fonts)"
 compile examples/image.lms "$WORK/small.dslb" "$WORK/small.png" 200 100 "Hi" >/dev/null || fail "compile small"
@@ -129,5 +130,37 @@ run_err r5 3 'needs video.frames(1)' "if (video.setup()) { video.size(64, 64); v
 run_err r6 3 'size must be' "if (video.setup()) { video.size(63000, 64); }"
 run_err r7 4 'fail: nope' "if (video.setup()) { $SETUP } else { out.fail(\"nope\"); }"
 ok "host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (exit 3); out.fail (exit 4)"
+
+# 10. Defence in depth (reviewer finding): the VM verifier checks names and arities, not types, so a hand-built program with the
+#     right schema hash could pass a Path where a Paint is expected. The host checks every argument against the schema.
+printf 'p = _dsl_ schema="%s";\nif (video.setup()) { %s } else { canvas.rect(0.0, 0.0, 5.0, 5.0, paint()); }\nend _dsl_\nsavedsl(p, "%s/w.dslb");\n' "$SCHEMA" "$SETUP" "$WORK" >"$WORK/w.lms"
+"$LMSCRIPT" "$WORK/w.lms" >/dev/null 2>&1 || fail "compile w.lms"
+python3 -I - "$WORK/w.dslb" <<'PY' || fail "patch bytecode"
+import struct, sys
+d = bytearray(open(sys.argv[1], "rb").read())
+pos = 4 + 2 + 32
+n, = struct.unpack(">H", d[pos:pos + 2]); pos += 2
+for _ in range(n):                       # rename the constant "paint" to "path": a verified program that returns a Path for a Paint
+    ln, = struct.unpack(">H", d[pos:pos + 2])
+    if d[pos + 2:pos + 2 + ln] == b"paint":
+        d[pos:pos + 2 + ln] = struct.pack(">H", 4) + b"path"; break
+    pos += 2 + ln
+else: raise SystemExit("constant not found")
+open(sys.argv[1], "wb").write(d)
+PY
+"$HOST" --dsl "$WORK/w.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/w.err"; code=$?
+[ "$code" = 3 ] && grep -q 'Canvas.rect: argument 5 must be Paint, got Path' "$WORK/w.err" || { cat "$WORK/w.err"; fail "wrong-type bytecode: exit $code"; }
+ok "hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)"
+sed 's|"fill": {"params": \[\], "returns": "Paint"},|&\n        "extra": {"params": [], "returns": "Paint"},|' "$SCHEMA" >"$WORK/extra.json"
+grep -q '"extra"' "$WORK/extra.json" || fail "schema edit"
+"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/extra.json" >/dev/null 2>"$WORK/e.err"; code=$?
+[ "$code" = 1 ] && grep -q 'missing method Paint.extra' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry self-check: exit $code"; }
+ok "the host refuses to start when the schema has a method its registry lacks (registry/schema self-check, exit 1)"
+run_err r8 3 'interpolation factor must be finite' "if (video.setup()) { $SETUP } else { canvas.clear(mix(\"#000000\", \"#ffffff\", 0.0 / 0.0)); }"
+run_err r9 3 'cannot write' "if (video.setup()) { video.size(8, 8); video.frames(1); video.output(\"$WORK/no/such/dir/x.jpg\"); } else { canvas.clear(\"#ffffff\"); }"
+rm -f "$WORK/fail.mp4"
+run_err r10 4 'fail: stop' "if (video.setup()) { video.size(64, 64); video.frames(5); video.output(\"$WORK/fail.mp4\"); } else { if (video.index() == 1) { out.fail(\"stop\"); } }"
+[ ! -e "$WORK/fail.mp4" ] && [ -z "$(ls -A "$WORK" | grep '^\.lmv-')" ] || fail "a failed video run left a partial file"
+ok "NaN colour factor and an unwritable image path are errors (exit 3); out.fail during a video leaves no partial file"
 
 echo "PASS $pass checks"
