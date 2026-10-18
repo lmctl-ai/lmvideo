@@ -75,7 +75,7 @@ Skia types never leave `lmvideo.cpp`: the public header uses value classes holdi
 
 The schema format has methods only (no fields, no constructors, R11), so:
 
-- **Object types** (opaque handles): `Canvas`, `Paint`, `Path`, `Font`, `Image`, `Svg`, `Surface`; video side: `Frame`, `Video`.
+- **Object types** (opaque handles): `Canvas`, `Paint`, `Path`, `Font`, `Image`, `Svg`, `Surface`, `Video`, `Output`.
 - **Constructors are host functions**: `paint()`, `path()`, `font(size)`, `image_file(path)`, `svg(text)`, `surface(w, h)`.
 - **Builders return self** (`paint().color("#ff8800").stroke().stroke_width(3.0)`), which the POC findings already observed as the
   recurring idiom (setter-returns-self); no optional arguments, no lists.
@@ -83,10 +83,10 @@ The schema format has methods only (no fields, no constructors, R11), so:
   rejects bad values with a located run-time error. Numbers are `float` (coordinates) and `int` (sizes, counts).
 - **Ownership**: the host keeps every object in an arena for the run; the chunk cannot free, store or return handles (R11/R12),
   exactly as in poc-numpy.
-- **Image mode**: the context is `canvas: Canvas`, `out: Output`; the chunk runs once. **Video mode**: the host owns the frame
-  loop and runs the chunk once per frame with `frame: Frame` (`index()`, `count()`, `t()` in 0..1, `time()` seconds, `width()`,
-  `height()`) plus `canvas`; animation is arithmetic on `frame.t()`. This is the R12 callback model; the DSL needs no loop.
-  Evaluation of this choice is in the README (Phase 4).
+- **One chunk, two passes** (as built; see README findings 2): the context is `canvas: Canvas`, `video: Video`, `out: Output`. The host runs the chunk once
+  with `video.setup() == true` (the chunk declares `size`, `fps`, `frames`, `crf`, `output`), then owns the frame loop and runs it once per frame
+  (`video.index()`, `count()`, `t()` in 0..1, `time()`, `width()`, `height()`, `save_frame(path)`). An image is a one-frame output (`.png`/`.jpg`).
+  Animation is arithmetic on `video.t()`; the DSL needs no loop. This is the R12 callback model.
 
 ## 7. Licensing
 
