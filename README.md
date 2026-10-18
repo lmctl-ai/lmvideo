@@ -50,26 +50,27 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 
 ## Transcript (`nice bash test.sh`, 2026-10-18)
 
-    ok 1 - cpp/dslvm.hpp matches sdk.lock (2b28058f6d1c)
+    ok 1 - cpp/dslvm.hpp matches sdk.lock (aebac89e0736)
     ok 2 - library, CLI, tests and DSL host build
     ok 3 - skia_test: PASS 77 checks
     ok 4 - lmvideo demo writes a valid 500x350 PNG
     ok 5 - lmvideo render: SVG -> 200x120 PNG
     ok 6 - CLI exit codes: 1 usage, 3 runtime error
     ok 7 - encoder_test: PASS 32 checks
-    ok 8 - image.lms: 640x360 PNG with the sun, gradient and translucent card at the expected pixels
-    ok 9 - image.lms: a second run gives identical pixels (deterministic, no system fonts)
-    ok 10 - image.lms: ${} literals (size 200x100, title, path) reach the host
-    ok 11 - svg.lms: SVG fitted into a rect on a canvas the chunk also draws on
-    ok 12 - video.lms: mp4 is h264 320x180, 60 frames, 2.0 s        (ffprobe: codec_name=h264 width=320 height=180 nb_read_frames=60 duration=2.000000)
-    ok 13 - video.lms: frame 0 and frame 59 decode to the expected ball position and colours
-    ok 14 - seven ill-typed chunks are rejected at lmscript check time with located errors
-    ok 15 - host refuses a schema-hash mismatch and a truncated file (exit 1, nothing drawn)
-    ok 16 - host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (exit 3); out.fail (exit 4)
-    ok 17 - hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)
-    ok 18 - the host refuses to start when the schema has a method its registry lacks (registry/schema self-check, exit 1)
-    ok 19 - NaN colour factor and an unwritable image path are errors (exit 3); out.fail during a video leaves no partial file
-    PASS 19 checks
+    ok 8 - registry signatures equal the schema's (83 entries, lmscript --dsl-signatures)
+    ok 9 - image.lms: 640x360 PNG with the sun, gradient and translucent card at the expected pixels
+    ok 10 - image.lms: a second run gives identical pixels (deterministic, no system fonts)
+    ok 11 - image.lms: ${} literals (size 200x100, title, path) reach the host
+    ok 12 - svg.lms: SVG fitted into a rect on a canvas the chunk also draws on
+    ok 13 - video.lms: mp4 is h264 320x180, 60 frames, 2.0 s        (ffprobe: codec_name=h264 width=320 height=180 nb_read_frames=60 duration=2.000000)
+    ok 14 - video.lms: frame 0 and frame 59 decode to the expected ball position and colours
+    ok 15 - seven ill-typed chunks are rejected at lmscript check time with located errors
+    ok 16 - host refuses a schema-hash mismatch and a truncated file (one JSON line, phase load, exit 3, nothing drawn)
+    ok 17 - host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (phase run, RUN_HOST, exit 3); out.fail (phase app, APP_FAIL, exit 4)
+    ok 18 - hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)
+    ok 19 - the host refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)
+    ok 20 - NaN colour factor and an unwritable image path are errors (exit 3); out.fail during a video leaves no partial file
+    PASS 20 checks
 
 ## The DSL chunk (examples/video.lms, the body)
 
@@ -88,12 +89,17 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 
 ## How the host runs a chunk (R12)
 
-1. Register the schema's implementation (`register_schema`), load and verify the bytecode against the exact schema bytes (exit 1 if refused, nothing ran).
+1. Register the schema's implementation (`register_schema`, each signature declared with its types so `lmvideohost --dsl-signatures` can be diffed
+   against `lmscript --dsl-signatures schema/lmvideo.dsl.json`; the Registrar's own self-check compares the declarations with the schema file too),
+   load and verify the bytecode against the exact schema bytes (refused: one JSON line, phase load, exit 3, nothing ran).
 2. **Setup pass**: run the chunk once with `video.setup() == true` and an empty canvas slot. The chunk declares `size`, `fps`, `frames`, `crf`, `output`.
 3. The host creates the surface (and the ffmpeg encoder when the output extension is `.mp4/.webm/.mkv/.gif`; `.png/.jpg` means a single image and needs
    `frames(1)`), then **owns the loop**: per frame it clears the surface (black for video, transparent for images), runs the chunk, and pipes the RGBA
    frame to the encoder. Every handle the chunk created lives in an arena that is cleared after each run (R11/R12: handles cannot be stored or returned).
-4. Report on stderr; exit 0 ok, 1 refused, 2 usage, 3 run-time error (message names `Type.method`), 4 the chunk called `out.fail(msg)`.
+4. Report: the human line on stderr and exactly one JSON result line on stdout (spec v4 S0, A03): `{"ok": true, "result": {"output": [every
+   out.print line], "file": ..., "width": ..., "height": ..., "frames": ..., "fps": ...}}`, or `{"ok": false, "phase": "load|run|app", "code": ...,
+   "message": ...}`. Exit 0 ok, 2 usage, 3 host (load refused or run-time error; the message names `Type.method`), 4 the chunk called `out.fail(msg)`.
+   lmvideo keeps its own call-time argument/result checks on top of the SDK (the SDK itself has none: R33/R34).
 
 ## Files
 

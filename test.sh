@@ -47,10 +47,25 @@ ok "encoder_test: $(tail -1 "$WORK/enc.out")"
 
 # 4. Phase 3: the DSL host. image.lms -> PNG.
 HOST="$B/lmvideohost"
+# Registry versus schema (spec v4 S0, A02): the host declares its signatures' types itself; they must equal the schema's.
+if "$LMSCRIPT" --dsl-signatures "$SCHEMA" >"$WORK/schema.sigs" 2>/dev/null; then
+  "$HOST" --dsl-signatures >"$WORK/host.sigs" || fail "host --dsl-signatures"
+  diff -u "$WORK/schema.sigs" "$WORK/host.sigs" >"$WORK/sigs.diff" || { cat "$WORK/sigs.diff"; fail "registry signatures differ from the schema"; }
+  ok "registry signatures equal the schema's ($(wc -l <"$WORK/host.sigs") entries, lmscript --dsl-signatures)"
+else
+  echo "skip - this lmscript has no --dsl-signatures (mono builds after 0.2.330 do); the host declares $("$HOST" --dsl-signatures | wc -l) signatures"
+fi
+# stdout is exactly one JSON result line (spec v4 S0, A03); out.print lines travel in result.output.
+out_lines() { python3 -I -c 'import json,sys; d=json.load(sys.stdin); assert d["ok"] is True, d; print("\n".join(d["result"]["output"]))'; }
+result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line starting with the prefix
+  [ "$(wc -l <"$1")" = 1 ] || fail "$1: stdout must be exactly one JSON line: $(cat "$1")"
+  case "$(cat "$1")" in "$2"*) ;; *) fail "$1: result line $(cat "$1") does not start with $2";; esac
+}
 compile examples/image.lms "$WORK/image.dslb" "$WORK/image.png" 640 360 "Hello lmvideo" >/dev/null || fail "compile image.lms"
 [ "$(od -An -tu1 -j4 -N2 "$WORK/image.dslb" | tr -s ' ' | sed 's/^ //')" = "0 3" ] || fail "bytecode version 3"
 "$HOST" --dsl "$WORK/image.dslb" --schema "$SCHEMA" >"$WORK/image.out" 2>"$WORK/image.err" || { cat "$WORK/image.err"; fail "image host"; }
-[ "$(cat "$WORK/image.out")" = "drew 640x360" ] || fail "image.lms output: $(cat "$WORK/image.out")"
+result_line "$WORK/image.out" '{"ok": true, "result": {"output": ["drew 640x360"], "file": "'"$WORK"'/image.png", "width": 640, "height": 360, "frames": 1, "fps": '
+[ "$(out_lines <"$WORK/image.out")" = "drew 640x360" ] || fail "image.lms output: $(cat "$WORK/image.out")"
 [ "$($PNGPX "$WORK/image.png")" = "640x360" ] || fail "image.png size"
 expect_px "$WORK/image.png" 480 126 255 209 102 2    # sun: #ffd166 (cx 0.75w, cy 0.35h)
 expect_px "$WORK/image.png" 5 5 30 60 114 4          # gradient start #1e3c72 (top-left corner)
@@ -70,7 +85,7 @@ ok "image.lms: \${} literals (size 200x100, title, path) reach the host"
 # 5. svg.lms: an SVG document drawn into the canvas.
 compile examples/svg.lms "$WORK/svg.dslb" "$WORK/svg.png" tests/golden/scene.svg >/dev/null || fail "compile svg.lms"
 "$HOST" --dsl "$WORK/svg.dslb" --schema "$SCHEMA" >"$WORK/svg.out" 2>/dev/null || fail "svg host"
-[ "$(cat "$WORK/svg.out")" = "svg is 200x120" ] || fail "svg output"
+[ "$(out_lines <"$WORK/svg.out")" = "svg is 200x120" ] || fail "svg output: $(cat "$WORK/svg.out")"
 expect_px "$WORK/svg.png" 140 100 231 76 60 3        # the red #e74c3c rounded rect at (65..215, 60..153)
 expect_px "$WORK/svg.png" 320 100 241 196 15 3       # the yellow #f1c40f circle
 expect_px "$WORK/svg.png" 10 3 51 51 51 2            # the DSL's own bar on top
@@ -109,17 +124,20 @@ ok "seven ill-typed chunks are rejected at lmscript check time with located erro
 
 # 8. Host refusals before anything runs: schema hash mismatch, truncated file, wrong version.
 sed 's/"name": "lmvideo"/"name": "lmvideo2"/' "$SCHEMA" >"$WORK/other.json"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/other.json" >/dev/null 2>"$WORK/e.err"; [ $? = 1 ] && grep -q "schema mismatch" "$WORK/e.err" || fail "schema mismatch"
+"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/other.json" >"$WORK/e.out" 2>"$WORK/e.err"; [ $? = 3 ] && grep -q "schema mismatch" "$WORK/e.err" || fail "schema mismatch: $(cat "$WORK/e.err")"
+result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_SCHEMA_MISMATCH", "message": "schema mismatch'
 head -c 60 "$WORK/image.dslb" >"$WORK/trunc.dslb"
-"$HOST" --dsl "$WORK/trunc.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/e.err"; [ $? = 1 ] && grep -q "truncated" "$WORK/e.err" || fail "truncated"
-ok "host refuses a schema-hash mismatch and a truncated file (exit 1, nothing drawn)"
+"$HOST" --dsl "$WORK/trunc.dslb" --schema "$SCHEMA" >"$WORK/e.out" 2>"$WORK/e.err"; [ $? = 3 ] && grep -q "truncated" "$WORK/e.err" || fail "truncated"
+result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_BAD_BYTECODE", "message": "bytecode is truncated'
+ok "host refuses a schema-hash mismatch and a truncated file (one JSON line, phase load, exit 3, nothing drawn)"
 
 # 9. Run-time errors from the host: exit 3 with the method named; out.fail exit 4.
 run_err() { # NAME EXPECTED_EXIT EXPECTED_MESSAGE_PART BODY
   printf 'p = _dsl_ schema="%s";\n%s\nend _dsl_\nsavedsl(p, "%s/%s.dslb");\n' "$SCHEMA" "$4" "$WORK" "$1" >"$WORK/$1.lms"
   "$LMSCRIPT" "$WORK/$1.lms" >"$WORK/$1.cout" 2>&1 || { cat "$WORK/$1.cout"; fail "$1 compile"; }
-  "$HOST" --dsl "$WORK/$1.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/$1.err"; local code=$?
+  "$HOST" --dsl "$WORK/$1.dslb" --schema "$SCHEMA" >"$WORK/$1.out" 2>"$WORK/$1.err"; local code=$?
   [ "$code" = "$2" ] && grep -q "$3" "$WORK/$1.err" || { cat "$WORK/$1.err"; fail "$1: expected exit $2 with '$3', got $code"; }
+  if [ "$2" = 4 ]; then result_line "$WORK/$1.out" '{"ok": false, "phase": "app", "code": "APP_FAIL", "message": "'; else result_line "$WORK/$1.out" '{"ok": false, "phase": "run", "code": "RUN_HOST", "message": "'; fi
 }
 SETUP='video.size(64, 64); video.frames(1); video.output("'"$WORK"'/r.png");'
 run_err r1 3 'Paint.color' "if (video.setup()) { $SETUP } else { canvas.rect(0.0, 0.0, 5.0, 5.0, paint().color(\"#12\")); }"
@@ -129,7 +147,7 @@ run_err r4 3 'video.output' "if (video.setup()) { video.size(64, 64); }"
 run_err r5 3 'needs video.frames(1)' "if (video.setup()) { video.size(64, 64); video.frames(2); video.output(\"$WORK/r.png\"); }"
 run_err r6 3 'size must be' "if (video.setup()) { video.size(63000, 64); }"
 run_err r7 4 'fail: nope' "if (video.setup()) { $SETUP } else { out.fail(\"nope\"); }"
-ok "host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (exit 3); out.fail (exit 4)"
+ok "host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (phase run, RUN_HOST, exit 3); out.fail (phase app, APP_FAIL, exit 4)"
 
 # 10. Defence in depth (reviewer finding): the VM verifier checks names and arities, not types, so a hand-built program with the
 #     right schema hash could pass a Path where a Paint is expected. The host checks every argument against the schema.
@@ -153,9 +171,13 @@ PY
 ok "hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)"
 sed 's|"fill": {"params": \[\], "returns": "Paint"},|&\n        "extra": {"params": [], "returns": "Paint"},|' "$SCHEMA" >"$WORK/extra.json"
 grep -q '"extra"' "$WORK/extra.json" || fail "schema edit"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/extra.json" >/dev/null 2>"$WORK/e.err"; code=$?
-[ "$code" = 1 ] && grep -q 'missing method Paint.extra' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry self-check: exit $code"; }
-ok "the host refuses to start when the schema has a method its registry lacks (registry/schema self-check, exit 1)"
+"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/extra.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
+[ "$code" = 3 ] && grep -q 'missing method Paint.extra' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry self-check: exit $code"; }
+result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_UNBOUND", "message": "host registry does not match the schema: missing method Paint.extra;'
+sed 's|"fill": {"params": \[\], "returns": "Paint"},|"fill": {"params": ["int"], "returns": "Paint"},|' "$SCHEMA" >"$WORK/typed.json"
+"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/typed.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
+[ "$code" = 3 ] && grep -q 'signature of Paint.fill' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry type self-check: exit $code"; }
+ok "the host refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)"
 run_err r8 3 'interpolation factor must be finite' "if (video.setup()) { $SETUP } else { canvas.clear(mix(\"#000000\", \"#ffffff\", 0.0 / 0.0)); }"
 run_err r9 3 'cannot write' "if (video.setup()) { video.size(8, 8); video.frames(1); video.output(\"$WORK/no/such/dir/x.jpg\"); } else { canvas.clear(\"#ffffff\"); }"
 rm -f "$WORK/fail.mp4"

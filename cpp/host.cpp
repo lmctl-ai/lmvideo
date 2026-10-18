@@ -71,6 +71,7 @@ struct VideoState {
 };
 
 struct OutputState {
+  std::vector<std::string> lines;  // out.print, reported in the JSON result line at the end
   std::string failure;
   bool failed = false;
 };
@@ -110,7 +111,9 @@ float F(const Value& v) { return static_cast<float>(v.f); }
 
 // Wraps dslvm::Registry with what the VM does not do: every argument and result is checked against the schema's signature
 // (the verifier checks names and arities only), library errors become DSL run-time errors that name the callee, and the
-// registrations are remembered so the host can refuse to start when its registry and the schema disagree.
+// registrations are remembered so the host can refuse to start when its registry and the schema disagree. The host declares
+// each signature's types itself (spec v4 S0, A02): they reach the SDK registry, whose signatures() the test diffs against
+// `lmscript --dsl-signatures`, and verify() compares them with the schema file as well. lmvideo keeps its own run-time checks.
 class Registrar {
  public:
   Registrar(dslvm::Registry& reg, const schema::Schema& schema) : reg_(reg), schema_(schema) {}
@@ -120,11 +123,11 @@ class Registrar {
     contexts_[name] = type;
   }
 
-  void method(const std::string& type, const std::string& name, size_t argc, dslvm::Method fn) {
+  void method(const std::string& type, const std::string& name, std::vector<std::string> params, std::string returns, dslvm::Method fn) {
     methods_.insert(type + "." + name);
-    arity_[type + "." + name] = argc;
+    declared_[type + "." + name] = schema::Sig{params, returns};
     const schema::Sig* sig = find(schema_.types, type, name);
-    reg_.method(type, name, argc, [type, name, fn, sig](void* self, Args& a) {
+    reg_.method(type, name, std::move(params), std::move(returns), [type, name, fn, sig](void* self, Args& a) {
       std::string what = type + "." + name;
       if (!sig) throw dslvm::Error(what + ": not in the schema");
       check(what, *sig, a);
@@ -136,12 +139,12 @@ class Registrar {
     });
   }
 
-  void function(const std::string& name, size_t argc, dslvm::Function fn) {
+  void function(const std::string& name, std::vector<std::string> params, std::string returns, dslvm::Function fn) {
     functions_.insert(name);
-    arity_[name] = argc;
+    declared_[name] = schema::Sig{params, returns};
     auto it = schema_.functions.find(name);
     const schema::Sig* sig = it == schema_.functions.end() ? nullptr : &it->second;
-    reg_.function(name, argc, [name, fn, sig](Args& a) {
+    reg_.function(name, std::move(params), std::move(returns), [name, fn, sig](Args& a) {
       if (!sig) throw dslvm::Error(name + ": not in the schema");
       check(name, *sig, a);
       try {
@@ -152,18 +155,20 @@ class Registrar {
     });
   }
 
-  // Startup self-check: the registry must be exactly the schema (names, arities, context). Throws with every difference.
+  // Startup self-check: the registry must be exactly the schema (names, declared parameter and return types, context). Throws
+  // with every difference (code LOAD_UNBOUND: a load-phase refusal).
   void verify() const {
     std::string diff;
+    auto same = [](const schema::Sig& a, const schema::Sig& b) { return a.params == b.params && a.returns == b.returns; };
     for (const auto& t : schema_.types)
       for (const auto& m : t.second) {
         std::string key = t.first + "." + m.first;
         if (!methods_.count(key)) diff += " missing method " + key + ";";
-        else if (arity_.at(key) != m.second.params.size()) diff += " arity of " + key + ";";
+        else if (!same(declared_.at(key), m.second)) diff += " signature of " + key + ";";
       }
     for (const auto& f : schema_.functions) {
       if (!functions_.count(f.first)) diff += " missing function " + f.first + ";";
-      else if (arity_.at(f.first) != f.second.params.size()) diff += " arity of " + f.first + ";";
+      else if (!same(declared_.at(f.first), f.second)) diff += " signature of " + f.first + ";";
     }
     for (const auto& m : methods_) {
       size_t dot = m.find('.');
@@ -173,7 +178,7 @@ class Registrar {
     for (const auto& f : functions_)
       if (!schema_.functions.count(f)) diff += " function " + f + " is not in the schema;";
     if (contexts_ != schema_.context) diff += " context names or types differ;";
-    if (!diff.empty()) throw dslvm::Error("host registry does not match the schema:" + diff);
+    if (!diff.empty()) throw dslvm::Error("LOAD_UNBOUND", "host registry does not match the schema:" + diff);
   }
 
  private:
@@ -206,7 +211,7 @@ class Registrar {
   dslvm::Registry& reg_;
   const schema::Schema& schema_;
   std::set<std::string> methods_, functions_;
-  std::map<std::string, size_t> arity_;
+  std::map<std::string, schema::Sig> declared_;
   std::map<std::string, std::string> contexts_;
 };
 
@@ -228,51 +233,51 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   auto self = [](const char* type, void* p) { return Value::object(type, p); };
 
   // ---- Paint (setters return self) ----
-  reg.method("Paint", "color", 1, [=](void* p, Args& a) { paint(p).color(lmv::parse_color(a[0].s)); return self("Paint", p); });
-  reg.method("Paint", "alpha", 1, [=](void* p, Args& a) { paint(p).alpha(F(a[0])); return self("Paint", p); });
-  reg.method("Paint", "antialias", 1, [=](void* p, Args& a) { paint(p).antialias(a[0].b); return self("Paint", p); });
-  reg.method("Paint", "fill", 0, [=](void* p, Args&) { paint(p).fill(); return self("Paint", p); });
-  reg.method("Paint", "stroke", 0, [=](void* p, Args&) { paint(p).stroke(); return self("Paint", p); });
-  reg.method("Paint", "stroke_width", 1, [=](void* p, Args& a) { paint(p).stroke_width(F(a[0])); return self("Paint", p); });
-  reg.method("Paint", "stroke_cap", 1, [=](void* p, Args& a) { paint(p).stroke_cap(a[0].s); return self("Paint", p); });
-  reg.method("Paint", "stroke_join", 1, [=](void* p, Args& a) { paint(p).stroke_join(a[0].s); return self("Paint", p); });
-  reg.method("Paint", "gradient", 6, [=](void* p, Args& a) {
+  reg.method("Paint", "color", {"string"}, "Paint", [=](void* p, Args& a) { paint(p).color(lmv::parse_color(a[0].s)); return self("Paint", p); });
+  reg.method("Paint", "alpha", {"float"}, "Paint", [=](void* p, Args& a) { paint(p).alpha(F(a[0])); return self("Paint", p); });
+  reg.method("Paint", "antialias", {"bool"}, "Paint", [=](void* p, Args& a) { paint(p).antialias(a[0].b); return self("Paint", p); });
+  reg.method("Paint", "fill", {}, "Paint", [=](void* p, Args&) { paint(p).fill(); return self("Paint", p); });
+  reg.method("Paint", "stroke", {}, "Paint", [=](void* p, Args&) { paint(p).stroke(); return self("Paint", p); });
+  reg.method("Paint", "stroke_width", {"float"}, "Paint", [=](void* p, Args& a) { paint(p).stroke_width(F(a[0])); return self("Paint", p); });
+  reg.method("Paint", "stroke_cap", {"string"}, "Paint", [=](void* p, Args& a) { paint(p).stroke_cap(a[0].s); return self("Paint", p); });
+  reg.method("Paint", "stroke_join", {"string"}, "Paint", [=](void* p, Args& a) { paint(p).stroke_join(a[0].s); return self("Paint", p); });
+  reg.method("Paint", "gradient", {"float", "float", "float", "float", "string", "string"}, "Paint", [=](void* p, Args& a) {
     paint(p).linear_gradient(F(a[0]), F(a[1]), F(a[2]), F(a[3]), lmv::parse_color(a[4].s), lmv::parse_color(a[5].s));
     return self("Paint", p);
   });
-  reg.method("Paint", "dash", 2, [=](void* p, Args& a) { paint(p).dash(F(a[0]), F(a[1])); return self("Paint", p); });
-  reg.method("Paint", "blur", 1, [=](void* p, Args& a) { paint(p).blur(F(a[0])); return self("Paint", p); });
-  reg.function("paint", 0, [&arena](Args&) { return Value::object("Paint", arena.make<lmv::Paint>()); });
+  reg.method("Paint", "dash", {"float", "float"}, "Paint", [=](void* p, Args& a) { paint(p).dash(F(a[0]), F(a[1])); return self("Paint", p); });
+  reg.method("Paint", "blur", {"float"}, "Paint", [=](void* p, Args& a) { paint(p).blur(F(a[0])); return self("Paint", p); });
+  reg.function("paint", {}, "Paint", [&arena](Args&) { return Value::object("Paint", arena.make<lmv::Paint>()); });
 
   // ---- Path ----
-  reg.method("Path", "move_to", 2, [=](void* p, Args& a) { path(p).move_to(F(a[0]), F(a[1])); return self("Path", p); });
-  reg.method("Path", "line_to", 2, [=](void* p, Args& a) { path(p).line_to(F(a[0]), F(a[1])); return self("Path", p); });
-  reg.method("Path", "quad_to", 4, [=](void* p, Args& a) { path(p).quad_to(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return self("Path", p); });
-  reg.method("Path", "cubic_to", 6, [=](void* p, Args& a) {
+  reg.method("Path", "move_to", {"float", "float"}, "Path", [=](void* p, Args& a) { path(p).move_to(F(a[0]), F(a[1])); return self("Path", p); });
+  reg.method("Path", "line_to", {"float", "float"}, "Path", [=](void* p, Args& a) { path(p).line_to(F(a[0]), F(a[1])); return self("Path", p); });
+  reg.method("Path", "quad_to", {"float", "float", "float", "float"}, "Path", [=](void* p, Args& a) { path(p).quad_to(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return self("Path", p); });
+  reg.method("Path", "cubic_to", {"float", "float", "float", "float", "float", "float"}, "Path", [=](void* p, Args& a) {
     path(p).cubic_to(F(a[0]), F(a[1]), F(a[2]), F(a[3]), F(a[4]), F(a[5]));
     return self("Path", p);
   });
-  reg.method("Path", "close", 0, [=](void* p, Args&) { path(p).close(); return self("Path", p); });
-  reg.method("Path", "rect", 4, [=](void* p, Args& a) { path(p).add_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return self("Path", p); });
-  reg.method("Path", "oval", 4, [=](void* p, Args& a) { path(p).add_oval(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return self("Path", p); });
-  reg.method("Path", "circle", 3, [=](void* p, Args& a) { path(p).add_circle(F(a[0]), F(a[1]), F(a[2])); return self("Path", p); });
-  reg.method("Path", "round_rect", 6, [=](void* p, Args& a) {
+  reg.method("Path", "close", {}, "Path", [=](void* p, Args&) { path(p).close(); return self("Path", p); });
+  reg.method("Path", "rect", {"float", "float", "float", "float"}, "Path", [=](void* p, Args& a) { path(p).add_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return self("Path", p); });
+  reg.method("Path", "oval", {"float", "float", "float", "float"}, "Path", [=](void* p, Args& a) { path(p).add_oval(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return self("Path", p); });
+  reg.method("Path", "circle", {"float", "float", "float"}, "Path", [=](void* p, Args& a) { path(p).add_circle(F(a[0]), F(a[1]), F(a[2])); return self("Path", p); });
+  reg.method("Path", "round_rect", {"float", "float", "float", "float", "float", "float"}, "Path", [=](void* p, Args& a) {
     path(p).add_round_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3]), F(a[4]), F(a[5]));
     return self("Path", p);
   });
-  reg.function("path", 0, [&arena](Args&) { return Value::object("Path", arena.make<lmv::Path>()); });
+  reg.function("path", {}, "Path", [&arena](Args&) { return Value::object("Path", arena.make<lmv::Path>()); });
 
   // ---- Font, Image, Svg ----
-  reg.method("Font", "bold", 1, [=](void* p, Args& a) { font(p).embolden(a[0].b); return self("Font", p); });
-  reg.method("Font", "measure", 1, [=](void* p, Args& a) { return Value::real(font(p).measure(a[0].s)); });
-  reg.function("font", 1, [&arena](Args& a) { return Value::object("Font", arena.make<lmv::Font>(F(a[0]))); });
-  reg.method("Image", "width", 0, [](void* p, Args&) { return Value::integer(static_cast<lmv::Image*>(p)->width()); });
-  reg.method("Image", "height", 0, [](void* p, Args&) { return Value::integer(static_cast<lmv::Image*>(p)->height()); });
-  reg.function("image_file", 1, [&arena](Args& a) { return Value::object("Image", arena.make<lmv::Image>(lmv::Image::from_file(a[0].s))); });
-  reg.method("Svg", "width", 0, [](void* p, Args&) { return Value::real(static_cast<lmv::Svg*>(p)->width()); });
-  reg.method("Svg", "height", 0, [](void* p, Args&) { return Value::real(static_cast<lmv::Svg*>(p)->height()); });
-  reg.function("svg", 1, [&arena](Args& a) { return Value::object("Svg", arena.make<lmv::Svg>(lmv::Svg::parse(a[0].s))); });
-  reg.function("svg_file", 1, [&arena](Args& a) {
+  reg.method("Font", "bold", {"bool"}, "Font", [=](void* p, Args& a) { font(p).embolden(a[0].b); return self("Font", p); });
+  reg.method("Font", "measure", {"string"}, "float", [=](void* p, Args& a) { return Value::real(font(p).measure(a[0].s)); });
+  reg.function("font", {"float"}, "Font", [&arena](Args& a) { return Value::object("Font", arena.make<lmv::Font>(F(a[0]))); });
+  reg.method("Image", "width", {}, "int", [](void* p, Args&) { return Value::integer(static_cast<lmv::Image*>(p)->width()); });
+  reg.method("Image", "height", {}, "int", [](void* p, Args&) { return Value::integer(static_cast<lmv::Image*>(p)->height()); });
+  reg.function("image_file", {"string"}, "Image", [&arena](Args& a) { return Value::object("Image", arena.make<lmv::Image>(lmv::Image::from_file(a[0].s))); });
+  reg.method("Svg", "width", {}, "float", [](void* p, Args&) { return Value::real(static_cast<lmv::Svg*>(p)->width()); });
+  reg.method("Svg", "height", {}, "float", [](void* p, Args&) { return Value::real(static_cast<lmv::Svg*>(p)->height()); });
+  reg.function("svg", {"string"}, "Svg", [&arena](Args& a) { return Value::object("Svg", arena.make<lmv::Svg>(lmv::Svg::parse(a[0].s))); });
+  reg.function("svg_file", {"string"}, "Svg", [&arena](Args& a) {
     std::ifstream in(a[0].s, std::ios::binary);
     if (!in) throw lmv::Error("cannot read " + a[0].s);
     std::string xml((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
@@ -282,49 +287,49 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   // ---- Canvas ----
   auto cv = [](void* p) -> lmv::Canvas& { return static_cast<CanvasSlot*>(p)->get(); };
   auto P = [](const Value& v) -> const lmv::Paint& { return *static_cast<lmv::Paint*>(v.obj); };
-  reg.method("Canvas", "clear", 1, [=](void* p, Args& a) { cv(p).clear(lmv::parse_color(a[0].s)); return Value::none(); });
-  reg.method("Canvas", "rect", 5, [=](void* p, Args& a) { cv(p).draw_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3]), P(a[4])); return Value::none(); });
-  reg.method("Canvas", "round_rect", 7, [=](void* p, Args& a) {
+  reg.method("Canvas", "clear", {"string"}, "void", [=](void* p, Args& a) { cv(p).clear(lmv::parse_color(a[0].s)); return Value::none(); });
+  reg.method("Canvas", "rect", {"float", "float", "float", "float", "Paint"}, "void", [=](void* p, Args& a) { cv(p).draw_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3]), P(a[4])); return Value::none(); });
+  reg.method("Canvas", "round_rect", {"float", "float", "float", "float", "float", "float", "Paint"}, "void", [=](void* p, Args& a) {
     cv(p).draw_round_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3]), F(a[4]), F(a[5]), P(a[6]));
     return Value::none();
   });
-  reg.method("Canvas", "oval", 5, [=](void* p, Args& a) { cv(p).draw_oval(F(a[0]), F(a[1]), F(a[2]), F(a[3]), P(a[4])); return Value::none(); });
-  reg.method("Canvas", "circle", 4, [=](void* p, Args& a) { cv(p).draw_circle(F(a[0]), F(a[1]), F(a[2]), P(a[3])); return Value::none(); });
-  reg.method("Canvas", "line", 5, [=](void* p, Args& a) { cv(p).draw_line(F(a[0]), F(a[1]), F(a[2]), F(a[3]), P(a[4])); return Value::none(); });
-  reg.method("Canvas", "path", 2, [=](void* p, Args& a) {
+  reg.method("Canvas", "oval", {"float", "float", "float", "float", "Paint"}, "void", [=](void* p, Args& a) { cv(p).draw_oval(F(a[0]), F(a[1]), F(a[2]), F(a[3]), P(a[4])); return Value::none(); });
+  reg.method("Canvas", "circle", {"float", "float", "float", "Paint"}, "void", [=](void* p, Args& a) { cv(p).draw_circle(F(a[0]), F(a[1]), F(a[2]), P(a[3])); return Value::none(); });
+  reg.method("Canvas", "line", {"float", "float", "float", "float", "Paint"}, "void", [=](void* p, Args& a) { cv(p).draw_line(F(a[0]), F(a[1]), F(a[2]), F(a[3]), P(a[4])); return Value::none(); });
+  reg.method("Canvas", "path", {"Path", "Paint"}, "void", [=](void* p, Args& a) {
     cv(p).draw_path(*static_cast<lmv::Path*>(a[0].obj), P(a[1]));
     return Value::none();
   });
-  reg.method("Canvas", "text", 5, [=](void* p, Args& a) {
+  reg.method("Canvas", "text", {"string", "float", "float", "Font", "Paint"}, "void", [=](void* p, Args& a) {
     cv(p).draw_text(a[0].s, F(a[1]), F(a[2]), *static_cast<lmv::Font*>(a[3].obj), P(a[4]));
     return Value::none();
   });
-  reg.method("Canvas", "image", 3, [=](void* p, Args& a) {
+  reg.method("Canvas", "image", {"Image", "float", "float"}, "void", [=](void* p, Args& a) {
     cv(p).draw_image(*static_cast<lmv::Image*>(a[0].obj), F(a[1]), F(a[2]));
     return Value::none();
   });
-  reg.method("Canvas", "image_rect", 5, [=](void* p, Args& a) {
+  reg.method("Canvas", "image_rect", {"Image", "float", "float", "float", "float"}, "void", [=](void* p, Args& a) {
     cv(p).draw_image_rect(*static_cast<lmv::Image*>(a[0].obj), F(a[1]), F(a[2]), F(a[3]), F(a[4]));
     return Value::none();
   });
-  reg.method("Canvas", "svg", 5, [=](void* p, Args& a) {
+  reg.method("Canvas", "svg", {"Svg", "float", "float", "float", "float"}, "void", [=](void* p, Args& a) {
     cv(p).draw_svg(*static_cast<lmv::Svg*>(a[0].obj), F(a[1]), F(a[2]), F(a[3]), F(a[4]));
     return Value::none();
   });
-  reg.method("Canvas", "save", 0, [=](void* p, Args&) { cv(p).save(); return Value::none(); });
-  reg.method("Canvas", "restore", 0, [=](void* p, Args&) { cv(p).restore(); return Value::none(); });
-  reg.method("Canvas", "translate", 2, [=](void* p, Args& a) { cv(p).translate(F(a[0]), F(a[1])); return Value::none(); });
-  reg.method("Canvas", "scale", 2, [=](void* p, Args& a) { cv(p).scale(F(a[0]), F(a[1])); return Value::none(); });
-  reg.method("Canvas", "rotate", 1, [=](void* p, Args& a) { cv(p).rotate(F(a[0])); return Value::none(); });
-  reg.method("Canvas", "clip_rect", 4, [=](void* p, Args& a) { cv(p).clip_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return Value::none(); });
+  reg.method("Canvas", "save", {}, "void", [=](void* p, Args&) { cv(p).save(); return Value::none(); });
+  reg.method("Canvas", "restore", {}, "void", [=](void* p, Args&) { cv(p).restore(); return Value::none(); });
+  reg.method("Canvas", "translate", {"float", "float"}, "void", [=](void* p, Args& a) { cv(p).translate(F(a[0]), F(a[1])); return Value::none(); });
+  reg.method("Canvas", "scale", {"float", "float"}, "void", [=](void* p, Args& a) { cv(p).scale(F(a[0]), F(a[1])); return Value::none(); });
+  reg.method("Canvas", "rotate", {"float"}, "void", [=](void* p, Args& a) { cv(p).rotate(F(a[0])); return Value::none(); });
+  reg.method("Canvas", "clip_rect", {"float", "float", "float", "float"}, "void", [=](void* p, Args& a) { cv(p).clip_rect(F(a[0]), F(a[1]), F(a[2]), F(a[3])); return Value::none(); });
 
   // ---- Surface (offscreen drawing) ----
-  reg.function("surface", 2, [&arena](Args& a) {
+  reg.function("surface", {"int", "int"}, "Surface", [&arena](Args& a) {
     if (a[0].i < 1 || a[1].i < 1 || a[0].i > 8192 || a[1].i > 8192) throw lmv::Error("size must be 1..8192");
     return Value::object("Surface", arena.make<SurfaceObj>(a[0].i, a[1].i));
   });
-  reg.method("Surface", "canvas", 0, [](void* p, Args&) { return Value::object("Canvas", &static_cast<SurfaceObj*>(p)->slot); });
-  reg.method("Surface", "image", 0, [&arena](void* p, Args&) {
+  reg.method("Surface", "canvas", {}, "Canvas", [](void* p, Args&) { return Value::object("Canvas", &static_cast<SurfaceObj*>(p)->slot); });
+  reg.method("Surface", "image", {}, "Image", [&arena](void* p, Args&) {
     return Value::object("Image", arena.make<lmv::Image>(static_cast<SurfaceObj*>(p)->surface.snapshot()));
   });
 
@@ -333,52 +338,52 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   auto setup_only = [vs](void* p, const char* what) {
     if (!vs(p).setup) throw dslvm::Error(std::string("Video.") + what + " can only be called in the setup pass (inside if (video.setup()))");
   };
-  reg.method("Video", "setup", 0, [=](void* p, Args&) { return Value::boolean(vs(p).setup); });
-  reg.method("Video", "size", 2, [=](void* p, Args& a) {
+  reg.method("Video", "setup", {}, "bool", [=](void* p, Args&) { return Value::boolean(vs(p).setup); });
+  reg.method("Video", "size", {"int", "int"}, "void", [=](void* p, Args& a) {
     setup_only(p, "size");
     if (a[0].i < 2 || a[1].i < 2 || a[0].i > 8192 || a[1].i > 8192) throw lmv::Error("size must be 2..8192 per side");
     vs(p).width = a[0].i; vs(p).height = a[1].i; vs(p).size_set = true;
     return Value::none();
   });
-  reg.method("Video", "fps", 1, [=](void* p, Args& a) {
+  reg.method("Video", "fps", {"int"}, "void", [=](void* p, Args& a) {
     setup_only(p, "fps");
     if (a[0].i < 1 || a[0].i > 240) throw lmv::Error("fps must be 1..240");
     vs(p).fps = a[0].i;
     return Value::none();
   });
-  reg.method("Video", "frames", 1, [=](void* p, Args& a) {
+  reg.method("Video", "frames", {"int"}, "void", [=](void* p, Args& a) {
     setup_only(p, "frames");
     if (a[0].i < 1 || a[0].i > 100000) throw lmv::Error("frames must be 1..100000");
     vs(p).frames = a[0].i;
     return Value::none();
   });
-  reg.method("Video", "crf", 1, [=](void* p, Args& a) {
+  reg.method("Video", "crf", {"int"}, "void", [=](void* p, Args& a) {
     setup_only(p, "crf");
     if (a[0].i < 0 || a[0].i > 51) throw lmv::Error("crf must be 0..51");
     vs(p).crf = a[0].i;
     return Value::none();
   });
-  reg.method("Video", "output", 1, [=](void* p, Args& a) {
+  reg.method("Video", "output", {"string"}, "void", [=](void* p, Args& a) {
     setup_only(p, "output");
     if (a[0].s.empty()) throw lmv::Error("output path is empty");
     vs(p).output = a[0].s;
     return Value::none();
   });
-  reg.method("Video", "index", 0, [=](void* p, Args&) { return Value::integer(vs(p).index); });
-  reg.method("Video", "count", 0, [=](void* p, Args&) { return Value::integer(vs(p).frames); });
-  reg.method("Video", "t", 0, [=](void* p, Args&) { return Value::real(vs(p).t()); });
-  reg.method("Video", "time", 0, [=](void* p, Args&) { return Value::real(static_cast<double>(vs(p).index) / vs(p).fps); });
-  reg.method("Video", "width", 0, [=](void* p, Args&) { return Value::integer(vs(p).width); });
-  reg.method("Video", "height", 0, [=](void* p, Args&) { return Value::integer(vs(p).height); });
-  reg.method("Video", "save_frame", 1, [=](void* p, Args& a) {
+  reg.method("Video", "index", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).index); });
+  reg.method("Video", "count", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).frames); });
+  reg.method("Video", "t", {}, "float", [=](void* p, Args&) { return Value::real(vs(p).t()); });
+  reg.method("Video", "time", {}, "float", [=](void* p, Args&) { return Value::real(static_cast<double>(vs(p).index) / vs(p).fps); });
+  reg.method("Video", "width", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).width); });
+  reg.method("Video", "height", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).height); });
+  reg.method("Video", "save_frame", {"string"}, "void", [=](void* p, Args& a) {
     if (!vs(p).surface) throw lmv::Error("no frame is being drawn (call it in the else branch of video.setup())");
     write_image(*vs(p).surface, a[0].s);
     return Value::none();
   });
 
   // ---- Output ----
-  reg.method("Output", "print", 1, [](void*, Args& a) { std::cout << a[0].s << "\n"; return Value::none(); });
-  reg.method("Output", "fail", 1, [&output](void*, Args& a) {
+  reg.method("Output", "print", {"string"}, "void", [&output](void*, Args& a) { output.lines.push_back(a[0].s); return Value::none(); });
+  reg.method("Output", "fail", {"string"}, "void", [&output](void*, Args& a) {
     if (!output.failed) output.failure = a[0].s;
     output.failed = true;
     return Value::none();
@@ -402,14 +407,14 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
            num("ease", 1, [](Args& a) { double t = std::min(std::max(a[0].f, 0.0), 1.0); return t * t * (3.0 - 2.0 * t); }),
        }) {
     auto fn = spec.second;
-    reg.function(name, spec.first, [fn](Args& a) { return Value::real(fn(a)); });
+    reg.function(name, std::vector<std::string>(spec.first, "float"), "float", [fn](Args& a) { return Value::real(fn(a)); });
   }
-  reg.function("to_int", 1, [](Args& a) {
+  reg.function("to_int", {"float"}, "int", [](Args& a) {
     double v = std::trunc(a[0].f);
     if (!(v >= -2147483648.0 && v <= 2147483647.0)) throw lmv::Error("value does not fit an int");
     return Value::integer(static_cast<int32_t>(v));
   });
-  reg.function("mix", 3, [](Args& a) {
+  reg.function("mix", {"string", "string", "float"}, "string", [](Args& a) {
     lmv::Color c0 = lmv::parse_color(a[0].s), c1 = lmv::parse_color(a[1].s);
     if (!std::isfinite(a[2].f)) throw lmv::Error("the interpolation factor must be finite");
     double t = std::min(std::max(a[2].f, 0.0), 1.0);
@@ -431,7 +436,13 @@ int main(int argc, char** argv) {
     if (a == "--dsl") dsl_path = value("--dsl");
     else if (a == "--schema") schema_path = value("--schema");
     else if (a == "--output") output_override = value("--output");
-    else { std::cerr << "usage: lmvideohost --dsl FILE.dslb --schema FILE.json [--output PATH]\n"; return 2; }
+    else if (a == "--dsl-signatures") {  // the registry's canonical signatures as the host declares them (spec v4 S0, A02); no schema needed
+      Arena pa; OutputState po; dslvm::Registry preg; schema::Schema empty; Registrar pr(preg, empty);
+      register_schema(pr, pa, po);
+      for (const auto& s : preg.signatures()) std::cout << s << "\n";
+      return 0;
+    }
+    else { std::cerr << "usage: lmvideohost --dsl FILE.dslb --schema FILE.json [--output PATH] | --dsl-signatures\n"; return 2; }
   }
   if (dsl_path.empty() || schema_path.empty()) { std::cerr << "error: --dsl FILE and --schema FILE are required\n"; return 2; }
 
@@ -450,9 +461,9 @@ int main(int argc, char** argv) {
     register_schema(registrar, arena, output);
     registrar.verify();  // the registry IS the schema, or nothing starts
     program = dslvm::Program::load(dslvm::read_file(dsl_path), schema_bytes, reg);
-  } catch (const dslvm::Error& e) {
+  } catch (const dslvm::Error& e) {  // refused before anything ran: one JSON line, phase load, exit 3 (spec v4 S0, A03)
     std::cerr << "error: " << dsl_path << ": " << e.what() << "\n";
-    return 1;
+    return dslvm::report_error("load", e);
   }
 
   CanvasSlot main_canvas;  // empty during setup
@@ -466,7 +477,7 @@ int main(int argc, char** argv) {
     video.setup = true;
     program.run(ctx, reg);
     arena.clear();
-    if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return 4; }
+    if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_app_failure(output.failure); }
     if (!output_override.empty()) video.output = output_override;
     if (!video.size_set) throw dslvm::Error("the chunk did not call video.size(w, h) in the setup pass");
     if (video.output.empty()) throw dslvm::Error("the chunk did not call video.output(path) in the setup pass");
@@ -489,23 +500,24 @@ int main(int argc, char** argv) {
       main_canvas.get().clear(image ? lmv::Color(0, 0, 0, 0) : lmv::Color(0, 0, 0, 255));
       program.run(ctx, reg);
       arena.clear();
-      if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return 4; }
+      if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_app_failure(output.failure); }
       if (encoder) encoder->add_frame(surface.rgba());
     }
     if (encoder) encoder->finish();
     else write_image(surface, video.output);
 
-    // (4) Report.
+    // (4) Report: the human line on stderr, then exactly one JSON result line on stdout (A03) with every out.print line in order.
     if (image) std::cerr << "wrote " << video.output << " (" << video.width << "x" << video.height << ")\n";
     else std::cerr << "wrote " << video.output << " (" << video.width << "x" << video.height << ", " << video.frames << " frames at " << video.fps << " fps)\n";
-  } catch (const dslvm::Error& e) {
-    std::cout.flush();
+    std::string lines;
+    for (const auto& l : output.lines) lines += (lines.empty() ? "" : ", ") + dslvm::json_escape(l);
+    return dslvm::report_ok("{\"output\": [" + lines + "], \"file\": " + dslvm::json_escape(video.output) + ", \"width\": " + std::to_string(video.width) +
+                            ", \"height\": " + std::to_string(video.height) + ", \"frames\": " + std::to_string(video.frames) + ", \"fps\": " + std::to_string(video.fps) + "}");
+  } catch (const dslvm::Error& e) {  // the VM (RUN_ERROR) or a host method (RUN_HOST): phase run, exit 3
     std::cerr << "dsl runtime error: " << e.what() << "\n";
-    return 3;
-  } catch (const lmv::Error& e) {
-    std::cout.flush();
+    return dslvm::report_error("run", e);
+  } catch (const lmv::Error& e) {  // the library outside a method (encoder, image writer): phase run, RUN_HOST, exit 3
     std::cerr << "error: " << e.what() << "\n";
-    return 3;
+    return dslvm::report_error("run", dslvm::Error(e.what()));
   }
-  return 0;
 }
