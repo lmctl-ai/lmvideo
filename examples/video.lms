@@ -1,0 +1,32 @@
+# lmvideo video example (EXPERIMENTAL _dsl_): a short animation. The HOST owns the frame loop (R12): it runs this chunk once
+# as the setup pass and then once per frame; the chunk only describes ONE frame as a function of video.t() (0..1).
+# Run from the repo root: $LMSCRIPT_BIN examples/video.lms [OUT.dslb] [OUT.mp4] [FRAMES] [FPS]
+#   then   build/lmvideohost --dsl OUT.dslb --schema schema/lmvideo.dsl.json
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/video.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "build/video.mp4";
+frames = ARGV.len() > 2 ? num(ARGV[2]) : 60;
+fps = ARGV.len() > 3 ? num(ARGV[3]) : 30;
+program = _dsl_ schema="../schema/lmvideo.dsl.json";
+if (video.setup()) {
+  video.size(320, 180);
+  video.fps(${fps});
+  video.frames(${frames});
+  video.output(${mp4});
+} else {
+  let w = float(video.width());
+  let h = float(video.height());
+  let t = video.t();
+  let e = ease(t);
+  canvas.clear(mix("#0b132b", "#5bc0be", e));
+  # a ball sliding across with a sine bounce, growing a little
+  let x = lerp(40.0, w - 40.0, e);
+  let y = h * 0.6 - abs(sin(t * 6.2831853 * 2.0)) * h * 0.35;
+  canvas.circle(x, y, 18.0 + 10.0 * t, paint().color(mix("#ffd166", "#ef476f", t)));
+  # a progress bar and a frame counter
+  canvas.rect(20.0, h - 24.0, (w - 40.0) * t, 8.0, paint().color("#ffffff"));
+  canvas.text("frame " + str(video.index() + 1) + "/" + str(video.count()), 20.0, 30.0, font(18.0), paint().color("#ffffff"));
+}
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+println(f"wrote {dslout} (video {mp4}, {frames} frames at {fps} fps)");

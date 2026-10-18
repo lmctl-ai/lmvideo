@@ -1,0 +1,22 @@
+# lmvideo SVG example (EXPERIMENTAL _dsl_): an SVG file is the general drawing format; the chunk places it on a canvas it also
+# draws on, scaled to a target rectangle. Run from the repo root:
+#   $LMSCRIPT_BIN examples/svg.lms [OUT.dslb] [OUT.png] [SVG_FILE]   then   build/lmvideohost --dsl OUT.dslb --schema schema/lmvideo.dsl.json
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/svg.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "build/svg.png";
+svgfile = ARGV.len() > 2 ? ARGV[2] : "tests/golden/scene.svg";
+program = _dsl_ schema="../schema/lmvideo.dsl.json";
+if (video.setup()) {
+  video.size(640, 360);
+  video.frames(1);
+  video.output(${png});
+} else {
+  canvas.clear("#ffffff");
+  let doc = svg_file(${svgfile});
+  canvas.svg(doc, 20.0, 20.0, 600.0, 320.0);
+  canvas.rect(0.0, 0.0, 640.0, 6.0, paint().color("#333333"));
+  out.print("svg is " + str(doc.width()) + "x" + str(doc.height()));
+}
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+println(f"wrote {dslout} ({svgfile} -> {png})");

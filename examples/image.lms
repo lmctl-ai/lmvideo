@@ -1,0 +1,31 @@
+# lmvideo image example (EXPERIMENTAL _dsl_): a poster drawn with shapes, a gradient, a path and text.
+# Run from the repo root: $LMSCRIPT_BIN examples/image.lms [OUT.dslb] [OUT.png] [WIDTH] [HEIGHT] [TITLE]
+#   then   build/lmvideohost --dsl OUT.dslb --schema schema/lmvideo.dsl.json
+# The chunk runs twice: once as the setup pass (video.setup() is true: size, frames, output file), once to draw.
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/image.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "build/image.png";
+width = ARGV.len() > 2 ? num(ARGV[2]) : 640;
+height = ARGV.len() > 3 ? num(ARGV[3]) : 360;
+title = ARGV.len() > 4 ? ARGV[4] : "Hello lmvideo";
+program = _dsl_ schema="../schema/lmvideo.dsl.json";
+if (video.setup()) {
+  video.size(${width}, ${height});
+  video.frames(1);
+  video.output(${png});
+} else {
+  let w = float(video.width());
+  let h = float(video.height());
+  canvas.clear("#101820");
+  canvas.rect(0.0, 0.0, w, h, paint().gradient(0.0, 0.0, w, h, "#1e3c72", "#2a5298"));
+  canvas.circle(w * 0.75, h * 0.35, h * 0.22, paint().color("#ffd166"));
+  canvas.round_rect(w * 0.08, h * 0.55, w * 0.38, h * 0.3, 18.0, 18.0, paint().color("#ef476f").alpha(0.9));
+  let wave = path().move_to(0.0, h * 0.9).cubic_to(w * 0.25, h * 0.7, w * 0.5, h * 1.1, w, h * 0.85);
+  canvas.path(wave, paint().stroke().stroke_width(6.0).stroke_cap("round").color("#06d6a0"));
+  canvas.oval(w * 0.55, h * 0.62, w * 0.35, h * 0.2, paint().stroke().stroke_width(3.0).dash(10.0, 6.0).color("#ffffff"));
+  canvas.text(${title}, w * 0.06, h * 0.22, font(h * 0.12).bold(true), paint().color("#ffffff"));
+  out.print("drew " + str(video.width()) + "x" + str(video.height()));
+}
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+println(f"wrote {dslout} (image {png}, {width}x{height})");

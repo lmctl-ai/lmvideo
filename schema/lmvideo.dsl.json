@@ -1,0 +1,125 @@
+{
+  "dsl.schema": 1,
+  "name": "lmvideo",
+  "types": {
+    "Paint": {
+      "methods": {
+        "color": {"params": ["string"], "returns": "Paint"},
+        "alpha": {"params": ["float"], "returns": "Paint"},
+        "antialias": {"params": ["bool"], "returns": "Paint"},
+        "fill": {"params": [], "returns": "Paint"},
+        "stroke": {"params": [], "returns": "Paint"},
+        "stroke_width": {"params": ["float"], "returns": "Paint"},
+        "stroke_cap": {"params": ["string"], "returns": "Paint"},
+        "stroke_join": {"params": ["string"], "returns": "Paint"},
+        "gradient": {"params": ["float", "float", "float", "float", "string", "string"], "returns": "Paint"},
+        "dash": {"params": ["float", "float"], "returns": "Paint"},
+        "blur": {"params": ["float"], "returns": "Paint"}
+      }
+    },
+    "Path": {
+      "methods": {
+        "move_to": {"params": ["float", "float"], "returns": "Path"},
+        "line_to": {"params": ["float", "float"], "returns": "Path"},
+        "quad_to": {"params": ["float", "float", "float", "float"], "returns": "Path"},
+        "cubic_to": {"params": ["float", "float", "float", "float", "float", "float"], "returns": "Path"},
+        "close": {"params": [], "returns": "Path"},
+        "rect": {"params": ["float", "float", "float", "float"], "returns": "Path"},
+        "oval": {"params": ["float", "float", "float", "float"], "returns": "Path"},
+        "circle": {"params": ["float", "float", "float"], "returns": "Path"},
+        "round_rect": {"params": ["float", "float", "float", "float", "float", "float"], "returns": "Path"}
+      }
+    },
+    "Font": {
+      "methods": {
+        "bold": {"params": ["bool"], "returns": "Font"},
+        "measure": {"params": ["string"], "returns": "float"}
+      }
+    },
+    "Image": {
+      "methods": {
+        "width": {"params": [], "returns": "int"},
+        "height": {"params": [], "returns": "int"}
+      }
+    },
+    "Svg": {
+      "methods": {
+        "width": {"params": [], "returns": "float"},
+        "height": {"params": [], "returns": "float"}
+      }
+    },
+    "Canvas": {
+      "methods": {
+        "clear": {"params": ["string"], "returns": "void"},
+        "rect": {"params": ["float", "float", "float", "float", "Paint"], "returns": "void"},
+        "round_rect": {"params": ["float", "float", "float", "float", "float", "float", "Paint"], "returns": "void"},
+        "oval": {"params": ["float", "float", "float", "float", "Paint"], "returns": "void"},
+        "circle": {"params": ["float", "float", "float", "Paint"], "returns": "void"},
+        "line": {"params": ["float", "float", "float", "float", "Paint"], "returns": "void"},
+        "path": {"params": ["Path", "Paint"], "returns": "void"},
+        "text": {"params": ["string", "float", "float", "Font", "Paint"], "returns": "void"},
+        "image": {"params": ["Image", "float", "float"], "returns": "void"},
+        "image_rect": {"params": ["Image", "float", "float", "float", "float"], "returns": "void"},
+        "svg": {"params": ["Svg", "float", "float", "float", "float"], "returns": "void"},
+        "save": {"params": [], "returns": "void"},
+        "restore": {"params": [], "returns": "void"},
+        "translate": {"params": ["float", "float"], "returns": "void"},
+        "scale": {"params": ["float", "float"], "returns": "void"},
+        "rotate": {"params": ["float"], "returns": "void"},
+        "clip_rect": {"params": ["float", "float", "float", "float"], "returns": "void"}
+      }
+    },
+    "Surface": {
+      "methods": {
+        "canvas": {"params": [], "returns": "Canvas"},
+        "image": {"params": [], "returns": "Image"}
+      }
+    },
+    "Video": {
+      "methods": {
+        "setup": {"params": [], "returns": "bool"},
+        "size": {"params": ["int", "int"], "returns": "void"},
+        "fps": {"params": ["int"], "returns": "void"},
+        "frames": {"params": ["int"], "returns": "void"},
+        "output": {"params": ["string"], "returns": "void"},
+        "crf": {"params": ["int"], "returns": "void"},
+        "index": {"params": [], "returns": "int"},
+        "count": {"params": [], "returns": "int"},
+        "t": {"params": [], "returns": "float"},
+        "time": {"params": [], "returns": "float"},
+        "width": {"params": [], "returns": "int"},
+        "height": {"params": [], "returns": "int"},
+        "save_frame": {"params": ["string"], "returns": "void"}
+      }
+    },
+    "Output": {
+      "methods": {
+        "print": {"params": ["string"], "returns": "void"},
+        "fail": {"params": ["string"], "returns": "void"}
+      }
+    }
+  },
+  "functions": {
+    "paint": {"params": [], "returns": "Paint"},
+    "path": {"params": [], "returns": "Path"},
+    "font": {"params": ["float"], "returns": "Font"},
+    "image_file": {"params": ["string"], "returns": "Image"},
+    "svg": {"params": ["string"], "returns": "Svg"},
+    "svg_file": {"params": ["string"], "returns": "Svg"},
+    "surface": {"params": ["int", "int"], "returns": "Surface"},
+    "sin": {"params": ["float"], "returns": "float"},
+    "cos": {"params": ["float"], "returns": "float"},
+    "sqrt": {"params": ["float"], "returns": "float"},
+    "abs": {"params": ["float"], "returns": "float"},
+    "floor": {"params": ["float"], "returns": "float"},
+    "pow": {"params": ["float", "float"], "returns": "float"},
+    "min": {"params": ["float", "float"], "returns": "float"},
+    "max": {"params": ["float", "float"], "returns": "float"},
+    "lerp": {"params": ["float", "float", "float"], "returns": "float"},
+    "clamp": {"params": ["float", "float", "float"], "returns": "float"},
+    "ease": {"params": ["float"], "returns": "float"},
+    "mix": {"params": ["string", "string", "float"], "returns": "string"},
+    "to_int": {"params": ["float"], "returns": "int"}
+  },
+  "context": {"canvas": "Canvas", "video": "Video", "out": "Output"}
+}
