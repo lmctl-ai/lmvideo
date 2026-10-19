@@ -1,6 +1,6 @@
 # lmvideo: Skia and ffmpeg bindings for the lmscript DSL
 
-**S1′ compiler pairing:** this checkout reads bytecode v4 only. Until a v4 compiler is released,
+**S1′ compiler pairing:** this checkout reads bytecode v5 only. Until a v5 compiler is released,
 use `LMSCRIPT_BIN=../lmctl-mono/lmscript/bin/lmscript bash test.sh` with a built mono checkout.
 Released lmscript 0.2.328 emits v3 and is deliberately refused.
 
@@ -212,7 +212,7 @@ checked by ffprobe and endpoint pixels. No release promotion was performed.
 ## Schema 2 (S2)
 
 The host schema now uses `"dsl.schema": 2` and an array of signatures under every method/function name.
-The matching v4 compiler resolves overloads, declared conversions, arithmetic operators and enums before
+The matching v5 compiler resolves overloads, declared conversions, arithmetic operators and enums before
 execution; imports bind complete canonical signatures. `returns: "self"` is a schema shorthand for
 the enclosing object type, with no new VM identity or call-time checks. Use the built mono compiler
 with `LMSCRIPT_MIN=0` until a matching release; the released 0.2.328 still emits v3.

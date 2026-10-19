@@ -62,7 +62,7 @@ result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line sta
   case "$(cat "$1")" in "$2"*) ;; *) fail "$1: result line $(cat "$1") does not start with $2";; esac
 }
 compile examples/image.lms "$WORK/image.dslb" "$WORK/image.png" 640 360 "Hello lmvideo" >/dev/null || fail "compile image.lms"
-[ "$(od -An -tu1 -j4 -N2 "$WORK/image.dslb" | tr -s ' ' | sed 's/^ //')" = "0 4" ] || fail "bytecode version 4"
+[ "$(od -An -tu1 -j4 -N2 "$WORK/image.dslb" | tr -s ' ' | sed 's/^ //')" = "0 5" ] || fail "bytecode version 5"
 "$HOST" --dsl "$WORK/image.dslb" --schema "$SCHEMA" >"$WORK/image.out" 2>"$WORK/image.err" || { cat "$WORK/image.err"; fail "image host"; }
 result_line "$WORK/image.out" '{"ok": true, "result": {"output": ["drew 640x360"], "file": "'"$WORK"'/image.png", "width": 640, "height": 360, "frames": 1, "fps": '
 [ "$(out_lines <"$WORK/image.out")" = "drew 640x360" ] || fail "image.lms output: $(cat "$WORK/image.out")"
@@ -189,7 +189,7 @@ printf 'p = _dsl_ schema="%s";\n%s video.begin(); video.frame(); canvas.rect(0.0
 python3 -I - "$WORK/w.dslb" <<'PY' || fail "patch bytecode"
 import struct, sys
 d = bytearray(open(sys.argv[1], "rb").read())
-pos = 4 + 2 + 32                         # bytecode v4: u32 constant count, each u8 tag + u32 length + UTF-8
+pos = 4 + 2 + 32                         # bytecode v5: u32 constant count, each u8 tag + u32 length + UTF-8
 n, = struct.unpack(">I", d[pos:pos + 4]); pos += 4
 for _ in range(n):                       # rewrite the import "fn paint() -> Paint" to "fn path() -> Path": a verified program that returns a Path for a Paint
     ln, = struct.unpack(">I", d[pos + 1:pos + 5])

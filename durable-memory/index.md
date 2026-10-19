@@ -36,3 +36,10 @@ Schema 2 requires signature arrays. The SDK binds complete canonical imports, al
 signatures per name without dynamic overload dispatch. Self is expanded to the receiver type at
 compile/host-schema-read time; the VM adds no identity/type checks or limits. See sdk.lock for pin.
 Paint/Path use self; this host intentionally implements singleton signature arrays and refuses multiple entries.
+
+## Current integration target — DSL v5
+
+The host now targets the v5 compiler/runtime. The S1–S4 records and measurements above remain historical v4 evidence; the
+vendored SDK pin is refreshed by the integration owner after the v5 runtime is verified.
+
+V5 integration verified with mono compiler and SDK f140fa3: test.sh PASS 22 checks; both runtimes pass the same 42 regenerated vectors. No release promotion.
