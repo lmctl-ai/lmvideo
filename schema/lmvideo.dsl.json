@@ -75,14 +75,35 @@
         "image": {"params": [], "returns": "Image"}
       }
     },
+    "Keyframes": {
+      "methods": {
+        "len": {"params": [], "returns": "int"},
+        "at": {"params": ["int"], "returns": "Keyframe"},
+        "add": {"params": ["float", "float", "string"], "returns": "Keyframes"}
+      }
+    },
+    "Keyframe": {
+      "methods": {
+        "x": {"params": [], "returns": "float"},
+        "y": {"params": [], "returns": "float"},
+        "color": {"params": [], "returns": "string"}
+      }
+    },
+    "TemplateSvg": {
+      "methods": {
+        "render": {"params": ["float", "float", "string"], "returns": "Svg"}
+      }
+    },
     "Video": {
       "methods": {
-        "setup": {"params": [], "returns": "bool"},
         "size": {"params": ["int", "int"], "returns": "void"},
         "fps": {"params": ["int"], "returns": "void"},
         "frames": {"params": ["int"], "returns": "void"},
         "output": {"params": ["string"], "returns": "void"},
         "crf": {"params": ["int"], "returns": "void"},
+        "begin": {"params": [], "returns": "void"},
+        "frame": {"params": [], "returns": "void"},
+        "end": {"params": [], "returns": "void"},
         "index": {"params": [], "returns": "int"},
         "count": {"params": [], "returns": "int"},
         "t": {"params": [], "returns": "float"},
@@ -107,19 +128,9 @@
     "svg": {"params": ["string"], "returns": "Svg"},
     "svg_file": {"params": ["string"], "returns": "Svg"},
     "surface": {"params": ["int", "int"], "returns": "Surface"},
-    "sin": {"params": ["float"], "returns": "float"},
-    "cos": {"params": ["float"], "returns": "float"},
-    "sqrt": {"params": ["float"], "returns": "float"},
-    "abs": {"params": ["float"], "returns": "float"},
-    "floor": {"params": ["float"], "returns": "float"},
-    "pow": {"params": ["float", "float"], "returns": "float"},
-    "min": {"params": ["float", "float"], "returns": "float"},
-    "max": {"params": ["float", "float"], "returns": "float"},
-    "lerp": {"params": ["float", "float", "float"], "returns": "float"},
-    "clamp": {"params": ["float", "float", "float"], "returns": "float"},
-    "ease": {"params": ["float"], "returns": "float"},
-    "mix": {"params": ["string", "string", "float"], "returns": "string"},
-    "to_int": {"params": ["float"], "returns": "int"}
+    "keyframes": {"params": [], "returns": "Keyframes"},
+    "template_svg": {"params": ["string"], "returns": "TemplateSvg"},
+    "mix": {"params": ["string", "string", "float"], "returns": "string"}
   },
   "context": {"canvas": "Canvas", "video": "Video", "out": "Output"}
 }

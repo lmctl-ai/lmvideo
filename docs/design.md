@@ -2,7 +2,8 @@
 
 Status: EXPERIMENTAL. Operator brief R23 (lmctl-mono `lmscript/durable-memory/requirements/dsl-bytecode.md`): bindings for ffmpeg and
 Skia, exposed to the lmscript `_dsl_` framework as host objects. The DSL model is R12/R13: the **host program owns the process,
-the objects and the frame loop**; the DSL is a typed chunk (a callback) that runs inside a context the host hands it.
+the objects, surface, and encoder**; the DSL is a typed chunk (a callback) that runs inside a context the host hands it and owns its frame and
+attribute loops.
 
 ## 1. What Skija teaches (checked against HumbleUI/Skija, Apache-2.0)
 
@@ -75,18 +76,19 @@ Skia types never leave `lmvideo.cpp`: the public header uses value classes holdi
 
 The schema format has methods only (no fields, no constructors, R11), so:
 
-- **Object types** (opaque handles): `Canvas`, `Paint`, `Path`, `Font`, `Image`, `Svg`, `Surface`, `Video`, `Output`.
-- **Constructors are host functions**: `paint()`, `path()`, `font(size)`, `image_file(path)`, `svg(text)`, `surface(w, h)`.
+- **Object types** (opaque handles): `Canvas`, `Paint`, `Path`, `Font`, `Image`, `Svg`, `Surface`, `Keyframes`, `Keyframe`, `TemplateSvg`, `Video`, `Output`.
+- **Constructors are host functions**: `paint()`, `path()`, `font(size)`, `image_file(path)`, `svg(text)`, `surface(w, h)`, `keyframes()`, and
+  `template_svg(text)`.
 - **Builders return self** (`paint().color("#ff8800").stroke().stroke_width(3.0)`), which the POC findings already observed as the
   recurring idiom (setter-returns-self); no optional arguments, no lists.
 - **Colours are strings** (`"#rrggbb[aa]"`, a few names) because the DSL has no struct or colour type; the host parses and
   rejects bad values with a located run-time error. Numbers are `float` (coordinates) and `int` (sizes, counts).
 - **Ownership**: the host keeps every object in an arena for the run; the chunk cannot free, store or return handles (R11/R12),
   exactly as in poc-numpy.
-- **One chunk, two passes** (as built; see README findings 2): the context is `canvas: Canvas`, `video: Video`, `out: Output`. The host runs the chunk once
-  with `video.setup() == true` (the chunk declares `size`, `fps`, `frames`, `crf`, `output`), then owns the frame loop and runs it once per frame
-  (`video.index()`, `count()`, `t()` in 0..1, `time()`, `width()`, `height()`, `save_frame(path)`). An image is a one-frame output (`.png`/`.jpg`).
-  Animation is arithmetic on `video.t()`; the DSL needs no loop. This is the R12 callback model.
+- **One chunk, one invocation**: the context is `canvas: Canvas`, `video: Video`, `out: Output`. The chunk declares `size`, `fps`, `frames`, and `output`,
+  calls `video.begin()`, then calls `video.frame()` from its frame loop. `video.index()`, `count()`, `t()` in 0..1, `time()`, `width()`, `height()`, and
+  `save_frame(path)` describe the active frame; `video.end()` submits the final frame and finalizes the encoder. An image is a one-frame output.
+  `Keyframes.len()`/`at()` expose host-owned data without bytecode collections, and `TemplateSvg.render()` instantiates SVG templates.
 
 ## 7. Licensing
 

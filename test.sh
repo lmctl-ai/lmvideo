@@ -92,7 +92,7 @@ expect_px "$WORK/svg.png" 10 3 51 51 51 2            # the DSL's own bar on top
 expect_px "$WORK/svg.png" 5 200 255 255 255 0        # white margin outside the SVG
 ok "svg.lms: SVG fitted into a rect on a canvas the chunk also draws on"
 
-# 6. video.lms -> mp4: the host owns the frame loop.
+# 6. video.lms -> mp4: the DSL owns the frame loop; the host owns encoding.
 compile examples/video.lms "$WORK/video.dslb" "$WORK/video.mp4" 60 30 >/dev/null || fail "compile video.lms"
 "$HOST" --dsl "$WORK/video.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/video.err" || { cat "$WORK/video.err"; fail "video host"; }
 INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames:format=duration -of default=nw=1 "$WORK/video.mp4")"
@@ -107,6 +107,39 @@ expect_px "$WORK/f59.png" 280 108 239 71 111 40        # last frame: ball at w-4
 expect_px "$WORK/f59.png" 300 20 91 192 190 25         # last frame background #5bc0be
 ok "video.lms: frame 0 and frame 59 decode to the expected ball position and colours"
 
+# 6b. template.lms -> mp4 and a PNG snapshot in one DSL invocation. The same
+# host collection is walked on every frame, and the final frame is saved as PNG.
+compile examples/template.lms "$WORK/template.dslb" "$WORK/template.mp4" "$WORK/template.png" >/dev/null || fail "compile template.lms"
+"$HOST" --dsl "$WORK/template.dslb" --schema "$SCHEMA" >"$WORK/template.out" 2>"$WORK/template.err" || { cat "$WORK/template.err"; fail "template host"; }
+result_line "$WORK/template.out" '{"ok": true, "result": {"output": ['
+TINFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames:format=duration -of default=nw=1 "$WORK/template.mp4")"
+[ "$(echo "$TINFO" | tr '\n' ' ')" = "codec_name=h264 width=320 height=180 nb_read_frames=12 duration=1.000000 " ] || fail "template ffprobe: $TINFO"
+[ "$($PNGPX "$WORK/template.png")" = "320x180" ] || fail "template PNG size"
+frame "$WORK/template.mp4" 0 "$WORK/t0.png"; frame "$WORK/template.mp4" 11 "$WORK/t11.png"
+expect_px "$WORK/t0.png" 40 90 255 209 102 45
+expect_px "$WORK/t11.png" 280 90 239 71 111 45
+expect_px "$WORK/template.png" 40 145 255 209 102 0
+expect_px "$WORK/template.png" 160 145 6 214 160 0
+expect_px "$WORK/template.png" 280 145 239 71 111 0
+frame "$WORK/template.mp4" 5 "$WORK/t5.png"
+expect_px "$WORK/t5.png" 144 90 248 149 106 40
+ffmpeg -v error -i "$WORK/template.mp4" -f framemd5 "$WORK/template1.md5"
+cp "$WORK/template.png" "$WORK/template1.png"
+"$HOST" --dsl "$WORK/template.dslb" --schema "$SCHEMA" >/dev/null 2>&1 || fail "second template host run"
+[ "$($PNGPX "$WORK/template.png" --sha256)" = "$($PNGPX "$WORK/template1.png" --sha256)" ] || fail "template PNG is not deterministic"
+ffmpeg -v error -i "$WORK/template.mp4" -f framemd5 "$WORK/template2.md5"
+cmp "$WORK/template1.md5" "$WORK/template2.md5" || fail "template decoded frames differ on rerun"
+python3 -I - "$WORK/template.out" "$WORK/template.dslb" <<'PY_METRICS' || fail "template metrics"
+import json,sys,os
+r=json.load(open(sys.argv[1]))['result']
+assert r['frames']==12 and r['bytecode_bytes']==os.path.getsize(sys.argv[2])
+assert r['instructions']>1000 and r['wall_ms']>=0
+print('S4 template measurement:',json.dumps(r,sort_keys=True))
+PY_METRICS
+grep -q 'bytecode_bytes' "$WORK/template.out" || fail "template metrics missing"
+grep -q 'instructions' "$WORK/template.out" || fail "template instruction metric missing"
+ok "template.lms: 12-frame mp4, final PNG, len()/at() template loop, and deterministic rerun"
+
 # 7. Compile-time rejection (exit 2, located error): wrong types, unknown names.
 bad() { # NAME BODY EXPECTED_MESSAGE_PART
   printf 'p = _dsl_ schema="%s";\n%s\nend _dsl_\nsavedsl(p, "%s/%s.dslb");\n' "$SCHEMA" "$2" "$WORK" "$1" >"$WORK/$1.lms"
@@ -119,7 +152,7 @@ bad t3 'canvas.sparkle(1.0);' "no method 'sparkle'"
 bad t4 'let p = paint().color(5);' 'expects string'
 bad t5 'video.size("a", 2);' 'expects int'
 bad t6 'let x = 1.0 + 2;' 'no implicit conversion'
-bad t7 'let f = sin(1);' 'expects float'
+bad t7 'let f = sin(1);' 'expects (float) -> float'
 ok "seven ill-typed chunks are rejected at lmscript check time with located errors"
 
 # 8. Host refusals before anything runs: schema hash mismatch, truncated file, wrong version.
@@ -140,18 +173,18 @@ run_err() { # NAME EXPECTED_EXIT EXPECTED_MESSAGE_PART BODY
   if [ "$2" = 4 ]; then result_line "$WORK/$1.out" '{"ok": false, "phase": "app", "code": "APP_FAIL", "message": "'; else result_line "$WORK/$1.out" '{"ok": false, "phase": "run", "code": "RUN_HOST", "message": "'; fi
 }
 SETUP='video.size(64, 64); video.frames(1); video.output("'"$WORK"'/r.png");'
-run_err r1 3 'Paint.color' "if (video.setup()) { $SETUP } else { canvas.rect(0.0, 0.0, 5.0, 5.0, paint().color(\"#12\")); }"
-run_err r2 3 'not available during the setup pass' "canvas.clear(\"#ffffff\");"
-run_err r3 3 'only be called in the setup pass' "if (video.setup()) { $SETUP } else { video.size(10, 10); }"
-run_err r4 3 'video.output' "if (video.setup()) { video.size(64, 64); }"
-run_err r5 3 'needs video.frames(1)' "if (video.setup()) { video.size(64, 64); video.frames(2); video.output(\"$WORK/r.png\"); }"
-run_err r6 3 'size must be' "if (video.setup()) { video.size(63000, 64); }"
-run_err r7 4 'fail: nope' "if (video.setup()) { $SETUP } else { out.fail(\"nope\"); }"
-ok "host run-time errors: bad colour, drawing in setup, size in frame, missing output, image with 2 frames, bad size (phase run, RUN_HOST, exit 3); out.fail (phase app, APP_FAIL, exit 4)"
+run_err r1 3 'Paint.color' "$SETUP video.begin(); video.frame(); canvas.rect(0.0, 0.0, 5.0, 5.0, paint().color(\"#12\")); video.end();"
+run_err r2 3 'before video.begin' 'canvas.clear("#ffffff");'
+run_err r3 3 'before video.begin' "$SETUP video.begin(); video.size(10, 10);"
+run_err r4 3 'video.output' 'video.size(64, 64); video.begin();'
+run_err r5 3 'needs video.frames(1)' 'video.size(64, 64); video.frames(2); video.output("'"$WORK"'/r.png"); video.begin();'
+run_err r6 3 'size must be' 'video.size(63000, 64); video.frames(1); video.output("'"$WORK"'/r.png"); video.begin();'
+run_err r7 4 'fail: nope' "$SETUP video.begin(); video.frame(); out.fail(\"nope\"); video.end();"
+ok "host lifecycle errors: bad colour, drawing before begin, configuration after begin, missing output, image with 2 frames, bad size (exit 3); out.fail (exit 4)"
 
 # 10. Defence in depth (reviewer finding): the VM verifier checks names and arities, not types, so a hand-built program with the
 #     right schema hash could pass a Path where a Paint is expected. The host checks every argument against the schema.
-printf 'p = _dsl_ schema="%s";\nif (video.setup()) { %s } else { canvas.rect(0.0, 0.0, 5.0, 5.0, paint()); }\nend _dsl_\nsavedsl(p, "%s/w.dslb");\n' "$SCHEMA" "$SETUP" "$WORK" >"$WORK/w.lms"
+printf 'p = _dsl_ schema="%s";\n%s video.begin(); video.frame(); canvas.rect(0.0, 0.0, 5.0, 5.0, paint()); video.end();\nend _dsl_\nsavedsl(p, "%s/w.dslb");\n' "$SCHEMA" "$SETUP" "$WORK" >"$WORK/w.lms"
 "$LMSCRIPT" "$WORK/w.lms" >/dev/null 2>&1 || fail "compile w.lms"
 python3 -I - "$WORK/w.dslb" <<'PY' || fail "patch bytecode"
 import struct, sys
@@ -178,11 +211,17 @@ sed 's|"fill": {"params": \[\], "returns": "Paint"},|"fill": {"params": ["int"],
 "$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/typed.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'signature of Paint.fill' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry type self-check: exit $code"; }
 ok "the host refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)"
-run_err r8 3 'interpolation factor must be finite' "if (video.setup()) { $SETUP } else { canvas.clear(mix(\"#000000\", \"#ffffff\", 0.0 / 0.0)); }"
-run_err r9 3 'cannot write' "if (video.setup()) { video.size(8, 8); video.frames(1); video.output(\"$WORK/no/such/dir/x.jpg\"); } else { canvas.clear(\"#ffffff\"); }"
+run_err r8 3 'interpolation factor must be finite' "$SETUP video.begin(); video.frame(); canvas.clear(mix(\"#000000\", \"#ffffff\", 0.0 / 0.0)); video.end();"
+run_err r9 3 'cannot write' "video.size(8, 8); video.frames(1); video.output(\"$WORK/no/such/dir/x.jpg\"); video.begin(); video.frame(); canvas.clear(\"#ffffff\"); video.end();"
 rm -f "$WORK/fail.mp4"
-run_err r10 4 'fail: stop' "if (video.setup()) { video.size(64, 64); video.frames(5); video.output(\"$WORK/fail.mp4\"); } else { if (video.index() == 1) { out.fail(\"stop\"); } }"
+run_err r10 4 'fail: stop' "video.size(64, 64); video.frames(5); video.output(\"$WORK/fail.mp4\"); video.begin(); for (i in range(0, video.count())) { video.frame(); if (video.index() == 1) { out.fail(\"stop\"); } } video.end();"
 [ ! -e "$WORK/fail.mp4" ] && [ -z "$(ls -A "$WORK" | grep '^\.lmv-')" ] || fail "a failed video run left a partial file"
 ok "NaN colour factor and an unwritable image path are errors (exit 3); out.fail during a video leaves no partial file"
+
+run_err r11 3 'active video.begin' 'video.frame();'
+run_err r12 3 'exactly video.frames' "$SETUP video.begin(); video.end();"
+run_err r13 3 'may only be called once' "$SETUP video.begin(); video.begin();"
+run_err r14 3 'more times than video.frames' "$SETUP video.begin(); video.frame(); video.frame();"
+ok "host rejects frame without begin, missing frames, repeated begin and extra frames"
 
 echo "PASS $pass checks"

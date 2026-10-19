@@ -6,13 +6,13 @@ Released lmscript 0.2.328 emits v3 and is deliberately refused.
 
 
 Status: EXPERIMENTAL (operator brief R23; the DSL framework is R12-R22 in lmctl-mono `lmscript/durable-memory/requirements/dsl-bytecode.md`,
-living language spec `lmscript/durable-memory/design/dsl-language.md`, bytecode v4). Nothing here is an accepted design. Built and tested
-on 2026-10-18 with g++ 11, Skia m144 (prebuilt), ffmpeg 4.4.2 and a mono build of lmscript.
+living language spec `lmscript/durable-memory/design/dsl-language.md`, bytecode v4). Nothing here is an accepted design. The current S4 host/schema
+work is documented below; the older command transcript is retained as historical evidence for the S1/S3 host.
 
 NOT to be confused with `lmctlhq/lmcreator` (the TypeScript media CLI, formerly named lmvideo). This repository is a new C++ project.
 
 lmvideo is a small C++ library (`lmv::`) over Skia (images) and the ffmpeg CLI (video), plus a **DSL host** (`lmvideohost`): the host
-owns the process, the output file and the frame loop, and an lmscript `_dsl_` chunk is the callback that draws each frame
+owns the process, surface and encoder, while one lmscript `_dsl_` chunk owns the frame and attribute loops
 (R12/R13). Design decisions are in [docs/design.md](docs/design.md); the findings for the lmscript team are at the end of this file.
 
 **lmscript build needed.** `_dsl_` and `savedsl` are not in the npm staging build. Use a mono build:
@@ -35,6 +35,8 @@ owns the process, the output file and the frame loop, and an lmscript `_dsl_` ch
     build/lmvideohost --dsl build/video.dslb --schema schema/lmvideo.dsl.json
     $LMSCRIPT_BIN examples/svg.lms build/svg.dslb build/svg.png tests/golden/scene.svg
     build/lmvideohost --dsl build/svg.dslb --schema schema/lmvideo.dsl.json
+    $LMSCRIPT_BIN examples/template.lms build/template.dslb build/template.mp4 build/template.png
+    build/lmvideohost --dsl build/template.dslb --schema schema/lmvideo.dsl.json
 
 Offline use: `LMVIDEO_SKIA_ZIP=/path/to/Skia-m144-e2e6623374-4-linux-Release-x64.zip scripts/fetch-skia.sh` reuses a local copy (sha256 is checked
 against `scripts/skia.lock` either way). No system package is needed beyond the compiler, make, python3 and ffmpeg/ffprobe.
@@ -48,12 +50,13 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 - **ffmpeg works as an encoder without libav headers** (Phase 2). `lmv::Encoder` pipes RGBA frames to the `ffmpeg` CLI (fork/exec, no shell) and
   `probe_video` / `decode_frame` read back facts with ffprobe/ffmpeg. 32 checks, including a lossless FFV1 round trip where decoded frames are
   bit-identical to the drawn frames, and h264 frame count, duration and pixels.
-- **The DSL drives drawing and animation** (Phase 3). `schema/lmvideo.dsl.json` (9 object types, 60 methods, 20 functions, 3 context names) is implemented by
-  `cpp/host.cpp`; three lmscript examples compile against it with `${}` literals for size, colours, title, frame count, fps and paths.
-- **One run, one file.** `image.lms` produces a poster, `video.lms` a 2-second mp4 (60 frames) in 0.24 s of host time, `svg.lms` composes an SVG
-  document with DSL drawing. Rendering is deterministic (a second run gives identical pixels): no system fonts are used, DejaVu Sans is embedded.
+- **The DSL drives drawing and animation** (S4 current schema). `schema/lmvideo.dsl.json` declares 12 object types, 69 methods, 10 host functions, and 3 context names.
+  `cpp/host.cpp` implements four examples: image, video, SVG, and template keyframes. The template walks a host-owned collection with `len()`/`at()` and
+  renders both an MP4 and a PNG from one DSL invocation.
+- **One run, two possible outputs.** The DSL configures the host, calls `video.begin()`, owns nested frame/attribute loops through `video.frame()`, and calls
+  `video.end()`. The host result includes `bytecode_bytes`, dispatched `instructions`, and `wall_ms` alongside output, dimensions, frame count, and fps.
 
-## Transcript (`nice bash test.sh`, 2026-10-18)
+## Historical transcript (`nice bash test.sh`, 2026-10-18; S1/S3 host)
 
     ok 1 - cpp/dslvm.hpp matches sdk.lock (aebac89e0736)
     ok 2 - library, CLI, tests and DSL host build
@@ -79,9 +82,10 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 
 ## The DSL chunk (examples/video.lms, the body)
 
-    if (video.setup()) {                       # SETUP pass: declare what the host needs to know
-      video.size(320, 180); video.fps(${fps}); video.frames(${frames}); video.output(${mp4});
-    } else {                                   # FRAME pass: the host runs this once per frame
+    video.size(320, 180); video.fps(${fps}); video.frames(${frames}); video.output(${mp4});
+    video.begin();
+    for (f in range(0, video.count())) {       # DSL-owned frame loop
+      video.frame();
       let w = float(video.width());  let h = float(video.height());
       let t = video.t();  let e = ease(t);
       canvas.clear(mix("#0b132b", "#5bc0be", e));
@@ -91,18 +95,17 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
       canvas.rect(20.0, h - 24.0, (w - 40.0) * t, 8.0, paint().color("#ffffff"));
       canvas.text("frame " + str(video.index() + 1) + "/" + str(video.count()), 20.0, 30.0, font(18.0), paint().color("#ffffff"));
     }
+    video.end();
 
 ## How the host runs a chunk (R12)
 
 1. Register the schema's implementation (`register_schema`, each signature declared with its types so `lmvideohost --dsl-signatures` can be diffed
    against `lmscript --dsl-signatures schema/lmvideo.dsl.json`; the Registrar's own self-check compares the declarations with the schema file too),
    load and verify the bytecode against the exact schema bytes (refused: one JSON line, phase load, exit 3, nothing ran).
-2. **Setup pass**: run the chunk once with `video.setup() == true` and an empty canvas slot. The chunk declares `size`, `fps`, `frames`, `crf`, `output`.
-3. The host creates the surface (and the ffmpeg encoder when the output extension is `.mp4/.webm/.mkv/.gif`; `.png/.jpg` means a single image and needs
-   `frames(1)`), then **owns the loop**: per frame it clears the surface (black for video, transparent for images), runs the chunk, and pipes the RGBA
-   frame to the encoder. Every handle the chunk created lives in an arena that is cleared after each run (R11/R12: handles cannot be stored or returned).
+2. **Begin**: `video.begin()` creates the host-owned surface and encoder after `size`, `fps`, `frames`, `crf`, and `output` are configured.
+3. The DSL calls `video.frame()` once per iteration. It clears the surface (black for video, transparent for images), exposes `index()` and `t()`, and the DSL draws. The host pipes each completed frame to the encoder; `video.end()` finalizes it. Every handle the chunk creates lives in one run arena (R11/R12).
 4. Report: the human line on stderr and exactly one JSON result line on stdout (spec v4 S0, A03): `{"ok": true, "result": {"output": [every
-   out.print line], "file": ..., "width": ..., "height": ..., "frames": ..., "fps": ...}}`, or `{"ok": false, "phase": "load|run|app", "code": ...,
+   out.print line], "file": ..., "width": ..., "height": ..., "frames": ..., "fps": ..., "bytecode_bytes": ..., "instructions": ..., "wall_ms": ...}}`, or `{"ok": false, "phase": "load|run|app", "code": ...,
    "message": ...}`. Exit 0 ok, 2 usage, 3 host (load refused or run-time error; the message names `Type.method`), 4 the chunk called `out.fail(msg)`.
    lmvideo keeps its own call-time argument/result checks on top of the SDK (the SDK itself has none: R33/R34).
 
@@ -113,10 +116,10 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 | `cpp/lmvideo.hpp`, `cpp/lmvideo.cpp` | the library: Skia-free value-class API, the only TU that includes Skia; embedded DejaVu Sans via `.incbin`; SVG through `SkSVGDOM` |
 | `cpp/lmvideo_cli.cpp` | CLI `lmvideo render IN.svg OUT.png [--width W] [--height H] [--background C]`, `lmvideo demo OUT.png` |
 | `cpp/encoder.hpp`, `cpp/encoder.cpp` | `lmv::Encoder` (ffmpeg pipe), `probe_video`, `decode_frame`; Skia-free |
-| `cpp/host.cpp`, `cpp/schema.hpp` | the DSL host (registry = implementation of the schema, setup pass, frame loop) and its small schema reader (signature checks, registry self-check) |
+| `cpp/host.cpp`, `cpp/schema.hpp` | the DSL host (registry = implementation of the schema, begin/frame/end lifecycle, DSL-owned loops, keyframe/template objects) and its schema reader (signature checks, registry self-check) |
 | `cpp/dslvm.hpp`, `sdk.lock`, `scripts/sync-sdk.sh` | shared runtime vendored from [lmctlhq/cpp-dsl-sdk](https://github.com/lmctlhq/cpp-dsl-sdk) by pinned sha256 (`test.sh` fails on drift) |
-| `schema/lmvideo.dsl.json` | the contract (types Paint, Path, Font, Image, Svg, Canvas, Surface, Video, Output; functions; context `canvas`, `video`, `out`) |
-| `examples/image.lms`, `video.lms`, `svg.lms` | lmscript scripts (strict syntax, `_dsl_` block, `${}` literals) |
+| `schema/lmvideo.dsl.json` | the contract (12 object types, 69 methods, 10 host functions; contexts `canvas`, `video`, `out`) |
+| `examples/image.lms`, `video.lms`, `svg.lms`, `template.lms` | lmscript scripts (strict syntax, `_dsl_` block, `${}` literals; template emits MP4 and PNG) |
 | `scripts/fetch-skia.sh`, `scripts/skia.lock` | pinned Skia acquisition (tag, URL, sha256, size) |
 | `assets/fonts/` | DejaVu Sans and its licence (Bitstream Vera: redistributable with the notice) |
 | `tests/skia_test.cpp`, `tests/encoder_test.cpp`, `tests/golden/` | library tests; `tools/pngpx.py` is the stdlib PNG probe used by `test.sh` |
@@ -131,34 +134,23 @@ against `scripts/skia.lock` either way). No system package is needed beyond the 
 4. **Fonts are embedded**, never system fonts: determinism across machines. `Font(size)` is DejaVu Sans; `Font::from_file` exists in the library but is
    not exposed to the DSL yet (a path-reading function is a security decision for the lmscript team: the DSL host reads files named by the script).
 5. **Colours are strings** (`"#rgb"`, `"#rrggbb"`, `"#rrggbbaa"`, a few names) because the DSL has no colour type; bad values are DSL run-time errors (exit 3).
-6. **Setup pass in the same chunk** (`if (video.setup()) {...} else {...}`): the only way today to let a single chunk both configure and draw (see findings 1).
-7. **Math is host functions** (`sin cos sqrt abs floor pow min max lerp clamp ease mix to_int`) because the language has only `+ - * /` (findings 2).
+6. **One invocation with an explicit lifecycle**: `video.begin()`, DSL-owned `for` loops calling `video.frame()`, and `video.end()` keep configuration and rendering in one chunk.
+7. **Common math is a bytecode opcode** (`sin cos sqrt abs floor pow min max lerp clamp ease ease_in ease_out int`); lmvideo retains only the colour-specific `mix` helper.
 8. **The Skia types never leave `lmvideo.cpp`**, so a DSL host (or any other consumer) compiles in seconds and does not need Skia headers.
 
 ## Findings for the lmscript team (Phase 4: what the DSL needs for drawing and animation)
 
-Evidence: the three examples, the schema (9 types, 60 methods, 20 functions), 7 compile-time and 10 run-time negative tests, and two independent model reviews (library and host) whose findings are fixed with tests.
+Current evidence: four examples and the S4 schema (12 types, 69 methods, 10 host functions). The numbered transcript above is historical S1/S3 evidence;
+new S4 measurements belong in the implementation verification record once the host integration is tested.
 
-1. **The host-owned frame loop works and is the right model (R12).** The chunk is a pure per-frame function of `video.t()`/`video.index()`;
-   the host does clear, run, encode 60 times in 0.24 s total (VM overhead is negligible next to rasterization and x264). The DSL needed no loop to animate.
-   Recommendation: keep the host-owned loop; if animations need state across frames (physics, particles), give the host a persistent `State` object
-   (set/get floats by name) rather than letting the chunk keep variables.
-2. **Config and per-frame code need two callbacks.** One chunk per schema forced the `video.setup()` pass: the same bytecode runs once to declare
-   size/fps/frames/output and then per frame, and the compiler cannot stop a chunk from drawing during setup or declaring `size` during a frame (host
-   run-time errors 3 do, covered by tests r2/r3). The POC finding "named callbacks or several blocks per schema" is now confirmed by a second domain.
-   Recommendation: schema-declared callbacks with their own context, e.g. `"callbacks": {"setup": {"context": {"video": "VideoSetup"}}, "frame":
-   {"context": {"canvas": "Canvas", "video": "Frame"}}}`, and two `_dsl_` blocks (or `fn setup() {...}`-like sections) in one file; then calling `canvas.*` in setup
-   is a compile-time error instead of a run-time one.
-3. **The language needs maths.** Drawing and animation immediately need `sin`, `cos`, `sqrt`, `abs`, `floor`, `pow`, `min`, `max`, `lerp`, `clamp`, easing and
-   `float -> int` (`to_int`). These are 12 of the 20 host functions here; every future numeric host (poc-numpy, lmor) will want the same set. Recommendation:
-   put a fixed math library in the language's common part (like `float()` and `str()`), with the exact semantics specified for conformance (IEEE, `sin`
-   accuracy is libm-dependent: specify "within 1 ulp" or restrict to deterministic functions), and add the `int(f)` narrowing with explicit rounding names
-   (`floor`/`round`/`trunc`) instead of `to_int` ad hoc. `${3.0}` becoming the int `3` was visible again: `float(video.width())` is needed whenever an int size meets float geometry.
-4. **Loops are the first real gap for drawing; this project did not need one but the next scene will.** A grid of 10x10 circles, a bar chart of N values or a
-   particle burst need repeated statements; lmscript cannot unroll them (`${}` only substitutes literals, it does not generate code). Within the examples
-   the workaround is a host method that draws the repeated thing (`Path`) or `video.index()` driving one object per frame, which is not general. This is
-   UNVERIFIED as a measured need (no failing example exists yet) but strongly expected; it feeds Q12 (config chunk R13 vs one-shot program R20).
-   Recommendation: a bounded `for i in range(a, b)` with a VM step limit is the smallest addition (the lmor project may already be implementing it, R18).
+1. **The DSL-owned frame loop is now the right model for animation (R12/R29).** The host still owns the surface and encoder, but one chunk can configure,
+   loop over frames and attributes, and finalize. This also makes nested loops and template keyframes ordinary DSL code.
+2. **Configuration and drawing use explicit lifecycle methods.** `begin/frame/end` let the host keep its library checks and resource ownership while avoiding
+   repeated callback invocations. Invalid ordering remains a host error with a clear method name.
+3. **The language needs maths.** S4 places common numeric operations in a shared MATH opcode with the documented libm tolerance. lmvideo no longer registers
+   duplicate math functions; `mix` remains host-owned because it validates and interpolates colours.
+4. **Loops are now part of the current drawing path.** `video.lms` owns the frame loop; `template.lms` combines that with a host collection loop and
+   template rendering. The old recommendation to add a loop was satisfied by S3; the old paragraph remains historical context rather than a current gap.
 5. **Strings as enums and colours lose compile-time checking.** `stroke_cap("round")`, `stroke_join("miter")` and every colour are strings; a typo is caught only
    at run time and only when that branch executes (frame 37 of 60). Recommendation: schema enum types (`"enums": {"Cap": ["butt","round","square"]}`, usable as
    parameter types, literals checked by the compiler) and a `color` type that is a string subtype validated at compile time when the argument is a literal;
@@ -200,3 +192,19 @@ Evidence: the three examples, the schema (9 types, 60 methods, 20 functions), 7 
 Skija (study only, Apache-2.0, no code copied), Skia (BSD-3-Clause; the pack bundles libpng, libjpeg-turbo, libwebp, FreeType, HarfBuzz, expat, zlib, ICU under their
 own permissive licences: keep `third_party/skia`'s notices when distributing a binary), DejaVu Sans (Bitstream Vera licence, `assets/fonts/LICENSE-DejaVu.txt`).
 ffmpeg is run as a separate process and never linked; the installed build is GPL through libx264, which only matters if a binary of ffmpeg is redistributed.
+
+## S4 verification
+
+`test.sh` now passes 22 checks, including the existing 77 Skia and 32 encoder checks.
+The template test checks first/middle/last animation pixels, each collection-instantiated marker,
+PNG pixel equality and decoded MP4 frame hashes across repeated runs. It retains host failure cleanup
+and adds begin/frame/end ordering/count checks. Templates substitute `{{x}}`, `{{y}}`, `{{color}}`
+(RGB) and `{{opacity}}` separately: mix() returns RGBA hex, which must not be passed directly to
+Skia's SVG color parser. Handles returned by Keyframes.at() survive later add() calls (deque storage).
+
+The measured 320×180 template example emits 12 frames at 12 fps plus a PNG in one invocation:
+2220 bytecode bytes, 1758 VM dispatches, 47 ms chunk wall time on the shared box. Paths embedded in
+bytecode affect its byte count; this sample uses the test's scratch paths. Wall time includes drawing,
+encoding and finalization, excludes compilation/loading; dispatches exclude native callback work.
+This is one observation, not a performance guarantee. The 60-frame direct canvas animation is also
+checked by ffprobe and endpoint pixels. No release promotion was performed.

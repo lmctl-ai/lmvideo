@@ -1,13 +1,12 @@
-// lmvideohost: the DSL host for lmvideo (R12). The host owns the process, the output and the FRAME LOOP; the lmscript `_dsl_`
-// chunk is a callback that describes one frame at a time. It implements schema/lmvideo.dsl.json against the lmv:: library.
+// lmvideohost: the DSL host for lmvideo (R12). The host owns the process and encoder;
+// the lmscript chunk owns the frame and attribute loops.
 //
 //   lmvideohost --dsl FILE.dslb --schema schema/lmvideo.dsl.json [--output PATH]
 //
-// Run order: (1) register the schema, load and verify the bytecode (nothing runs yet); (2) SETUP pass: run the chunk once with
-// video.setup() == true, where it declares size, fps, frame count and output file; (3) the host creates the surface (and the
-// ffmpeg encoder for video output) and runs the chunk once per frame; (4) finish and report.
+// Run order: register/load, run one chunk (video.begin/frame/end), and report.
 // Exit codes: 0 ok, 1 bytecode/schema refused (nothing ran), 2 usage, 3 run-time error, 4 the chunk called out.fail().
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -46,11 +45,11 @@ class Arena {
   std::deque<std::shared_ptr<void>> items_;
 };
 
-// A Canvas is a non-owning view; the slot is empty during the setup pass so drawing then is a clear error.
+// A Canvas is a non-owning view; the slot is empty until video.begin().
 struct CanvasSlot {
   std::optional<lmv::Canvas> canvas;
   lmv::Canvas& get() {
-    if (!canvas) throw dslvm::Error("Canvas is not available during the setup pass (draw in the else branch of video.setup())");
+    if (!canvas) throw dslvm::Error("Canvas is not available before video.begin()");
     return *canvas;
   }
 };
@@ -62,13 +61,25 @@ struct SurfaceObj {
 };
 
 struct VideoState {
-  bool setup = true;
+  bool begun = false;
+  bool ended = false;
   int width = 0, height = 0, fps = 30, frames = 1, crf = 18, index = 0;
   std::string output;
+  std::string override_output;
   bool size_set = false;
-  const lmv::Surface* surface = nullptr;  // the frame being drawn (for save_frame)
+  lmv::Surface* surface = nullptr;
+  std::unique_ptr<lmv::Surface> owned_surface;
+  CanvasSlot* canvas_slot = nullptr;
+  std::unique_ptr<lmv::Encoder> encoder;
   double t() const { return frames <= 1 ? 0.0 : static_cast<double>(index) / (frames - 1); }
 };
+
+struct Keyframe {
+  double x, y;
+  std::string color;
+};
+struct Keyframes { std::deque<Keyframe> values; }; // stable handles when add() appends
+struct TemplateSvg { std::string source; };
 
 struct OutputState {
   std::vector<std::string> lines;  // out.print, reported in the JSON result line at the end
@@ -333,40 +344,119 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
     return Value::object("Image", arena.make<lmv::Image>(static_cast<SurfaceObj*>(p)->surface.snapshot()));
   });
 
-  // ---- Video: setup declarations and per-frame facts ----
+  // A small host-owned collection used by the template example. The DSL only sees
+  // len()/at(); no collection representation is added to the bytecode.
+  reg.function("keyframes", {}, "Keyframes", [&arena](Args&) { return Value::object("Keyframes", arena.make<Keyframes>()); });
+  reg.method("Keyframes", "add", {"float", "float", "string"}, "Keyframes", [](void* p, Args& a) {
+    auto* k = static_cast<Keyframes*>(p);
+    k->values.push_back({a[0].f, a[1].f, a[2].s});
+    return Value::object("Keyframes", p);
+  });
+  reg.method("Keyframes", "len", {}, "int", [](void* p, Args&) {
+    return Value::integer(static_cast<int64_t>(static_cast<Keyframes*>(p)->values.size()));
+  });
+  reg.method("Keyframes", "at", {"int"}, "Keyframe", [](void* p, Args& a) {
+    auto* k = static_cast<Keyframes*>(p);
+    if (a[0].i < 0 || static_cast<size_t>(a[0].i) >= k->values.size()) throw lmv::Error("keyframe index out of range");
+    return Value::object("Keyframe", &k->values[static_cast<size_t>(a[0].i)]);
+  });
+  auto kf = [](void* p) -> const Keyframe& { return *static_cast<const Keyframe*>(p); };
+  reg.method("Keyframe", "x", {}, "float", [kf](void* p, Args&) { return Value::real(kf(p).x); });
+  reg.method("Keyframe", "y", {}, "float", [kf](void* p, Args&) { return Value::real(kf(p).y); });
+  reg.method("Keyframe", "color", {}, "string", [kf](void* p, Args&) { return Value::string(kf(p).color); });
+  reg.function("template_svg", {"string"}, "TemplateSvg", [&arena](Args& a) {
+    return Value::object("TemplateSvg", arena.make<TemplateSvg>(TemplateSvg{a[0].s}));
+  });
+  reg.method("TemplateSvg", "render", {"float", "float", "string"}, "Svg", [&arena](void* p, Args& a) {
+    std::string xml = static_cast<TemplateSvg*>(p)->source;
+    auto replace = [&xml](const std::string& needle, const std::string& value) {
+      size_t at = 0;
+      while ((at = xml.find(needle, at)) != std::string::npos) { xml.replace(at, needle.size(), value); at += value.size(); }
+    };
+    replace("{{x}}", std::to_string(a[0].f));
+    replace("{{y}}", std::to_string(a[1].f));
+    // SVG's colour parser accepts RGB syntax, while mix() returns RGBA hex.
+    // Keep alpha separate so templates also work with translucent colours.
+    const auto color = lmv::parse_color(a[2].s);
+    char rgb[8]; std::snprintf(rgb, sizeof rgb, "#%02x%02x%02x", color.r, color.g, color.b);
+    replace("{{color}}", rgb);
+    replace("{{opacity}}", std::to_string(double(color.a) / 255.0));
+    return Value::object("Svg", arena.make<lmv::Svg>(lmv::Svg::parse(xml)));
+  });
+
+  // ---- Video: configuration and DSL-owned frame lifecycle ----
   auto vs = [](void* p) -> VideoState& { return *static_cast<VideoState*>(p); };
-  auto setup_only = [vs](void* p, const char* what) {
-    if (!vs(p).setup) throw dslvm::Error(std::string("Video.") + what + " can only be called in the setup pass (inside if (video.setup()))");
+  auto config_only = [vs](void* p, const char* what) {
+    if (vs(p).begun) throw dslvm::Error(std::string("Video.") + what + " must be called before video.begin()");
+    if (vs(p).ended) throw dslvm::Error(std::string("Video.") + what + " is not available after video.end()");
   };
-  reg.method("Video", "setup", {}, "bool", [=](void* p, Args&) { return Value::boolean(vs(p).setup); });
   reg.method("Video", "size", {"int", "int"}, "void", [=](void* p, Args& a) {
-    setup_only(p, "size");
+    config_only(p, "size");
     if (a[0].i < 2 || a[1].i < 2 || a[0].i > 8192 || a[1].i > 8192) throw lmv::Error("size must be 2..8192 per side");
     vs(p).width = a[0].i; vs(p).height = a[1].i; vs(p).size_set = true;
     return Value::none();
   });
   reg.method("Video", "fps", {"int"}, "void", [=](void* p, Args& a) {
-    setup_only(p, "fps");
+    config_only(p, "fps");
     if (a[0].i < 1 || a[0].i > 240) throw lmv::Error("fps must be 1..240");
     vs(p).fps = a[0].i;
     return Value::none();
   });
   reg.method("Video", "frames", {"int"}, "void", [=](void* p, Args& a) {
-    setup_only(p, "frames");
+    config_only(p, "frames");
     if (a[0].i < 1 || a[0].i > 100000) throw lmv::Error("frames must be 1..100000");
     vs(p).frames = a[0].i;
     return Value::none();
   });
   reg.method("Video", "crf", {"int"}, "void", [=](void* p, Args& a) {
-    setup_only(p, "crf");
+    config_only(p, "crf");
     if (a[0].i < 0 || a[0].i > 51) throw lmv::Error("crf must be 0..51");
     vs(p).crf = a[0].i;
     return Value::none();
   });
   reg.method("Video", "output", {"string"}, "void", [=](void* p, Args& a) {
-    setup_only(p, "output");
+    config_only(p, "output");
     if (a[0].s.empty()) throw lmv::Error("output path is empty");
-    vs(p).output = a[0].s;
+    vs(p).output = vs(p).override_output.empty() ? a[0].s : vs(p).override_output;
+    return Value::none();
+  });
+  reg.method("Video", "begin", {}, "void", [=](void* p, Args&) {
+    VideoState& v = vs(p);
+    if (v.begun) throw dslvm::Error("Video.begin may only be called once");
+    if (!v.size_set) throw dslvm::Error("video.begin needs video.size(w, h)");
+    if (v.output.empty()) throw dslvm::Error("video.begin needs video.output(path)");
+    bool image = is_image_path(v.output);
+    if (image && v.frames != 1) throw dslvm::Error("an image output (.png/.jpg) needs video.frames(1)");
+    v.owned_surface = std::make_unique<lmv::Surface>(v.width, v.height);
+    v.surface = v.owned_surface.get();
+    if (v.canvas_slot) v.canvas_slot->canvas = v.surface->canvas();
+    if (!image) {
+      lmv::EncoderOptions opt;
+      opt.fps = v.fps;
+      opt.crf = v.crf;
+      v.encoder = std::make_unique<lmv::Encoder>(v.output, v.width, v.height, opt);
+    }
+    v.index = -1;
+    v.begun = true;
+    return Value::none();
+  });
+  reg.method("Video", "frame", {}, "void", [=](void* p, Args&) {
+    VideoState& v = vs(p);
+    if (!v.begun || v.ended) throw dslvm::Error("video.frame requires an active video.begin()/video.end() block");
+    if (v.index + 1 >= v.frames) throw dslvm::Error("video.frame called more times than video.frames");
+    if (v.index >= 0 && v.encoder) v.encoder->add_frame(v.surface->rgba());
+    ++v.index;
+    v.canvas_slot->get().clear(is_image_path(v.output) ? lmv::Color(0, 0, 0, 0) : lmv::Color(0, 0, 0, 255));
+    return Value::none();
+  });
+  reg.method("Video", "end", {}, "void", [=](void* p, Args&) {
+    VideoState& v = vs(p);
+    if (!v.begun || v.ended) throw dslvm::Error("video.end requires an active video.begin() block");
+    if (v.index + 1 != v.frames) throw dslvm::Error("video.end needs exactly video.frames frame() calls");
+    if (v.encoder) v.encoder->add_frame(v.surface->rgba());
+    if (v.encoder) v.encoder->finish();
+    else write_image(*v.surface, v.output);
+    v.ended = true;
     return Value::none();
   });
   reg.method("Video", "index", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).index); });
@@ -376,44 +466,19 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   reg.method("Video", "width", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).width); });
   reg.method("Video", "height", {}, "int", [=](void* p, Args&) { return Value::integer(vs(p).height); });
   reg.method("Video", "save_frame", {"string"}, "void", [=](void* p, Args& a) {
-    if (!vs(p).surface) throw lmv::Error("no frame is being drawn (call it in the else branch of video.setup())");
+    if (!vs(p).surface || vs(p).index < 0) throw lmv::Error("no frame is being drawn (call video.frame() first)");
     write_image(*vs(p).surface, a[0].s);
     return Value::none();
   });
 
   // ---- Output ----
   reg.method("Output", "print", {"string"}, "void", [&output](void*, Args& a) { output.lines.push_back(a[0].s); return Value::none(); });
-  reg.method("Output", "fail", {"string"}, "void", [&output](void*, Args& a) {
+  reg.method("Output", "fail", {"string"}, "void", [&output](void*, Args& a) -> Value {
     if (!output.failed) output.failure = a[0].s;
     output.failed = true;
-    return Value::none();
+    throw dslvm::Error("APP_FAIL", a[0].s);
   });
 
-  // ---- Math and colour helpers (the DSL has only + - * / on its numbers) ----
-  auto num = [](const char* name, size_t argc, std::function<double(Args&)> fn) {
-    return std::make_pair(std::string(name), std::make_pair(argc, fn));
-  };
-  for (auto& [name, spec] : {
-           num("sin", 1, [](Args& a) { return std::sin(a[0].f); }),
-           num("cos", 1, [](Args& a) { return std::cos(a[0].f); }),
-           num("sqrt", 1, [](Args& a) { if (a[0].f < 0) throw dslvm::Error("sqrt of a negative number"); return std::sqrt(a[0].f); }),
-           num("abs", 1, [](Args& a) { return std::fabs(a[0].f); }),
-           num("floor", 1, [](Args& a) { return std::floor(a[0].f); }),
-           num("pow", 2, [](Args& a) { return std::pow(a[0].f, a[1].f); }),
-           num("min", 2, [](Args& a) { return std::min(a[0].f, a[1].f); }),
-           num("max", 2, [](Args& a) { return std::max(a[0].f, a[1].f); }),
-           num("lerp", 3, [](Args& a) { return a[0].f + (a[1].f - a[0].f) * a[2].f; }),
-           num("clamp", 3, [](Args& a) { return std::min(std::max(a[0].f, a[1].f), a[2].f); }),
-           num("ease", 1, [](Args& a) { double t = std::min(std::max(a[0].f, 0.0), 1.0); return t * t * (3.0 - 2.0 * t); }),
-       }) {
-    auto fn = spec.second;
-    reg.function(name, std::vector<std::string>(spec.first, "float"), "float", [fn](Args& a) { return Value::real(fn(a)); });
-  }
-  reg.function("to_int", {"float"}, "int", [](Args& a) {
-    double v = std::trunc(a[0].f);
-    if (!(v >= -9223372036854775808.0 && v < 9223372036854775808.0)) throw lmv::Error("value does not fit an int");
-    return Value::integer(static_cast<int64_t>(v));
-  });
   reg.function("mix", {"string", "string", "float"}, "string", [](Args& a) {
     lmv::Color c0 = lmv::parse_color(a[0].s), c1 = lmv::parse_color(a[1].s);
     if (!std::isfinite(a[2].f)) throw lmv::Error("the interpolation factor must be finite");
@@ -452,6 +517,7 @@ int main(int argc, char** argv) {
   OutputState output;
   dslvm::Registry reg;
   dslvm::Program program;
+  std::string bytecode_bytes;
   schema::Schema schema;  // outlives the run: the registered closures point into it
   std::optional<Registrar> registrar_slot;
   try {
@@ -460,51 +526,31 @@ int main(int argc, char** argv) {
     Registrar& registrar = registrar_slot.emplace(reg, schema);
     register_schema(registrar, arena, output);
     registrar.verify();  // the registry IS the schema, or nothing starts
-    program = dslvm::Program::load(dslvm::read_file(dsl_path), schema_bytes, reg);
+    bytecode_bytes = dslvm::read_file(dsl_path);
+    program = dslvm::Program::load(bytecode_bytes, schema_bytes, reg);
   } catch (const dslvm::Error& e) {  // refused before anything ran: one JSON line, phase load, exit 3 (spec v4 S0, A03)
     std::cerr << "error: " << dsl_path << ": " << e.what() << "\n";
     return dslvm::report_error("load", e);
   }
 
-  CanvasSlot main_canvas;  // empty during setup
+  CanvasSlot main_canvas;
+  video.canvas_slot = &main_canvas;
+  video.override_output = output_override;
   dslvm::Context ctx;
   ctx.set("canvas", &main_canvas);
   ctx.set("video", &video);
   ctx.set("out", &output);
 
   try {
-    // (2) Setup pass: the chunk declares size, fps, frames and the output file.
-    video.setup = true;
-    program.run(ctx, reg);
-    arena.clear();
+    // The chunk configures and renders in one invocation. Video.begin() allocates
+    // the host-owned surface/encoder; frame() clears and advances the current frame.
+    dslvm::Program::RunStats stats;
+    auto started = std::chrono::steady_clock::now();
+    program.run(ctx, reg, &stats);
+    auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - started).count();
     if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_app_failure(output.failure); }
-    if (!output_override.empty()) video.output = output_override;
-    if (!video.size_set) throw dslvm::Error("the chunk did not call video.size(w, h) in the setup pass");
-    if (video.output.empty()) throw dslvm::Error("the chunk did not call video.output(path) in the setup pass");
+    if (!video.ended) throw dslvm::Error("the chunk did not call video.end()");
     bool image = is_image_path(video.output);
-    if (image && video.frames != 1) throw dslvm::Error("an image output (.png/.jpg) needs video.frames(1), not " + std::to_string(video.frames));
-
-    // (3) The frame loop belongs to the host.
-    video.setup = false;
-    lmv::Surface surface(video.width, video.height);
-    video.surface = &surface;
-    main_canvas.canvas = surface.canvas();
-    std::unique_ptr<lmv::Encoder> encoder;
-    if (!image) {
-      lmv::EncoderOptions opt;
-      opt.fps = video.fps;
-      opt.crf = video.crf;
-      encoder = std::make_unique<lmv::Encoder>(video.output, video.width, video.height, opt);
-    }
-    for (video.index = 0; video.index < video.frames; ++video.index) {
-      main_canvas.get().clear(image ? lmv::Color(0, 0, 0, 0) : lmv::Color(0, 0, 0, 255));
-      program.run(ctx, reg);
-      arena.clear();
-      if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_app_failure(output.failure); }
-      if (encoder) encoder->add_frame(surface.rgba());
-    }
-    if (encoder) encoder->finish();
-    else write_image(surface, video.output);
 
     // (4) Report: the human line on stderr, then exactly one JSON result line on stdout (A03) with every out.print line in order.
     if (image) std::cerr << "wrote " << video.output << " (" << video.width << "x" << video.height << ")\n";
@@ -512,8 +558,11 @@ int main(int argc, char** argv) {
     std::string lines;
     for (const auto& l : output.lines) lines += (lines.empty() ? "" : ", ") + dslvm::json_escape(l);
     return dslvm::report_ok("{\"output\": [" + lines + "], \"file\": " + dslvm::json_escape(video.output) + ", \"width\": " + std::to_string(video.width) +
-                            ", \"height\": " + std::to_string(video.height) + ", \"frames\": " + std::to_string(video.frames) + ", \"fps\": " + std::to_string(video.fps) + "}");
+                            ", \"height\": " + std::to_string(video.height) + ", \"frames\": " + std::to_string(video.frames) + ", \"fps\": " + std::to_string(video.fps) +
+                            ", \"bytecode_bytes\": " + std::to_string(bytecode_bytes.size()) + ", \"instructions\": " + std::to_string(stats.instructions) +
+                            ", \"wall_ms\": " + std::to_string(elapsed_ms) + "}");
   } catch (const dslvm::Error& e) {  // the VM (RUN_ERROR) or a host method (RUN_HOST): phase run, exit 3
+    if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_app_failure(output.failure); }
     std::cerr << "dsl runtime error: " << e.what() << "\n";
     return dslvm::report_error("run", e);
   } catch (const lmv::Error& e) {  // the library outside a method (encoder, image writer): phase run, RUN_HOST, exit 3
