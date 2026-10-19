@@ -202,12 +202,26 @@ PY
 "$HOST" --dsl "$WORK/w.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/w.err"; code=$?
 [ "$code" = 3 ] && grep -q 'Canvas.rect: argument 5 must be Paint, got Path' "$WORK/w.err" || { cat "$WORK/w.err"; fail "wrong-type bytecode: exit $code"; }
 ok "hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)"
-sed 's|"fill": {"params": \[\], "returns": "Paint"},|&\n        "extra": {"params": [], "returns": "Paint"},|' "$SCHEMA" >"$WORK/extra.json"
+python3 - "$SCHEMA" "$WORK/extra.json" <<'PY'
+import json, sys
+src, dst = sys.argv[1:]
+data = json.load(open(src))
+data["types"]["Paint"]["methods"]["extra"] = [{"params": [], "returns": "self"}]
+json.dump(data, open(dst, "w"), indent=2)
+open(dst, "a").write("\n")
+PY
 grep -q '"extra"' "$WORK/extra.json" || fail "schema edit"
 "$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/extra.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'missing method Paint.extra' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry self-check: exit $code"; }
 result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_UNBOUND", "message": "host registry does not match the schema: missing method Paint.extra;'
-sed 's|"fill": {"params": \[\], "returns": "Paint"},|"fill": {"params": ["int"], "returns": "Paint"},|' "$SCHEMA" >"$WORK/typed.json"
+python3 - "$SCHEMA" "$WORK/typed.json" <<'PY'
+import json, sys
+src, dst = sys.argv[1:]
+data = json.load(open(src))
+data["types"]["Paint"]["methods"]["fill"][0]["params"] = ["int"]
+json.dump(data, open(dst, "w"), indent=2)
+open(dst, "a").write("\n")
+PY
 "$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/typed.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'signature of Paint.fill' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry type self-check: exit $code"; }
 ok "the host refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)"

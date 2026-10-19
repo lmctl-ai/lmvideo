@@ -208,3 +208,13 @@ bytecode affect its byte count; this sample uses the test's scratch paths. Wall 
 encoding and finalization, excludes compilation/loading; dispatches exclude native callback work.
 This is one observation, not a performance guarantee. The 60-frame direct canvas animation is also
 checked by ffprobe and endpoint pixels. No release promotion was performed.
+
+## Schema 2 (S2)
+
+The host schema now uses `"dsl.schema": 2` and an array of signatures under every method/function name.
+The matching v4 compiler resolves overloads, declared conversions, arithmetic operators and enums before
+execution; imports bind complete canonical signatures. `returns: "self"` is a schema shorthand for
+the enclosing object type, with no new VM identity or call-time checks. Use the built mono compiler
+with `LMSCRIPT_MIN=0` until a matching release; the released 0.2.328 still emits v3.
+Paint/Path setters use `self`; the host reader expands it before comparing registry signatures.
+This host has one signature per name and explicitly rejects extra declarations in its own schema.

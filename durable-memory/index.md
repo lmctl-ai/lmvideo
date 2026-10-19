@@ -29,3 +29,10 @@ including encoding/finalization, excluding compilation/loading). No execution bu
 S4 test.sh: PASS 22 checks (77 Skia, 32 encoder checks retained). Template: 12 frames, 2220 bytes,
 1758 dispatches, 47 ms in one shared-box run; exact paths influence bytes. First/mid/last pixels,
 collection markers, repeat PNG and decoded MP4 equality are gated. SDK pin is 90e1000 (see sdk.lock).
+
+## S2 schema and SDK adoption
+
+Schema 2 requires signature arrays. The SDK binds complete canonical imports, allowing multiple
+signatures per name without dynamic overload dispatch. Self is expanded to the receiver type at
+compile/host-schema-read time; the VM adds no identity/type checks or limits. See sdk.lock for pin.
+Paint/Path use self; this host intentionally implements singleton signature arrays and refuses multiple entries.

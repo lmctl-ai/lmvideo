@@ -1,4 +1,4 @@
-// Host-side reader for the `dsl.schema` 1 JSON (types with methods, functions, context). dslvm.hpp only hashes the schema bytes;
+// Host-side reader for schema 2 JSON (types with methods, functions, context). dslvm.hpp only hashes the schema bytes;
 // the host reads the signatures to (a) type-check every argument and result at call time, because the VM verifier checks names
 // and arities but not types, so hand-built bytecode with the right schema hash could otherwise hand a Path to a Paint parameter,
 // and (b) refuse to start when its registry and the schema disagree. No dependencies; strict about the shape it understands.
@@ -96,13 +96,13 @@ class Parser {
   size_t i_ = 0;
 };
 
-inline Sig sig(const Json& j) {
+inline Sig sig(const Json& j, const std::string& selfType = {}) {
   Sig s;
   const Json* p = j.find("params");
   const Json* r = j.find("returns");
   if (!p || p->kind != Json::ARR || !r || r->kind != Json::STR) throw dslvm::Error("schema: a signature needs params (array) and returns (string)");
   for (const Json& x : p->items) s.params.push_back(x.s);
-  s.returns = r->s;
+  s.returns = r->s == "self" ? selfType : r->s;
   return s;
 }
 
@@ -116,10 +116,23 @@ inline Schema parse(const std::string& text) {
     for (const auto& t : types->members) {
       const detail::Json* methods = t.second.find("methods");
       auto& dst = out.types[t.first];
-      if (methods) for (const auto& m : methods->members) dst[m.first] = detail::sig(m.second);
+      if (methods) for (const auto& m : methods->members) {
+        // Schema 2 keeps one or more signatures in an array under each name. The
+        // lmvideo host currently has no overloaded registrations, so retain the
+        // sole declaration while accepting the common representation.
+        if (m.second.kind != detail::Json::ARR || m.second.items.size() != 1)
+          throw dslvm::Error("schema: host registration requires exactly one signature array for method " + t.first + "." + m.first);
+        const detail::Json* entry = &m.second.items.front();
+        dst[m.first] = detail::sig(*entry, t.first);
+      }
     }
   if (const detail::Json* fns = root.find("functions"))
-    for (const auto& f : fns->members) out.functions[f.first] = detail::sig(f.second);
+    for (const auto& f : fns->members) {
+      if (f.second.kind != detail::Json::ARR || f.second.items.size() != 1)
+        throw dslvm::Error("schema: host registration requires exactly one signature array for function " + f.first);
+      const detail::Json* entry = &f.second.items.front();
+      out.functions[f.first] = detail::sig(*entry);
+    }
   if (const detail::Json* ctx = root.find("context"))
     for (const auto& c : ctx->members) out.context[c.first] = c.second.s;
   return out;
