@@ -1,5 +1,10 @@
 # lmvideo: Skia and ffmpeg bindings for the lmscript DSL
 
+**S1′ compiler pairing:** this checkout reads bytecode v4 only. Until a v4 compiler is released,
+use `LMSCRIPT_BIN=../lmctl-mono/lmscript/bin/lmscript bash test.sh` with a built mono checkout.
+Released lmscript 0.2.328 emits v3 and is deliberately refused.
+
+
 Status: EXPERIMENTAL (operator brief R23; the DSL framework is R12-R22 in lmctl-mono `lmscript/durable-memory/requirements/dsl-bytecode.md`,
 living language spec `lmscript/durable-memory/design/dsl-language.md`, bytecode v4). Nothing here is an accepted design. Built and tested
 on 2026-10-18 with g++ 11, Skia m144 (prebuilt), ffmpeg 4.4.2 and a mono build of lmscript.
