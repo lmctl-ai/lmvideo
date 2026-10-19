@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-# End-to-end test of lmvideo, offline and deterministic. Needs g++ (or CXX), make, python3, ffmpeg + ffprobe and a mono build of
-# lmscript: LMSCRIPT_BIN (default ../lmctl-mono/lmscript/bin/lmscript next to this checkout). `_dsl_` is not in the npm staging build.
+# End-to-end test of lmvideo, offline and deterministic. Needs g++ (or CXX), make, python3, ffmpeg + ffprobe and lmscript >= 0.2.346.
+# Set LMSCRIPT_BIN to override the lmscript executable; otherwise the released command is resolved from PATH.
 # Skia is fetched once into third_party/ by scripts/fetch-skia.sh (pinned sha256; LMVIDEO_SKIA_ZIP=path reuses a local zip).
 set -u
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$HERE"
-LMSCRIPT="${LMSCRIPT_BIN:-$HERE/../lmctl-mono/lmscript/bin/lmscript}"
-[ -f "$LMSCRIPT" ] || { echo "FAIL: lmscript not found at $LMSCRIPT (set LMSCRIPT_BIN to a mono build)" >&2; exit 1; }
+LMSCRIPT="${LMSCRIPT_BIN:-$(command -v lmscript || true)}"
+[ -n "$LMSCRIPT" ] && [ -x "$LMSCRIPT" ] || { echo "FAIL: lmscript >= 0.2.346 not found in PATH (or set LMSCRIPT_BIN)" >&2; exit 1; }
+LMSCRIPT_VERSION="$($LMSCRIPT --version 2>/dev/null | sed -nE 's/.*([0-9]+\.[0-9]+\.[0-9]+).*/\1/p' | head -1)"
+[ -n "$LMSCRIPT_VERSION" ] || { echo "FAIL: cannot read lmscript version from $LMSCRIPT" >&2; exit 1; }
+[ "$(printf '%s\n' 0.2.346 "$LMSCRIPT_VERSION" | sort -V | head -1)" = "0.2.346" ] || { echo "FAIL: lmscript $LMSCRIPT_VERSION is older than 0.2.346" >&2; exit 1; }
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/lmvideo-test-XXXXXX")"
 trap 'rm -rf "$WORK"' EXIT
 fail() { echo "FAIL: $*" >&2; exit 1; }
@@ -47,15 +50,15 @@ ok "encoder_test: $(tail -1 "$WORK/enc.out")"
 
 # 4. Phase 3: the DSL host. image.lms -> PNG.
 HOST="$B/lmvideohost"
-# Registry versus schema (spec v4 S0, A02): the host declares its signatures' types itself; they must equal the schema's.
+# Registry versus schema: the host declares its signatures' types; they must equal the schema's.
 if "$LMSCRIPT" --dsl-signatures "$SCHEMA" >"$WORK/schema.sigs" 2>/dev/null; then
   "$HOST" --dsl-signatures >"$WORK/host.sigs" || fail "host --dsl-signatures"
   diff -u "$WORK/schema.sigs" "$WORK/host.sigs" >"$WORK/sigs.diff" || { cat "$WORK/sigs.diff"; fail "registry signatures differ from the schema"; }
   ok "registry signatures equal the schema's ($(wc -l <"$WORK/host.sigs") entries, lmscript --dsl-signatures)"
 else
-  echo "skip - this lmscript has no --dsl-signatures (mono builds after 0.2.330 do); the host declares $("$HOST" --dsl-signatures | wc -l) signatures"
+  echo "skip - this lmscript has no --dsl-signatures; the host declares $("$HOST" --dsl-signatures | wc -l) signatures"
 fi
-# stdout is exactly one JSON result line (spec v4 S0, A03); out.print lines travel in result.output.
+# stdout is exactly one JSON result line; out.print lines travel in result.output.
 out_lines() { python3 -I -c 'import json,sys; d=json.load(sys.stdin); assert d["ok"] is True, d; print("\n".join(d["result"]["output"]))'; }
 result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line starting with the prefix
   [ "$(wc -l <"$1")" = 1 ] || fail "$1: stdout must be exactly one JSON line: $(cat "$1")"

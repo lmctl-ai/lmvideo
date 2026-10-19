@@ -1,12 +1,7 @@
 # Open items
 
-- **libav in-process backend** for `Encoder` (no process, in-memory encode): needs prebuilt shared FFmpeg with headers (or an installed `-dev` package); nothing attempted.
-- **GPU backends** (Skia Ganesh/Graphite, Vulkan/GL) are not used; raster only.
-- **Platforms:** Linux x86-64 only (the pinned zip). Windows/macOS/arm64 skia-pack archives exist but are not wired in `fetch-skia.sh`/Makefile.
-- **Not exposed to the DSL / not in the library:** `Matrix`, `Shader` objects (only a two-colour linear gradient exists), `ImageFilter`, `Paragraph`, `Skottie`, `PathEffect`
-  beyond dash, text layout beyond one line, audio, animated GIF/WebP reading.
-- **`Font::from_file`** exists in the library but is NOT exposed to the DSL: reading a path named by the script is a security decision for the lmscript team.
-- **SVG fidelity:** SkSVG supports a practical subset (no scripting, limited filters/CSS); a resvg-backed path rasterising to an `Image` is the fallback if needed.
-- **Rust host (R21):** not attempted; a Rust port would use `skia-safe` and share the schema and the SDK conformance vectors.
-- **State across frames** (physics/particles) is only expressible with DSL locals inside the frame loop or host collections; a persistent host `State` object is untested.
-- **Release promotion:** none done; released lmscript 0.2.328 emits v3 and is refused. Re-pin `sdk.lock` and rerun `test.sh` when the matching release exists.
+- Collect and ship the missing upstream notices for every linked Skia-pack library before distributing a compiled binary. The current source-only preparation records the gap in `THIRD_PARTY_NOTICES.md`.
+- Consider an in-process libav backend only if avoiding the FFmpeg process becomes a real requirement; it would add headers, ABI choices, and more license inventory.
+- Add non-Linux Skia archive wiring when there is a supported host and a reproducible validation path.
+- Extend SVG support only in response to a concrete document that the current Skia SVG DOM cannot render.
+- A Rust host remains a separate project; it should reuse the schema and runtime conformance contract rather than duplicate native policy.

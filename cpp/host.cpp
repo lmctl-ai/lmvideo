@@ -1,4 +1,4 @@
-// lmvideohost: the DSL host for lmvideo (R12). The host owns the process and encoder;
+// lmvideohost: the DSL host for lmvideo. The host owns the process and encoder;
 // the lmscript chunk owns the frame and attribute loops.
 //
 //   lmvideohost --dsl FILE.dslb --schema schema/lmvideo.dsl.json [--output PATH]
@@ -30,7 +30,7 @@ namespace {
 using dslvm::Args;
 using dslvm::Value;
 
-// Everything a chunk creates lives here for one run of the chunk and dies after it (R11/R12: handles cannot be stored).
+// Everything a chunk creates lives here for one run of the chunk and dies after it; handles cannot be stored across runs.
 class Arena {
  public:
   template <class T, class... A>
@@ -123,7 +123,7 @@ float F(const Value& v) { return static_cast<float>(v.f); }
 // Wraps dslvm::Registry with what the VM does not do: every argument and result is checked against the schema's signature
 // (the verifier checks names and arities only), library errors become DSL run-time errors that name the callee, and the
 // registrations are remembered so the host can refuse to start when its registry and the schema disagree. The host declares
-// each signature's types itself (spec v4 S0, A02): they reach the SDK registry, whose signatures() the test diffs against
+// each signature's types itself: they reach the SDK registry, whose signatures() the test diffs against
 // `lmscript --dsl-signatures`, and verify() compares them with the schema file as well. lmvideo keeps its own run-time checks.
 class Registrar {
  public:
@@ -501,7 +501,7 @@ int main(int argc, char** argv) {
     if (a == "--dsl") dsl_path = value("--dsl");
     else if (a == "--schema") schema_path = value("--schema");
     else if (a == "--output") output_override = value("--output");
-    else if (a == "--dsl-signatures") {  // the registry's canonical signatures as the host declares them (spec v4 S0, A02); no schema needed
+    else if (a == "--dsl-signatures") {  // the registry's canonical signatures as the host declares them; no schema needed
       Arena pa; OutputState po; dslvm::Registry preg; schema::Schema empty; Registrar pr(preg, empty);
       register_schema(pr, pa, po);
       for (const auto& s : preg.signatures()) std::cout << s << "\n";
@@ -528,7 +528,7 @@ int main(int argc, char** argv) {
     registrar.verify();  // the registry IS the schema, or nothing starts
     bytecode_bytes = dslvm::read_file(dsl_path);
     program = dslvm::Program::load(bytecode_bytes, schema_bytes, reg);
-  } catch (const dslvm::Error& e) {  // refused before anything ran: one JSON line, phase load, exit 3 (spec v4 S0, A03)
+  } catch (const dslvm::Error& e) {  // refused before anything ran: one JSON line, phase load, exit 3
     std::cerr << "error: " << dsl_path << ": " << e.what() << "\n";
     return dslvm::report_error("load", e);
   }
