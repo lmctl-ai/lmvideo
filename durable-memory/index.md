@@ -42,6 +42,11 @@ Paint/Path use self; this host intentionally implements singleton signature arra
 The host now targets the v5 compiler/runtime. The S1–S4 records and measurements above remain historical v4 evidence; the
 vendored SDK pin is refreshed by the integration owner after the v5 runtime is verified.
 
+S5 host coverage is verified: VM division errors and `out.fail` application errors assert source line/column locations, with
+the existing video output protocol preserved. The matching SDK and compiler are verified below.
+
 V5 integration verified with mono compiler and SDK f140fa3: test.sh PASS 22 checks; both runtimes pass the same 42 regenerated vectors. No release promotion.
 
 Final v5 verifier refresh: SDK b8fd285, PASS 22 checks; both runtimes pass all 43 regenerated vectors. This supersedes the earlier f140fa3 integration pin.
+
+S5 verified with SDK a0bebcd: PASS 23 checks. Exact physical line/column assertions cover existing host failures and computed division by zero; both SDKs pass all 50 shared vectors. Existing result codes and host checks are retained. No release promotion.

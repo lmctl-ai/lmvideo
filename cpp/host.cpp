@@ -562,7 +562,7 @@ int main(int argc, char** argv) {
                             ", \"bytecode_bytes\": " + std::to_string(bytecode_bytes.size()) + ", \"instructions\": " + std::to_string(stats.instructions) +
                             ", \"wall_ms\": " + std::to_string(elapsed_ms) + "}");
   } catch (const dslvm::Error& e) {  // the VM (RUN_ERROR) or a host method (RUN_HOST): phase run, exit 3
-    if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_app_failure(output.failure); }
+    if (output.failed) { std::cerr << "fail: " << output.failure << "\n"; return dslvm::report_error("app", e); }
     std::cerr << "dsl runtime error: " << e.what() << "\n";
     return dslvm::report_error("run", e);
   } catch (const lmv::Error& e) {  // the library outside a method (encoder, image writer): phase run, RUN_HOST, exit 3

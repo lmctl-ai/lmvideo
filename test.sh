@@ -179,7 +179,21 @@ run_err r3 3 'before video.begin' "$SETUP video.begin(); video.size(10, 10);"
 run_err r4 3 'video.output' 'video.size(64, 64); video.begin();'
 run_err r5 3 'needs video.frames(1)' 'video.size(64, 64); video.frames(2); video.output("'"$WORK"'/r.png"); video.begin();'
 run_err r6 3 'size must be' 'video.size(63000, 64); video.frames(1); video.output("'"$WORK"'/r.png"); video.begin();'
+python3 - "$WORK/r6.out" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+assert d["phase"] == "run" and d["code"] == "RUN_HOST", d
+assert d["line"] == 2 and d["column"] == 7, d
+assert d["message"].startswith("dsl line 2:7:") and "size must be" in d["message"], d
+PY
 run_err r7 4 'fail: nope' "$SETUP video.begin(); video.frame(); out.fail(\"nope\"); video.end();"
+python3 - "$WORK/r7.out" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+assert d["phase"] == "app" and d["code"] == "APP_FAIL", d
+assert d["line"] == 2 and d["column"] > 0, d
+assert d["message"].startswith("dsl line 2:") and "nope" in d["message"], d
+PY
 ok "host lifecycle errors: bad colour, drawing before begin, configuration after begin, missing output, image with 2 frames, bad size (exit 3); out.fail (exit 4)"
 
 # 10. Defence in depth (reviewer finding): the VM verifier checks names and arities, not types, so a hand-built program with the
@@ -231,6 +245,20 @@ rm -f "$WORK/fail.mp4"
 run_err r10 4 'fail: stop' "video.size(64, 64); video.frames(5); video.output(\"$WORK/fail.mp4\"); video.begin(); for (i in range(0, video.count())) { video.frame(); if (video.index() == 1) { out.fail(\"stop\"); } } video.end();"
 [ ! -e "$WORK/fail.mp4" ] && [ -z "$(ls -A "$WORK" | grep '^\.lmv-')" ] || fail "a failed video run left a partial file"
 ok "NaN colour factor and an unwritable image path are errors (exit 3); out.fail during a video leaves no partial file"
+
+# 12. VM failures retain the DSL source location; the computed zero bypasses the compiler's literal-zero rejection.
+printf 'p = _dsl_ schema="%s";\nlet z = 1 - 1;\nlet x = 1 / z;\nend _dsl_\nsavedsl(p, "%s/located.dslb");\n' "$SCHEMA" "$WORK" >"$WORK/located.lms"
+compile "$WORK/located.lms" >/dev/null 2>&1 || fail "compile located division"
+"$HOST" --dsl "$WORK/located.dslb" --schema "$SCHEMA" >"$WORK/located.out" 2>"$WORK/located.err"; code=$?
+[ "$code" = 3 ] || fail "located division exit $code: $(cat "$WORK/located.out")"
+python3 - "$WORK/located.out" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+assert d["phase"] == "run" and d["code"] == "RUN_ERROR", d
+assert d["line"] == 3 and d["column"] == 11, d
+assert d["message"] == "dsl line 3:11: int division by zero", d
+PY
+ok "computed division by zero reports DSL line 3:11"
 
 run_err r11 3 'active video.begin' 'video.frame();'
 run_err r12 3 'exactly video.frames' "$SETUP video.begin(); video.end();"
