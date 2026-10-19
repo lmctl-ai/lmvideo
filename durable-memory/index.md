@@ -43,3 +43,5 @@ The host now targets the v5 compiler/runtime. The S1–S4 records and measuremen
 vendored SDK pin is refreshed by the integration owner after the v5 runtime is verified.
 
 V5 integration verified with mono compiler and SDK f140fa3: test.sh PASS 22 checks; both runtimes pass the same 42 regenerated vectors. No release promotion.
+
+Final v5 verifier refresh: SDK b8fd285, PASS 22 checks; both runtimes pass all 43 regenerated vectors. This supersedes the earlier f140fa3 integration pin.
