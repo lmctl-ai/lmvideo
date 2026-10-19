@@ -411,8 +411,8 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   }
   reg.function("to_int", {"float"}, "int", [](Args& a) {
     double v = std::trunc(a[0].f);
-    if (!(v >= -2147483648.0 && v <= 2147483647.0)) throw lmv::Error("value does not fit an int");
-    return Value::integer(static_cast<int32_t>(v));
+    if (!(v >= -9223372036854775808.0 && v < 9223372036854775808.0)) throw lmv::Error("value does not fit an int");
+    return Value::integer(static_cast<int64_t>(v));
   });
   reg.function("mix", {"string", "string", "float"}, "string", [](Args& a) {
     lmv::Color c0 = lmv::parse_color(a[0].s), c1 = lmv::parse_color(a[1].s);
