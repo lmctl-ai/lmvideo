@@ -10,3 +10,4 @@
 - Common numeric functions belong to the lmscript runtime. lmvideo retains `mix` because it validates and interpolates colors.
 - The template example uses one DSL run for setup, frame loops, template expansion, PNG output, and video finalization.
 - The C++ DSL header is synchronized by `scripts/sync-sdk.sh` and pinned by `sdk.lock`. Publication of a binary must also carry the upstream runtime notice.
+- DSL host flag standard (lmscript R42): make embeds `schema/lmvideo.dsl.json` in `lmvideohost` (generated `schema_embedded.hpp`); the registry self-check and the bytecode hash use that embedded copy, `--dsl-schema [--json]` prints it and `--schema FILE` is gone (exit 2, no alias). `LMVIDEO_SCHEMA=FILE` at build time exists only so `test.sh` can build hosts embedding edited schemas to exercise the self-check.

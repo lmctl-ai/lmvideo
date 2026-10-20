@@ -73,8 +73,17 @@ $(BUILD)/encoder_test: $(BUILD)/encoder_test.o $(BUILD)/liblmvideo.a | $(BUILD) 
 	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/encoder_test.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
 # The DSL host: implements schema/lmvideo.dsl.json over the library (dslvm.hpp is vendored, pinned by sdk.lock).
-$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp | $(BUILD)
-	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -c cpp/host.cpp -o $@
+# The schema is embedded byte for byte (`lmvideohost --dsl-schema --json` prints exactly these bytes). LMVIDEO_SCHEMA exists
+# only so test.sh can build a host embedding an edited schema to exercise the registry/schema self-check.
+LMVIDEO_SCHEMA ?= schema/lmvideo.dsl.json
+$(BUILD)/generated/schema_embedded.hpp: $(LMVIDEO_SCHEMA)
+	@mkdir -p $(@D)
+	{ printf '#pragma once\n#include <cstddef>\nnamespace lmvideo_dsl { inline constexpr unsigned char embedded_schema[] = {\n'; \
+	  od -An -v -tx1 $(LMVIDEO_SCHEMA) | sed 's/ *\([0-9a-f][0-9a-f]\)/0x\1,/g'; \
+	  printf '};\ninline constexpr std::size_t embedded_schema_size = sizeof(embedded_schema); }\n'; } >$@.tmp && mv $@.tmp $@
+
+$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp cpp/schema.hpp $(BUILD)/generated/schema_embedded.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -I$(BUILD)/generated -c cpp/host.cpp -o $@
 
 $(BUILD)/lmvideohost: $(BUILD)/host.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
 	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/host.o $(BUILD)/liblmvideo.a $(LINK_SKIA)

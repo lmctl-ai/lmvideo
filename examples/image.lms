@@ -1,6 +1,6 @@
 # lmvideo image example (EXPERIMENTAL _dsl_): a poster drawn with shapes, a gradient, a path and text.
 # Run from the repo root: $LMSCRIPT_BIN examples/image.lms [OUT.dslb] [OUT.png] [WIDTH] [HEIGHT] [TITLE]
-#   then   build/lmvideohost --dsl OUT.dslb --schema schema/lmvideo.dsl.json
+#   then   build/lmvideohost --dsl OUT.dslb
 # The chunk runs once: video.begin() allocates the host-owned surface and frame() selects the frame.
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/image.dslb";
 png = ARGV.len() > 1 ? ARGV[1] : "build/image.png";

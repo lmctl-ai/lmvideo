@@ -10,7 +10,7 @@ nice make
 nice bash test.sh
 ```
 
-`test.sh` checks the compiler version, verifies `cpp/dslvm.hpp` against `sdk.lock`, builds in a temporary directory, runs the Skia and encoder tests, exercises the CLI, compares host and schema signatures, compiles all DSL examples, checks PNG and MP4 facts, and covers host error paths. It does not install packages or modify system directories.
+`test.sh` checks the compiler version, verifies `cpp/dslvm.hpp` against `sdk.lock`, builds in a temporary directory, runs the Skia and encoder tests, exercises the CLI, compares host and schema signatures, checks the embedded schema (`--dsl-schema --json` byte-identical to the file, the shared `--dsl-schema` summary, `--schema FILE` refused with exit 2), compiles all DSL examples, checks PNG and MP4 facts, and covers host error paths. It does not install packages or modify system directories.
 
 The test script's generated files live under a temporary directory and are removed on exit. The downloaded Skia tree is ignored by Git. A clean checkout therefore needs either network access or `LMVIDEO_SKIA_ZIP` pointing to the archive whose checksum matches `scripts/skia.lock`.
 

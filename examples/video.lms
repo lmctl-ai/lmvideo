@@ -1,7 +1,7 @@
 # lmvideo video example (EXPERIMENTAL _dsl_): the DSL owns both the frame loop and
 # the per-frame drawing loop; the host owns the surface and encoder.
 # Run from the repo root: $LMSCRIPT_BIN examples/video.lms [OUT.dslb] [OUT.mp4] [FRAMES] [FPS]
-#   then   build/lmvideohost --dsl OUT.dslb --schema schema/lmvideo.dsl.json
+#   then   build/lmvideohost --dsl OUT.dslb
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/video.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "build/video.mp4";
 frames = ARGV.len() > 2 ? num(ARGV[2]) : 60;

@@ -30,12 +30,14 @@ Compile and run the DSL examples with the released CLI:
 
 ```sh
 lmscript examples/image.lms build/image.dslb build/image.png 640 360 "Hello lmvideo"
-build/lmvideohost --dsl build/image.dslb --schema schema/lmvideo.dsl.json
+build/lmvideohost --dsl build/image.dslb
 lmscript examples/video.lms build/video.dslb build/video.mp4 60 30
-build/lmvideohost --dsl build/video.dslb --schema schema/lmvideo.dsl.json
+build/lmvideohost --dsl build/video.dslb
 lmscript examples/template.lms build/template.dslb build/template.mp4 build/template.png
-build/lmvideohost --dsl build/template.dslb --schema schema/lmvideo.dsl.json
+build/lmvideohost --dsl build/template.dslb
 ```
+
+The host follows the lmctl DSL host flag standard: `make` embeds `schema/lmvideo.dsl.json` in `lmvideohost` (a generated header), and bytecode is verified against that embedded copy. `build/lmvideohost --dsl-schema --json` prints those exact bytes, `--dsl-schema` prints the shared summary (`context`/`fn` lines, then `Owner:` with indented methods) and `--dsl-signatures` the canonical signature list. There is no `--schema FILE` option; it and any other flag combination are refused with exit 2 and nothing on stdout.
 
 The template example iterates a host-owned collection through `len()` and `at()`, interpolates keyframes in DSL loops, and produces both MP4 and PNG output. The runtime reports output paths, frame counts, bytecode size, dispatch count, and wall time in its JSON result line.
 

@@ -58,6 +58,15 @@ if "$LMSCRIPT" --dsl-signatures "$SCHEMA" >"$WORK/schema.sigs" 2>/dev/null; then
 else
   echo "skip - this lmscript has no --dsl-signatures; the host declares $("$HOST" --dsl-signatures | wc -l) signatures"
 fi
+# DSL host flag standard: the schema is embedded; --dsl-schema --json prints its exact bytes, --dsl-schema the shared summary.
+"$HOST" --dsl-schema --json >"$WORK/embedded.json" || fail "--dsl-schema --json"
+cmp -s "$SCHEMA" "$WORK/embedded.json" || fail "--dsl-schema --json differs from schema/lmvideo.dsl.json"
+ok "--dsl-schema --json prints the embedded schema byte for byte"
+python3 -I tests/schema-cli.py "$HOST" "$SCHEMA" >"$WORK/schema-cli.out" 2>&1 || { cat "$WORK/schema-cli.out"; fail "--dsl-schema summary format / flag combinations"; }
+ok "--dsl-schema summary uses the shared format; other flag combinations exit 2 with empty stdout"
+out="$("$HOST" --dsl "$WORK/none.dslb" --schema "$SCHEMA" 2>/dev/null)"; code=$?
+[ "$code" = 2 ] && [ -z "$out" ] || fail "removed --schema FILE accepted (exit $code): $out"
+ok "removed --schema FILE option refused (exit 2, nothing on stdout)"
 # stdout is exactly one JSON result line; out.print lines travel in result.output.
 out_lines() { python3 -I -c 'import json,sys; d=json.load(sys.stdin); assert d["ok"] is True, d; print("\n".join(d["result"]["output"]))'; }
 result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line starting with the prefix
@@ -66,7 +75,7 @@ result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line sta
 }
 compile examples/image.lms "$WORK/image.dslb" "$WORK/image.png" 640 360 "Hello lmvideo" >/dev/null || fail "compile image.lms"
 [ "$(od -An -tu1 -j4 -N2 "$WORK/image.dslb" | tr -s ' ' | sed 's/^ //')" = "0 5" ] || fail "bytecode version 5"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$SCHEMA" >"$WORK/image.out" 2>"$WORK/image.err" || { cat "$WORK/image.err"; fail "image host"; }
+"$HOST" --dsl "$WORK/image.dslb" >"$WORK/image.out" 2>"$WORK/image.err" || { cat "$WORK/image.err"; fail "image host"; }
 result_line "$WORK/image.out" '{"ok": true, "result": {"output": ["drew 640x360"], "file": "'"$WORK"'/image.png", "width": 640, "height": 360, "frames": 1, "fps": '
 [ "$(out_lines <"$WORK/image.out")" = "drew 640x360" ] || fail "image.lms output: $(cat "$WORK/image.out")"
 [ "$($PNGPX "$WORK/image.png")" = "640x360" ] || fail "image.png size"
@@ -76,18 +85,18 @@ expect_px "$WORK/image.png" 635 355 42 82 152 4      # gradient end #2a5298 (bot
 expect_px "$WORK/image.png" 120 250 219 71 113 12    # translucent #ef476f over the gradient
 ok "image.lms: 640x360 PNG with the sun, gradient and translucent card at the expected pixels"
 mv "$WORK/image.png" "$WORK/image1.png"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$SCHEMA" >/dev/null 2>&1 || fail "second host run failed"
+"$HOST" --dsl "$WORK/image.dslb" >/dev/null 2>&1 || fail "second host run failed"
 [ -f "$WORK/image.png" ] || fail "second run did not produce image.png"
 [ "$($PNGPX "$WORK/image.png" --sha256)" = "$($PNGPX "$WORK/image1.png" --sha256)" ] || fail "two runs differ"
 ok "image.lms: a second run gives identical pixels (deterministic, no system fonts)"
 compile examples/image.lms "$WORK/small.dslb" "$WORK/small.png" 200 100 "Hi" >/dev/null || fail "compile small"
-"$HOST" --dsl "$WORK/small.dslb" --schema "$SCHEMA" >/dev/null 2>&1 || fail "small host"
+"$HOST" --dsl "$WORK/small.dslb" >/dev/null 2>&1 || fail "small host"
 [ "$($PNGPX "$WORK/small.png")" = "200x100" ] || fail "\${} size reaches the host"
 ok "image.lms: \${} literals (size 200x100, title, path) reach the host"
 
 # 5. svg.lms: an SVG document drawn into the canvas.
 compile examples/svg.lms "$WORK/svg.dslb" "$WORK/svg.png" tests/golden/scene.svg >/dev/null || fail "compile svg.lms"
-"$HOST" --dsl "$WORK/svg.dslb" --schema "$SCHEMA" >"$WORK/svg.out" 2>/dev/null || fail "svg host"
+"$HOST" --dsl "$WORK/svg.dslb" >"$WORK/svg.out" 2>/dev/null || fail "svg host"
 [ "$(out_lines <"$WORK/svg.out")" = "svg is 200x120" ] || fail "svg output: $(cat "$WORK/svg.out")"
 expect_px "$WORK/svg.png" 140 100 231 76 60 3        # the red #e74c3c rounded rect at (65..215, 60..153)
 expect_px "$WORK/svg.png" 320 100 241 196 15 3       # the yellow #f1c40f circle
@@ -97,7 +106,7 @@ ok "svg.lms: SVG fitted into a rect on a canvas the chunk also draws on"
 
 # 6. video.lms -> mp4: the DSL owns the frame loop; the host owns encoding.
 compile examples/video.lms "$WORK/video.dslb" "$WORK/video.mp4" 60 30 >/dev/null || fail "compile video.lms"
-"$HOST" --dsl "$WORK/video.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/video.err" || { cat "$WORK/video.err"; fail "video host"; }
+"$HOST" --dsl "$WORK/video.dslb" >/dev/null 2>"$WORK/video.err" || { cat "$WORK/video.err"; fail "video host"; }
 INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames:format=duration -of default=nw=1 "$WORK/video.mp4")"
 echo "$INFO" | sed 's/^/    /'
 [ "$(echo "$INFO" | tr '\n' ' ')" = "codec_name=h264 width=320 height=180 nb_read_frames=60 duration=2.000000 " ] || fail "ffprobe: $INFO"
@@ -113,7 +122,7 @@ ok "video.lms: frame 0 and frame 59 decode to the expected ball position and col
 # 6b. template.lms -> mp4 and a PNG snapshot in one DSL invocation. The same
 # host collection is walked on every frame, and the final frame is saved as PNG.
 compile examples/template.lms "$WORK/template.dslb" "$WORK/template.mp4" "$WORK/template.png" >/dev/null || fail "compile template.lms"
-"$HOST" --dsl "$WORK/template.dslb" --schema "$SCHEMA" >"$WORK/template.out" 2>"$WORK/template.err" || { cat "$WORK/template.err"; fail "template host"; }
+"$HOST" --dsl "$WORK/template.dslb" >"$WORK/template.out" 2>"$WORK/template.err" || { cat "$WORK/template.err"; fail "template host"; }
 result_line "$WORK/template.out" '{"ok": true, "result": {"output": ['
 TINFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames:format=duration -of default=nw=1 "$WORK/template.mp4")"
 [ "$(echo "$TINFO" | tr '\n' ' ')" = "codec_name=h264 width=320 height=180 nb_read_frames=12 duration=1.000000 " ] || fail "template ffprobe: $TINFO"
@@ -128,7 +137,7 @@ frame "$WORK/template.mp4" 5 "$WORK/t5.png"
 expect_px "$WORK/t5.png" 144 90 248 149 106 40
 ffmpeg -v error -i "$WORK/template.mp4" -f framemd5 "$WORK/template1.md5"
 cp "$WORK/template.png" "$WORK/template1.png"
-"$HOST" --dsl "$WORK/template.dslb" --schema "$SCHEMA" >/dev/null 2>&1 || fail "second template host run"
+"$HOST" --dsl "$WORK/template.dslb" >/dev/null 2>&1 || fail "second template host run"
 [ "$($PNGPX "$WORK/template.png" --sha256)" = "$($PNGPX "$WORK/template1.png" --sha256)" ] || fail "template PNG is not deterministic"
 ffmpeg -v error -i "$WORK/template.mp4" -f framemd5 "$WORK/template2.md5"
 cmp "$WORK/template1.md5" "$WORK/template2.md5" || fail "template decoded frames differ on rerun"
@@ -160,10 +169,12 @@ ok "seven ill-typed chunks are rejected at lmscript check time with located erro
 
 # 8. Host refusals before anything runs: schema hash mismatch, truncated file, wrong version.
 sed 's/"name": "lmvideo"/"name": "lmvideo2"/' "$SCHEMA" >"$WORK/other.json"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/other.json" >"$WORK/e.out" 2>"$WORK/e.err"; [ $? = 3 ] && grep -q "schema mismatch" "$WORK/e.err" || fail "schema mismatch: $(cat "$WORK/e.err")"
+printf 'p = _dsl_ schema="%s";\nout.print("x");\nend _dsl_\nsavedsl(p, "%s/other.dslb");\n' "$WORK/other.json" "$WORK" >"$WORK/other.lms"
+"$LMSCRIPT" "$WORK/other.lms" >/dev/null 2>&1 || fail "compile against the other schema"
+"$HOST" --dsl "$WORK/other.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; [ $? = 3 ] && grep -q "schema mismatch" "$WORK/e.err" || fail "schema mismatch: $(cat "$WORK/e.err")"
 result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_SCHEMA_MISMATCH", "message": "schema mismatch'
 head -c 60 "$WORK/image.dslb" >"$WORK/trunc.dslb"
-"$HOST" --dsl "$WORK/trunc.dslb" --schema "$SCHEMA" >"$WORK/e.out" 2>"$WORK/e.err"; [ $? = 3 ] && grep -q "truncated" "$WORK/e.err" || fail "truncated"
+"$HOST" --dsl "$WORK/trunc.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; [ $? = 3 ] && grep -q "truncated" "$WORK/e.err" || fail "truncated"
 result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_BAD_BYTECODE", "message": "bytecode is truncated'
 ok "host refuses a schema-hash mismatch and a truncated file (one JSON line, phase load, exit 3, nothing drawn)"
 
@@ -171,7 +182,7 @@ ok "host refuses a schema-hash mismatch and a truncated file (one JSON line, pha
 run_err() { # NAME EXPECTED_EXIT EXPECTED_MESSAGE_PART BODY
   printf 'p = _dsl_ schema="%s";\n%s\nend _dsl_\nsavedsl(p, "%s/%s.dslb");\n' "$SCHEMA" "$4" "$WORK" "$1" >"$WORK/$1.lms"
   "$LMSCRIPT" "$WORK/$1.lms" >"$WORK/$1.cout" 2>&1 || { cat "$WORK/$1.cout"; fail "$1 compile"; }
-  "$HOST" --dsl "$WORK/$1.dslb" --schema "$SCHEMA" >"$WORK/$1.out" 2>"$WORK/$1.err"; local code=$?
+  "$HOST" --dsl "$WORK/$1.dslb" >"$WORK/$1.out" 2>"$WORK/$1.err"; local code=$?
   [ "$code" = "$2" ] && grep -q "$3" "$WORK/$1.err" || { cat "$WORK/$1.err"; fail "$1: expected exit $2 with '$3', got $code"; }
   if [ "$2" = 4 ]; then result_line "$WORK/$1.out" '{"ok": false, "phase": "app", "code": "APP_FAIL", "message": "'; else result_line "$WORK/$1.out" '{"ok": false, "phase": "run", "code": "RUN_HOST", "message": "'; fi
 }
@@ -216,7 +227,7 @@ for _ in range(n):                       # rewrite the import "fn paint() -> Pai
 else: raise SystemExit("constant not found")
 open(sys.argv[1], "wb").write(d)
 PY
-"$HOST" --dsl "$WORK/w.dslb" --schema "$SCHEMA" >/dev/null 2>"$WORK/w.err"; code=$?
+"$HOST" --dsl "$WORK/w.dslb" >/dev/null 2>"$WORK/w.err"; code=$?
 [ "$code" = 3 ] && grep -q 'Canvas.rect: argument 5 must be Paint, got Path' "$WORK/w.err" || { cat "$WORK/w.err"; fail "wrong-type bytecode: exit $code"; }
 ok "hand-built bytecode passing a Path as a Paint is stopped by the host's schema type check (exit 3, no crash)"
 python3 - "$SCHEMA" "$WORK/extra.json" <<'PY'
@@ -228,7 +239,12 @@ json.dump(data, open(dst, "w"), indent=2)
 open(dst, "a").write("\n")
 PY
 grep -q '"extra"' "$WORK/extra.json" || fail "schema edit"
-"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/extra.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
+variant_host() { # NAME SCHEMA: a host embedding an edited schema, linked against the already built library
+  cp -Rp "$B" "$WORK/build-$1" && rm -rf "$WORK/build-$1/host.o" "$WORK/build-$1/lmvideohost" "$WORK/build-$1/generated" || fail "copy build for $1"
+  nice make BUILD="$WORK/build-$1" LMVIDEO_SCHEMA="$2" "$WORK/build-$1/lmvideohost" >"$WORK/make-$1.log" 2>&1 || { tail -30 "$WORK/make-$1.log"; fail "build $1 host"; }
+}
+variant_host extra "$WORK/extra.json"
+"$WORK/build-extra/lmvideohost" --dsl "$WORK/image.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'missing method Paint.extra' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry self-check: exit $code"; }
 result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_UNBOUND", "message": "host registry does not match the schema: missing method Paint.extra;'
 python3 - "$SCHEMA" "$WORK/typed.json" <<'PY'
@@ -239,9 +255,10 @@ data["types"]["Paint"]["methods"]["fill"][0]["params"] = ["int"]
 json.dump(data, open(dst, "w"), indent=2)
 open(dst, "a").write("\n")
 PY
-"$HOST" --dsl "$WORK/image.dslb" --schema "$WORK/typed.json" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
+variant_host typed "$WORK/typed.json"
+"$WORK/build-typed/lmvideohost" --dsl "$WORK/image.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'signature of Paint.fill' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry type self-check: exit $code"; }
-ok "the host refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)"
+ok "a host built with an edited embedded schema refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)"
 run_err r8 3 'interpolation factor must be finite' "$SETUP video.begin(); video.frame(); canvas.clear(mix(\"#000000\", \"#ffffff\", 0.0 / 0.0)); video.end();"
 run_err r9 3 'cannot write' "video.size(8, 8); video.frames(1); video.output(\"$WORK/no/such/dir/x.jpg\"); video.begin(); video.frame(); canvas.clear(\"#ffffff\"); video.end();"
 rm -f "$WORK/fail.mp4"
@@ -252,7 +269,7 @@ ok "NaN colour factor and an unwritable image path are errors (exit 3); out.fail
 # 12. VM failures retain the DSL source location; the computed zero bypasses the compiler's literal-zero rejection.
 printf 'p = _dsl_ schema="%s";\nlet z = 1 - 1;\nlet x = 1 / z;\nend _dsl_\nsavedsl(p, "%s/located.dslb");\n' "$SCHEMA" "$WORK" >"$WORK/located.lms"
 compile "$WORK/located.lms" >/dev/null 2>&1 || fail "compile located division"
-"$HOST" --dsl "$WORK/located.dslb" --schema "$SCHEMA" >"$WORK/located.out" 2>"$WORK/located.err"; code=$?
+"$HOST" --dsl "$WORK/located.dslb" >"$WORK/located.out" 2>"$WORK/located.err"; code=$?
 [ "$code" = 3 ] || fail "located division exit $code: $(cat "$WORK/located.out")"
 python3 - "$WORK/located.out" <<'PY'
 import json, sys
