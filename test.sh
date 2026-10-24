@@ -20,7 +20,7 @@ compile() {
   local source="${1:-}"
   if [ -f "$source" ] && grep -q 'canvas\.plot(' "$source"; then
     local local_schema="$WORK/$(basename "$source" .lms)-local-schema.lms"
-    sed "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@latest\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
+    sed "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@v0.1.23\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
     shift
     "$LMSCRIPT" "$local_schema" "$@"
   else

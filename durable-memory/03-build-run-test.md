@@ -14,7 +14,7 @@ nice bash test.sh
 
 `test.sh` checks the compiler version, verifies `cpp/dslvm.hpp` against `sdk.lock`, builds in a temporary directory, runs the Skia, plot-pixel, and encoder tests, exercises the CLI, compares host and schema signatures, checks the embedded schema (`--dsl-schema --json` byte-identical to the file, the shared `--dsl-schema` summary, `--schema FILE` refused with exit 2), compiles all DSL examples, checks PNG and MP4 facts, and covers host error paths. It does not install packages or modify system directories.
 
-For sources that call `Canvas.plot()`, `test.sh` compiles a temporary copy against the checked-in schema and runs that bytecode on the freshly built host. The published source keeps `cli="lmvideo" install="github:lmctl-ai/lmvideo@latest"` so `lmctl autorun` resolves the released host normally.
+For sources that call `Canvas.plot()`, `test.sh` compiles a temporary copy against the checked-in schema and runs that bytecode on the freshly built host. The examples pin `cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23"` so the compiler selects the schema revision that introduced `Plot`/`Series`.
 
 The test script's generated files live under a temporary directory and are removed on exit. The downloaded Skia tree is ignored by Git. A clean checkout therefore needs either network access or `LMVIDEO_SKIA_ZIP` pointing to the archive whose checksum matches `scripts/skia.lock`.
 

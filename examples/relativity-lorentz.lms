@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/relativity-lorentz.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/relativity-lorentz.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/relativity-lorentz.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 let plot = canvas.plot(30.0, 32.0, 610.0, 476.0).title("Special relativity · γ, γβ and L/L₀").xlabel("speed fraction β = v/c").ylabel("dimensionless value").x_range(0.0, 1.0).y_range(0.0, 6.0).legend("top_left").background("#ffffff");
 let gamma = plot.series("Lorentz factor γ", "line", "#d89b00").width(3.0);

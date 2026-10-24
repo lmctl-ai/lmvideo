@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/quarterly-revenue.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/quarterly-revenue.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/quarterly-revenue.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 let plot = canvas.plot(40.0, 34.0, 880.0, 472.0).title("Quarterly revenue and net margin").xlabel("quarter").ylabel("revenue ($M)").y2label("net margin (%)").x_range(0.5, 8.5).y_range(0.0, 80.0).y2_range(-5.0, 35.0).legend("top_left").background("#ffffff");
 let revenue = plot.series("revenue", "bar", "#2878b5");
