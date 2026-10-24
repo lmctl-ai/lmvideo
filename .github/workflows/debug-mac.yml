@@ -8,12 +8,15 @@ jobs:
       - name: probe
         run: |
           set +e
-          echo '#include <memory>' > /tmp/t.cpp
-          c++ -std=c++17 -fsyntax-only /tmp/t.cpp && echo BEFORE-ok
-          xcode-select -p; ls /Library/Developer/CommandLineTools 2>&1 | head -2
-          brew install ffmpeg >/tmp/brew.log 2>&1; tail -3 /tmp/brew.log
-          xcode-select -p
-          c++ -std=c++17 -fsyntax-only /tmp/t.cpp && echo AFTER-ok
-          c++ -std=c++17 -fsyntax-only -v /tmp/t.cpp 2>&1 | grep -a -A14 "search starts here"
-          env | grep -a -i "sdkroot\|cpath\|c_include\|developer"
-          which -a c++
+          scripts/fetch-skia.sh >/dev/null
+          S=third_party/skia
+          F="-Icpp -I$S -isystem $S/include -isystem $S/modules/svg/include -isystem $S/modules/skshaper/include"
+          t() { echo "== $*"; c++ -std=c++17 "$@" cpp/lmvideo.cpp -o /tmp/x.o 2>&1 | grep -a -c "error:" | sed "s/^/count=/"; }
+          t $F -c
+          t $F -c -O2
+          t $F -c -w
+          t $F -c -O2 -w
+          t $F -c -O2 -w -Wa,-I$PWD
+          t $F -fsyntax-only -O2
+          ls -la cpp/lmvideo.cpp; git log -1 --format=%H
+          c++ -std=c++17 $F -c -O2 -w cpp/lmvideo.cpp -o /tmp/x.o 2>&1 | head -8 | cut -c1-200
