@@ -1,0 +1,18 @@
+name: debug-mac
+on: workflow_dispatch
+jobs:
+  d:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: probe
+        run: |
+          which g++ clang++; g++ --version | head -2
+          echo '#include <memory>' > /tmp/t.cpp
+          g++ -std=c++17 -fsyntax-only /tmp/t.cpp && echo plain-ok
+          scripts/fetch-skia.sh >/dev/null
+          g++ -std=c++17 -Icpp -Ithird_party/skia -fsyntax-only /tmp/t.cpp && echo I-ok
+          g++ -std=c++17 -isystem third_party/skia/include -fsyntax-only /tmp/t.cpp && echo isystem-ok
+          g++ -std=c++17 -Wa,-I$PWD -fsyntax-only /tmp/t.cpp && echo wa-ok
+          g++ -std=c++17 -Icpp -fsyntax-only cpp/lmvideo.hpp -x c++ && echo hpp-ok || true
+          make BUILD=build -n build/liblmvideo.a | head -5 || true
