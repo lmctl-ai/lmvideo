@@ -49,15 +49,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-24.04,     name: linux-x64 }
-          - { os: ubuntu-24.04-arm, name: linux-arm64 }
-          - { os: macos-15,         name: macos-arm64 }
-          - { os: macos-15-intel,   name: macos-x64 }
+          - { os: ubuntu-24.04,     name: linux-x64,   static: "1" }
+          - { os: ubuntu-24.04-arm, name: linux-arm64, static: "1" }
+          - { os: macos-15,         name: macos-arm64, static: "0" }
+          - { os: macos-15-intel,   name: macos-x64,   static: "0" }
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     env:
       # Linux executables are fully static; macOS cannot link libSystem statically.
-      STATIC: ${{ runner.os == 'Linux' && '1' || '0' }}
+      STATIC: ${{ matrix.static }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
