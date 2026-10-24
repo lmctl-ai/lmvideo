@@ -56,7 +56,7 @@ export PATH="$B:$PATH"   # examples declare cli="lmvideo": lmscript asks the fre
 if "$LMSCRIPT" --dsl-signatures "$SCHEMA" >"$WORK/schema.sigs" 2>/dev/null; then
   "$HOST" --dsl-signatures >"$WORK/host.sigs" || fail "host --dsl-signatures"
   diff -u "$WORK/schema.sigs" "$WORK/host.sigs" >"$WORK/sigs.diff" || { cat "$WORK/sigs.diff"; fail "registry signatures differ from the schema"; }
-  ok "registry signatures equal the schema's ($(wc -l <"$WORK/host.sigs") entries, lmscript --dsl-signatures)"
+  ok "registry signatures equal the schema's ($(wc -l <"$WORK/host.sigs" | tr -d " ") entries, lmscript --dsl-signatures)"
 else
   echo "skip - this lmscript has no --dsl-signatures; the host declares $("$HOST" --dsl-signatures | wc -l) signatures"
 fi
@@ -72,7 +72,7 @@ ok "removed --schema FILE option refused (exit 2, nothing on stdout)"
 # stdout is exactly one JSON result line; out.print lines travel in result.output.
 out_lines() { python3 -I -c 'import json,sys; d=json.load(sys.stdin); assert d["ok"] is True, d; print("\n".join(d["result"]["output"]))'; }
 result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line starting with the prefix
-  [ "$(wc -l <"$1")" = 1 ] || fail "$1: stdout must be exactly one JSON line: $(cat "$1")"
+  [ "$(wc -l <"$1" | tr -d " ")" = 1 ] || fail "$1: stdout must be exactly one JSON line: $(cat "$1")"
   case "$(cat "$1")" in "$2"*) ;; *) fail "$1: result line $(cat "$1") does not start with $2";; esac
 }
 compile examples/image.lms "$WORK/image.dslb" "$WORK/image.png" 640 360 "Hello lmvideo" >/dev/null || fail "compile image.lms"
