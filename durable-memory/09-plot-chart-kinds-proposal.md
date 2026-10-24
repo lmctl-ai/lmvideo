@@ -43,6 +43,7 @@ Add data types:
     "colorbar": [{"params":["bool"],"returns":"Heatmap"}],
     "labels": [{"params":["bool"],"returns":"Heatmap"}],
     "contours": [{"params":["int","string","float"],"returns":"Heatmap"}],
+    "clear": [{"params":[],"returns":"Heatmap"}],
     "draw": [{"params":[],"returns":"Heatmap"}]
   }},
   "VectorField": {"methods": {
@@ -50,6 +51,7 @@ Add data types:
     "color": [{"params":["string"],"returns":"VectorField"}],
     "scale": [{"params":["float"],"returns":"VectorField"}],
     "streamlines": [{"params":["bool"],"returns":"VectorField"}],
+    "clear": [{"params":[],"returns":"VectorField"}],
     "draw": [{"params":[],"returns":"VectorField"}]
   }}
 }
@@ -64,3 +66,15 @@ All dimensions, ranges, data, bins, thresholds, and scales are validated as fini
 ## Acceptance examples
 
 Port ROC AUC, precision-recall, confusion matrix, Poisson contours, cavity quiver, symlog outlier, and residual scatter from `lmplot/examples`, preserving their deterministic input data and computed metrics. Include an evolving standing-wave heatmap/quiver MP4 and a README comparison image with lmplot and lmvideo panels. Tests cover palette endpoints, matrix-cell/colorbar layout, contrast text, contour interpolation, vector arrow orientation, symlog ticks, date tick formatting, histogram/bar grouping, pie sectors, band bounds, and inset clipping.
+
+## Implementation record
+
+Implemented in `cpp/plot.hpp`, `cpp/plot.cpp`, and `cpp/host.cpp`; the registry and `schema/lmvideo.dsl.json` expose the methods above. `Heatmap` owns a row-major fixed grid and supports viridis, magma, coolwarm, and gray interpolation, explicit value bounds, contrast-aware numeric labels, a colorbar, and marching-squares contour segments. Row zero is drawn at the top. A `VectorField` retains `(x,y,u,v)` samples; arrows are capped to 22 px, and optional streamlines use deterministic nearest-sample Euler integration with at most 48 steps from each sample seed.
+
+Series kinds now include `histogram`, `grouped_bar`, `stacked_bar`, `box`, `pie`, and `donut` in addition to the original kinds. Histogram observations use `Series.add(value, weight)` with the value in `x`; the `y` argument is ignored and `.histogram(bins)` sets the bin count. Box summaries use `.box(min,q1,median,q3,max)`; each call occupies the next evenly spaced category. Pie and donut values use `Series.add(category_index, value)` and deterministic palette rotation; slice labels are not rendered. `.group(name)` and `.stack(name)` set explicit category group and stack keys. `add_band(x,low,high)` adds a filled polygon to line/area series.
+
+`x_symlog(threshold)` and `y_symlog(threshold)` use `sign(v)*log10(1+abs(v)/threshold)` and render original-value tick labels. `x_date(format)` accepts `%Y-%m` or `%Y-%m-%d`, maps numeric Unix seconds to UTC, and chooses fixed day/month tick intervals. `inset(x,y,width,height)` creates an independently scaled plot in a normalized rectangle relative to the parent's outer plot bounds; its bounds are recalculated when the parent is drawn, including when Panel layout reflows it.
+
+Examples include the seven lmplot ports plus `chart-kinds-workbench.lms`, which exercises histogram, box, grouped/stacked bars, donut, date ticks, error bands, and inset composition. `standing-wave-field.lms` redraws a 33×33 heatmap and its gradient vectors over 60 video frames. Golden tests cover palette endpoints/colorbar direction and a symlog marker position; `test.sh` compiles and renders all new examples and checks the animation's frame count.
+
+Limitations: date ticks are UTC and the supported formats are numeric; vector streamlines are a small deterministic nearest-neighbor integrator rather than a high-order field solver; pie/donut slices currently have no per-slice text labels. Insets use the parent rectangle rather than its inner data-area rectangle.

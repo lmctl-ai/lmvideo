@@ -23,7 +23,7 @@ make -j4                              # Build lmvideo binary
 | [06-ffmpeg-in-process-feasibility.md](06-ffmpeg-in-process-feasibility.md) | Analysis of in-process libav vs CLI ffmpeg execution |
 | [07-plot-proposal.md](07-plot-proposal.md) | High-level 2D plotting APIs, series types, and styling |
 | [08-layout-managers.md](08-layout-managers.md) | Explicit Tk/Swing-style container layout managers (pack, grid, border) |
-| [09-plot-chart-kinds-proposal.md](09-plot-chart-kinds-proposal.md) | Extended chart types (bar, line, scatter, histogram, area) |
+| [09-plot-chart-kinds-proposal.md](09-plot-chart-kinds-proposal.md) | Typed schema and implementation facts for field, statistical, symlog, and date charts |
 
 ## SDK pin and sync
 

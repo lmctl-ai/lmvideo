@@ -25,7 +25,7 @@ Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see [dura
 
 ## Gallery
 
-Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six ports use the reusable `Canvas.plot()` / `Plot` / `Series` API for axes, linear and log ticks, grids, legends, and typed sample data; plots redraw on the current video frame and compose with low-level Canvas drawing. `Canvas.panel()` adds explicit pack, grid, place, border, flow, and box managers for predictable multi-panel layouts. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
+Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The reusable `Canvas.plot()` / `Plot` / `Series` API includes heatmaps, contours, vector fields, statistical chart kinds, date and symlog axes, error bands, and insets alongside lines, bars, and scatter; plots redraw on the current video frame and compose with low-level Canvas drawing. `Canvas.panel()` adds explicit pack, grid, place, border, flow, and box managers for predictable multi-panel layouts. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
 
 | **Damped oscillator** | **Kepler's second law** | **Lotka–Volterra** |
 | --- | --- | --- |
@@ -57,6 +57,27 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six
 | ![2x2 plot dashboard](docs/images/dashboard-grid.png) | ![Layout workbench](docs/images/layout-workbench.png) | |
 | Four charts arranged by weighted grid cells. [PNG](docs/images/dashboard-grid.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/dashboard-grid.lms` | Border, box, flow and place managers compose plots, text, shapes, and an offscreen image. [PNG](docs/images/layout-workbench.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/layout-workbench.lms` | |
 
+| **ROC AUC** | **Precision–recall** | **Confusion matrix** |
+| --- | --- | --- |
+| ![ROC AUC](docs/images/roc-auc.png) | ![Precision recall](docs/images/pr-average-precision.png) | ![Confusion matrix](docs/images/confusion-matrix.png) |
+| Deterministic binary classifier sweep with AUC. [PNG](docs/images/roc-auc.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/roc-auc.lms` | The same imbalanced score sample used to compute average precision. [PNG](docs/images/pr-average-precision.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/pr-average-precision.lms` | Three-class counts with contrast-aware cell labels. [PNG](docs/images/confusion-matrix.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/confusion-matrix.lms` |
+
+| **Poisson contours** | **Cavity quiver** | **Symlog outlier** |
+| --- | --- | --- |
+| ![Poisson contours](docs/images/poisson-contours.png) | ![Cavity vector field](docs/images/cavity-quiver.png) | ![Symlog outlier](docs/images/symlog-outlier.png) |
+| Analytic potential heatmap with marching-squares contours. [PNG](docs/images/poisson-contours.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/poisson-contours.lms` | Streamfunction heatmap with velocity arrows. [PNG](docs/images/cavity-quiver.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/cavity-quiver.lms` | Symmetric-log scaling keeps ordinary months visible beside a 63,000 outlier. [PNG](docs/images/symlog-outlier.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/symlog-outlier.lms` |
+
+| **Residual scatter** | **Chart kinds workbench** | **Standing wave field** |
+| --- | --- | --- |
+| ![Residual scatter](docs/images/residual-scatter.png) | ![Chart kinds workbench](docs/images/chart-kinds-workbench.png) | ![Standing wave field](docs/images/standing-wave-field.gif) |
+| Heteroscedastic OLS residuals around the zero reference. [PNG](docs/images/residual-scatter.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/residual-scatter.lms` | Histogram, box plot, grouped and stacked bars, donut, date axis, band, and inset. [PNG](docs/images/chart-kinds-workbench.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/chart-kinds-workbench.lms` | A heatmap and gradient vector field over 60 frames. [MP4](docs/videos/standing-wave-field.mp4), [PNG](docs/images/standing-wave-field.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/standing-wave-field.lms` |
+
+**Same confusion-matrix input rendered with gnuplot and Skia:**
+
+![Side-by-side lmplot and lmvideo confusion matrix](docs/images/lmplot-lmvideo-confusion-comparison.png)
+
+`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmplot/main/examples/confusion_matrix.lms` · `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/confusion-matrix.lms`
+
 
 | **Terminal screenshot** |
 | --- |
@@ -69,7 +90,7 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six
 npm install -g @lmctl-ai/lmctl
 scripts/fetch-skia.sh
 nice make                      # build/lmvideo (STATIC=1 links a fully static Linux executable)
-nice bash test.sh              # builds in a temp dir and runs 31+ checks
+nice bash test.sh              # builds in a temp dir and runs 34+ checks
 build/lmvideo demo build/demo.png
 build/lmvideo render tests/golden/scene.svg build/scene.png
 ```

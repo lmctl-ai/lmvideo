@@ -339,4 +339,25 @@ for n in dashboard-grid layout-workbench; do
 done
 ok "2 explicit layout compositions: grid and border/box/flow/place with Skia child widgets"
 
+# Slice 3 chart examples use matrix/vector-field objects and extra Plot scales/kinds.
+for n in roc-auc pr-average-precision confusion-matrix poisson-contours cavity-quiver symlog-outlier residual-scatter; do
+  compile "examples/$n.lms" "$WORK/$n.dslb" "$WORK/$n.mp4" "$WORK/$n.png" >/dev/null || fail "compile $n.lms"
+  "$HOST" --dsl "$WORK/$n.dslb" >/dev/null 2>"$WORK/$n.err" || { cat "$WORK/$n.err"; fail "run $n.lms"; }
+  INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/$n.mp4" | tr '\n' ' ')"
+  [ "$INFO" = "codec_name=h264 width=960 height=540 nb_read_frames=1 " ] || fail "$n.mp4: $INFO"
+  [ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
+done
+ok "7 chart examples: ROC, PR, matrix, contours, quiver, symlog, residuals"
+compile examples/chart-kinds-workbench.lms "$WORK/chart-kinds-workbench.dslb" "$WORK/chart-kinds-workbench.mp4" "$WORK/chart-kinds-workbench.png" >/dev/null || fail "compile chart-kinds-workbench.lms"
+"$HOST" --dsl "$WORK/chart-kinds-workbench.dslb" >/dev/null 2>"$WORK/chart-kinds-workbench.err" || { cat "$WORK/chart-kinds-workbench.err"; fail "run chart-kinds-workbench.lms"; }
+INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/chart-kinds-workbench.mp4" | tr '\n' ' ')"
+[ "$INFO" = "codec_name=h264 width=960 height=720 nb_read_frames=1 " ] || fail "chart-kinds-workbench.mp4: $INFO"
+[ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/chart-kinds-workbench.png")" = "960x720" ] || fail "chart-kinds-workbench.png size"
+ok "chart-kinds-workbench: histogram, box, grouped/stacked bars, donut, dates, bands and inset"
+compile examples/standing-wave-field.lms "$WORK/standing-wave-field.dslb" "$WORK/standing-wave-field.mp4" "$WORK/standing-wave-field.png" >/dev/null || fail "compile standing-wave-field.lms"
+"$HOST" --dsl "$WORK/standing-wave-field.dslb" >/dev/null 2>"$WORK/standing-wave-field.err" || { cat "$WORK/standing-wave-field.err"; fail "run standing-wave-field.lms"; }
+INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/standing-wave-field.mp4" | tr '\n' ' ')"
+[ "$INFO" = "codec_name=h264 width=960 height=540 nb_read_frames=60 " ] || fail "standing-wave-field.mp4: $INFO"
+ok "standing-wave-field: evolving 33x33 heatmap/quiver, 60-frame H.264 output"
+
 echo "PASS $pass checks"

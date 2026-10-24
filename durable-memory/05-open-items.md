@@ -7,3 +7,4 @@
 - Extend SVG support only in response to a concrete document that the current Skia SVG DOM cannot render.
 - A Rust host remains a separate project; it should reuse the schema and runtime conformance contract rather than duplicate native policy.
 - Slice 2 (implemented) — [explicit Panel layout managers](08-layout-managers.md) (`pack`, `grid`, `place`, `border`, `flow`, and horizontal/vertical `box`) for plot/text/shape/image compositions; layout decisions stay visible in DSL calls, with no hidden graph-layout engine.
+- Slice 3 (implemented) — [field and statistical Plot kinds](09-plot-chart-kinds-proposal.md): heatmaps, contours, vector fields, histograms, box summaries, grouped/stacked bars, pie/donut, symlog/date axes, error bands, and insets.
