@@ -11,13 +11,14 @@ jobs:
           scripts/fetch-skia.sh >/dev/null
           S=third_party/skia
           t() { echo "== $*"; c++ -std=c++17 -fsyntax-only "$@" cpp/lmvideo.cpp 2>&1 | grep -a -c "error:" | sed "s/^/count=/"; }
-          t -Icpp
           t -Icpp -I$S
-          t -Icpp -isystem $S/include
-          t -Icpp -isystem $S/modules/svg/include
-          t -Icpp -isystem $S/modules/skshaper/include
-          t -Icpp -w
-          t -Icpp -O2
+          t -Icpp -I$S -isystem $S/include
+          t -Icpp -I$S -isystem $S/include -isystem $S/modules/svg/include
+          t -Icpp -I$S -isystem $S/include -isystem $S/modules/svg/include -isystem $S/modules/skshaper/include
+          t -Icpp -I$S -isystem $S/modules/svg/include
+          t -Icpp -I$S -isystem $S/modules/skshaper/include
+          t -Icpp -I$S -Wa,-I$PWD
+          c++ -std=c++17 -Icpp -I$S -isystem $S/include -isystem $S/modules/svg/include -isystem $S/modules/skshaper/include -fsyntax-only cpp/lmvideo.cpp 2>&1 | grep -a -m3 -B3 "error:"
           c++ -std=c++17 -Icpp -E cpp/lmvideo.cpp 2>&1 | grep -a -n "ptrdiff_t.h\|stddef" | head
           c++ -std=c++17 -Icpp -fsyntax-only -H cpp/lmvideo.cpp 2>&1 | grep -a -m12 "stddef\|ptrdiff\|include/c++/v1/cstddef\|SkTypes\|SkUserConfig"
           sed -n 1,30p cpp/lmvideo.cpp
