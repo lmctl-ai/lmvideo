@@ -363,13 +363,14 @@ void draw_heatmap_data(lmv::Canvas& c,const Heatmap& h,const Area& a,const Axis&
 }
 void draw_vectors(lmv::Canvas& c,const VectorField& field,const Area& a,const Axis& xa,const Axis& ya) {
   const auto pen=stroke(field.color,1.25f);
+  c.save();c.clip_rect(a.x,a.y,a.w,a.h);
   if(field.streamlines) {
     const double sx=(xa.hi-xa.lo)/120.0,sy=(ya.hi-ya.lo)/120.0;
     for(const auto& seed:field.vectors) {double x=seed.x,y=seed.y;lmv::Path path;path.move_to(xa.map(x,a.x,a.x+a.w),ya.map(y,a.y,a.y+a.h,true));
       for(int step=0;step<48;++step){const Vector* nearest=nullptr;double best=std::numeric_limits<double>::infinity();for(const auto& v:field.vectors){double d=(v.x-x)*(v.x-x)+(v.y-y)*(v.y-y);if(d<best){best=d;nearest=&v;}}
         if(!nearest||std::hypot(nearest->u,nearest->v)<1e-12)break;x+=nearest->u*sx*field.scale;y+=nearest->v*sy*field.scale;if(x<xa.lo||x>xa.hi||y<ya.lo||y>ya.hi)break;path.line_to(xa.map(x,a.x,a.x+a.w),ya.map(y,a.y,a.y+a.h,true));}
       c.draw_path(path,pen);
-    }return;
+    }c.restore();return;
   }
   for(const auto& v:field.vectors) {
     const double x=xa.map(v.x,a.x,a.x+a.w),y=ya.map(v.y,a.y,a.y+a.h,true);
@@ -380,6 +381,7 @@ void draw_vectors(lmv::Canvas& c,const VectorField& field,const Area& a,const Ax
     c.draw_line(ex,ey,ex-head*std::cos(al-.55),ey-head*std::sin(al-.55),pen);
     c.draw_line(ex,ey,ex-head*std::cos(al+.55),ey-head*std::sin(al+.55),pen);
   }
+  c.restore();
 }
 }  // namespace
 

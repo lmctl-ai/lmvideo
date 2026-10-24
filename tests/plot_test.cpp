@@ -75,11 +75,22 @@ void heatmap_palette_and_symlog() {
   bool red_at_threshold=false;for(int y=85;y<=94;++y)for(int x=218;x<=228;++x){const auto marker=pixel(symlog_surface,x,y);red_at_threshold=red_at_threshold||(marker.r>marker.g*1.5&&marker.r>marker.b*1.5);}
   check(red_at_threshold,"symlog transform places the threshold marker at its expected pixel");
 }
+void date_ticks_and_error_band() {
+  lmv::Surface surface(400,260);auto canvas=surface.canvas();canvas.clear({255,255,255,255});lmvplot::CanvasSlot slot;slot.canvas=canvas;
+  lmvplot::Plot dates(&slot,0,0,400,260);dates.x_fixed=true;dates.x_min=1704067200.0;dates.x_max=1704240000.0;dates.y_fixed=true;dates.y_min=0;dates.y_max=1;dates.x_date_format="%Y-%m-%d";dates.legend_position="none";
+  lmvplot::Series point;point.owner=&dates;point.kind="scatter";point.color="#d02020";point.marker="circle";point.samples={{1704153600.0,.5,0,0,false}};dates.series.push_back(&point);lmvplot::draw(dates);
+  check(near(pixel(surface,223,70),lmv::Color(241,243,247,255),3),"UTC date tick for the middle day is placed at the range midpoint");
+  lmv::Surface band_surface(400,260);auto band_canvas=band_surface.canvas();band_canvas.clear({255,255,255,255});lmvplot::CanvasSlot band_slot;band_slot.canvas=band_canvas;
+  lmvplot::Plot bands(&band_slot,0,0,400,260);bands.x_fixed=true;bands.x_min=0;bands.x_max=1;bands.y_fixed=true;bands.y_min=0;bands.y_max=10;bands.legend_position="none";
+  lmvplot::Series line;line.owner=&bands;line.kind="line";line.color="#2878b5";line.samples={{0,5,0,0,false},{1,5,0,0,false}};line.bands={{0,4,6},{1,4,6}};bands.series.push_back(&line);lmvplot::draw(bands);
+  const auto filled=pixel(band_surface,200,100);check(filled.b>filled.r,"error band fills the interval around its line data");
+}
 }
 int main() {
   linear_axes_and_legend();
   logarithmic_ticks();
   heatmap_palette_and_symlog();
+  date_ticks_and_error_band();
   std::cout << tests << " checks, " << failures << " failures\n";
   return failures ? 1 : 0;
 }
