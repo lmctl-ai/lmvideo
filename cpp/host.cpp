@@ -341,6 +341,8 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   auto series = [](void* p) -> lmvplot::Series& { return *static_cast<lmvplot::Series*>(p); };
   auto plot_self = [=](void* p) { return Value::object("Plot", p); };
   auto series_self = [=](void* p) { return Value::object("Series", p); };
+  auto heatmap_self = [=](void* p) { return Value::object("Heatmap", p); };
+  auto vector_self = [=](void* p) { return Value::object("VectorField", p); };
   reg.method("Canvas", "plot", {"float", "float", "float", "float"}, "Plot", [&arena](void* p, Args& a) {
     return Value::object("Plot", arena.make<lmvplot::Plot>(static_cast<CanvasSlot*>(p), F(a[0]), F(a[1]), F(a[2]), F(a[3])));
   });
@@ -359,7 +361,7 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   reg.method("Plot", "y_range", {"float", "float"}, "Plot", [=](void* p, Args& a) mutable { auto& q=plot(p); return set_plot_range(p,a,q.y_min,q.y_max,q.y_fixed,false); });
   reg.method("Plot", "y2_range", {"float", "float"}, "Plot", [=](void* p, Args& a) mutable { auto& q=plot(p); return set_plot_range(p,a,q.y2_min,q.y2_max,q.y2_fixed,true); });
   auto set_scale = [=](void* p, const std::string& value, std::string& target) {
-    if (value != "linear" && value != "log") throw lmv::Error("Plot scale must be 'linear' or 'log'");
+    if (value != "linear" && value != "log" && value != "symlog") throw lmv::Error("Plot scale must be 'linear', 'log', or 'symlog'");
     target = value; return plot_self(p);
   };
   reg.method("Plot", "x_scale", {"string"}, "Plot", [=](void* p, Args& a) mutable { return set_scale(p,a[0].s,plot(p).x_scale); });
@@ -371,11 +373,30 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   });
   reg.method("Plot", "grid", {"bool"}, "Plot", [=](void* p, Args& a) { plot(p).grid_visible=a[0].b; return plot_self(p); });
   reg.method("Plot", "background", {"string"}, "Plot", [=](void* p, Args& a) { if(!a[0].s.empty()) (void)lmv::parse_color(a[0].s); plot(p).background_color=a[0].s; return plot_self(p); });
+  reg.method("Plot", "heatmap", {"string","int","int"}, "Heatmap", [&arena,plot,heatmap_self](void* p, Args& a) {
+    auto& q=plot(p); const int rows=static_cast<int>(a[1].i),cols=static_cast<int>(a[2].i);
+    if(rows<1||cols<1||rows>512||cols>512||static_cast<int64_t>(rows)*cols>100000) throw lmv::Error("Plot.heatmap dimensions must be 1..512 with at most 100000 cells");
+    if(q.heatmaps.size()>=8) throw lmv::Error("Plot heatmap limit exceeded (8)");
+    auto* h=arena.make<lmvplot::Heatmap>(); h->owner=&q; h->name=a[0].s; h->rows=rows; h->columns=cols; h->cells.reserve(rows*cols);
+    for(int r=0;r<rows;++r) for(int c=0;c<cols;++c) h->cells.push_back({r,c,0});
+    q.heatmaps.push_back(h); return heatmap_self(h);
+  });
+  reg.method("Plot", "quiver", {"string"}, "VectorField", [&arena,plot,vector_self](void* p, Args& a) {
+    auto& q=plot(p); if(q.vector_fields.size()>=8) throw lmv::Error("Plot vector-field limit exceeded (8)");
+    auto* f=arena.make<lmvplot::VectorField>(); f->owner=&q; f->name=a[0].s; q.vector_fields.push_back(f); return vector_self(f);
+  });
+  reg.method("Plot", "x_symlog", {"float"}, "Plot", [=](void* p, Args& a) { double t=F(a[0]); if(!std::isfinite(t)||t<=0) throw lmv::Error("Plot symlog threshold must be finite and positive"); plot(p).x_scale="symlog"; plot(p).x_symlog_threshold=t; return plot_self(p); });
+  reg.method("Plot", "y_symlog", {"float"}, "Plot", [=](void* p, Args& a) { double t=F(a[0]); if(!std::isfinite(t)||t<=0) throw lmv::Error("Plot symlog threshold must be finite and positive"); plot(p).y_scale="symlog"; plot(p).y_symlog_threshold=t; return plot_self(p); });
+  reg.method("Plot", "x_date", {"string"}, "Plot", [=](void* p, Args& a) { const auto& f=a[0].s; if(f!="%Y-%m"&&f!="%Y-%m-%d") throw lmv::Error("Plot.x_date format must be %Y-%m or %Y-%m-%d (UTC)"); plot(p).x_date_format=f; return plot_self(p); });
+  reg.method("Plot", "inset", {"float","float","float","float"}, "Plot", [&arena,plot](void* p, Args& a) {
+    auto& q=plot(p); double x=F(a[0]),y=F(a[1]),w=F(a[2]),h=F(a[3]); if(!std::isfinite(x)||!std::isfinite(y)||!std::isfinite(w)||!std::isfinite(h)||x<0||y<0||w<=0||h<=0||x+w>1||y+h>1) throw lmv::Error("Plot.inset requires a positive normalized rectangle inside 0..1");
+    auto* child=arena.make<lmvplot::Plot>(q.canvas,q.x+x*q.width,q.y+y*q.height,w*q.width,h*q.height); q.insets.push_back({child,x,y,w,h}); return Value::object("Plot",child);
+  });
   reg.method("Plot", "series", {"string", "string", "string"}, "Series", [&arena, plot, series_self](void* p, Args& a) {
     auto& q=plot(p);
     if(q.series.size()>=32) throw lmv::Error("Plot.series limit exceeded (32)");
     const auto& kind=a[1].s;
-    if(kind!="line"&&kind!="scatter"&&kind!="bar"&&kind!="step"&&kind!="area"&&kind!="errorbar") throw lmv::Error("Plot.series kind must be line, scatter, bar, step, area, or errorbar");
+    if(kind!="line"&&kind!="scatter"&&kind!="bar"&&kind!="step"&&kind!="area"&&kind!="errorbar"&&kind!="histogram"&&kind!="grouped_bar"&&kind!="stacked_bar"&&kind!="pie"&&kind!="donut"&&kind!="box") throw lmv::Error("Plot.series kind must be line, scatter, bar, step, area, errorbar, histogram, grouped_bar, stacked_bar, pie, donut, or box");
     (void)lmv::parse_color(a[2].s);
     auto* value=arena.make<lmvplot::Series>(); value->owner=&q; value->name=a[0].s; value->kind=kind; value->color=a[2].s;
     q.series.push_back(value); return series_self(value);
@@ -411,6 +432,26 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   reg.method("Series", "width", {"float"}, "Series", [=](void* p, Args& a) { const double w=F(a[0]); if(!std::isfinite(w)||w<=0||w>256) throw lmv::Error("Series.width must be in (0, 256]"); series(p).width=static_cast<float>(w); return series_self(p); });
   reg.method("Series", "dash", {"string"}, "Series", [=](void* p, Args& a) { const auto& v=a[0].s; if(v!="solid"&&v!="dashed"&&v!="dotted"&&v!="dash_dot") throw lmv::Error("Series.dash must be solid, dashed, dotted, or dash_dot"); series(p).dash=v; return series_self(p); });
   reg.method("Series", "marker", {"string"}, "Series", [=](void* p, Args& a) { const auto& v=a[0].s; if(v!="none"&&v!="circle"&&v!="square"&&v!="triangle"&&v!="plus") throw lmv::Error("Series.marker must be none, circle, square, triangle, or plus"); series(p).marker=v; return series_self(p); });
+  reg.method("Series", "histogram", {"int"}, "Series", [=](void* p, Args& a) { auto& s=series(p); int n=static_cast<int>(a[0].i); if(s.kind!="histogram"||n<1||n>256) throw lmv::Error("Series.histogram requires histogram kind and 1..256 bins"); s.bins=n; return series_self(p); });
+  reg.method("Series", "box", {"float","float","float","float","float"}, "Series", [=](void* p, Args& a) { auto& s=series(p); if(s.kind!="box") throw lmv::Error("Series.box requires box kind"); std::array<double,5> v{F(a[0]),F(a[1]),F(a[2]),F(a[3]),F(a[4])}; for(double x:v)if(!std::isfinite(x))throw lmv::Error("Series.box values must be finite"); if(!(v[0]<=v[1]&&v[1]<=v[2]&&v[2]<=v[3]&&v[3]<=v[4]))throw lmv::Error("Series.box requires min <= q1 <= median <= q3 <= max");s.boxes.push_back(v);return series_self(p); });
+  reg.method("Series", "stack", {"string"}, "Series", [=](void* p, Args& a) { series(p).stack_name=a[0].s; return series_self(p); });
+  reg.method("Series", "group", {"string"}, "Series", [=](void* p, Args& a) { series(p).group_name=a[0].s; return series_self(p); });
+  reg.method("Series", "donut", {"float"}, "Series", [=](void* p, Args& a) { auto& s=series(p); double v=F(a[0]); if(s.kind!="donut"||!std::isfinite(v)||v<=0||v>=0.9)throw lmv::Error("Series.donut requires donut kind and hole fraction in (0,0.9)");s.donut_hole=v;return series_self(p); });
+  reg.method("Series", "add_band", {"float","float","float"}, "Series", [=](void* p, Args& a) { auto& s=series(p); double x=F(a[0]),lo=F(a[1]),hi=F(a[2]); if((s.kind!="line"&&s.kind!="area")||!std::isfinite(x)||!std::isfinite(lo)||!std::isfinite(hi)||lo>hi) throw lmv::Error("Series.add_band requires a line/area series and finite ordered bounds"); s.bands.push_back({x,lo,hi}); return series_self(p); });
+  reg.method("Heatmap", "cell", {"int","int","float"}, "Heatmap", [=](void* p, Args& a) { auto& h=*static_cast<lmvplot::Heatmap*>(p); int r=static_cast<int>(a[0].i),c=static_cast<int>(a[1].i); double v=F(a[2]); if(r<0||r>=h.rows||c<0||c>=h.columns||!std::isfinite(v)) throw lmv::Error("Heatmap.cell index outside grid or non-finite value"); h.cells[r*h.columns+c].value=v; return heatmap_self(p); });
+  reg.method("Heatmap", "palette", {"string"}, "Heatmap", [=](void* p, Args& a) { const auto& v=a[0].s; if(v!="viridis"&&v!="magma"&&v!="coolwarm"&&v!="gray") throw lmv::Error("Heatmap.palette must be viridis, magma, coolwarm, or gray"); static_cast<lmvplot::Heatmap*>(p)->palette=v; return heatmap_self(p); });
+  reg.method("Heatmap", "range", {"float","float"}, "Heatmap", [=](void* p, Args& a) { double lo=F(a[0]),hi=F(a[1]); if(!std::isfinite(lo)||!std::isfinite(hi)||lo>=hi) throw lmv::Error("Heatmap.range must be finite and increasing"); auto& h=*static_cast<lmvplot::Heatmap*>(p); h.fixed_range=true; h.value_min=lo; h.value_max=hi; return heatmap_self(p); });
+  reg.method("Heatmap", "colorbar", {"bool"}, "Heatmap", [=](void* p, Args& a) { static_cast<lmvplot::Heatmap*>(p)->show_colorbar=a[0].b; return heatmap_self(p); });
+  reg.method("Heatmap", "labels", {"bool"}, "Heatmap", [=](void* p, Args& a) { static_cast<lmvplot::Heatmap*>(p)->show_labels=a[0].b; return heatmap_self(p); });
+  reg.method("Heatmap", "contours", {"int","string","float"}, "Heatmap", [=](void* p, Args& a) { int n=static_cast<int>(a[0].i); double w=F(a[2]); if(n<0||n>32||!std::isfinite(w)||w<=0||w>16) throw lmv::Error("Heatmap.contours requires 0..32 levels and width in (0,16]"); (void)lmv::parse_color(a[1].s); auto& h=*static_cast<lmvplot::Heatmap*>(p); h.contour_count=n; h.contour_color=a[1].s; h.contour_width=static_cast<float>(w); return heatmap_self(p); });
+  reg.method("Heatmap", "clear", {}, "Heatmap", [=](void* p, Args&) { auto& h=*static_cast<lmvplot::Heatmap*>(p); for(auto& c:h.cells)c.value=0; return heatmap_self(p); });
+  reg.method("Heatmap", "draw", {}, "Heatmap", [=](void* p, Args&) { lmvplot::draw(*static_cast<lmvplot::Heatmap*>(p)->owner); return heatmap_self(p); });
+  reg.method("VectorField", "add", {"float","float","float","float"}, "VectorField", [=](void* p, Args& a) { auto& f=*static_cast<lmvplot::VectorField*>(p); lmvplot::Vector v{F(a[0]),F(a[1]),F(a[2]),F(a[3])}; if(!std::isfinite(v.x)||!std::isfinite(v.y)||!std::isfinite(v.u)||!std::isfinite(v.v)||f.vectors.size()>=10000) throw lmv::Error("VectorField.add requires finite values and fewer than 10000 vectors"); f.vectors.push_back(v); return vector_self(p); });
+  reg.method("VectorField", "color", {"string"}, "VectorField", [=](void* p, Args& a) { (void)lmv::parse_color(a[0].s); static_cast<lmvplot::VectorField*>(p)->color=a[0].s; return vector_self(p); });
+  reg.method("VectorField", "scale", {"float"}, "VectorField", [=](void* p, Args& a) { double v=F(a[0]); if(!std::isfinite(v)||v<=0||v>100) throw lmv::Error("VectorField.scale must be in (0,100]"); static_cast<lmvplot::VectorField*>(p)->scale=v; return vector_self(p); });
+  reg.method("VectorField", "streamlines", {"bool"}, "VectorField", [=](void* p, Args& a) { static_cast<lmvplot::VectorField*>(p)->streamlines=a[0].b; return vector_self(p); });
+  reg.method("VectorField", "clear", {}, "VectorField", [=](void* p, Args&) { static_cast<lmvplot::VectorField*>(p)->vectors.clear(); return vector_self(p); });
+  reg.method("VectorField", "draw", {}, "VectorField", [=](void* p, Args&) { lmvplot::draw(*static_cast<lmvplot::VectorField*>(p)->owner); return vector_self(p); });
 
   // ---- Surface (offscreen drawing) ----
   reg.function("surface", {"int", "int"}, "Surface", [&arena](Args& a) {

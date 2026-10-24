@@ -61,10 +61,25 @@ void logarithmic_ticks() {
   const auto minor=pixel(surface,202,227);
   check(near(minor,lmv::Color(172,177,185,255),12), "log minor tick for 20 is placed between decade ticks");
 }
+void heatmap_palette_and_symlog() {
+  lmv::Surface surface(400,260);auto canvas=surface.canvas();canvas.clear({255,255,255,255});
+  lmvplot::CanvasSlot slot;slot.canvas=canvas;lmvplot::Plot plot(&slot,0,0,400,260);
+  plot.x_fixed=true;plot.x_min=0;plot.x_max=2;plot.y_fixed=true;plot.y_min=0;plot.y_max=2;plot.legend_position="none";
+  lmvplot::Heatmap heat;heat.owner=&plot;heat.rows=2;heat.columns=2;heat.palette="gray";heat.show_colorbar=true;
+  heat.cells={{0,0,0},{0,1,1},{1,0,2},{1,1,3}};plot.heatmaps.push_back(&heat);lmvplot::draw(plot);
+  check(near(pixel(surface,100,160),lmv::Color(0,0,0,255),3),"heatmap gray palette maps minimum to black");
+  check(pixel(surface,364,100).r>pixel(surface,364,180).r,"heatmap colorbar follows the value ramp");
+  lmv::Surface symlog_surface(400,260);auto cv=symlog_surface.canvas();cv.clear({255,255,255,255});lmvplot::CanvasSlot symlog_slot;symlog_slot.canvas=cv;
+  lmvplot::Plot symlog(&symlog_slot,0,0,400,260);symlog.x_fixed=true;symlog.x_min=0;symlog.x_max=1;symlog.y_fixed=true;symlog.y_min=-1000;symlog.y_max=1000;symlog.y_scale="symlog";symlog.y_symlog_threshold=100;symlog.legend_position="none";
+  lmvplot::Series dots;dots.owner=&symlog;dots.kind="scatter";dots.color="#d02020";dots.marker="circle";dots.samples={{.5,100,0,0,false}};symlog.series.push_back(&dots);lmvplot::draw(symlog);
+  bool red_at_threshold=false;for(int y=85;y<=94;++y)for(int x=218;x<=228;++x){const auto marker=pixel(symlog_surface,x,y);red_at_threshold=red_at_threshold||(marker.r>marker.g*1.5&&marker.r>marker.b*1.5);}
+  check(red_at_threshold,"symlog transform places the threshold marker at its expected pixel");
+}
 }
 int main() {
   linear_axes_and_legend();
   logarithmic_ticks();
+  heatmap_palette_and_symlog();
   std::cout << tests << " checks, " << failures << " failures\n";
   return failures ? 1 : 0;
 }

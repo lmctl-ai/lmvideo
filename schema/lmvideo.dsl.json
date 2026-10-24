@@ -85,6 +85,12 @@
         "legend": [{"params":["string"],"returns":"Plot"}],
         "grid": [{"params":["bool"],"returns":"Plot"}],
         "background": [{"params":["string"],"returns":"Plot"}],
+        "heatmap": [{"params":["string","int","int"],"returns":"Heatmap"}],
+        "quiver": [{"params":["string"],"returns":"VectorField"}],
+        "x_symlog": [{"params":["float"],"returns":"Plot"}],
+        "y_symlog": [{"params":["float"],"returns":"Plot"}],
+        "x_date": [{"params":["string"],"returns":"Plot"}],
+        "inset": [{"params":["float","float","float","float"],"returns":"Plot"}],
         "series": [{"params":["string","string","string"],"returns":"Series"}],
         "annotate": [{"params":["float","float","string","string"],"returns":"Plot"}],
         "vline": [{"params":["float","string","float"],"returns":"Plot"}],
@@ -101,7 +107,35 @@
         "color": [{"params":["string"],"returns":"Series"}],
         "width": [{"params":["float"],"returns":"Series"}],
         "dash": [{"params":["string"],"returns":"Series"}],
-        "marker": [{"params":["string"],"returns":"Series"}]
+        "marker": [{"params":["string"],"returns":"Series"}],
+        "add_band": [{"params":["float","float","float"],"returns":"Series"}],
+        "histogram": [{"params":["int"],"returns":"Series"}],
+        "box": [{"params":["float","float","float","float","float"],"returns":"Series"}],
+        "stack": [{"params":["string"],"returns":"Series"}],
+        "group": [{"params":["string"],"returns":"Series"}],
+        "donut": [{"params":["float"],"returns":"Series"}]
+      }
+    },
+    "Heatmap": {
+      "methods": {
+        "cell": [{"params":["int","int","float"],"returns":"Heatmap"}],
+        "palette": [{"params":["string"],"returns":"Heatmap"}],
+        "range": [{"params":["float","float"],"returns":"Heatmap"}],
+        "colorbar": [{"params":["bool"],"returns":"Heatmap"}],
+        "labels": [{"params":["bool"],"returns":"Heatmap"}],
+        "contours": [{"params":["int","string","float"],"returns":"Heatmap"}],
+        "clear": [{"params":[],"returns":"Heatmap"}],
+        "draw": [{"params":[],"returns":"Heatmap"}]
+      }
+    },
+    "VectorField": {
+      "methods": {
+        "add": [{"params":["float","float","float","float"],"returns":"VectorField"}],
+        "color": [{"params":["string"],"returns":"VectorField"}],
+        "scale": [{"params":["float"],"returns":"VectorField"}],
+        "streamlines": [{"params":["bool"],"returns":"VectorField"}],
+        "clear": [{"params":[],"returns":"VectorField"}],
+        "draw": [{"params":[],"returns":"VectorField"}]
       }
     },
     "Panel": {
