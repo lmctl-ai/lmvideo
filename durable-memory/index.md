@@ -13,6 +13,7 @@ Public entry points:
 | `durable-memory/03-build-run-test.md` | repeatable validation procedure |
 | `durable-memory/04-gotchas.md` | build and runtime cautions |
 | `durable-memory/05-open-items.md` | deliberately deferred work |
+| `durable-memory/06-ffmpeg-in-process-feasibility.md` | evaluation (with a reproducible spike in `tools/ffmpeg-spike/`) of linking libav instead of running `ffmpeg` |
 
 The current source tree is prepared for lmscript 0.2.347 or newer from `PATH`. The C++ runtime header remains pinned by `sdk.lock`; the pin is unchanged during publication preparation.
 
