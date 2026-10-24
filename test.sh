@@ -107,6 +107,22 @@ expect_px "$WORK/svg.png" 10 3 51 51 51 2            # the DSL's own bar on top
 expect_px "$WORK/svg.png" 5 200 255 255 255 0        # white margin outside the SVG
 ok "svg.lms: SVG fitted into a rect on a canvas the chunk also draws on"
 
+# 5b. terminal-shot.lms: terminal text rendered into a 1000px window PNG.
+printf '$ date -u\nSat Oct 24 15:00:00 UTC 2026\n$ echo "hello"\nhello\n' >"$WORK/term.txt"
+compile examples/terminal-shot.lms "$WORK/term.txt" "$WORK/term.png" "bash - 80x24" "$WORK/term.dslb" >/dev/null || fail "compile terminal-shot.lms"
+[ -f "$WORK/term.png" ] || "$HOST" --dsl "$WORK/term.dslb" >/dev/null 2>&1 || fail "run terminal-shot"
+[ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/term.png" | cut -dx -f1)" = "1000" ] || fail "terminal-shot width != 1000"
+expect_px "$WORK/term.png" 5 5 13 17 23 2              # outer background #0d1117
+expect_px "$WORK/term.png" 44 43 255 95 86 5           # red dot #ff5f56 (cx 44, cy 43)
+expect_px "$WORK/term.png" 62 43 255 189 46 5          # yellow dot #ffbd2e (cx 62, cy 43)
+expect_px "$WORK/term.png" 80 43 39 201 63 5           # green dot #27c93f (cx 80, cy 43)
+expect_px "$WORK/term.png" 100 100 22 27 34 2         # window background #161b22
+mv "$WORK/term.png" "$WORK/term1.png"
+"$HOST" --dsl "$WORK/term.dslb" >/dev/null 2>&1 || fail "second terminal host run"
+[ -f "$WORK/term.png" ] || fail "second run did not produce term.png"
+[ "$($PNGPX "$WORK/term.png" --sha256)" = "$($PNGPX "$WORK/term1.png" --sha256)" ] || fail "terminal-shot is not deterministic"
+ok "terminal-shot.lms: 1000px PNG with title bar dots, dark card and deterministic rerun"
+
 # 6. video.lms -> mp4: the DSL owns the frame loop; the host owns encoding.
 compile examples/video.lms "$WORK/video.dslb" "$WORK/video.mp4" 60 30 >/dev/null || fail "compile video.lms"
 "$HOST" --dsl "$WORK/video.dslb" >/dev/null 2>"$WORK/video.err" || { cat "$WORK/video.err"; fail "video host"; }

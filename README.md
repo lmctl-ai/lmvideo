@@ -42,6 +42,11 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The
 | ![RC low-pass filter](docs/images/rc-lowpass.gif) | ![Hydrogen spectrum](docs/images/hydrogen-spectrum.gif) | ![Ellipse geometry](docs/images/geometry-ellipse.gif) |
 | Step response and Bode magnitude of a first-order filter. [MP4](docs/videos/rc-lowpass.mp4), [PNG](docs/images/rc-lowpass.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/rc-lowpass.lms` | Bohr levels and the Balmer series lines. [MP4](docs/videos/hydrogen-spectrum.mp4), [PNG](docs/images/hydrogen-spectrum.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/hydrogen-spectrum.lms` | Foci, the constant distance sum and the string construction. [MP4](docs/videos/geometry-ellipse.mp4), [PNG](docs/images/geometry-ellipse.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/geometry-ellipse.lms` |
 
+| **Terminal screenshot** |
+| --- |
+| ![Terminal screenshot](docs/images/terminal-shot.png) |
+| Dark-window terminal screenshot rendered from captured text. Fixed 1000 px width, title bar dots, automatic line wrapping, up to 40 lines, and command highlighting.<br>`lmscript examples/terminal-shot.lms examples/terminal-shot.txt docs/images/terminal-shot.png "Terminal"` |
+
 ## Build from source
 
 ```sh
@@ -70,7 +75,7 @@ The template example iterates a host-owned collection through `len()` and `at()`
 - `cpp/lmvideo.hpp` is the Skia-free C++ value API.
 - `cpp/encoder.hpp` pipes RGBA frames to the external FFmpeg executable.
 - `cpp/host.cpp` implements the schema in `schema/lmvideo.dsl.json`; `cpp/main.cpp` dispatches between the host and the `demo`/`render` commands.
-- `examples/` contains image, video, SVG, and template-keyframe programs.
+- `examples/` contains image, video, SVG, terminal-shot, and template-keyframe programs.
 - `scripts/fetch-skia.sh` and `scripts/skia.lock` pin the external Skia archive.
 - `assets/fonts/` contains the embedded DejaVu Sans font and its complete license file.
 

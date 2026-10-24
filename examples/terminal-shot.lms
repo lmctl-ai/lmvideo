@@ -1,0 +1,245 @@
+# lmvideo terminal-shot example: render captured terminal text into a 1000px dark-window PNG screenshot.
+# Usage:
+#   lmscript examples/terminal-shot.lms [IN.txt] [OUT.png] [TITLE] [OUT.dslb]
+
+in_txt = ARGV.len() > 0 ? ARGV[0] : "examples/terminal-shot.txt";
+out_png = ARGV.len() > 1 ? ARGV[1] : "docs/images/terminal-shot.png";
+title = ARGV.len() > 2 ? ARGV[2] : "Terminal";
+dslout = ARGV.len() > 3 ? ARGV[3] : "build/terminal-shot.dslb";
+
+mkdir(dirname(out_png));
+mkdir(dirname(dslout));
+
+raw_text = file_exists(in_txt) ? read_file(in_txt) : "$ echo 'No input provided'\nNo input provided";
+raw_lines = lines(raw_text);
+
+fn wrap_line(s, max_len) {
+  let res = [];
+  let cur = s;
+  while (cur.len() > max_len) {
+    let part = slice(cur, 0, max_len);
+    push(res, part);
+    cur = slice(cur, max_len, cur.len());
+  }
+  if (cur.len() > 0) {
+    push(res, cur);
+  }
+  return res;
+}
+
+let all_lines = [];
+let all_cmds = [];
+for (raw in raw_lines) {
+  let clean = replace_all(raw, "\r", "");
+  clean = replace_all(clean, "\t", "    ");
+  let is_cmd = starts_with(clean, "$ ");
+  if (clean.len() == 0) {
+    push(all_lines, " ");
+    push(all_cmds, false);
+  } else if (clean.len() <= 92) {
+    push(all_lines, clean);
+    push(all_cmds, is_cmd);
+  } else {
+    let chunks = wrap_line(clean, 92);
+    for (i in range(0, chunks.len())) {
+      push(all_lines, chunks[i]);
+      push(all_cmds, i == 0 ? is_cmd : false);
+    }
+  }
+}
+
+if (all_lines.len() > 40) {
+  all_lines = take(all_lines, 40);
+  all_cmds = take(all_cmds, 40);
+}
+
+let num_lines = all_lines.len();
+let display_count = num_lines < 3 ? 3 : num_lines;
+let canvas_height = round(48.0 + 82.0 + display_count * 22.0);
+
+let l0 = all_lines.len() > 0 ? all_lines[0] : "";
+let c0 = all_cmds.len() > 0 ? all_cmds[0] : false;
+let l1 = all_lines.len() > 1 ? all_lines[1] : "";
+let c1 = all_cmds.len() > 1 ? all_cmds[1] : false;
+let l2 = all_lines.len() > 2 ? all_lines[2] : "";
+let c2 = all_cmds.len() > 2 ? all_cmds[2] : false;
+let l3 = all_lines.len() > 3 ? all_lines[3] : "";
+let c3 = all_cmds.len() > 3 ? all_cmds[3] : false;
+let l4 = all_lines.len() > 4 ? all_lines[4] : "";
+let c4 = all_cmds.len() > 4 ? all_cmds[4] : false;
+let l5 = all_lines.len() > 5 ? all_lines[5] : "";
+let c5 = all_cmds.len() > 5 ? all_cmds[5] : false;
+let l6 = all_lines.len() > 6 ? all_lines[6] : "";
+let c6 = all_cmds.len() > 6 ? all_cmds[6] : false;
+let l7 = all_lines.len() > 7 ? all_lines[7] : "";
+let c7 = all_cmds.len() > 7 ? all_cmds[7] : false;
+let l8 = all_lines.len() > 8 ? all_lines[8] : "";
+let c8 = all_cmds.len() > 8 ? all_cmds[8] : false;
+let l9 = all_lines.len() > 9 ? all_lines[9] : "";
+let c9 = all_cmds.len() > 9 ? all_cmds[9] : false;
+let l10 = all_lines.len() > 10 ? all_lines[10] : "";
+let c10 = all_cmds.len() > 10 ? all_cmds[10] : false;
+let l11 = all_lines.len() > 11 ? all_lines[11] : "";
+let c11 = all_cmds.len() > 11 ? all_cmds[11] : false;
+let l12 = all_lines.len() > 12 ? all_lines[12] : "";
+let c12 = all_cmds.len() > 12 ? all_cmds[12] : false;
+let l13 = all_lines.len() > 13 ? all_lines[13] : "";
+let c13 = all_cmds.len() > 13 ? all_cmds[13] : false;
+let l14 = all_lines.len() > 14 ? all_lines[14] : "";
+let c14 = all_cmds.len() > 14 ? all_cmds[14] : false;
+let l15 = all_lines.len() > 15 ? all_lines[15] : "";
+let c15 = all_cmds.len() > 15 ? all_cmds[15] : false;
+let l16 = all_lines.len() > 16 ? all_lines[16] : "";
+let c16 = all_cmds.len() > 16 ? all_cmds[16] : false;
+let l17 = all_lines.len() > 17 ? all_lines[17] : "";
+let c17 = all_cmds.len() > 17 ? all_cmds[17] : false;
+let l18 = all_lines.len() > 18 ? all_lines[18] : "";
+let c18 = all_cmds.len() > 18 ? all_cmds[18] : false;
+let l19 = all_lines.len() > 19 ? all_lines[19] : "";
+let c19 = all_cmds.len() > 19 ? all_cmds[19] : false;
+let l20 = all_lines.len() > 20 ? all_lines[20] : "";
+let c20 = all_cmds.len() > 20 ? all_cmds[20] : false;
+let l21 = all_lines.len() > 21 ? all_lines[21] : "";
+let c21 = all_cmds.len() > 21 ? all_cmds[21] : false;
+let l22 = all_lines.len() > 22 ? all_lines[22] : "";
+let c22 = all_cmds.len() > 22 ? all_cmds[22] : false;
+let l23 = all_lines.len() > 23 ? all_lines[23] : "";
+let c23 = all_cmds.len() > 23 ? all_cmds[23] : false;
+let l24 = all_lines.len() > 24 ? all_lines[24] : "";
+let c24 = all_cmds.len() > 24 ? all_cmds[24] : false;
+let l25 = all_lines.len() > 25 ? all_lines[25] : "";
+let c25 = all_cmds.len() > 25 ? all_cmds[25] : false;
+let l26 = all_lines.len() > 26 ? all_lines[26] : "";
+let c26 = all_cmds.len() > 26 ? all_cmds[26] : false;
+let l27 = all_lines.len() > 27 ? all_lines[27] : "";
+let c27 = all_cmds.len() > 27 ? all_cmds[27] : false;
+let l28 = all_lines.len() > 28 ? all_lines[28] : "";
+let c28 = all_cmds.len() > 28 ? all_cmds[28] : false;
+let l29 = all_lines.len() > 29 ? all_lines[29] : "";
+let c29 = all_cmds.len() > 29 ? all_cmds[29] : false;
+let l30 = all_lines.len() > 30 ? all_lines[30] : "";
+let c30 = all_cmds.len() > 30 ? all_cmds[30] : false;
+let l31 = all_lines.len() > 31 ? all_lines[31] : "";
+let c31 = all_cmds.len() > 31 ? all_cmds[31] : false;
+let l32 = all_lines.len() > 32 ? all_lines[32] : "";
+let c32 = all_cmds.len() > 32 ? all_cmds[32] : false;
+let l33 = all_lines.len() > 33 ? all_lines[33] : "";
+let c33 = all_cmds.len() > 33 ? all_cmds[33] : false;
+let l34 = all_lines.len() > 34 ? all_lines[34] : "";
+let c34 = all_cmds.len() > 34 ? all_cmds[34] : false;
+let l35 = all_lines.len() > 35 ? all_lines[35] : "";
+let c35 = all_cmds.len() > 35 ? all_cmds[35] : false;
+let l36 = all_lines.len() > 36 ? all_lines[36] : "";
+let c36 = all_cmds.len() > 36 ? all_cmds[36] : false;
+let l37 = all_lines.len() > 37 ? all_lines[37] : "";
+let c37 = all_cmds.len() > 37 ? all_cmds[37] : false;
+let l38 = all_lines.len() > 38 ? all_lines[38] : "";
+let c38 = all_cmds.len() > 38 ? all_cmds[38] : false;
+let l39 = all_lines.len() > 39 ? all_lines[39] : "";
+let c39 = all_cmds.len() > 39 ? all_cmds[39] : false;
+
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1000, ${canvas_height});
+video.frames(1);
+video.output(${out_png});
+video.begin();
+video.frame();
+
+let w = 1000.0;
+let h = float(video.height());
+let win_x = 24.0;
+let win_y = 24.0;
+let win_w = 952.0;
+let win_h = h - 48.0;
+let win_r = 10.0;
+
+# Outer canvas background
+canvas.clear("#0d1117");
+
+# Window border & background
+canvas.round_rect(win_x - 1.0, win_y - 1.0, win_w + 2.0, win_h + 2.0, win_r + 1.0, win_r + 1.0, paint().color("#30363d"));
+canvas.round_rect(win_x, win_y, win_w, win_h, win_r, win_r, paint().color("#161b22"));
+
+# Title bar
+canvas.save();
+canvas.clip_rect(win_x, win_y, win_w, 38.0);
+canvas.round_rect(win_x, win_y, win_w, win_h, win_r, win_r, paint().color("#21262d"));
+canvas.restore();
+canvas.line(win_x, win_y + 38.0, win_x + win_w, win_y + 38.0, paint().stroke().stroke_width(1.0).color("#30363d"));
+
+# Window control dots (macOS style close, minimize, maximize)
+canvas.circle(win_x + 20.0, win_y + 19.0, 6.0, paint().color("#ff5f56"));
+canvas.circle(win_x + 38.0, win_y + 19.0, 6.0, paint().color("#ffbd2e"));
+canvas.circle(win_x + 56.0, win_y + 19.0, 6.0, paint().color("#27c93f"));
+
+# Window title (centered)
+let f_title = font(13.0);
+let title_w = f_title.measure(${title});
+canvas.text(${title}, win_x + (win_w - title_w) * 0.5, win_y + 24.0, f_title, paint().color("#8b949e"));
+
+# Terminal content layout
+let x0 = win_x + 24.0;
+let y0 = win_y + 68.0;
+let line_h = 22.0;
+
+fn row(s: string, y: float, is_cmd: bool) -> void {
+  if (s != "") {
+    if (is_cmd) {
+      canvas.text(s, 48.0, y, font(14.0), paint().color("#58a6ff"));
+    } else {
+      canvas.text(s, 48.0, y, font(14.0), paint().color("#c9d1d9"));
+    }
+  }
+}
+
+row(${l0}, y0 + 0.0 * line_h, ${c0});
+row(${l1}, y0 + 1.0 * line_h, ${c1});
+row(${l2}, y0 + 2.0 * line_h, ${c2});
+row(${l3}, y0 + 3.0 * line_h, ${c3});
+row(${l4}, y0 + 4.0 * line_h, ${c4});
+row(${l5}, y0 + 5.0 * line_h, ${c5});
+row(${l6}, y0 + 6.0 * line_h, ${c6});
+row(${l7}, y0 + 7.0 * line_h, ${c7});
+row(${l8}, y0 + 8.0 * line_h, ${c8});
+row(${l9}, y0 + 9.0 * line_h, ${c9});
+row(${l10}, y0 + 10.0 * line_h, ${c10});
+row(${l11}, y0 + 11.0 * line_h, ${c11});
+row(${l12}, y0 + 12.0 * line_h, ${c12});
+row(${l13}, y0 + 13.0 * line_h, ${c13});
+row(${l14}, y0 + 14.0 * line_h, ${c14});
+row(${l15}, y0 + 15.0 * line_h, ${c15});
+row(${l16}, y0 + 16.0 * line_h, ${c16});
+row(${l17}, y0 + 17.0 * line_h, ${c17});
+row(${l18}, y0 + 18.0 * line_h, ${c18});
+row(${l19}, y0 + 19.0 * line_h, ${c19});
+row(${l20}, y0 + 20.0 * line_h, ${c20});
+row(${l21}, y0 + 21.0 * line_h, ${c21});
+row(${l22}, y0 + 22.0 * line_h, ${c22});
+row(${l23}, y0 + 23.0 * line_h, ${c23});
+row(${l24}, y0 + 24.0 * line_h, ${c24});
+row(${l25}, y0 + 25.0 * line_h, ${c25});
+row(${l26}, y0 + 26.0 * line_h, ${c26});
+row(${l27}, y0 + 27.0 * line_h, ${c27});
+row(${l28}, y0 + 28.0 * line_h, ${c28});
+row(${l29}, y0 + 29.0 * line_h, ${c29});
+row(${l30}, y0 + 30.0 * line_h, ${c30});
+row(${l31}, y0 + 31.0 * line_h, ${c31});
+row(${l32}, y0 + 32.0 * line_h, ${c32});
+row(${l33}, y0 + 33.0 * line_h, ${c33});
+row(${l34}, y0 + 34.0 * line_h, ${c34});
+row(${l35}, y0 + 35.0 * line_h, ${c35});
+row(${l36}, y0 + 36.0 * line_h, ${c36});
+row(${l37}, y0 + 37.0 * line_h, ${c37});
+row(${l38}, y0 + 38.0 * line_h, ${c38});
+row(${l39}, y0 + 39.0 * line_h, ${c39});
+
+video.end();
+end _dsl_
+
+savedsl(program, dslout);
+r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+if (r.code != 0) {
+  println(r.stderr + r.stdout);
+}
+assert(r.code == 0);
+println("wrote " + out_png + " (1000x" + str(canvas_height) + ")");
