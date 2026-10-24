@@ -40,6 +40,18 @@
 #include "modules/svg/include/SkSVGSVG.h"
 
 // Embed bundled DejaVu Sans TTF into the binary so rendering never depends on system fonts.
+#if defined(__APPLE__)
+// Mach-O: C symbols carry a leading underscore in assembly, and read-only data lives in __TEXT,__const.
+__asm__(
+  ".section __TEXT,__const\n"
+  ".globl _dejavu_sans_start\n"
+  ".globl _dejavu_sans_end\n"
+  "_dejavu_sans_start:\n"
+  ".incbin \"assets/fonts/DejaVuSans.ttf\"\n"
+  "_dejavu_sans_end:\n"
+  ".text\n"
+);
+#else
 __asm__(
   ".section .rodata\n"
   ".global dejavu_sans_start\n"
@@ -49,6 +61,7 @@ __asm__(
   "dejavu_sans_end:\n"
   ".text\n"
 );
+#endif
 extern "C" const unsigned char dejavu_sans_start[];
 extern "C" const unsigned char dejavu_sans_end[];
 
