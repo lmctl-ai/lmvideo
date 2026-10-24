@@ -6,3 +6,4 @@
 - In-process FFmpeg (libav) backend: see 06-ffmpeg-in-process-feasibility.md for the plan, costs and the H.264/LGPL decisions.
 - Extend SVG support only in response to a concrete document that the current Skia SVG DOM cannot render.
 - A Rust host remains a separate project; it should reuse the schema and runtime conformance contract rather than duplicate native policy.
+- Slice 2 — [explicit Panel layout managers](08-layout-managers.md) (`pack`, `grid`, `place`, `border`, `flow`, and horizontal/vertical `box`) for plot/text/shape/image compositions; layout decisions stay visible in DSL calls, with no hidden graph-layout engine.

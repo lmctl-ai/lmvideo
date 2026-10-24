@@ -57,7 +57,7 @@ All coordinates are logical canvas pixels and all data values are finite binary6
 
 Legend positions are `top_right`, `top_left`, `bottom_right`, `bottom_left`, or `none`. Series kinds, scale names, axis names, legend positions, dash names (`solid`, `dashed`, `dotted`, `dash_dot`), marker names (`none`, `circle`, `square`, `triangle`, `plus`) and colors are validated. `vline`/`hline` widths and series widths are positive pixels. `annotate` places left-aligned DejaVu Sans text at the given data coordinate. The plot uses the bundled DejaVu Sans face and the same deterministic Skia text settings as the low-level API.
 
-The initial implementation covers independent linear/log X and left Y axes, optional right Y axis, line/scatter/bar/step/area/error-bar series, text and reference-line annotations, range selection, grid, and a positioned legend. It intentionally leaves retained groups, node mutation, and additional chart families for a later slice.
+The initial implementation covers independent linear/log X and left Y axes, optional right Y axis, line/scatter/bar/step/area/error-bar series, text and reference-line annotations, range selection, grid, and a positioned legend. The next slice adds explicit container layout managers; hidden graph-layout engines remain out of scope.
 
 ## Implementation notes
 

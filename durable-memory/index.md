@@ -15,6 +15,7 @@ Public entry points:
 | `durable-memory/05-open-items.md` | deliberately deferred work |
 | `durable-memory/06-ffmpeg-in-process-feasibility.md` | evaluation (with a reproducible spike in `tools/ffmpeg-spike/`) of linking libav instead of running `ffmpeg` |
 | `durable-memory/07-plot-proposal.md` | typed Plot/Series API and implementation facts for high-level Skia charts |
+| `durable-memory/08-layout-managers.md` | typed schema and behavior for explicit Tk/Swing-style container layout |
 
 The current source tree is prepared for lmscript 0.2.347 or newer from `PATH`. The C++ runtime header remains pinned by `sdk.lock`; the pin is unchanged during publication preparation.
 
