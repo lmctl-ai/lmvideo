@@ -40,7 +40,8 @@ ok "lmvideo demo writes a valid 500x350 PNG"
 "$B/lmvideo" render tests/golden/scene.svg "$WORK/scene.png" || fail "lmvideo render"
 [ "$($PNGPX "$WORK/scene.png")" = "200x120" ] || fail "scene.png size"
 ok "lmvideo render: SVG -> 200x120 PNG"
-"$B/lmvideo" >/dev/null 2>&1; [ $? -eq 1 ] || fail "usage exit code"
+"$B/lmvideo" >/dev/null 2>&1; [ $? -eq 2 ] || fail "usage exit code"
+[ "$("$B/lmvideo" --version)" = "lmvideo $(head -n1 VERSION)" ] || fail "--version"
 "$B/lmvideo" render nonexistent.svg "$WORK/x.png" >/dev/null 2>&1; [ $? -eq 3 ] || fail "runtime error exit code"
 ok "CLI exit codes: 1 usage, 3 runtime error"
 
@@ -49,7 +50,8 @@ ok "CLI exit codes: 1 usage, 3 runtime error"
 ok "encoder_test: $(tail -1 "$WORK/enc.out")"
 
 # 4. Phase 3: the DSL host. image.lms -> PNG.
-HOST="$B/lmvideohost"
+HOST="$B/lmvideo"
+export PATH="$B:$PATH"   # examples declare cli="lmvideo": lmscript asks the freshly built host for its schema
 # Registry versus schema: the host declares its signatures' types; they must equal the schema's.
 if "$LMSCRIPT" --dsl-signatures "$SCHEMA" >"$WORK/schema.sigs" 2>/dev/null; then
   "$HOST" --dsl-signatures >"$WORK/host.sigs" || fail "host --dsl-signatures"
@@ -240,11 +242,11 @@ open(dst, "a").write("\n")
 PY
 grep -q '"extra"' "$WORK/extra.json" || fail "schema edit"
 variant_host() { # NAME SCHEMA: a host embedding an edited schema, linked against the already built library
-  cp -Rp "$B" "$WORK/build-$1" && rm -rf "$WORK/build-$1/host.o" "$WORK/build-$1/lmvideohost" "$WORK/build-$1/generated" || fail "copy build for $1"
-  nice make BUILD="$WORK/build-$1" LMVIDEO_SCHEMA="$2" "$WORK/build-$1/lmvideohost" >"$WORK/make-$1.log" 2>&1 || { tail -30 "$WORK/make-$1.log"; fail "build $1 host"; }
+  cp -Rp "$B" "$WORK/build-$1" && rm -rf "$WORK/build-$1/host.o" "$WORK/build-$1/lmvideo" "$WORK/build-$1/generated" || fail "copy build for $1"
+  nice make BUILD="$WORK/build-$1" LMVIDEO_SCHEMA="$2" "$WORK/build-$1/lmvideo" >"$WORK/make-$1.log" 2>&1 || { tail -30 "$WORK/make-$1.log"; fail "build $1 host"; }
 }
 variant_host extra "$WORK/extra.json"
-"$WORK/build-extra/lmvideohost" --dsl "$WORK/image.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
+"$WORK/build-extra/lmvideo" --dsl "$WORK/image.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'missing method Paint.extra' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry self-check: exit $code"; }
 result_line "$WORK/e.out" '{"ok": false, "phase": "load", "code": "LOAD_UNBOUND", "message": "host registry does not match the schema: missing method Paint.extra;'
 python3 - "$SCHEMA" "$WORK/typed.json" <<'PY'
@@ -256,7 +258,7 @@ json.dump(data, open(dst, "w"), indent=2)
 open(dst, "a").write("\n")
 PY
 variant_host typed "$WORK/typed.json"
-"$WORK/build-typed/lmvideohost" --dsl "$WORK/image.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
+"$WORK/build-typed/lmvideo" --dsl "$WORK/image.dslb" >"$WORK/e.out" 2>"$WORK/e.err"; code=$?
 [ "$code" = 3 ] && grep -q 'signature of Paint.fill' "$WORK/e.err" || { cat "$WORK/e.err"; fail "registry type self-check: exit $code"; }
 ok "a host built with an edited embedded schema refuses to start when the schema has a method its registry lacks or declares with other types (registry/schema self-check, LOAD_UNBOUND, exit 3)"
 run_err r8 3 'interpolation factor must be finite' "$SETUP video.begin(); video.frame(); canvas.clear(mix(\"#000000\", \"#ffffff\", 0.0 / 0.0)); video.end();"

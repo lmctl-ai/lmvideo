@@ -2,7 +2,7 @@
 
 - The Skia archive is downloaded and ignored, not committed. Its checksum and platform are fixed by `scripts/skia.lock`.
 - The current build targets Linux x86-64. Other skia-pack archives exist but are not wired into the Makefile. With the linux-Release-arm64 archive linked in place of `out/Release-linux-x64` everything builds on aarch64, but `skia_test`'s golden comparison fails (max channel difference 6, 2.8% of pixels): the goldens are x86-64 renders.
-- The schema is embedded in `lmvideohost` at build time; rebuild after editing `schema/lmvideo.dsl.json`.
+- The schema is embedded in `lmvideo` at build time; rebuild after editing `schema/lmvideo.dsl.json`.
 - The embedded font is deterministic and must remain paired with its license file.
 - FFmpeg is an external executable. Codec availability, FFmpeg licensing, and encoder diagnostics come from the user's installation.
 - MP4/YUV420 output requires even dimensions. The host validates dimensions, frame counts, output extensions, and lifecycle ordering.

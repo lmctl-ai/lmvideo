@@ -36,9 +36,13 @@ The verified license families for the linked libraries are:
 
 The table identifies licensing families for compatibility review; it does not replace the exact upstream notices required for binary redistribution.
 
-### Binary redistribution follow-up
+### Binary redistribution
 
-Before distributing a binary that links the downloaded Skia pack, collect the exact notices for Skia and every linked archive library, especially FreeType, ICU, Expat, and the JPEG implementation, whose notices are not present in the extracted pack inventory above. Include those notices with the binary distribution. The current repository distributes source and a download script, not the Skia archive or compiled binaries.
+Release binaries link the Skia pack's static libraries, so each release carries the exact license texts next to the executable
+(`scripts/stage-release-notices.sh`): `licenses/Skia.txt`, `ICU.txt` (Unicode License v3), `Expat.txt`, `libjpeg-turbo.md` and `README.ijg`
+(IJG + BSD-3-Clause + zlib terms) from this repository, `libpng-LICENSE`, `zlib-LICENSE`, `HarfBuzz-COPYING`, `libwebp-COPYING` and
+`FreeType-FTL.TXT` (FreeType used under its FTL) copied from the unpacked pack, and the DejaVu font license. ANGLE, SwiftShader and the Vulkan
+headers are in the pack but not linked into the CPU-raster build.
 
 ## FFmpeg
 

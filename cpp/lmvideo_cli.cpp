@@ -205,7 +205,7 @@ int run_render(int argc, char* argv[]) {
 
 } // namespace
 
-int main(int argc, char* argv[]) {
+int cli_main(int argc, char* argv[]) {
     if (argc < 2) {
         print_usage(argv[0]);
         return 1;

@@ -4,7 +4,10 @@ BUILD ?= build
 
 CUR_DIR := $(shell pwd)
 SKIA_DIR := third_party/skia
-SKIA_OUT := $(SKIA_DIR)/out/Release-linux-x64
+SKIA_PLATFORM := $(shell scripts/platform.sh)
+SKIA_OS := $(firstword $(subst -, ,$(SKIA_PLATFORM)))
+SKIA_OUT := $(SKIA_DIR)/out/Release-$(SKIA_PLATFORM)
+LMVIDEO_VERSION := $(shell head -n1 VERSION)
 
 SKIA_INCLUDES := \
     -Icpp \
@@ -24,19 +27,27 @@ SKIA_LIBS := \
     $(SKIA_OUT)/libpng.a \
     $(SKIA_OUT)/libjpeg.a \
     $(SKIA_OUT)/libwebp.a \
-    $(SKIA_OUT)/libwebp_sse41.a \
+    $(wildcard $(SKIA_OUT)/libwebp_sse41.a) \
     $(SKIA_OUT)/libzlib.a \
-    $(SKIA_OUT)/libfreetype2.a \
     $(SKIA_OUT)/libharfbuzz.a \
+    $(wildcard $(SKIA_OUT)/libfreetype2.a) \
     $(SKIA_OUT)/libexpat.a \
     $(SKIA_OUT)/libicu.a \
     $(SKIA_OUT)/libskcms.a
 
+# Linux: one static group (STATIC=1 adds -static: no runtime dependency except the user's ffmpeg). macOS: Skia needs the system font and graphics frameworks.
+ifeq ($(SKIA_OS),macos)
+LINK_SKIA := $(SKIA_LIBS) -lpthread -framework CoreFoundation -framework CoreGraphics -framework CoreText -framework CoreServices -framework Foundation
+else
 LINK_SKIA := -Wl,--start-group $(SKIA_LIBS) -Wl,--end-group -lpthread -ldl
+ifeq ($(STATIC),1)
+LINK_SKIA += -static
+endif
+endif
 
 .PHONY: all test clean fetch_skia
 
-all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/encoder_test $(BUILD)/lmvideohost
+all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/encoder_test
 
 fetch_skia:
 	@scripts/fetch-skia.sh --quiet
@@ -57,8 +68,6 @@ $(BUILD)/liblmvideo.a: $(BUILD)/lmvideo.o $(BUILD)/encoder.o
 $(BUILD)/lmvideo_cli.o: cpp/lmvideo_cli.cpp cpp/lmvideo.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Icpp -c cpp/lmvideo_cli.cpp -o $@
 
-$(BUILD)/lmvideo: $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
-	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
 $(BUILD)/skia_test.o: tests/skia_test.cpp cpp/lmvideo.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Icpp -c tests/skia_test.cpp -o $@
@@ -73,7 +82,7 @@ $(BUILD)/encoder_test: $(BUILD)/encoder_test.o $(BUILD)/liblmvideo.a | $(BUILD) 
 	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/encoder_test.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
 # The DSL host: implements schema/lmvideo.dsl.json over the library (dslvm.hpp is vendored, pinned by sdk.lock).
-# The schema is embedded byte for byte (`lmvideohost --dsl-schema --json` prints exactly these bytes). LMVIDEO_SCHEMA exists
+# The schema is embedded byte for byte (`lmvideo --dsl-schema --json` prints exactly these bytes). LMVIDEO_SCHEMA exists
 # only so test.sh can build a host embedding an edited schema to exercise the registry/schema self-check.
 LMVIDEO_SCHEMA ?= schema/lmvideo.dsl.json
 $(BUILD)/generated/schema_embedded.hpp: $(LMVIDEO_SCHEMA)
@@ -85,8 +94,12 @@ $(BUILD)/generated/schema_embedded.hpp: $(LMVIDEO_SCHEMA)
 $(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp cpp/schema.hpp $(BUILD)/generated/schema_embedded.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -I$(BUILD)/generated -c cpp/host.cpp -o $@
 
-$(BUILD)/lmvideohost: $(BUILD)/host.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
-	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/host.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
+$(BUILD)/main.o: cpp/main.cpp VERSION | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Icpp -DLMVIDEO_VERSION='"$(LMVIDEO_VERSION)"' -c cpp/main.cpp -o $@
+
+# One executable: the DSL host plus the `demo` / `render` library demos.
+$(BUILD)/lmvideo: $(BUILD)/main.o $(BUILD)/host.o $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
+	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/main.o $(BUILD)/host.o $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
 test: $(BUILD)/skia_test $(BUILD)/encoder_test
 	@$(BUILD)/skia_test && $(BUILD)/encoder_test

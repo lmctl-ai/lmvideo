@@ -1,6 +1,6 @@
 # Purpose and boundaries
 
-lmvideo wraps Skia for raster drawing and the external FFmpeg command for video encoding. It also provides `lmvideohost`, which exposes those operations through the lmscript schema in `schema/lmvideo.dsl.json`.
+lmvideo wraps Skia for raster drawing and the external FFmpeg command for video encoding. It also provides `lmvideo`, which exposes those operations through the lmscript schema in `schema/lmvideo.dsl.json`.
 
 The native host owns the process, surface, encoder, output path, and per-run object arena. The compiled DSL chunk is a callback that configures the host, draws frames, and calls lifecycle methods. Handles are host objects and do not become bytecode collections.
 

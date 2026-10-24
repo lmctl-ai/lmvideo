@@ -3,7 +3,7 @@
 lmvideo has three layers:
 
 1. `lmv::` value classes provide a small C++ drawing and encoding API. Skia implementation details stay in `cpp/lmvideo.cpp`; the public header does not require Skia headers.
-2. `lmvideohost` registers the schema's object methods and functions, owns the native arena, and validates host policy such as dimensions, lifecycle, file output, and encoder state.
+2. `lmvideo` registers the schema's object methods and functions, owns the native arena, and validates host policy such as dimensions, lifecycle, file output, and encoder state.
 3. lmscript compiles one typed DSL chunk. The host loads and runs that chunk, which configures the run and performs frame, attribute, and template loops.
 
 ## Dependencies

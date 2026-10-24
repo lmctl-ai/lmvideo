@@ -1,9 +1,11 @@
 # Host collection/template example. The bytecode has no list value: keyframes()
 # returns a host object and the DSL walks it with len()/at() inside its frame loop.
+standalone = ARGV.len() == 0;
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/template.dslb";
-mp4 = ARGV.len() > 1 ? ARGV[1] : "build/template.mp4";
-png = ARGV.len() > 2 ? ARGV[2] : "build/template.png";
-program = _dsl_ schema="../schema/lmvideo.dsl.json";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/template.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/template.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(320, 180);
 video.fps(12);
 video.frames(12);
@@ -39,4 +41,10 @@ video.end();
 end _dsl_
 mkdir(dirname(dslout));
 savedsl(program, dslout);
+# No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+}
 println(f"wrote {dslout} ({mp4}, {png})");

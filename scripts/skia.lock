@@ -1,4 +1,6 @@
+# JetBrains skia-pack release and the sha256 of each platform's Release zip (Skia-<tag>-<os>-Release-<arch>.zip).
 tag=m144-e2e6623374-4
-url=https://github.com/JetBrains/skia-pack/releases/download/m144-e2e6623374-4/Skia-m144-e2e6623374-4-linux-Release-x64.zip
-sha256=895628ecaf8f60dee5b4c3b04574a290335408049110a008d79ad4668382a79b
-bytes=49703089
+linux-x64=895628ecaf8f60dee5b4c3b04574a290335408049110a008d79ad4668382a79b
+linux-arm64=2c66dc45e6ede6fa87682d617a390059894592d3d0cd2d7f72afded830fb3a9e
+macos-arm64=5ec2f81f28bf79ce4b9fd744dd183b3f718cb72a742a8465ae44f395a7bfb411
+macos-x64=077513011356f9d96c596def3c5b292e43c705dc6902812daa82bc147303a9f4

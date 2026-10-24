@@ -1,7 +1,7 @@
-// lmvideohost: the DSL host for lmvideo. The host owns the process and encoder;
+// lmvideo DSL host (reached through main.cpp): the DSL host for lmvideo. The host owns the process and encoder;
 // the lmscript chunk owns the frame and attribute loops.
 //
-//   lmvideohost --dsl FILE.dslb [--output PATH]
+//   lmvideo --dsl FILE.dslb [--output PATH]
 //   lmvideohost --dsl-schema [--json] | --dsl-signatures
 //
 // schema/lmvideo.dsl.json is embedded at build time (DSL host flag standard); --dsl-schema --json prints it byte for byte.
@@ -505,8 +505,8 @@ static void print_schema_summary(const dslvm::Registry& reg) {
   for (const auto& owner : order) { std::cout << owner << ":\n"; for (const auto& m : members[owner]) std::cout << "  " << m << "\n"; }
 }
 
-int main(int argc, char** argv) {
-  const char* usage = "usage: lmvideohost --dsl FILE.dslb [--output PATH] | --dsl-schema [--json] | --dsl-signatures\n";
+int host_main(int argc, char** argv) {
+  const char* usage = "usage: lmvideo --dsl FILE.dslb [--output PATH] | --dsl-schema [--json] | --dsl-signatures | --version | demo OUT.png | render IN.svg OUT.png\n";
   const std::string schema_bytes(reinterpret_cast<const char*>(lmvideo_dsl::embedded_schema), lmvideo_dsl::embedded_schema_size);
   auto print_signatures = [](bool summary) {  // the registry's canonical signatures as the host declares them
     Arena pa; OutputState po; dslvm::Registry preg; schema::Schema empty; Registrar pr(preg, empty);

@@ -1,13 +1,15 @@
 # lmvideo image example (EXPERIMENTAL _dsl_): a poster drawn with shapes, a gradient, a path and text.
 # Run from the repo root: $LMSCRIPT_BIN examples/image.lms [OUT.dslb] [OUT.png] [WIDTH] [HEIGHT] [TITLE]
-#   then   build/lmvideohost --dsl OUT.dslb
+#   (no arguments: also runs it with the released lmvideo host; with arguments it only compiles, then run: lmvideo --dsl OUT.dslb)
 # The chunk runs once: video.begin() allocates the host-owned surface and frame() selects the frame.
+standalone = ARGV.len() == 0;
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/image.dslb";
-png = ARGV.len() > 1 ? ARGV[1] : "build/image.png";
+png = ARGV.len() > 1 ? ARGV[1] : "images/image.png";
 width = ARGV.len() > 2 ? num(ARGV[2]) : 640;
 height = ARGV.len() > 3 ? num(ARGV[3]) : 360;
 title = ARGV.len() > 4 ? ARGV[4] : "Hello lmvideo";
-program = _dsl_ schema="../schema/lmvideo.dsl.json";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(${width}, ${height});
 video.frames(1);
 video.output(${png});
@@ -28,4 +30,10 @@ video.end();
 end _dsl_
 mkdir(dirname(dslout));
 savedsl(program, dslout);
+# No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+}
 println(f"wrote {dslout} (image {png}, {width}x{height})");
