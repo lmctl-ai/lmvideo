@@ -1,0 +1,140 @@
+# Hohmann transfer from low Earth orbit to geostationary orbit, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/hohmann-transfer.lms) to lmvideo:
+# two tangential burns and half an ellipse, drawn to scale (LEO radius 6778 km, GEO radius 42164 km). The craft circles LEO, burns, rides the transfer ellipse
+# (Kepler's equation in the DSL), burns again at apogee and settles into GEO. Known answers: dv1 = 2.40 km/s, dv2 = 1.46 km/s, total 3.85 km/s, coast 5.3 h.
+# Writes images/hohmann-transfer.mp4 (8 s, 960x540), images/hohmann-transfer.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/hohmann-transfer.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/hohmann-transfer.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/hohmann-transfer.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("Hohmann transfer: LEO to geostationary orbit", "Two tangential burns and half an ellipse. Speeds from vis-viva: v² = μ (2/r − 1/a).");
+  card(36.0, 96.0, 640.0, 420.0);
+  let ex = 360.0;
+  let ey = 308.0;
+  let r1 = 32.0;
+  let r2 = 32.0 * 42164.0 / 6778.0;
+  let a = (r1 + r2) / 2.0;
+  let e = (r2 - r1) / (r2 + r1);
+  let b = a * sqrt(1.0 - e * e);
+  let c = a * e;
+  # orbits
+  canvas.path(path().circle(ex, ey, r2), paint().stroke().stroke_width(2.0).color(c_gold()).alpha(0.8));
+  canvas.path(path().circle(ex, ey, r1), paint().stroke().stroke_width(2.0).color(c_teal()).alpha(0.9));
+  canvas.path(path().oval(ex - c - a, ey - b, 2.0 * a, 2.0 * b), paint().stroke().stroke_width(1.5).dash(8.0, 7.0).color(c_coral()));
+  dot(ex, ey, 26.0, c_blue());
+  txtc("Earth", ex, ey + 4.0, 11.0, c_bg());
+  txt("GEO 35 786 km", ex + 40.0, ey - r2 + 22.0, 12.0, c_gold());
+  txt("transfer ellipse (coast)", ex - 70.0, ey + b + 20.0, 12.0, c_coral());
+  # timeline: 0-0.18 LEO, 0.18 burn 1, 0.18-0.68 transfer, 0.68 burn 2, 0.68-1.0 GEO
+  let px = ex + r1;
+  let py = ey;
+  let phase = 0;
+  if (t < 0.18) {
+    let ang = t / 0.18 * 2.0 * pi();
+    px = ex + r1 * cos(ang);
+    py = ey - r1 * sin(ang);
+  }
+  if (t >= 0.18) {
+    if (t < 0.68) {
+      let u = (t - 0.18) / 0.5;
+      let m = pi() * u;
+      let big = m + e * sin(m);
+      for (it in range(0, 9)) { big = big - (big - e * sin(big) - m) / (1.0 - e * cos(big)); }
+      # Earth is a focus and perigee (E = 0) is at +x, so the ellipse centre sits at ex - c
+      px = ex + a * cos(big) - c;
+      py = ey - b * sin(big);
+      phase = 1;
+    }
+    if (t >= 0.68) {
+      let ang = pi() + (t - 0.68) / 0.32 * 2.0 * pi();
+      px = ex + r2 * cos(ang);
+      py = ey - r2 * sin(ang);
+      phase = 2;
+    }
+  }
+  # burn flashes
+  if (t > 0.17) { if (t < 0.28) { ring(ex + r1, ey, 8.0 + (t - 0.17) * 150.0, 2.0, c_coral()); } }
+  if (t > 0.67) { if (t < 0.78) { ring(ex - r2, ey, 8.0 + (t - 0.67) * 150.0, 2.0, c_teal()); } }
+  dot(px, py, 7.0, c_ink());
+  card(692.0, 96.0, 232.0, 420.0);
+  txtb("Speed budget (km/s)", 706.0, 126.0, 14.0, c_violet());
+  txt("circular LEO", 706.0, 160.0, 12.0, c_muted());  txtr("7.67", 910.0, 160.0, 12.0, c_ink());
+  txt("transfer, perigee", 706.0, 180.0, 12.0, c_muted());  txtr("10.07", 910.0, 180.0, 12.0, c_ink());
+  txt("transfer, apogee", 706.0, 200.0, 12.0, c_muted());  txtr("1.60", 910.0, 200.0, 12.0, c_ink());
+  txt("circular GEO", 706.0, 220.0, 12.0, c_muted());  txtr("3.07", 910.0, 220.0, 12.0, c_ink());
+  let b1 = fade(t, 0.18, 0.24);
+  let b2 = fade(t, 0.68, 0.74);
+  if (b1 > 0.0) { txtb("Δv₁ = 2.40", 706.0, 262.0, 18.0, c_coral()); txt("burn 1 at perigee", 706.0, 282.0, 12.0, c_muted()); }
+  if (b2 > 0.0) { txtb("Δv₂ = 1.46", 706.0, 316.0, 18.0, c_teal()); txt("burn 2 at apogee", 706.0, 336.0, 12.0, c_muted()); }
+  if (b2 > 0.0) { txtb("total 3.85 km/s", 706.0, 380.0, 18.0, c_ink()); txt("coast time 5.3 h (half ellipse)", 706.0, 400.0, 12.0, c_muted()); }
+  canvas.rect(706.0, 440.0, 200.0, 8.0, paint().color(c_grid()));
+  canvas.rect(706.0, 440.0, 200.0 * t, 8.0, paint().color(c_gold()));
+  txt("mission clock", 706.0, 466.0, 11.0, c_muted());
+
+  if (video.index() == 170) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/hohmann-transfer.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/hohmann-transfer.gif;
+    assert(g.code == 0);
+    println("wrote images/hohmann-transfer.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

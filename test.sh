@@ -288,4 +288,14 @@ run_err r13 3 'may only be called once' "$SETUP video.begin(); video.begin();"
 run_err r14 3 'more times than video.frames' "$SETUP video.begin(); video.frame(); video.frame();"
 ok "host rejects frame without begin, missing frames, repeated begin and extra frames"
 
+# 13. The lmdraw ports (examples/*.lms other than the four basics): each compiles, runs and writes a 960x540 h264 mp4 of 240 frames and a PNG still.
+for n in damped-oscillator kepler-second-law lotka-volterra hohmann-transfer carnot-cycle lens-ray-diagram rc-lowpass hydrogen-spectrum geometry-ellipse; do
+  compile examples/$n.lms "$WORK/$n.dslb" "$WORK/$n.mp4" "$WORK/$n.png" >/dev/null || fail "compile $n.lms"
+  "$HOST" --dsl "$WORK/$n.dslb" >/dev/null 2>"$WORK/$n.err" || { cat "$WORK/$n.err"; fail "run $n.lms"; }
+  INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/$n.mp4" | tr '\n' ' ')"
+  [ "$INFO" = "codec_name=h264 width=960 height=540 nb_read_frames=240 " ] || fail "$n.mp4: $INFO"
+  [ "$(python3 -I $HERE/tools/pngpx.py "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
+done
+ok "nine lmdraw ports: compile, run, 960x540 h264 with 240 frames and a PNG still each"
+
 echo "PASS $pass checks"

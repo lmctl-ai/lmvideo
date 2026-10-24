@@ -1,0 +1,142 @@
+# Damped harmonic oscillator, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/damped-oscillator.lms) to lmvideo:
+# x'' + 2 zeta w0 x' + w0^2 x = 0, released from x(0) = 1, x'(0) = 0 with w0 = 1. Four damping ratios are drawn with Skia and animated:
+# the curves grow with time, the legend reports each regime's overshoot, and the critically damped curve (zeta = 1) is the one that settles first.
+# Writes images/damped-oscillator.mp4 (8 s, 960x540), images/damped-oscillator.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/damped-oscillator.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/damped-oscillator.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/damped-oscillator.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("Damped harmonic oscillator: why critical damping settles fastest", "x'' + 2ζω₀x' + ω₀²x = 0, released from x(0) = 1. Four damping ratios, one time axis.");
+  # plot frame: t = 0..16 on x = 90..640, x = -1..1 on y = 140..500
+  card(60.0, 100.0, 610.0, 410.0);
+  for (g in range(0, 5)) {
+    let gy = 140.0 + float(g) * 90.0;
+    seg(90.0, gy, 650.0, gy, 1.0, c_grid());
+    txtr(str(1.0 - float(g) * 0.5), 82.0, gy + 5.0, 12.0, c_muted());
+  }
+  for (g in range(0, 5)) {
+    let gx = 90.0 + float(g) * 140.0;
+    seg(gx, 140.0, gx, 500.0, 1.0, c_grid());
+    txtc(str(g * 4), gx, 524.0, 12.0, c_muted());
+  }
+  seg(90.0, 320.0, 650.0, 320.0, 1.6, c_muted());
+  txtc("dimensionless time ω₀t", 370.0, 546.0 - 10.0, 12.0, c_muted());
+  let tmax = t * 16.0;
+  let colors = 0;
+  for (r in range(0, 4)) {
+    let z = 0.15;
+    let col = c_gold();
+    if (r == 1) { z = 0.4; col = c_teal(); }
+    if (r == 2) { z = 1.0; col = c_coral(); }
+    if (r == 3) { z = 2.0; col = c_violet(); }
+    let wd = sqrt(abs(1.0 - z * z));
+    let trace = path();
+    let started = 0;
+    let lastx = 0.0;
+    let lasty = 0.0;
+    let low = 1.0;
+    for (i in range(0, 321)) {
+      let tt = float(i) * 0.05;
+      if (tt <= tmax) {
+        let x = 1.0;
+        if (z < 1.0) { x = pow(2.718281828459045, -z * tt) * (cos(wd * tt) + z / wd * sin(wd * tt)); }
+        if (z == 1.0) { x = (1.0 + tt) * pow(2.718281828459045, -tt); }
+        if (z > 1.0) {
+          let s1 = -z + wd;
+          let s2 = -z - wd;
+          x = (s2 * pow(2.718281828459045, s1 * tt) - s1 * pow(2.718281828459045, s2 * tt)) / (s2 - s1);
+        }
+        if (x < low) { low = x; }
+        let px = 90.0 + tt / 16.0 * 560.0;
+        let py = 320.0 - x * 180.0;
+        if (started == 0) { trace = trace.move_to(px, py); started = 1; } else { trace = trace.line_to(px, py); }
+        lastx = px;
+        lasty = py;
+      }
+    }
+    canvas.path(trace, paint().stroke().stroke_width(3.0).stroke_join("round").color(col));
+    dot(lastx, lasty, 5.0, col);
+    # legend card on the right
+    let ly = 150.0 + float(r) * 54.0;
+    seg(700.0, ly, 730.0, ly, 4.0, col);
+    txtb("ζ = " + str(z), 742.0, ly + 5.0, 17.0, c_ink());
+    let note = "underdamped, rings";
+    if (r == 2) { note = "critical: fastest, no overshoot"; }
+    if (r == 3) { note = "overdamped: sluggish creep"; }
+    txt(note, 742.0, ly + 24.0, 13.0, c_muted());
+    if (z < 1.0) { txt("lowest point " + str(floor(low * 100.0) / 100.0), 742.0, ly + 40.0, 12.0, col); }
+  }
+  card(690.0, 390.0, 240.0, 120.0);
+  txtb("Takeaway", 706.0, 418.0, 15.0, c_violet());
+  txt("Door closers and meters target", 706.0, 442.0, 13.0, c_muted());
+  txt("ζ ≈ 0.7 to 1: quick without", 706.0, 460.0, 13.0, c_muted());
+  txt("ringing. Past 1 it only slows.", 706.0, 478.0, 13.0, c_muted());
+
+  if (video.index() == 170) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/damped-oscillator.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/damped-oscillator.gif;
+    assert(g.code == 0);
+    println("wrote images/damped-oscillator.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

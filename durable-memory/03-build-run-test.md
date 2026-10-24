@@ -17,3 +17,15 @@ nice bash test.sh
 The test script's generated files live under a temporary directory and are removed on exit. The downloaded Skia tree is ignored by Git. A clean checkout therefore needs either network access or `LMVIDEO_SKIA_ZIP` pointing to the archive whose checksum matches `scripts/skia.lock`.
 
 The template example is the primary integration path: it renders 12 frames and a PNG from one DSL invocation, iterates a host collection, and checks deterministic pixels and video facts. Measurements in the README and prior records are observations, not performance guarantees.
+
+## Examples and gallery
+
+`examples/` holds four basics (`image`, `svg`, `video`, `template`) and nine ports of the lmdraw physics/maths animations (`damped-oscillator`, `kepler-second-law`, `lotka-volterra`, `hohmann-transfer`, `carnot-cycle`, `lens-ray-diagram`, `rc-lowpass`, `hydrogen-spectrum`, `geometry-ellipse`). Each port is 960x540, 240 frames at 30 fps, writes `images/<name>.mp4`, a PNG still and a GIF, and has the same two modes as the basics: no arguments compiles and runs; `dslout mp4 png` only compiles (what `test.sh` uses). `test.sh` check 27 runs all nine and verifies h264, size and frame count.
+
+DSL constraints met while porting (they shape how these files are written): `#` comments only; functions cannot capture caller locals, so the shared palette is a set of `c_*()` functions repeated in each file; no arrays, no `?:`, no `atan2`/`exp`/`log` (helpers are written out per file); loop variable names are read-only and cannot be redeclared. Published pictures live in `docs/images/` (GIF and PNG) and `docs/videos/` (MP4) and are what the README gallery links.
+
+## Portability notes
+
+- The bundled font is embedded with `.incbin`; the path is the absolute `LMVIDEO_FONT_PATH` define from the Makefile. Do not use `-Wa,-I`: clang on macOS forwards it as a C++ include path and the libc++ headers then fail with "reference to unresolved using declaration". Mach-O needs `__TEXT,__const` and underscore-prefixed symbols (see `cpp/lmvideo.cpp`).
+- `sigtimedwait` does not exist on macOS; the encoder drains its own SIGPIPE with `sigpending` + `sigwait`.
+- `tests/skia_test.cpp` compares to an x86-64 golden; aarch64 gets a looser tolerance because anti-aliased edges differ slightly.

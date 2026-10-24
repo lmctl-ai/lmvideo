@@ -1,0 +1,156 @@
+# Carnot engine, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/carnot-cycle.lms) to lmvideo:
+# 1 mol of an ideal diatomic gas (gamma = 1.4) between 500 K and 300 K: isothermal expansion 1->2, adiabatic expansion 2->3, isothermal compression 3->4,
+# adiabatic compression 4->1. A marker runs the loop while the enclosed area (the work) fills in. Known answers: W = nR (Th - Tc) ln 2 = 1153 J, efficiency 1 - Tc/Th = 40 %.
+# Writes images/carnot-cycle.mp4 (8 s, 960x540), images/carnot-cycle.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/carnot-cycle.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/carnot-cycle.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/carnot-cycle.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("Carnot engine: work is the area inside the loop", "1 mol of ideal gas between a 500 K source and a 300 K sink: two isotherms, two adiabats.");
+  card(36.0, 96.0, 610.0, 420.0);
+  for (g in range(0, 5)) {
+    let gy = 480.0 - float(g) * 87.5;
+    seg(100.0, gy, 620.0, gy, 1.0, c_grid());
+    txtr(str(g * 120), 92.0, gy + 4.0, 11.0, c_muted());
+  }
+  for (g in range(0, 5)) {
+    let gx = 100.0 + float(g) * 130.0;
+    seg(gx, 130.0, gx, 480.0, 1.0, c_grid());
+    txtc(str(g * 20), gx, 500.0, 11.0, c_muted());
+  }
+  txt("pressure P (kPa)", 52.0, 122.0, 12.0, c_muted());
+  txtc("volume V (L)", 360.0, 512.0, 12.0, c_muted());
+  let v1 = 10.0;
+  let v2 = 20.0;
+  let gam = 1.4;
+  let v3 = 20.0 * pow(500.0 / 300.0, 1.0 / (gam - 1.0));
+  let v4 = 10.0 * pow(500.0 / 300.0, 1.0 / (gam - 1.0));
+  let prog = fade(t, 0.06, 0.94) * 4.0;
+  let fill_path = path();
+  let started = 0;
+  let mx = 0.0;
+  let my = 0.0;
+  for (si in range(0, 4)) {
+    let seg_path = path();
+    let seg_started = 0;
+    for (j in range(0, 41)) {
+      let u = float(j) / 40.0;
+      let vol = 0.0;
+      let pr = 0.0;
+      if (si == 0) { vol = lerp(v1, v2, u); pr = 8.314 * 500.0 / vol; }
+      if (si == 1) { vol = lerp(v2, v3, u); pr = 8.314 * 500.0 / v2 * pow(v2 / vol, gam); }
+      if (si == 2) { vol = lerp(v3, v4, u); pr = 8.314 * 300.0 / vol; }
+      if (si == 3) { vol = lerp(v4, v1, u); pr = 8.314 * 300.0 / v4 * pow(v4 / vol, gam); }
+      let px = 100.0 + vol / 80.0 * 520.0;
+      let py = 480.0 - pr / 480.0 * 350.0;
+      if (float(si) + u <= prog) {
+        if (seg_started == 0) { seg_path = seg_path.move_to(px, py); seg_started = 1; } else { seg_path = seg_path.line_to(px, py); }
+        if (started == 0) { fill_path = fill_path.move_to(px, py); started = 1; } else { fill_path = fill_path.line_to(px, py); }
+        mx = px;
+        my = py;
+      }
+    }
+    let col = c_coral();
+    if (si == 1) { col = c_violet(); }
+    if (si == 2) { col = c_teal(); }
+    if (si == 3) { col = c_blue(); }
+    if (seg_started == 1) { canvas.path(seg_path, paint().stroke().stroke_width(3.5).stroke_join("round").color(col)); }
+  }
+  if (started == 1) {
+    fill_path = fill_path.close();
+    canvas.path(fill_path, paint().color(c_violet()).alpha(0.28));
+    dot(mx, my, 7.0, c_ink());
+  }
+  # the four state points
+  txtb("1", 100.0 + v1 / 80.0 * 520.0 - 18.0, 480.0 - 8.314 * 500.0 / v1 / 480.0 * 350.0 - 6.0, 15.0, c_ink());
+  txtb("2", 100.0 + v2 / 80.0 * 520.0 + 8.0, 480.0 - 8.314 * 500.0 / v2 / 480.0 * 350.0 - 6.0, 15.0, c_ink());
+  txtb("3", 100.0 + v3 / 80.0 * 520.0 + 6.0, 480.0 - 8.314 * 300.0 / v3 / 480.0 * 350.0 - 6.0, 15.0, c_ink());
+  txtb("4", 100.0 + v4 / 80.0 * 520.0 - 4.0, 480.0 - 8.314 * 300.0 / v4 / 480.0 * 350.0 + 22.0, 15.0, c_ink());
+  card(662.0, 96.0, 262.0, 420.0);
+  txtb("Energy per cycle", 676.0, 126.0, 14.0, c_violet());
+  let w = fade(t, 0.5, 0.95);
+  seg(676.0, 156.0, 700.0, 156.0, 4.0, c_coral());
+  txt("1→2 isotherm 500 K: heat in", 708.0, 160.0, 11.0, c_ink());
+  seg(676.0, 178.0, 700.0, 178.0, 4.0, c_violet());
+  txt("2→3 adiabat: Q = 0", 708.0, 182.0, 11.0, c_ink());
+  seg(676.0, 200.0, 700.0, 200.0, 4.0, c_teal());
+  txt("3→4 isotherm 300 K: heat out", 708.0, 204.0, 11.0, c_ink());
+  seg(676.0, 222.0, 700.0, 222.0, 4.0, c_blue());
+  txt("4→1 adiabat: Q = 0", 708.0, 226.0, 11.0, c_ink());
+  txt("heat in  Qh", 676.0, 270.0, 12.0, c_muted());  txtr("2882 J", 906.0, 270.0, 12.0, c_ink());
+  canvas.rect(676.0, 278.0, 230.0 * fade(t, 0.1, 0.4), 10.0, paint().color(c_coral()));
+  txt("heat out Qc", 676.0, 316.0, 12.0, c_muted());  txtr("1729 J", 906.0, 316.0, 12.0, c_ink());
+  canvas.rect(676.0, 324.0, 230.0 * 0.6 * fade(t, 0.4, 0.7), 10.0, paint().color(c_teal()));
+  txt("work W = area", 676.0, 362.0, 12.0, c_muted());  txtr("1153 J", 906.0, 362.0, 12.0, c_ink());
+  canvas.rect(676.0, 370.0, 230.0 * 0.4 * w, 10.0, paint().color(c_violet()));
+  txtb("efficiency " + str(floor(40.0 * w * 10.0) / 10.0) + " %", 676.0, 420.0, 20.0, c_gold());
+  txt("= 1 − Tc/Th = 1 − 300/500", 676.0, 442.0, 12.0, c_muted());
+
+  if (video.index() == 170) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/carnot-cycle.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/carnot-cycle.gif;
+    assert(g.code == 0);
+    println("wrote images/carnot-cycle.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

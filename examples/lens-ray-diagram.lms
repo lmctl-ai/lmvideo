@@ -1,0 +1,166 @@
+# Thin lens: real vs virtual image, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/lens-ray-diagram.lms) to lmvideo:
+# a converging lens (f = 10 cm, drawn at 10 px/cm) and an object that slides toward it. The three principal rays are redrawn every frame; beyond 2f the image is
+# real, inverted and smaller, inside f it flips to virtual, upright and larger. Known answers: 1/do + 1/di = 1/f, magnification m = -di/do.
+# Writes images/lens-ray-diagram.mp4 (8 s, 960x540), images/lens-ray-diagram.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/lens-ray-diagram.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/lens-ray-diagram.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/lens-ray-diagram.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("One lens, two images: real or virtual", "Thin converging lens, f = 10 cm. The object slides in; three principal rays find the image.");
+  card(36.0, 96.0, 700.0, 420.0);
+  let lx = 400.0;
+  let ay = 310.0;
+  let fl = 100.0;
+  let ho = 62.0;
+  let d = 260.0 - 205.0 * ease(t);
+  let xo = lx - d;
+  seg(60.0, ay, 712.0, ay, 1.5, c_grid());
+  # lens, focal points and 2f marks
+  canvas.path(path().move_to(lx, ay - 150.0).quad_to(lx + 22.0, ay, lx, ay + 150.0).quad_to(lx - 22.0, ay, lx, ay - 150.0), paint().color(c_blue()).alpha(0.35));
+  canvas.path(path().move_to(lx, ay - 150.0).quad_to(lx + 22.0, ay, lx, ay + 150.0).quad_to(lx - 22.0, ay, lx, ay - 150.0), paint().stroke().stroke_width(2.0).color(c_blue()));
+  for (m in range(0, 4)) {
+    let mxp = lx - 2.0 * fl;
+    if (m == 1) { mxp = lx - fl; }
+    if (m == 2) { mxp = lx + fl; }
+    if (m == 3) { mxp = lx + 2.0 * fl; }
+    seg(mxp, ay - 6.0, mxp, ay + 6.0, 2.0, c_muted());
+    let lab = "2F";
+    if (m == 1) { lab = "F"; }
+    if (m == 2) { lab = "F'"; }
+    if (m == 3) { lab = "2F'"; }
+    txtc(lab, mxp, ay + 24.0, 12.0, c_muted());
+  }
+  canvas.save();
+  canvas.clip_rect(36.0, 96.0, 700.0, 420.0);
+  # object arrow
+  arrow(xo, ay, xo, ay - ho, 4.0, c_ink());
+  txtc("object", xo, ay + 24.0, 12.0, c_ink());
+  let yo = ay - ho;
+  let near = abs(d - fl) < 3.0;
+  let di = 0.0;
+  if (near == false) { di = fl * d / (d - fl); }
+  let yi = ay + ho * di / d;
+  let xi = lx + di;
+  # ray hit heights on the lens
+  let s3 = (lx - xo) / (lx - fl - xo);
+  let y3 = yo + s3 * (ay - yo);
+  # ray 1 (parallel, then through F'), ray 2 (through the centre), ray 3 (through F, then parallel)
+  seg(xo, yo, lx, yo, 2.5, c_gold());
+  seg(xo, yo, lx, ay, 2.5, c_coral());
+  seg(xo, yo, lx, y3, 2.5, c_teal());
+  if (near) {
+    seg(lx, yo, lx + 280.0, yo + (ay - yo) * 280.0 / fl, 2.5, c_gold());
+    seg(lx, ay, lx + 280.0, ay + ho / d * 280.0, 2.5, c_coral());
+    seg(lx, y3, lx + 280.0, y3, 2.5, c_teal());
+    txt("object at F: rays leave parallel, image at infinity", 240.0, 140.0, 13.0, c_gold());
+  } else {
+    # direction of each outgoing ray: toward (xi, yi) from its lens hit point (or away from it when the image is virtual)
+    let k = 1.0;
+    if (di < 0.0) { k = -1.0; }
+    let l1 = sqrt((xi - lx) * (xi - lx) + (yi - yo) * (yi - yo)) + 0.001;
+    let l2 = sqrt((xi - lx) * (xi - lx) + (yi - ay) * (yi - ay)) + 0.001;
+    let l3 = sqrt((xi - lx) * (xi - lx) + (yi - y3) * (yi - y3)) + 0.001;
+    seg(lx, yo, lx + k * (xi - lx) / l1 * 330.0, yo + k * (yi - yo) / l1 * 330.0, 2.5, c_gold());
+    seg(lx, ay, lx + k * (xi - lx) / l2 * 330.0, ay + k * (yi - ay) / l2 * 330.0, 2.5, c_coral());
+    seg(lx, y3, lx + k * (xi - lx) / l3 * 330.0, y3 + k * (yi - y3) / l3 * 330.0, 2.5, c_teal());
+    if (di < 0.0) {
+      dseg(lx, yo, xi, yi, 1.5, c_gold());
+      dseg(lx, ay, xi, yi, 1.5, c_coral());
+      dseg(lx, y3, xi, yi, 1.5, c_teal());
+    }
+    if (xi > 60.0) { if (xi < 712.0) {
+      let col = c_violet();
+      arrow(xi, ay, xi, yi, 4.0, col);
+      let what = "real image";
+      if (di < 0.0) { what = "virtual image"; }
+      let ly = ay - 30.0;
+      if (yi < ay) { ly = ay + 40.0; }
+      txtc(what, xi, ly, 12.0, col);
+    } }
+  }
+  canvas.restore();
+  card(752.0, 96.0, 176.0, 420.0);
+  txtb("Lens equation", 764.0, 126.0, 14.0, c_violet());
+  txt("1/do + 1/di = 1/f", 764.0, 150.0, 12.0, c_muted());
+  txt("do", 764.0, 190.0, 12.0, c_muted());  txtr(str(floor(d) / 10.0) + " cm", 914.0, 190.0, 13.0, c_ink());
+  if (near) { txt("di", 764.0, 214.0, 12.0, c_muted());  txtr("∞", 914.0, 214.0, 13.0, c_gold()); }
+  else { txt("di", 764.0, 214.0, 12.0, c_muted());  txtr(str(floor(di) / 10.0) + " cm", 914.0, 214.0, 13.0, c_ink()); }
+  let mag = 0.0;
+  if (near == false) { mag = -di / d; }
+  if (near == false) { txt("m = −di/do", 764.0, 238.0, 12.0, c_muted());  txtr(str(floor(mag * 100.0) / 100.0), 914.0, 238.0, 13.0, c_ink()); }
+  let kind = "real, inverted";
+  if (d < fl) { kind = "virtual, upright"; }
+  if (near) { kind = "no image"; }
+  txtb(kind, 764.0, 292.0, 15.0, c_gold());
+  if (d > 2.0 * fl) { txt("smaller than the object", 764.0, 312.0, 12.0, c_muted()); }
+  if (d <= 2.0 * fl) { if (d > fl) { txt("larger than the object", 764.0, 312.0, 12.0, c_muted()); } }
+  if (d < fl) { txt("a magnifying glass:", 764.0, 312.0, 12.0, c_muted()); txt("your eye traces rays back", 764.0, 330.0, 12.0, c_muted()); }
+
+  if (video.index() == 205) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/lens-ray-diagram.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/lens-ray-diagram.gif;
+    assert(g.code == 0);
+    println("wrote images/lens-ray-diagram.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

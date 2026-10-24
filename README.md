@@ -23,6 +23,25 @@ lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/v
 
 Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see [durable-memory/06-ffmpeg-in-process-feasibility.md](durable-memory/06-ffmpeg-in-process-feasibility.md) for the in-process option.
 
+## Gallery
+
+Animated 2D physics and maths diagrams drawn with Skia and encoded to video. They are ports of the [lmdraw](https://github.com/lmctl-ai/lmdraw) examples of the same names. Each picture is the GIF of the animation; the captions link the MP4 and a still PNG, and give the command that runs it.
+
+| **Damped oscillator** | **Kepler's second law** | **Lotka–Volterra** |
+| --- | --- | --- |
+| ![Damped oscillator](docs/images/damped-oscillator.gif) | ![Kepler's second law](docs/images/kepler-second-law.gif) | ![Lotka–Volterra](docs/images/lotka-volterra.gif) |
+| Spring, trace and phase portrait of x'' + 2ζω x' + ω² x = 0. [MP4](docs/videos/damped-oscillator.mp4), [PNG](docs/images/damped-oscillator.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/damped-oscillator.lms` | Equal areas in equal times on an e = 0.6 orbit. [MP4](docs/videos/kepler-second-law.mp4), [PNG](docs/images/kepler-second-law.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/kepler-second-law.lms` | Predator and prey populations and their phase loop. [MP4](docs/videos/lotka-volterra.mp4), [PNG](docs/images/lotka-volterra.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/lotka-volterra.lms` |
+
+| **Hohmann transfer** | **Carnot cycle** | **Lens ray diagram** |
+| --- | --- | --- |
+| ![Hohmann transfer](docs/images/hohmann-transfer.gif) | ![Carnot cycle](docs/images/carnot-cycle.gif) | ![Lens ray diagram](docs/images/lens-ray-diagram.gif) |
+| Two burns move a spacecraft between circular orbits. [MP4](docs/videos/hohmann-transfer.mp4), [PNG](docs/images/hohmann-transfer.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/hohmann-transfer.lms` | The four strokes of the ideal heat engine on a P–V diagram. [MP4](docs/videos/carnot-cycle.mp4), [PNG](docs/images/carnot-cycle.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/carnot-cycle.lms` | Thin-lens image formation as the object moves. [MP4](docs/videos/lens-ray-diagram.mp4), [PNG](docs/images/lens-ray-diagram.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/lens-ray-diagram.lms` |
+
+| **RC low-pass filter** | **Hydrogen spectrum** | **Ellipse geometry** |
+| --- | --- | --- |
+| ![RC low-pass filter](docs/images/rc-lowpass.gif) | ![Hydrogen spectrum](docs/images/hydrogen-spectrum.gif) | ![Ellipse geometry](docs/images/geometry-ellipse.gif) |
+| Step response and Bode magnitude of a first-order filter. [MP4](docs/videos/rc-lowpass.mp4), [PNG](docs/images/rc-lowpass.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/rc-lowpass.lms` | Bohr levels and the Balmer series lines. [MP4](docs/videos/hydrogen-spectrum.mp4), [PNG](docs/images/hydrogen-spectrum.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/hydrogen-spectrum.lms` | Foci, the constant distance sum and the string construction. [MP4](docs/videos/geometry-ellipse.mp4), [PNG](docs/images/geometry-ellipse.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/geometry-ellipse.lms` |
+
 ## Build from source
 
 ```sh

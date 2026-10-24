@@ -1,0 +1,120 @@
+# The gardener's ellipse, after lmdraw's geometry-ellipse example (https://github.com/lmctl-ai/lmdraw/blob/main/examples/geometry-ellipse.lms), animated in lmvideo:
+# a point P goes round an ellipse with semi-axes a = 250 and b = 170 while its two focal distances d1 and d2 change continuously and always add up to 2a = 500.
+# The two bars at the right stack d1 and d2 to the same total length every frame. Foci at c = sqrt(a^2 - b^2) = 183.3 from the centre; eccentricity e = c/a = 0.733.
+# Writes images/geometry-ellipse.mp4 (8 s, 960x540), images/geometry-ellipse.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/geometry-ellipse.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/geometry-ellipse.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/geometry-ellipse.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("Ellipse: the two focal distances always add up to 2a", "Pin two foci, loop a string of length 2a around them: the pencil traces an ellipse. Here P drives the loop.");
+  card(36.0, 96.0, 620.0, 420.0);
+  let cx = 346.0;
+  let cy = 308.0;
+  let a = 250.0;
+  let b = 170.0;
+  let c = sqrt(a * a - b * b);
+  let ang = 2.0 * pi() * fade(t, 0.04, 0.96);
+  let px = cx + a * cos(ang);
+  let py = cy - b * sin(ang);
+  # trace so far
+  let tr = path().move_to(cx + a, cy);
+  for (i in range(1, 181)) {
+    let aa = float(i) / 180.0 * 2.0 * pi();
+    if (aa <= ang) { tr = tr.line_to(cx + a * cos(aa), cy - b * sin(aa)); }
+  }
+  canvas.path(path().oval(cx - a, cy - b, 2.0 * a, 2.0 * b), paint().stroke().stroke_width(1.0).color(c_grid()));
+  canvas.path(tr, paint().stroke().stroke_width(3.5).stroke_join("round").color(c_blue()));
+  # axes, foci, centre
+  seg(cx - a - 14.0, cy, cx + a + 14.0, cy, 1.0, c_muted());
+  seg(cx, cy - b - 14.0, cx, cy + b + 14.0, 1.0, c_muted());
+  dot(cx - c, cy, 6.0, c_gold());
+  dot(cx + c, cy, 6.0, c_gold());
+  txtc("F₁", cx - c, cy + 24.0, 13.0, c_gold());
+  txtc("F₂", cx + c, cy + 24.0, 13.0, c_gold());
+  dot(cx, cy, 3.0, c_muted());
+  let d1 = sqrt((px - (cx - c)) * (px - (cx - c)) + (py - cy) * (py - cy));
+  let d2 = sqrt((px - (cx + c)) * (px - (cx + c)) + (py - cy) * (py - cy));
+  seg(cx - c, cy, px, py, 3.0, c_coral());
+  seg(cx + c, cy, px, py, 3.0, c_teal());
+  dot(px, py, 8.0, c_ink());
+  txtc("P", px + 14.0, py - 12.0, 14.0, c_ink());
+  card(672.0, 96.0, 252.0, 420.0);
+  txtb("Focal distances", 686.0, 126.0, 14.0, c_violet());
+  txt("d₁ = |PF₁|", 686.0, 164.0, 12.0, c_muted());  txtr(str(floor(d1 * 10.0) / 10.0), 910.0, 164.0, 14.0, c_coral());
+  txt("d₂ = |PF₂|", 686.0, 188.0, 12.0, c_muted());  txtr(str(floor(d2 * 10.0) / 10.0), 910.0, 188.0, 14.0, c_teal());
+  txt("d₁ + d₂", 686.0, 218.0, 12.0, c_muted());  txtr(str(floor((d1 + d2) * 10.0) / 10.0), 910.0, 218.0, 16.0, c_gold());
+  canvas.rect(686.0, 250.0, (d1 / (2.0 * a)) * 224.0, 18.0, paint().color(c_coral()));
+  canvas.rect(686.0 + (d1 / (2.0 * a)) * 224.0, 250.0, (d2 / (2.0 * a)) * 224.0, 18.0, paint().color(c_teal()));
+  txt("one bar of length 2a = 500", 686.0, 290.0, 11.0, c_muted());
+  txt("semi-axes", 686.0, 340.0, 12.0, c_muted());  txtr("a = 250, b = 170", 910.0, 340.0, 12.0, c_ink());
+  txt("focal offset", 686.0, 362.0, 12.0, c_muted());  txtr("c = " + str(floor(c * 10.0) / 10.0), 910.0, 362.0, 12.0, c_ink());
+  txt("eccentricity", 686.0, 384.0, 12.0, c_muted());  txtr("e = c/a = " + str(floor(c / a * 1000.0) / 1000.0), 910.0, 384.0, 12.0, c_ink());
+
+  if (video.index() == 170) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/geometry-ellipse.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/geometry-ellipse.gif;
+    assert(g.code == 0);
+    println("wrote images/geometry-ellipse.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

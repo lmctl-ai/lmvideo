@@ -1,0 +1,138 @@
+# Predator-prey cycles (Lotka-Volterra), ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/lotka-volterra.lms) to lmvideo:
+# dx/dt = 0.9 x - 0.025 x y (prey), dy/dt = -0.8 y + 0.01 x y (predators), integrated with classic RK4 (dt = 0.05) inside the DSL. The population curves and the
+# closed phase-plane orbit are drawn up to the current time, so the cycle (predators lag prey by a quarter period) builds up on screen.
+# Writes images/lotka-volterra.mp4 (8 s, 960x540), images/lotka-volterra.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/lotka-volterra.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/lotka-volterra.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/lotka-volterra.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("Predators chase prey: the Lotka–Volterra cycle", "Prey multiply, predators feast and multiply, prey crash, predators starve, repeat. RK4 integration, dt = 0.05.");
+  card(36.0, 96.0, 470.0, 420.0);
+  card(522.0, 96.0, 402.0, 420.0);
+  txtb("population vs time", 52.0, 122.0, 14.0, c_ink());
+  txtb("phase portrait (prey, predators)", 538.0, 122.0, 14.0, c_ink());
+  # axes of the time plot: t = 0..40 on x = 72..490, population 0..160 on y = 480..150
+  for (g in range(0, 5)) {
+    let gy = 480.0 - float(g) * 82.5;
+    seg(72.0, gy, 490.0, gy, 1.0, c_grid());
+    txtr(str(g * 40), 66.0, gy + 4.0, 11.0, c_muted());
+  }
+  seg(72.0, 480.0, 490.0, 480.0, 1.5, c_muted());
+  # phase plot: prey 0..160 on x = 560..900, predators 0..80 on y = 480..160
+  seg(560.0, 480.0, 900.0, 480.0, 1.5, c_muted());
+  seg(560.0, 480.0, 560.0, 160.0, 1.5, c_muted());
+  txtc("prey", 730.0, 506.0, 12.0, c_muted());
+  txt("predators", 540.0, 150.0, 12.0, c_muted());
+  let steps = floor(t * 800.0);
+  let x = 100.0;
+  let y = 30.0;
+  let tr_x = path().move_to(72.0, 480.0 - x * 2.0625);
+  let tr_y = path().move_to(72.0, 480.0 - y * 2.0625);
+  let ph = path().move_to(560.0 + x * 2.125, 480.0 - y * 4.0);
+  for (i in range(1, 801)) {
+    if (float(i) <= steps) {
+      let k1x = 0.9 * x - 0.025 * x * y;
+      let k1y = -0.8 * y + 0.01 * x * y;
+      let x2 = x + 0.025 * k1x;
+      let y2 = y + 0.025 * k1y;
+      let k2x = 0.9 * x2 - 0.025 * x2 * y2;
+      let k2y = -0.8 * y2 + 0.01 * x2 * y2;
+      let x3 = x + 0.025 * k2x;
+      let y3 = y + 0.025 * k2y;
+      let k3x = 0.9 * x3 - 0.025 * x3 * y3;
+      let k3y = -0.8 * y3 + 0.01 * x3 * y3;
+      let x4 = x + 0.05 * k3x;
+      let y4 = y + 0.05 * k3y;
+      let k4x = 0.9 * x4 - 0.025 * x4 * y4;
+      let k4y = -0.8 * y4 + 0.01 * x4 * y4;
+      x = x + 0.05 / 6.0 * (k1x + 2.0 * k2x + 2.0 * k3x + k4x);
+      y = y + 0.05 / 6.0 * (k1y + 2.0 * k2y + 2.0 * k3y + k4y);
+      let px = 72.0 + float(i) / 800.0 * 418.0;
+      tr_x = tr_x.line_to(px, 480.0 - x * 2.0625);
+      tr_y = tr_y.line_to(px, 480.0 - y * 2.0625);
+      ph = ph.line_to(560.0 + x * 2.125, 480.0 - y * 4.0);
+    }
+  }
+  canvas.path(tr_x, paint().stroke().stroke_width(3.0).stroke_join("round").color(c_teal()));
+  canvas.path(tr_y, paint().stroke().stroke_width(3.0).stroke_join("round").color(c_coral()));
+  canvas.path(ph, paint().stroke().stroke_width(2.5).stroke_join("round").color(c_gold()));
+  dot(72.0 + steps / 800.0 * 418.0, 480.0 - x * 2.0625, 5.0, c_teal());
+  dot(72.0 + steps / 800.0 * 418.0, 480.0 - y * 2.0625, 5.0, c_coral());
+  dot(560.0 + x * 2.125, 480.0 - y * 4.0, 7.0, c_gold());
+  # the equilibrium (80, 36) and the legend
+  dot(560.0 + 80.0 * 2.125, 480.0 - 36.0 * 4.0, 4.0, c_muted());
+  txt("equilibrium (80, 36)", 560.0 + 80.0 * 2.125 + 8.0, 480.0 - 36.0 * 4.0 - 6.0, 11.0, c_muted());
+  seg(300.0, 130.0, 326.0, 130.0, 4.0, c_teal());
+  txt("prey (hares)", 334.0, 135.0, 12.0, c_ink());
+  seg(300.0, 150.0, 326.0, 150.0, 4.0, c_coral());
+  txt("predators (lynx)", 334.0, 155.0, 12.0, c_ink());
+  txt("time " + str(floor(t * 400.0) / 10.0), 538.0, 506.0, 12.0, c_muted());
+
+  if (video.index() == 170) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/lotka-volterra.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/lotka-volterra.gif;
+    assert(g.code == 0);
+    println("wrote images/lotka-volterra.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

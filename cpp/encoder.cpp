@@ -279,9 +279,12 @@ void Encoder::add_frame(const std::string& rgba) {
     int saved_errno = errno;
 
     if (!was_pending) {
-      struct timespec ts = {0, 0};
-      siginfo_t info;
-      while (sigtimedwait(&mask, &info, &ts) == SIGPIPE) {
+      // Consume the SIGPIPE our own write raised (sigtimedwait does not exist on macOS; sigwait returns at once for a pending signal).
+      sigset_t pending_after;
+      sigpending(&pending_after);
+      if (sigismember(&pending_after, SIGPIPE)) {
+        int sig = 0;
+        sigwait(&mask, &sig);
       }
     }
 
