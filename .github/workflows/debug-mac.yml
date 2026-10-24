@@ -7,9 +7,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: probe
         run: |
+          set +e
           scripts/fetch-skia.sh >/dev/null
           S=third_party/skia
-          t() { echo "== $*"; c++ -std=c++17 -fsyntax-only "$@" cpp/lmvideo.cpp 2>&1 | grep -a -c "error:"; }
+          t() { echo "== $*"; c++ -std=c++17 -fsyntax-only "$@" cpp/lmvideo.cpp 2>&1 | grep -a -c "error:" || true; }
           t -Icpp
           t -Icpp -I$S
           t -Icpp -isystem $S/include
