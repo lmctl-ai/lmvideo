@@ -15,7 +15,7 @@ SKIA_INCLUDES := \
     -isystem $(SKIA_DIR)/include \
     -isystem $(SKIA_DIR)/modules/svg/include \
     -isystem $(SKIA_DIR)/modules/skshaper/include \
-    -Wa,-I$(CUR_DIR) \
+    -DLMVIDEO_FONT_PATH='"$(CUR_DIR)/assets/fonts/DejaVuSans.ttf"' \
     -w
 
 SKIA_LIBS := \
