@@ -50,6 +50,7 @@
     },
     "Canvas": {
       "methods": {
+        "panel": [{"params":["float","float","float","float"],"returns":"Panel"}],
         "plot": [{"params":["float","float","float","float"],"returns":"Plot"}],
         "clear": [{"params":["string"],"returns":"void"}],
         "rect": [{"params":["float","float","float","float","Paint"],"returns":"void"}],
@@ -101,6 +102,69 @@
         "width": [{"params":["float"],"returns":"Series"}],
         "dash": [{"params":["string"],"returns":"Series"}],
         "marker": [{"params":["string"],"returns":"Series"}]
+      }
+    },
+    "Panel": {
+      "methods": {
+        "manager": [{"params":["string"],"returns":"Panel"}],
+        "padding": [{"params":["float","float","float","float"],"returns":"Panel"}],
+        "gap": [{"params":["float"],"returns":"Panel"}],
+        "background": [{"params":["string"],"returns":"Panel"}],
+        "edge": [{"params":["string","float"],"returns":"Panel"}],
+        "align": [{"params":["string","string"],"returns":"Panel"}],
+        "min_size": [{"params":["float","float"],"returns":"Panel"}],
+        "max_size": [{"params":["float","float"],"returns":"Panel"}],
+        "columns": [{"params":["int"],"returns":"Panel"}],
+        "row_weight": [{"params":["int","float"],"returns":"Panel"}],
+        "column_weight": [{"params":["int","float"],"returns":"Panel"}],
+        "add_panel": [{"params":[],"returns":"LayoutItem"}],
+        "add_plot": [{"params":[],"returns":"LayoutItem"}],
+        "add_text": [{"params":["string"],"returns":"LayoutItem"}],
+        "add_shape": [{"params":["string"],"returns":"LayoutItem"}],
+        "add_image": [{"params":["Image"],"returns":"LayoutItem"}],
+        "add_glue": [{"params":[],"returns":"LayoutItem"}],
+        "draw": [{"params":[],"returns":"Panel"}]
+      }
+    },
+    "LayoutItem": {
+      "methods": {
+        "panel": [{"params":[],"returns":"Panel"}],
+        "plot": [{"params":[],"returns":"Plot"}],
+        "text": [{"params":[],"returns":"Text"}],
+        "shape": [{"params":[],"returns":"Shape"}],
+        "image": [{"params":[],"returns":"ImageView"}],
+        "pack": [{"params":["string","string","bool"],"returns":"LayoutItem"}],
+        "fill": [{"params":["string"],"returns":"LayoutItem"}],
+        "grid": [{"params":["int","int","int","int"],"returns":"LayoutItem"}],
+        "border": [{"params":["string"],"returns":"LayoutItem"}],
+        "place": [{"params":["float","float","float","float"],"returns":"LayoutItem"}],
+        "preferred_size": [{"params":["float","float"],"returns":"LayoutItem"}],
+        "min_size": [{"params":["float","float"],"returns":"LayoutItem"}],
+        "max_size": [{"params":["float","float"],"returns":"LayoutItem"}],
+        "weight": [{"params":["float"],"returns":"LayoutItem"}],
+        "sticky": [{"params":["string"],"returns":"LayoutItem"}],
+        "align": [{"params":["string","string"],"returns":"LayoutItem"}]
+      }
+    },
+    "Text": {
+      "methods": {
+        "color": [{"params":["string"],"returns":"Text"}],
+        "size": [{"params":["float"],"returns":"Text"}],
+        "bold": [{"params":["bool"],"returns":"Text"}],
+        "align": [{"params":["string"],"returns":"Text"}]
+      }
+    },
+    "Shape": {
+      "methods": {
+        "fill": [{"params":["string"],"returns":"Shape"}],
+        "stroke": [{"params":["string"],"returns":"Shape"}],
+        "stroke_width": [{"params":["float"],"returns":"Shape"}],
+        "radius": [{"params":["float"],"returns":"Shape"}]
+      }
+    },
+    "ImageView": {
+      "methods": {
+        "fit": [{"params":["string"],"returns":"ImageView"}]
       }
     },
     "Surface": {

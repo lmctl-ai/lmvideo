@@ -1,4 +1,4 @@
-# Slice 2 proposal: explicit layout managers
+# Slice 2: explicit layout managers
 
 ## Goal and boundaries
 
@@ -45,6 +45,7 @@ A panel or child can declare preferred, minimum, and maximum sizes. Panel paddin
       "shape": [{"params": [], "returns": "Shape"}],
       "image": [{"params": [], "returns": "ImageView"}],
       "pack": [{"params": ["string", "string", "bool"], "returns": "LayoutItem"}],
+      "fill": [{"params": ["string"], "returns": "LayoutItem"}],
       "grid": [{"params": ["int", "int", "int", "int"], "returns": "LayoutItem"}],
       "border": [{"params": ["string"], "returns": "LayoutItem"}],
       "place": [{"params": ["float", "float", "float", "float"], "returns": "LayoutItem"}],
@@ -82,10 +83,18 @@ A panel or child can declare preferred, minimum, and maximum sizes. Panel paddin
 
 `Canvas.panel(x, y, width, height)` creates the positioned root. Nested panels are added as layout items; `LayoutItem.panel()`, `.plot()`, `.text()`, `.shape()`, and `.image()` return the selected child object for styling. `Panel.manager` accepts only `pack`, `grid`, `place`, `border`, `flow_h`, `flow_v`, `box_h`, or `box_v`. A panel defaults to `pack`, but examples set the manager explicitly. Call `Panel.draw()` after configuring and filling the tree.
 
-For `pack`, `LayoutItem.pack(side, fill, expand)` accepts side `top`, `bottom`, `left`, or `right`; fill `none`, `x`, `y`, or `both`; and distributes remaining space among expanded items in insertion order. `grid` requires `Panel.columns(n)` and uses zero-based row/column, positive row/column spans, optional row/column weights, and `sticky` from the `n`, `s`, `e`, `w` combinations. `border` places at most one child in each `north`, `south`, `east`, `west`, and `center` region. `place` uses coordinates relative to the padded inner panel. `flow_h`/`flow_v` place children in order at preferred sizes with gaps and do not wrap. `box_h`/`box_v` use preferred sizes, gap, item weights, and glue items to distribute remaining space along one axis.
+For `pack`, `LayoutItem.pack(side, fill, expand)` accepts side `top`, `bottom`, `left`, or `right`; fill `none`, `x`, `y`, or `both`; and distributes remaining space among expanded items in insertion order. `LayoutItem.fill` selects cross-axis stretching for flow and box children. `grid` requires `Panel.columns(n)` and uses zero-based row/column, positive row/column spans, optional row/column weights, and `sticky` from the `n`, `s`, `e`, `w` combinations. `border` places at most one child in each `north`, `south`, `east`, `west`, and `center` region. `place` uses coordinates relative to the padded inner panel. `flow_h`/`flow_v` place children in order at preferred sizes with gaps and do not wrap. `box_h`/`box_v` use preferred sizes, gap, item weights, and glue items to distribute remaining space along one axis.
 
 Panel and child min/max sizes must be finite and nonnegative; when both are set, minimum cannot exceed maximum. Padding and gap are finite nonnegative pixels. Grid dimensions/spans are positive, indexes are nonnegative, weights are finite nonnegative values, and item place rectangles have positive dimensions. Horizontal alignment is `left`, `center`, or `right`; vertical alignment is `top`, `center`, or `bottom`. `Shape` kinds are `rect`, `round_rect`, `ellipse`, and `line`; image fit is `contain`, `cover`, or `stretch`. An absent preferred size comes from the child: measured text, source image dimensions, a 320×200 plot, or the available cell for a shape/glue.
 
-## Initial example set and tests
+## Examples and tests
 
-The slice will add a 2×2 plot dashboard using `grid`, a title/body/footer figure using `border` with nested panels, and a horizontal control/plot composition using `box_h` plus glue. Golden probes cover pack expansion, weighted grid cells/spans, border regions, explicit place coordinates, and box spacing. `test.sh` compiles the three examples, renders stills/video frames through the same `CanvasSlot`, and checks schema/compiler signatures.
+`dashboard-grid.lms` is a 2×2 figure using `grid`. `layout-workbench.lms` combines `border`, `place`, `box_h`, `flow_v`, image, shape, text, and plot children. The existing `quarterly-revenue`, `sensor-calibration`, and `forecast-area` examples now compose their headings, charts, side notes, and footers with box, border, pack, and flow managers. Golden probes cover pack expansion, weighted grid cells/spans, border regions, explicit place coordinates, flow order, and horizontal/vertical box spacing. `test.sh` renders the examples and checks schema/compiler signatures.
+
+## Implementation record
+
+Slice 2 is implemented in `cpp/layout.hpp` and `cpp/layout.cpp`, with callbacks registered in `cpp/host.cpp`. A `Panel` stores the stable `CanvasSlot*`; `Panel.draw()` recomputes child rectangles for the current frame and then draws each child in order. `Plot` bounds are reassigned before each child draw. Text, shape, image and nested panel handles live in the host's per-run arena. Parent panels clip their children to the panel rectangle. `LayoutItem.fill` sets cross-axis fill for flow and box children; pack items can set fill and expansion together through `LayoutItem.pack`.
+
+The registry exposes all eight explicit managers: `pack`, `grid`, `place`, `border`, `flow_h`, `flow_v`, `box_h`, and `box_v`. Grid supports weighted rows/columns and spans; border rejects duplicate regions; place rectangles must fit the padded content box; flow does not wrap; box distributes leftover space using item weights and glue. No manager inspects graph structure or infers a node arrangement.
+
+The three Plot examples reflow existing examples: quarterly revenue uses a box with a title and chart, sensor calibration uses border regions for heading/chart/footer, and forecast area uses a packed heading/body/footer with a box and flow sidebar. `dashboard-grid.lms` exercises weighted grid cells. `layout-workbench.lms` combines border, box, flow, place, text, shapes, a generated image, and a Plot. `tests/layout_test.cpp` checks pack expansion, weighted grid and spans, border regions, place, flow order, and horizontal/vertical box glue.

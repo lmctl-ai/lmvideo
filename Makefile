@@ -47,7 +47,7 @@ endif
 
 .PHONY: all test clean fetch_skia
 
-all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/plot_test $(BUILD)/encoder_test
+all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/plot_test $(BUILD)/layout_test $(BUILD)/encoder_test
 
 fetch_skia:
 	@scripts/fetch-skia.sh --quiet
@@ -64,6 +64,9 @@ $(BUILD)/encoder.o: cpp/encoder.cpp cpp/encoder.hpp cpp/lmvideo.hpp | $(BUILD)
 
 $(BUILD)/plot.o: cpp/plot.cpp cpp/plot.hpp cpp/lmvideo.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Icpp -c cpp/plot.cpp -o $@
+
+$(BUILD)/layout.o: cpp/layout.cpp cpp/layout.hpp cpp/plot.hpp cpp/lmvideo.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -c cpp/layout.cpp -o $@
 
 $(BUILD)/liblmvideo.a: $(BUILD)/lmvideo.o $(BUILD)/encoder.o
 	ar rcs $@ $^
@@ -84,6 +87,12 @@ $(BUILD)/plot_test.o: tests/plot_test.cpp cpp/plot.hpp cpp/lmvideo.hpp | $(BUILD
 $(BUILD)/plot_test: $(BUILD)/plot_test.o $(BUILD)/plot.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
 	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/plot_test.o $(BUILD)/plot.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
+$(BUILD)/layout_test.o: tests/layout_test.cpp cpp/layout.hpp cpp/plot.hpp cpp/lmvideo.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Icpp -c $< -o $@
+
+$(BUILD)/layout_test: $(BUILD)/layout_test.o $(BUILD)/layout.o $(BUILD)/plot.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
+	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/layout_test.o $(BUILD)/layout.o $(BUILD)/plot.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
+
 $(BUILD)/encoder_test.o: tests/encoder_test.cpp cpp/encoder.hpp cpp/lmvideo.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Icpp -c tests/encoder_test.cpp -o $@
 
@@ -100,18 +109,18 @@ $(BUILD)/generated/schema_embedded.hpp: $(LMVIDEO_SCHEMA)
 	  od -An -v -tx1 $(LMVIDEO_SCHEMA) | sed 's/ *\([0-9a-f][0-9a-f]\)/0x\1,/g'; \
 	  printf '};\ninline constexpr std::size_t embedded_schema_size = sizeof(embedded_schema); }\n'; } >$@.tmp && mv $@.tmp $@
 
-$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp cpp/plot.hpp cpp/schema.hpp $(BUILD)/generated/schema_embedded.hpp | $(BUILD)
+$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp cpp/plot.hpp cpp/layout.hpp cpp/schema.hpp $(BUILD)/generated/schema_embedded.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -I$(BUILD)/generated -c cpp/host.cpp -o $@
 
 $(BUILD)/main.o: cpp/main.cpp VERSION | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Icpp -DLMVIDEO_VERSION='"$(LMVIDEO_VERSION)"' -c cpp/main.cpp -o $@
 
 # One executable: the DSL host plus the `demo` / `render` library demos.
-$(BUILD)/lmvideo: $(BUILD)/main.o $(BUILD)/host.o $(BUILD)/plot.o $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
-	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/main.o $(BUILD)/host.o $(BUILD)/plot.o $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
+$(BUILD)/lmvideo: $(BUILD)/main.o $(BUILD)/host.o $(BUILD)/plot.o $(BUILD)/layout.o $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
+	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/main.o $(BUILD)/host.o $(BUILD)/plot.o $(BUILD)/layout.o $(BUILD)/lmvideo_cli.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
-test: $(BUILD)/skia_test $(BUILD)/plot_test $(BUILD)/encoder_test
-	@$(BUILD)/skia_test && $(BUILD)/plot_test && $(BUILD)/encoder_test
+test: $(BUILD)/skia_test $(BUILD)/plot_test $(BUILD)/layout_test $(BUILD)/encoder_test
+	@$(BUILD)/skia_test && $(BUILD)/plot_test && $(BUILD)/layout_test && $(BUILD)/encoder_test
 
 clean:
 	rm -rf $(BUILD)

@@ -6,7 +6,11 @@ png = ARGV.len() > 2 ? ARGV[2] : "images/sensor-calibration.png";
 mkdir("images");
 program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
-let plot = canvas.plot(42.0, 34.0, 876.0, 474.0).title("Sensor calibration · observed value and uncertainty").xlabel("reference temperature (°C)").ylabel("sensor reading (°C)").x_range(0.0, 80.0).y_range(0.0, 90.0).background("#ffffff");
+let figure = canvas.panel(24.0, 20.0, 912.0, 500.0).manager("border").padding(12.0, 12.0, 12.0, 12.0).gap(8.0).background("#f5f7fa").edge("#cbd5e1", 1.0);
+let header = figure.add_text("Sensor calibration · observed value and uncertainty").border("north").preferred_size(880.0, 36.0).text().size(18.0).bold(true);
+let chart_item = figure.add_plot().border("center");
+let footer = figure.add_text("Dashed crosshairs mark the reference point: 40 °C.").border("south").preferred_size(880.0, 24.0).text().size(12.0).color("#667085");
+let plot = chart_item.plot().title("Measured sensor response").xlabel("reference temperature (°C)").ylabel("sensor reading (°C)").x_range(0.0, 80.0).y_range(0.0, 90.0).background("#ffffff");
 let readings = plot.series("measured", "errorbar", "#168c83").width(2.0).marker("circle");
 plot.hline(40.0, "#667085", 1.2).vline(40.0, "#df5b36", 1.2);
 fn fill_readings(s: Series, progress: float) -> void {
@@ -20,7 +24,7 @@ fn fill_readings(s: Series, progress: float) -> void {
   if (progress >= 0.93) { s.add_error(70.0, 69.0, 67.0, 71.0); }
 }
 for (frame in range(0, video.count())) {
-  video.frame(); canvas.clear("#f5f7fa"); fill_readings(readings, video.t()); plot.draw();
+  video.frame(); canvas.clear("#f5f7fa"); fill_readings(readings, video.t()); figure.draw();
   if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();

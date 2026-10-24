@@ -10,6 +10,7 @@ The current examples cover:
 - a direct frame animation;
 - a template-keyframe animation that iterates a host collection with `len()` and `at()`.
 - retained `Plot`/`Series` charts rendered by Skia on the still or current video-frame `Canvas`.
+- nested `Panel` compositions using explicit pack, grid, place, border, flow, and box managers.
 
 The public C++ API keeps Skia types behind implementation pointers, so consumers of `cpp/lmvideo.hpp` do not need Skia headers. The DSL schema is the compatibility boundary for the host.
 

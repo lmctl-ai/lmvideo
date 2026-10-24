@@ -6,10 +6,23 @@ png = ARGV.len() > 2 ? ARGV[2] : "images/forecast-area.png";
 mkdir("images");
 program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
-let plot = canvas.plot(42.0, 34.0, 876.0, 474.0).title("A logistic adoption forecast").xlabel("month").ylabel("active users (thousands)").x_range(0.0, 12.0).y_range(0.0, 110.0).legend("top_left").background("#ffffff");
+let figure = canvas.panel(24.0, 20.0, 912.0, 500.0).manager("pack").padding(12.0, 12.0, 12.0, 12.0).gap(8.0).background("#f5f7fa").edge("#cbd5e1", 1.0);
+let heading = figure.add_text("A logistic adoption forecast").pack("top", "x", false).preferred_size(850.0, 30.0).text().size(18.0).bold(true);
+let footer = figure.add_text("Growth saturates near 100k active users; red dots are observed samples.").pack("bottom", "x", false).preferred_size(850.0, 24.0).text().size(12.0).color("#667085");
+let body_item = figure.add_panel().pack("top", "both", true);
+let body = body_item.panel().manager("box_h").gap(12.0);
+let chart_item = body.add_plot().weight(1.0).fill("both");
+let plot = chart_item.plot().title("Projected and observed users").xlabel("month").ylabel("active users (thousands)").x_range(0.0, 12.0).y_range(0.0, 110.0).legend("top_left").background("#ffffff");
 let forecast = plot.series("projected adoption", "area", "#2878b5").width(2.5);
 let observed = plot.series("observations", "scatter", "#df5b36").width(3.0).marker("circle");
 plot.hline(80.0, "#667085", 1.0).annotate(9.0, 84.0, "target", "#667085");
+let note_item = body.add_panel().preferred_size(210.0, 300.0).fill("both");
+let note = note_item.panel().manager("flow_v").padding(14.0, 12.0, 12.0, 12.0).gap(10.0).background("#ffffff").edge("#d0d7de", 1.0);
+let note_title = note.add_text("Reading the curve").preferred_size(180.0, 28.0).text().size(15.0).bold(true);
+let note_line1 = note.add_text("Early growth is gradual.").preferred_size(180.0, 36.0).text().size(13.0);
+let note_line2 = note.add_text("Faster growth near month 6.").preferred_size(180.0, 36.0).text().size(13.0);
+let note_badge = note.add_shape("round_rect").preferred_size(170.0, 16.0).shape().fill("#b6e3ff").radius(8.0);
+let note_line3 = note.add_text("The dashed target is 80k.").preferred_size(180.0, 36.0).text().size(13.0);
 fn adoption(t: float) -> float { return 100.0 / (1.0 + pow(2.718281828459045, -0.72 * (t - 6.0))); }
 fn fill_forecast(area: Series, dots: Series, progress: float) -> void {
   area.clear(); dots.clear();
@@ -25,7 +38,7 @@ fn fill_forecast(area: Series, dots: Series, progress: float) -> void {
   if (progress >= 0.90) { dots.add(11.0, 97.0); }
 }
 for (frame in range(0, video.count())) {
-  video.frame(); canvas.clear("#f5f7fa"); fill_forecast(forecast, observed, video.t()); plot.draw();
+  video.frame(); canvas.clear("#f5f7fa"); fill_forecast(forecast, observed, video.t()); figure.draw();
   if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();

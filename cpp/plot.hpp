@@ -41,6 +41,7 @@ struct Annotation {
 
 struct Plot {
   explicit Plot(CanvasSlot* canvas, double x, double y, double width, double height);
+  void set_bounds(double x, double y, double width, double height);
   CanvasSlot* canvas;
   double x, y, width, height;
   std::string title_text, x_label, y_label, y2_label;

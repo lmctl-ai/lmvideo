@@ -250,9 +250,14 @@ lmv::Canvas& CanvasSlot::get() {
 }
 
 Plot::Plot(CanvasSlot* slot, double px, double py, double w, double h) : canvas(slot), x(px), y(py), width(w), height(h) {
-  finite(x,"x"); finite(y,"y"); finite(width,"width"); finite(height,"height");
-  finite(x+width,"right edge"); finite(y+height,"bottom edge");
-  if (width <= 0 || height <= 0) throw lmv::Error("Canvas.plot: width and height must be positive");
+  set_bounds(px,py,w,h);
+}
+
+void Plot::set_bounds(double px, double py, double w, double h) {
+  finite(px,"x"); finite(py,"y"); finite(w,"width"); finite(h,"height");
+  finite(px+w,"right edge"); finite(py+h,"bottom edge");
+  if (w <= 0 || h <= 0) throw lmv::Error("Canvas.plot: width and height must be positive");
+  x=px; y=py; width=w; height=h;
 }
 
 void draw(Plot& p) {

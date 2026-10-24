@@ -18,9 +18,9 @@ SCHEMA="$HERE/schema/lmvideo.dsl.json"
 PNGPX="python3 -I $HERE/tools/pngpx.py"
 compile() {
   local source="${1:-}"
-  if [ -f "$source" ] && grep -q 'canvas\.plot(' "$source"; then
+  if [ -f "$source" ] && grep -Eq 'canvas\.(plot|panel)\(' "$source"; then
     local local_schema="$WORK/$(basename "$source" .lms)-local-schema.lms"
-    sed "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@v0.1.23\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
+    sed -E "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@[^\"]+\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
     shift
     "$LMSCRIPT" "$local_schema" "$@"
   else
@@ -46,6 +46,8 @@ ok "library, CLI, tests and DSL host build"
 ok "skia_test: $(tail -1 "$WORK/skia.out")"
 "$B/plot_test" >"$WORK/plot.out" 2>&1 || { cat "$WORK/plot.out"; fail "plot_test"; }
 ok "plot_test: $(tail -1 "$WORK/plot.out")"
+"$B/layout_test" >"$WORK/layout.out" 2>&1 || { cat "$WORK/layout.out"; fail "layout_test"; }
+ok "layout_test: $(tail -1 "$WORK/layout.out")"
 "$B/lmvideo" demo "$WORK/demo.png" || fail "lmvideo demo"
 [ "$($PNGPX "$WORK/demo.png")" = "500x350" ] || fail "demo.png size"
 ok "lmvideo demo writes a valid 500x350 PNG"
@@ -326,5 +328,15 @@ for n in damped-oscillator kepler-second-law lotka-volterra hohmann-transfer car
   [ "$(python3 -I $HERE/tools/pngpx.py "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
 done
 ok "14 plot examples/ports: compile, run, 960x540 h264 with 240 frames and a PNG still each"
+
+# 14. Explicit container-manager examples draw one still frame per layout.
+for n in dashboard-grid layout-workbench; do
+  compile "examples/$n.lms" "$WORK/$n.dslb" "$WORK/$n.mp4" "$WORK/$n.png" >/dev/null || fail "compile $n.lms"
+  "$HOST" --dsl "$WORK/$n.dslb" >/dev/null 2>"$WORK/$n.err" || { cat "$WORK/$n.err"; fail "run $n.lms"; }
+  INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/$n.mp4" | tr '\n' ' ')"
+  [ "$INFO" = "codec_name=h264 width=960 height=540 nb_read_frames=1 " ] || fail "$n.mp4: $INFO"
+  [ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
+done
+ok "2 explicit layout compositions: grid and border/box/flow/place with Skia child widgets"
 
 echo "PASS $pass checks"

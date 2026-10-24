@@ -25,7 +25,7 @@ Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see [dura
 
 ## Gallery
 
-Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six ports use the reusable `Canvas.plot()` / `Plot` / `Series` API for axes, linear and log ticks, grids, legends, and typed sample data; plots redraw on the current video frame and compose with low-level Canvas drawing. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
+Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six ports use the reusable `Canvas.plot()` / `Plot` / `Series` API for axes, linear and log ticks, grids, legends, and typed sample data; plots redraw on the current video frame and compose with low-level Canvas drawing. `Canvas.panel()` adds explicit pack, grid, place, border, flow, and box managers for predictable multi-panel layouts. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
 
 | **Damped oscillator** | **Kepler's second law** | **Lotka–Volterra** |
 | --- | --- | --- |
@@ -52,6 +52,12 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six
 | ![Forecast area](docs/images/forecast-area.gif) | ![Waveform sampling](docs/images/waveform-sampling.gif) | |
 | Logistic adoption forecast with observations and target. [PNG](docs/images/forecast-area.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/forecast-area.lms` | Continuous waveform compared with discrete samples. [PNG](docs/images/waveform-sampling.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/waveform-sampling.lms` | |
 
+| **2×2 plot dashboard** | **Layout workbench** | |
+| --- | --- | --- |
+| ![2x2 plot dashboard](docs/images/dashboard-grid.png) | ![Layout workbench](docs/images/layout-workbench.png) | |
+| Four charts arranged by weighted grid cells. [PNG](docs/images/dashboard-grid.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/dashboard-grid.lms` | Border, box, flow and place managers compose plots, text, shapes, and an offscreen image. [PNG](docs/images/layout-workbench.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/layout-workbench.lms` | |
+
+
 | **Terminal screenshot** |
 | --- |
 | ![Terminal screenshot](docs/images/terminal-shot.png) |
@@ -63,7 +69,7 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six
 npm install -g @lmctl-ai/lmctl
 scripts/fetch-skia.sh
 nice make                      # build/lmvideo (STATIC=1 links a fully static Linux executable)
-nice bash test.sh              # builds in a temp dir and runs 29+ checks
+nice bash test.sh              # builds in a temp dir and runs 31+ checks
 build/lmvideo demo build/demo.png
 build/lmvideo render tests/golden/scene.svg build/scene.png
 ```
@@ -85,8 +91,9 @@ The template example iterates a host-owned collection through `len()` and `at()`
 - `cpp/lmvideo.hpp` is the Skia-free C++ value API.
 - `cpp/encoder.hpp` pipes RGBA frames to the external FFmpeg executable.
 - `cpp/host.cpp` implements the schema in `schema/lmvideo.dsl.json`; `cpp/main.cpp` dispatches between the host and the `demo`/`render` commands.
-- `examples/` contains image, video, SVG, terminal-shot, template-keyframe, and animated plot programs.
+- `examples/` contains image, video, SVG, terminal-shot, template-keyframe, animated plot, and explicit layout compositions.
 - `Canvas.plot()` creates a retained `Plot`; typed `Series` objects add line, scatter, bar, step, area, and error-bar data. See [durable-memory/07-plot-proposal.md](durable-memory/07-plot-proposal.md) for the schema and behavior.
+- `Canvas.panel()` creates a `Panel` with an explicit layout manager; `LayoutItem` carries each child's pack/grid/border/place constraints. See [durable-memory/08-layout-managers.md](durable-memory/08-layout-managers.md) for the schema and behavior.
 - `scripts/fetch-skia.sh` and `scripts/skia.lock` pin the external Skia archive.
 - `assets/fonts/` contains the embedded DejaVu Sans font and its complete license file.
 
