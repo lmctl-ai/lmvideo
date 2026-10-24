@@ -76,7 +76,8 @@ result_line() { # FILE EXPECTED_PREFIX: the file holds exactly one JSON line sta
   case "$(cat "$1")" in "$2"*) ;; *) fail "$1: result line $(cat "$1") does not start with $2";; esac
 }
 compile examples/image.lms "$WORK/image.dslb" "$WORK/image.png" 640 360 "Hello lmvideo" >/dev/null || fail "compile image.lms"
-[ "$(od -An -tu1 -j4 -N2 "$WORK/image.dslb" | tr -s ' ' | sed 's/^ //')" = "0 5" ] || fail "bytecode version 5"
+BCV="$(python3 -I -c 'import sys; b=open(sys.argv[1],"rb").read(6); print(b[4], b[5])' "$WORK/image.dslb")"
+[ "$BCV" = "0 5" ] || fail "bytecode version 5 (header bytes 4-5 are: $BCV)"
 "$HOST" --dsl "$WORK/image.dslb" >"$WORK/image.out" 2>"$WORK/image.err" || { cat "$WORK/image.err"; fail "image host"; }
 result_line "$WORK/image.out" '{"ok": true, "result": {"output": ["drew 640x360"], "file": "'"$WORK"'/image.png", "width": 640, "height": 360, "frames": 1, "fps": '
 [ "$(out_lines <"$WORK/image.out")" = "drew 640x360" ] || fail "image.lms output: $(cat "$WORK/image.out")"
