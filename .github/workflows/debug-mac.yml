@@ -5,6 +5,7 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - run: brew install ffmpeg
       - name: probe
         run: |
           which g++ clang++; g++ --version | head -2
@@ -16,3 +17,5 @@ jobs:
           g++ -std=c++17 -Wa,-I$PWD -fsyntax-only /tmp/t.cpp && echo wa-ok
           g++ -std=c++17 -Icpp -fsyntax-only cpp/lmvideo.hpp -x c++ && echo hpp-ok || true
           make BUILD=build -n build/liblmvideo.a | head -5 || true
+          which c++; c++ --version | head -2; echo $PATH; env | grep -i 'cpath\|sdkroot\|cxx\|flags'
+          make BUILD=build build/lmvideo.o V=1 2>&1 | tail -20
