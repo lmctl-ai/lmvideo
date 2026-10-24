@@ -25,12 +25,12 @@ Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see [dura
 
 ## Gallery
 
-Animated 2D physics and maths diagrams drawn with Skia and encoded to video. They are ports of the [lmdraw](https://github.com/lmctl-ai/lmdraw) examples of the same names. Each picture is the GIF of the animation; the captions link the MP4 and a still PNG, and give the command that runs it.
+Animated 2D physics and maths diagrams drawn with Skia and encoded to video. Six ports use the reusable `Canvas.plot()` / `Plot` / `Series` API for axes, linear and log ticks, grids, legends, and typed sample data; plots redraw on the current video frame and compose with low-level Canvas drawing. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
 
 | **Damped oscillator** | **Kepler's second law** | **Lotka–Volterra** |
 | --- | --- | --- |
 | ![Damped oscillator](docs/images/damped-oscillator.gif) | ![Kepler's second law](docs/images/kepler-second-law.gif) | ![Lotka–Volterra](docs/images/lotka-volterra.gif) |
-| Spring, trace and phase portrait of x'' + 2ζω x' + ω² x = 0. [MP4](docs/videos/damped-oscillator.mp4), [PNG](docs/images/damped-oscillator.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/damped-oscillator.lms` | Equal areas in equal times on an e = 0.6 orbit. [MP4](docs/videos/kepler-second-law.mp4), [PNG](docs/images/kepler-second-law.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/kepler-second-law.lms` | Predator and prey populations and their phase loop. [MP4](docs/videos/lotka-volterra.mp4), [PNG](docs/images/lotka-volterra.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/lotka-volterra.lms` |
+| Four damping regimes and their phase portraits for x'' + 2ζω x' + ω² x = 0. [MP4](docs/videos/damped-oscillator.mp4), [PNG](docs/images/damped-oscillator.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/damped-oscillator.lms` | Equal areas in equal times on an e = 0.6 orbit. [MP4](docs/videos/kepler-second-law.mp4), [PNG](docs/images/kepler-second-law.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/kepler-second-law.lms` | Predator and prey populations and their phase loop. [MP4](docs/videos/lotka-volterra.mp4), [PNG](docs/images/lotka-volterra.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/lotka-volterra.lms` |
 
 | **Hohmann transfer** | **Carnot cycle** | **Lens ray diagram** |
 | --- | --- | --- |
@@ -41,6 +41,16 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The
 | --- | --- | --- |
 | ![RC low-pass filter](docs/images/rc-lowpass.gif) | ![Hydrogen spectrum](docs/images/hydrogen-spectrum.gif) | ![Ellipse geometry](docs/images/geometry-ellipse.gif) |
 | Step response and Bode magnitude of a first-order filter. [MP4](docs/videos/rc-lowpass.mp4), [PNG](docs/images/rc-lowpass.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/rc-lowpass.lms` | Bohr levels and the Balmer series lines. [MP4](docs/videos/hydrogen-spectrum.mp4), [PNG](docs/images/hydrogen-spectrum.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/hydrogen-spectrum.lms` | Foci, the constant distance sum and the string construction. [MP4](docs/videos/geometry-ellipse.mp4), [PNG](docs/images/geometry-ellipse.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/geometry-ellipse.lms` |
+
+| **Relativity · Lorentz factor** | **Quarterly revenue** | **Sensor calibration** |
+| --- | --- | --- |
+| ![Lorentz factor](docs/images/relativity-lorentz.gif) | ![Quarterly revenue](docs/images/quarterly-revenue.gif) | ![Sensor calibration](docs/images/sensor-calibration.gif) |
+| Lorentz factor, momentum and length contraction as speed approaches light speed. [PNG](docs/images/relativity-lorentz.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/relativity-lorentz.lms` | Revenue bars and net-margin steps on twin Y axes. [PNG](docs/images/quarterly-revenue.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/quarterly-revenue.lms` | Calibration observations with uncertainty bars and reference lines. [PNG](docs/images/sensor-calibration.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/sensor-calibration.lms` |
+
+| **Forecast area** | **Waveform sampling** | |
+| --- | --- | --- |
+| ![Forecast area](docs/images/forecast-area.gif) | ![Waveform sampling](docs/images/waveform-sampling.gif) | |
+| Logistic adoption forecast with observations and target. [PNG](docs/images/forecast-area.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/forecast-area.lms` | Continuous waveform compared with discrete samples. [PNG](docs/images/waveform-sampling.png)<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/waveform-sampling.lms` | |
 
 | **Terminal screenshot** |
 | --- |
@@ -53,7 +63,7 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The
 npm install -g @lmctl-ai/lmctl
 scripts/fetch-skia.sh
 nice make                      # build/lmvideo (STATIC=1 links a fully static Linux executable)
-nice bash test.sh              # builds in a temp dir and runs 26+ checks
+nice bash test.sh              # builds in a temp dir and runs 29+ checks
 build/lmvideo demo build/demo.png
 build/lmvideo render tests/golden/scene.svg build/scene.png
 ```
@@ -75,7 +85,8 @@ The template example iterates a host-owned collection through `len()` and `at()`
 - `cpp/lmvideo.hpp` is the Skia-free C++ value API.
 - `cpp/encoder.hpp` pipes RGBA frames to the external FFmpeg executable.
 - `cpp/host.cpp` implements the schema in `schema/lmvideo.dsl.json`; `cpp/main.cpp` dispatches between the host and the `demo`/`render` commands.
-- `examples/` contains image, video, SVG, terminal-shot, and template-keyframe programs.
+- `examples/` contains image, video, SVG, terminal-shot, template-keyframe, and animated plot programs.
+- `Canvas.plot()` creates a retained `Plot`; typed `Series` objects add line, scatter, bar, step, area, and error-bar data. See [durable-memory/07-plot-proposal.md](durable-memory/07-plot-proposal.md) for the schema and behavior.
 - `scripts/fetch-skia.sh` and `scripts/skia.lock` pin the external Skia archive.
 - `assets/fonts/` contains the embedded DejaVu Sans font and its complete license file.
 

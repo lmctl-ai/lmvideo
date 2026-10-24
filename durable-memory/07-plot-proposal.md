@@ -1,4 +1,4 @@
-# Plot and Series schema proposal
+# Plot and Series API
 
 ## Purpose
 
@@ -66,3 +66,17 @@ The schema is implemented by `cpp/plot.cpp` and registered in `cpp/host.cpp`. `P
 The host limits each plot to 32 series and 250,000 total samples; series stroke width is in `(0, 256]` pixels. Bars are grouped by sample x, share the zero baseline when zero is in range, and otherwise start at the lower Y bound. Area series close to the same baseline. Error-bar low/high values are absolute Y coordinates and must surround the sample's Y value. The right axis uses the same linear/log scale selection as the left Y axis, with its own range and label.
 
 `tests/plot_test.cpp` checks fixed pixel probes for the linear axis/grid and legend, plus log-decade grid and sub-decade tick placement. `test.sh` builds and runs these probes and continues to compare the host's registered signatures against lmscript's schema signatures.
+
+## Example size comparison
+
+The five existing lmvideo ports below were counted at the parent revision before their drawing code was replaced. `relativity-lorentz` was counted in lmdraw because lmvideo did not have that port yet. Counts are physical source lines, including comments and standalone autorun wrappers.
+
+| Example | Before | With Plot | Reduction |
+| --- | ---: | ---: | ---: |
+| damped-oscillator | 142 | 58 | 84 |
+| lotka-volterra | 138 | 40 | 98 |
+| carnot-cycle | 156 | 46 | 110 |
+| hydrogen-spectrum | 144 | 45 | 99 |
+| rc-lowpass | 177 | 77 | 100 |
+| relativity-lorentz | 148 | 43 | 105 |
+| **Total** | **905** | **309** | **596 (65.9%)** |

@@ -1,144 +1,45 @@
-# Hydrogen's visible lines, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/hydrogen-spectrum.lms) to lmvideo:
-# Bohr levels E_n = -13.6 eV / n^2 drawn to scale; the four Balmer transitions n = 3..6 -> 2 appear one by one as arrows and light up their lines in the spectrum strip below
-# (lambda = 1239.84 eV nm / dE). Known answers: H-alpha 656.3 nm, H-beta 486.1 nm, H-gamma 434.0 nm, H-delta 410.2 nm.
-# Writes images/hydrogen-spectrum.mp4 (8 s, 960x540), images/hydrogen-spectrum.png (frame 170) and, with ffmpeg, a GIF.
+# Balmer emission lines as a wavelength/intensity plot.
 standalone = ARGV.len() == 0;
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/hydrogen-spectrum.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/hydrogen-spectrum.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/hydrogen-spectrum.png";
 mkdir("images");
 program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
-video.size(960, 540);
-video.fps(30);
-video.frames(240);
-video.crf(20);
-video.output(${mp4});
-video.begin();
-fn c_bg() -> string { return "#0d1320"; }
-fn c_panel() -> string { return "#141c2e"; }
-fn c_grid() -> string { return "#26324a"; }
-fn c_ink() -> string { return "#dfe7f5"; }
-fn c_muted() -> string { return "#8a99b8"; }
-fn c_gold() -> string { return "#f2c14e"; }
-fn c_teal() -> string { return "#5ec4b6"; }
-fn c_coral() -> string { return "#ef8354"; }
-fn c_violet() -> string { return "#b89cf0"; }
-fn c_blue() -> string { return "#6aa9ff"; }
-fn pi() -> float { return 3.141592653589793; }
-fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
-fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
-fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
-fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
-fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
-fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
-fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
-fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
-fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
-  let dx = x2 - x1;
-  let dy = y2 - y1;
-  let len = sqrt(dx * dx + dy * dy) + 0.0001;
-  let ux = dx / len;
-  let uy = dy / len;
-  let hs = 6.0 + w * 2.0;
-  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
-  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
-  canvas.path(head, paint().color(color));
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(42.0, 22.0, 876.0, 264.0).title("Hydrogen · Balmer emission spectrum").xlabel("wavelength (nm)").ylabel("relative intensity").x_range(380.0, 700.0).y_range(0.0, 1.2).legend("none").background("#ffffff");
+let lines = plot.series("visible Balmer lines", "bar", "#7256a8");
+plot.annotate(410.0, 1.08, "Hδ 410 nm", "#263244");
+plot.annotate(434.0, 0.95, "Hγ 434 nm", "#263244");
+plot.annotate(486.0, 1.08, "Hβ 486 nm", "#263244");
+plot.annotate(656.0, 1.08, "Hα 656 nm", "#263244");
+let levels = canvas.plot(42.0, 286.0, 876.0, 232.0).title("Bohr levels · Balmer transitions end at n = 2").xlabel("transition").ylabel("energy (eV)").x_range(0.0, 6.0).y_range(-14.5, 0.5).legend("none").background("#ffffff");
+let n1 = levels.series("n = 1", "line", "#667085").width(2.0); n1.add(0.5, -13.6).add(5.5, -13.6);
+let n2 = levels.series("n = 2", "line", "#667085").width(2.0); n2.add(0.5, -3.4).add(5.5, -3.4);
+let n3 = levels.series("n = 3", "line", "#98a2b3").width(1.5); n3.add(0.5, -1.511).add(5.5, -1.511);
+let n4 = levels.series("n = 4", "line", "#98a2b3").width(1.5); n4.add(0.5, -0.85).add(5.5, -0.85);
+let n5 = levels.series("n = 5", "line", "#98a2b3").width(1.5); n5.add(0.5, -0.544).add(5.5, -0.544);
+let n6 = levels.series("n = 6", "line", "#98a2b3").width(1.5); n6.add(0.5, -0.378).add(5.5, -0.378);
+let h_alpha = levels.series("Hα", "line", "#df5b36").width(2.5); h_alpha.add(2.0, -1.511).add(2.0, -3.4);
+let h_beta = levels.series("Hβ", "line", "#d89b00").width(2.5); h_beta.add(3.0, -0.85).add(3.0, -3.4);
+let h_gamma = levels.series("Hγ", "line", "#168c83").width(2.5); h_gamma.add(4.0, -0.544).add(4.0, -3.4);
+let h_delta = levels.series("Hδ", "line", "#7256a8").width(2.5); h_delta.add(5.0, -0.378).add(5.0, -3.4);
+fn fill_lines(s: Series, progress: float) -> void {
+  s.clear();
+  s.add(410.0, 0.66 * progress).add(434.0, 0.76 * progress);
+  s.add(486.0, 0.91 * progress).add(656.0, progress);
 }
-fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
-fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
-fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
-fn atan_pos(x: float) -> float {
-  let r = 0.0;
-  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
-  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
-  return r;
-}
-fn spectrum(l: float) -> string {
-  let c = "#000000";
-  if (l < 440.0) { c = mix("#a45cff", "#5b6cff", clamp((l - 380.0) / 60.0, 0.0, 1.0)); }
-  if (l >= 440.0) { c = mix("#3b6cff", "#2fe3ff", clamp((l - 440.0) / 50.0, 0.0, 1.0)); }
-  if (l >= 490.0) { c = mix("#2fe3ff", "#35e35a", clamp((l - 490.0) / 30.0, 0.0, 1.0)); }
-  if (l >= 520.0) { c = mix("#35e35a", "#f3ee3a", clamp((l - 520.0) / 60.0, 0.0, 1.0)); }
-  if (l >= 580.0) { c = mix("#f3ee3a", "#ff8a1f", clamp((l - 580.0) / 30.0, 0.0, 1.0)); }
-  if (l >= 610.0) { c = mix("#ff8a1f", "#ff2a1f", clamp((l - 610.0) / 40.0, 0.0, 1.0)); }
-  return c;
-}
-for (f in range(0, video.count())) {
-  video.frame();
-  let t = video.t();
-  canvas.clear(c_bg());
-  title("Hydrogen: four visible lines from one formula", "E_n = −13.6 eV / n². A falling electron emits a photon with λ = hc/ΔE; only jumps ending on n = 2 are visible.");
-  card(36.0, 96.0, 560.0, 300.0);
-  # levels n = 1..6 on y = 130 + (-E/13.6) * 240 (n = 1 at the bottom)
-  for (n in range(1, 7)) {
-    let en = 13.6 / float(n * n);
-    let ly = 130.0 + (en / 13.6) * 240.0 * 0.0 + 0.0;
-    ly = 370.0 - (13.6 - en) / 13.6 * 240.0;
-    seg(90.0, ly, 560.0, ly, 1.5, c_grid());
-    txtr("n = " + str(n), 82.0, ly + 4.0, 11.0, c_muted());
-    txt(str(floor(-en * 100.0) / 100.0) + " eV", 566.0 - 0.0, ly + 4.0 - 0.0, 10.0, c_muted());
-  }
-  # Balmer arrows n -> 2, one every 0.1 of the timeline from t = 0.1
-  for (k in range(0, 4)) {
-    let n = 3 + k;
-    let en = 13.6 / float(n * n);
-    let e2 = 13.6 / 4.0;
-    let ytop = 370.0 - (13.6 - en) / 13.6 * 240.0;
-    let ybot = 370.0 - (13.6 - e2) / 13.6 * 240.0;
-    let lam = 1239.84 / (e2 - en);
-    let ax = 160.0 + float(k) * 90.0;
-    let show = fade(t, 0.10 + float(k) * 0.12, 0.18 + float(k) * 0.12);
-    if (show > 0.0) {
-      let col = spectrum(lam);
-      arrow(ax, ytop, ax, ytop + (ybot - ytop) * show, 3.5, col);
-      if (show >= 1.0) {
-        let name = "Hα";
-        if (k == 1) { name = "Hβ"; }
-        if (k == 2) { name = "Hγ"; }
-        if (k == 3) { name = "Hδ"; }
-        txtc(name, ax, ybot + 20.0, 13.0, col);
-        txtc(str(floor(lam * 10.0) / 10.0) + " nm", ax, ybot + 36.0, 11.0, c_muted());
-        # glow on the spectrum strip
-        let sx = 100.0 + (lam - 380.0) / 320.0 * 800.0;
-        canvas.rect(sx - 2.5, 440.0, 5.0, 40.0, paint().color(col));
-        canvas.rect(sx - 10.0, 440.0, 20.0, 40.0, paint().color(col).alpha(0.25));
-        txtc(name, sx, 436.0, 11.0, col);
-      }
-    }
-  }
-  # the spectrum strip: 380..700 nm
-  card(36.0, 408.0, 888.0, 108.0);
-  txtr("lamp seen through a prism (wavelength in nm)", 910.0, 428.0, 11.0, c_muted());
-  for (i in range(0, 320)) {
-    let lam = 380.0 + float(i);
-    canvas.rect(100.0 + float(i) * 2.5, 440.0, 2.6, 40.0, paint().color(spectrum(lam)).alpha(0.30));
-  }
-  for (g in range(0, 5)) { txtc(str(400 + g * 75), 100.0 + (20.0 + float(g) * 75.0) * 2.5, 502.0, 10.0, c_muted()); }
-  card(612.0, 96.0, 312.0, 300.0);
-  txtb("Series that end on n = 2 (Balmer)", 626.0, 124.0, 13.0, c_violet());
-  txt("3 → 2", 626.0, 160.0, 12.0, c_muted());  txtr("656.3 nm  Hα  red", 910.0, 160.0, 12.0, c_ink());
-  txt("4 → 2", 626.0, 184.0, 12.0, c_muted());  txtr("486.1 nm  Hβ  cyan", 910.0, 184.0, 12.0, c_ink());
-  txt("5 → 2", 626.0, 208.0, 12.0, c_muted());  txtr("434.0 nm  Hγ  blue", 910.0, 208.0, 12.0, c_ink());
-  txt("6 → 2", 626.0, 232.0, 12.0, c_muted());  txtr("410.2 nm  Hδ  violet", 910.0, 232.0, 12.0, c_ink());
-  txt("Jumps to n = 1 release ≥ 10.2 eV:", 626.0, 280.0, 12.0, c_muted());
-  txt("ultraviolet (Lyman), invisible.", 626.0, 298.0, 12.0, c_muted());
-  txt("Jumps to n = 3 release ≤ 1.89 eV:", 626.0, 326.0, 12.0, c_muted());
-  txt("infrared (Paschen), invisible.", 626.0, 344.0, 12.0, c_muted());
-
-  if (video.index() == 170) { video.save_frame(${png}); }
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); fill_lines(lines, video.t()); plot.draw(); levels.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();
 end _dsl_
-mkdir(dirname(dslout));
-savedsl(program, dslout);
+mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
-  if (r.code != 0) { println(r.stderr + r.stdout); }
-  assert(r.code == 0);
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/hydrogen-spectrum.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/hydrogen-spectrum.gif;
     assert(g.code == 0);
-    println("wrote images/hydrogen-spectrum.gif");
   }
 }
 println(f"wrote {dslout} ({mp4}, {png})");

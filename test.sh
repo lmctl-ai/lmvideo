@@ -16,7 +16,17 @@ fail() { echo "FAIL: $*" >&2; exit 1; }
 pass=0; ok() { pass=$((pass + 1)); echo "ok $pass - $*"; }
 SCHEMA="$HERE/schema/lmvideo.dsl.json"
 PNGPX="python3 -I $HERE/tools/pngpx.py"
-compile() { "$LMSCRIPT" "$@"; }
+compile() {
+  local source="${1:-}"
+  if [ -f "$source" ] && grep -q 'canvas\.plot(' "$source"; then
+    local local_schema="$WORK/$(basename "$source" .lms)-local-schema.lms"
+    sed "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@latest\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
+    shift
+    "$LMSCRIPT" "$local_schema" "$@"
+  else
+    "$LMSCRIPT" "$@"
+  fi
+}
 # near R G B TOL a b c d: is pixel "a b c d" within TOL of R G B?
 within() { python3 -I -c 'import sys; a=list(map(int,sys.argv[1:4])); b=list(map(int,sys.argv[4:7])); t=int(sys.argv[7]); sys.exit(0 if all(abs(x-y)<=t for x,y in zip(a,b)) else 1)' "$@"; }
 px() { $PNGPX "$1" "$2" "$3" | awk '{print $1, $2, $3}'; }   # prints "r g b" of one pixel
@@ -307,14 +317,14 @@ run_err r13 3 'may only be called once' "$SETUP video.begin(); video.begin();"
 run_err r14 3 'more times than video.frames' "$SETUP video.begin(); video.frame(); video.frame();"
 ok "host rejects frame without begin, missing frames, repeated begin and extra frames"
 
-# 13. The lmdraw ports (examples/*.lms other than the four basics): each compiles, runs and writes a 960x540 h264 mp4 of 240 frames and a PNG still.
-for n in damped-oscillator kepler-second-law lotka-volterra hohmann-transfer carnot-cycle lens-ray-diagram rc-lowpass hydrogen-spectrum geometry-ellipse; do
+# 13. Animated plot examples and the remaining lmdraw ports: 960x540 h264 plus a PNG still.
+for n in damped-oscillator kepler-second-law lotka-volterra hohmann-transfer carnot-cycle lens-ray-diagram rc-lowpass hydrogen-spectrum geometry-ellipse relativity-lorentz quarterly-revenue sensor-calibration forecast-area waveform-sampling; do
   compile examples/$n.lms "$WORK/$n.dslb" "$WORK/$n.mp4" "$WORK/$n.png" >/dev/null || fail "compile $n.lms"
   "$HOST" --dsl "$WORK/$n.dslb" >/dev/null 2>"$WORK/$n.err" || { cat "$WORK/$n.err"; fail "run $n.lms"; }
   INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/$n.mp4" | tr '\n' ' ')"
   [ "$INFO" = "codec_name=h264 width=960 height=540 nb_read_frames=240 " ] || fail "$n.mp4: $INFO"
   [ "$(python3 -I $HERE/tools/pngpx.py "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
 done
-ok "nine lmdraw ports: compile, run, 960x540 h264 with 240 frames and a PNG still each"
+ok "14 plot examples/ports: compile, run, 960x540 h264 with 240 frames and a PNG still each"
 
 echo "PASS $pass checks"

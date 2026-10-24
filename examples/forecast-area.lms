@@ -1,0 +1,41 @@
+# A logistic forecast area with observed samples.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/forecast-area.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/forecast-area.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/forecast-area.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(42.0, 34.0, 876.0, 474.0).title("A logistic adoption forecast").xlabel("month").ylabel("active users (thousands)").x_range(0.0, 12.0).y_range(0.0, 110.0).legend("top_left").background("#ffffff");
+let forecast = plot.series("projected adoption", "area", "#2878b5").width(2.5);
+let observed = plot.series("observations", "scatter", "#df5b36").width(3.0).marker("circle");
+plot.hline(80.0, "#667085", 1.0).annotate(9.0, 84.0, "target", "#667085");
+fn adoption(t: float) -> float { return 100.0 / (1.0 + pow(2.718281828459045, -0.72 * (t - 6.0))); }
+fn fill_forecast(area: Series, dots: Series, progress: float) -> void {
+  area.clear(); dots.clear();
+  for (k in range(0, 49)) {
+    let t = float(k) * 0.25;
+    if (float(k) / 48.0 <= progress) { area.add(t, adoption(t)); }
+  }
+  if (progress >= 0.15) { dots.add(1.0, 3.3); }
+  if (progress >= 0.30) { dots.add(3.0, 9.8); }
+  if (progress >= 0.45) { dots.add(5.0, 31.0); }
+  if (progress >= 0.60) { dots.add(7.0, 67.0); }
+  if (progress >= 0.75) { dots.add(9.0, 89.0); }
+  if (progress >= 0.90) { dots.add(11.0, 97.0); }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); fill_forecast(forecast, observed, video.t()); plot.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _dsl_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/forecast-area.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/forecast-area.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

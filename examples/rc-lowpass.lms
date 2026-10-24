@@ -1,177 +1,77 @@
-# RC low-pass filter, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/rc-lowpass.lms) to lmvideo:
-# R = 1 kOhm, C = 100 nF, corner frequency fc = 1/(2 pi R C) = 1592 Hz. The Bode gain and phase curves are drawn with a marker that sweeps the frequency from 20 Hz to
-# 80 kHz while a scope panel shows the input and output sine at that frequency: above fc the output shrinks and lags up to 90 degrees. Known answers:
-# gain at fc = -3.01 dB, phase at fc = -45 degrees, slope -20 dB per decade. (The DSL has no logarithm or arctangent: both are small series inside fn.)
-# Writes images/rc-lowpass.mp4 (8 s, 960x540), images/rc-lowpass.png (frame 170) and, with ffmpeg, a GIF.
+# RC step response and a two-stage log-frequency Bode plot.
 standalone = ARGV.len() == 0;
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/rc-lowpass.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/rc-lowpass.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/rc-lowpass.png";
 mkdir("images");
 program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
-video.size(960, 540);
-video.fps(30);
-video.frames(240);
-video.crf(20);
-video.output(${mp4});
-video.begin();
-fn c_bg() -> string { return "#0d1320"; }
-fn c_panel() -> string { return "#141c2e"; }
-fn c_grid() -> string { return "#26324a"; }
-fn c_ink() -> string { return "#dfe7f5"; }
-fn c_muted() -> string { return "#8a99b8"; }
-fn c_gold() -> string { return "#f2c14e"; }
-fn c_teal() -> string { return "#5ec4b6"; }
-fn c_coral() -> string { return "#ef8354"; }
-fn c_violet() -> string { return "#b89cf0"; }
-fn c_blue() -> string { return "#6aa9ff"; }
-fn pi() -> float { return 3.141592653589793; }
-fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
-fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
-fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
-fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
-fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
-fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
-fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
-fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
-fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
-  let dx = x2 - x1;
-  let dy = y2 - y1;
-  let len = sqrt(dx * dx + dy * dy) + 0.0001;
-  let ux = dx / len;
-  let uy = dy / len;
-  let hs = 6.0 + w * 2.0;
-  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
-  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
-  canvas.path(head, paint().color(color));
-}
-fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
-fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
-fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
-fn atan_pos(x: float) -> float {
-  let r = 0.0;
-  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
-  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
-  return r;
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(24.0, 28.0, 590.0, 484.0).title("RC low-pass · fc ≈ 1.59 kHz").xlabel("frequency (Hz, log)").ylabel("magnitude (dB)").y2label("phase (°)").x_range(10.0, 1000000.0).y_range(-85.0, 3.0).y2_range(-185.0, 5.0).x_scale("log").background("#ffffff");
+let mag1 = plot.series("magnitude · one stage", "line", "#2878b5").width(2.5);
+let mag2 = plot.series("magnitude · two stages", "line", "#7256a8").width(2.5).dash("dashed");
+let phase1 = plot.series("phase · one stage", "line", "#df5b36").width(2.5).axis("right");
+let phase2 = plot.series("phase · two stages", "line", "#168c83").width(2.5).dash("dashed").axis("right");
+let step = canvas.plot(628.0, 28.0, 308.0, 484.0).title("Step response").xlabel("time / τ").ylabel("output").x_range(0.0, 5.0).y_range(0.0, 1.1).background("#ffffff");
+let step1 = step.series("one stage", "line", "#2878b5").width(2.5);
+let step2 = step.series("two stages", "line", "#7256a8").width(2.5).dash("dashed");
+fn ln_small(m: float) -> float {
+  let y = (m - 1.0) / (m + 1.0); let term = y; let total = 0.0;
+  for (k in range(0, 48)) { total = total + term / float(2 * k + 1); term = term * y * y; }
+  return 2.0 * total;
 }
 fn log10(x: float) -> float {
-  let v = x;
-  let k = 0.0;
-  while (v >= 2.0) { v = v / 2.0; k = k + 1.0; }
-  while (v < 1.0) { v = v * 2.0; k = k - 1.0; }
-  let z = (v - 1.0) / (v + 1.0);
-  let z2 = z * z;
-  let ln = 2.0 * z * (1.0 + z2 / 3.0 + z2 * z2 / 5.0 + z2 * z2 * z2 / 7.0 + z2 * z2 * z2 * z2 / 9.0);
-  return (ln + k * 0.6931471805599453) * 0.4342944819032518;
+  let m = x; let exponent = 0.0;
+  while (m >= 10.0) { m = m / 10.0; exponent = exponent + 1.0; }
+  while (m < 1.0) { m = m * 10.0; exponent = exponent - 1.0; }
+  return exponent + ln_small(m) / 2.302585092994046;
 }
-for (f in range(0, video.count())) {
-  video.frame();
-  let t = video.t();
-  canvas.clear(c_bg());
-  title("RC low-pass filter: from schematic to Bode plot", "R = 1 kΩ, C = 100 nF, fc = 1/(2πRC) = 1592 Hz. Below fc the signal passes, above it each decade costs 20 dB.");
-  # schematic
-  card(36.0, 96.0, 300.0, 150.0);
-  seg(60.0, 160.0, 100.0, 160.0, 2.0, c_ink());
-  canvas.path(path().move_to(100.0, 160.0).line_to(110.0, 145.0).line_to(122.0, 175.0).line_to(134.0, 145.0).line_to(146.0, 175.0).line_to(158.0, 145.0).line_to(170.0, 160.0), paint().stroke().stroke_width(2.5).stroke_join("round").color(c_gold()));
-  seg(170.0, 160.0, 250.0, 160.0, 2.0, c_ink());
-  seg(210.0, 160.0, 210.0, 190.0, 2.0, c_ink());
-  seg(190.0, 190.0, 230.0, 190.0, 3.0, c_teal());
-  seg(190.0, 200.0, 230.0, 200.0, 3.0, c_teal());
-  seg(210.0, 200.0, 210.0, 222.0, 2.0, c_ink());
-  seg(196.0, 222.0, 224.0, 222.0, 2.0, c_ink());
-  seg(250.0, 160.0, 290.0, 160.0, 2.0, c_ink());
-  dot(250.0, 160.0, 3.5, c_ink());
-  txt("Vin", 60.0, 150.0, 13.0, c_ink());
-  txt("Vout", 292.0, 150.0, 13.0, c_ink());
-  txt("R = 1 kΩ", 104.0, 130.0, 12.0, c_gold());
-  txt("C = 100 nF", 238.0, 200.0, 12.0, c_teal());
-  # sweep: u = log10(f) from 1.3 (20 Hz) to 4.9 (80 kHz)
-  let u = 1.3 + 3.6 * fade(t, 0.06, 0.94);
-  let x = pow(10.0, u) / 1591.55;
-  let gain = 1.0 / sqrt(1.0 + x * x);
-  let phase = atan_pos(x);
-  let gdb = -10.0 * log10(1.0 + x * x);
-  # gain plot: u = 1..5 on x = 76..320, gain 0..-60 dB on y = 296..446
-  card(36.0, 262.0, 300.0, 254.0);
-  txtb("gain (dB)", 48.0, 284.0, 12.0, c_ink());
-  for (g in range(0, 5)) {
-    let gy = 300.0 + float(g) * 36.0;
-    seg(76.0, gy, 320.0, gy, 1.0, c_grid());
-    txtr(str(g * -15), 70.0, gy + 4.0, 10.0, c_muted());
-  }
-  let pg = path().move_to(76.0, 300.0);
-  let pp = path().move_to(76.0, 400.0);
-  for (i in range(1, 121)) {
-    let uu = 1.0 + float(i) / 120.0 * 4.0;
-    if (uu <= u) {
-      let xx = pow(10.0, uu) / 1591.55;
-      let gg = -10.0 * log10(1.0 + xx * xx);
-      pg = pg.line_to(76.0 + (uu - 1.0) / 4.0 * 244.0, 300.0 - gg * 2.4);
-      pp = pp.line_to(76.0 + (uu - 1.0) / 4.0 * 244.0, 400.0 + atan_pos(xx) * 57.2958 / 90.0 * 100.0 - 0.0);
+fn atan_pos(x: float) -> float {
+  let a = 0.0;
+  if (x <= 1.0) { a = 0.7853981633974483 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; a = 1.570796326794897 - (0.7853981633974483 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return a;
+}
+fn fill_response(s: Series, stages: float, is_phase: bool, progress: float) -> void {
+  s.clear();
+  for (k in range(0, 121)) {
+    let u = float(k) / 120.0;
+    if (u <= progress) {
+      let f = 10.0 * pow(10.0, 5.0 * u); let ratio = f / 1591.549430918953;
+      let value = -10.0 * stages * log10(1.0 + ratio * ratio);
+      if (is_phase) { value = -stages * atan_pos(ratio) * 180.0 / 3.141592653589793; }
+      s.add(f, value);
     }
   }
-  canvas.path(pg, paint().stroke().stroke_width(3.0).stroke_join("round").color(c_gold()));
-  dot(76.0 + (u - 1.0) / 4.0 * 244.0, 300.0 - gdb * 2.4, 5.0, c_gold());
-  dseg(76.0 + (log10(1591.55) - 1.0) / 4.0 * 244.0, 296.0, 76.0 + (log10(1591.55) - 1.0) / 4.0 * 244.0, 446.0, 1.0, c_coral());
-  txt("fc", 76.0 + (log10(1591.55) - 1.0) / 4.0 * 244.0 + 4.0, 460.0, 11.0, c_coral());
-  for (g in range(1, 6)) { txtc(str(floor(pow(10.0, float(g)))), 76.0 + float(g - 1) / 4.0 * 244.0, 484.0, 10.0, c_muted()); }
-  txtc("frequency (Hz)", 198.0, 504.0, 10.0, c_muted());
-  # phase plot sits in its own card to the right of the scope
-  card(352.0, 262.0, 300.0, 254.0);
-  txtb("phase (degrees)", 364.0, 284.0, 12.0, c_ink());
-  for (g in range(0, 4)) {
-    let gy = 300.0 + float(g) * 50.0;
-    seg(392.0, gy, 636.0, gy, 1.0, c_grid());
-    txtr(str(g * -30), 386.0, gy + 4.0, 10.0, c_muted());
-  }
-  let ph = path().move_to(392.0, 300.0);
-  for (i in range(1, 121)) {
-    let uu = 1.0 + float(i) / 120.0 * 4.0;
-    if (uu <= u) {
-      let xx = pow(10.0, uu) / 1591.55;
-      ph = ph.line_to(392.0 + (uu - 1.0) / 4.0 * 244.0, 300.0 + atan_pos(xx) * 57.2958 / 30.0 * 50.0);
+}
+fn fill_step(s: Series, stages: float, progress: float) -> void {
+  s.clear();
+  for (k in range(0, 101)) {
+    let u = float(k) / 100.0;
+    if (u <= progress) {
+      let t = 5.0 * u; let decay = pow(2.718281828459045, -t);
+      let value = 1.0 - decay;
+      if (stages == 2.0) { value = 1.0 - (1.0 + t) * decay; }
+      s.add(t, value);
     }
   }
-  canvas.path(ph, paint().stroke().stroke_width(3.0).stroke_join("round").color(c_violet()));
-  dot(392.0 + (u - 1.0) / 4.0 * 244.0, 300.0 + phase * 57.2958 / 30.0 * 50.0, 5.0, c_violet());
-  # scope: input and output at the current frequency
-  card(352.0, 96.0, 572.0, 150.0);
-  txtb("scope at " + str(floor(pow(10.0, u))) + " Hz", 364.0, 118.0, 12.0, c_ink());
-  seg(370.0, 180.0, 910.0, 180.0, 1.0, c_grid());
-  let pin = path();
-  let pout = path();
-  for (i in range(0, 241)) {
-    let ph_t = 2.0 * pi() * 3.0 * float(i) / 240.0;
-    let px = 370.0 + float(i) / 240.0 * 540.0;
-    if (i == 0) { pin = pin.move_to(px, 180.0 - 44.0 * sin(ph_t)); pout = pout.move_to(px, 180.0 - 44.0 * gain * sin(ph_t - phase)); }
-    else { pin = pin.line_to(px, 180.0 - 44.0 * sin(ph_t)); pout = pout.line_to(px, 180.0 - 44.0 * gain * sin(ph_t - phase)); }
-  }
-  canvas.path(pin, paint().stroke().stroke_width(1.8).color(c_muted()));
-  canvas.path(pout, paint().stroke().stroke_width(3.0).color(c_gold()));
-  txtr("gain " + str(floor(gdb * 10.0) / 10.0) + " dB   phase −" + str(floor(phase * 573.0) / 10.0) + "°", 910.0, 118.0, 12.0, c_gold());
-  card(668.0, 262.0, 256.0, 254.0);
-  txtb("Checked", 682.0, 284.0, 13.0, c_violet());
-  txt("gain at fc", 682.0, 316.0, 12.0, c_muted());  txtr("−3.01 dB", 910.0, 316.0, 12.0, c_ink());
-  txt("phase at fc", 682.0, 338.0, 12.0, c_muted());  txtr("−45°", 910.0, 338.0, 12.0, c_ink());
-  txt("slope above fc", 682.0, 360.0, 12.0, c_muted());  txtr("−20 dB/decade", 910.0, 360.0, 12.0, c_ink());
-  txt("Each decade above the corner", 682.0, 410.0, 12.0, c_muted());
-  txt("divides the amplitude by about 10", 682.0, 428.0, 12.0, c_muted());
-  txt("and the phase lag nears 90°.", 682.0, 446.0, 12.0, c_muted());
-
-  if (video.index() == 170) { video.save_frame(${png}); }
+}
+plot.vline(1591.549430918953, "#667085", 1.0);
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); let progress = video.t();
+  fill_response(mag1, 1.0, false, progress); fill_response(mag2, 2.0, false, progress);
+  fill_response(phase1, 1.0, true, progress); fill_response(phase2, 2.0, true, progress);
+  fill_step(step1, 1.0, progress); fill_step(step2, 2.0, progress);
+  plot.draw(); step.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();
 end _dsl_
-mkdir(dirname(dslout));
-savedsl(program, dslout);
+mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
-  if (r.code != 0) { println(r.stderr + r.stdout); }
-  assert(r.code == 0);
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/rc-lowpass.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/rc-lowpass.gif;
     assert(g.code == 0);
-    println("wrote images/rc-lowpass.gif");
   }
 }
 println(f"wrote {dslout} ({mp4}, {png})");

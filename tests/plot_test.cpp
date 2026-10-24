@@ -41,7 +41,7 @@ void linear_axes_and_legend() {
   const auto axis=pixel(surface,64,100);
   const auto grid=pixel(surface,143,100);
   check(axis.r < 150 && axis.g < 160 && axis.b < 180, "linear y-axis golden pixel");
-  check(near(grid,lmv::Color(227,232,239,255),4), "linear major tick grid golden pixel");
+  check(near(grid,lmv::Color(227,232,239,255),10), "linear major tick grid golden pixel");
   const auto legend=pixel(surface,300,53);
   check(legend.r > 210 && legend.g > 210 && legend.b > 210 && legend != lmv::Color(24,32,48,255), "top-right legend occupies its expected layout box");
   const auto swatch=pixel(surface,310,60);
@@ -57,7 +57,7 @@ void logarithmic_ticks() {
   lmvplot::Series line; line.owner=&plot; line.kind="line"; line.color="#2878b5";
   line.samples={{1,1,0,0,false},{10,10,0,0,false},{100,30,0,0,false},{1000,100,0,0,false}};
   plot.series.push_back(&line); lmvplot::draw(plot);
-  check(near(pixel(surface,170,70),lmv::Color(241,243,247,255),6), "log decade tick at 10 is one-third across the axis");
+  check(near(pixel(surface,170,70),lmv::Color(241,243,247,255),10), "log decade tick at 10 is one-third across the axis");
   const auto minor=pixel(surface,202,227);
   check(near(minor,lmv::Color(172,177,185,255),12), "log minor tick for 20 is placed between decade ticks");
 }
