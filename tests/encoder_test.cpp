@@ -176,7 +176,11 @@ int main() {
   // Finding c: no fd leaks on failing constructions
   auto count_open_fds = []() -> int {
     int count = 0;
+#if defined(__APPLE__)
+    DIR* d = opendir("/dev/fd");
+#else
     DIR* d = opendir("/proc/self/fd");
+#endif
     if (!d) return -1;
     while (struct dirent* de = readdir(d)) {
       if (de->d_name[0] != '.') ++count;
