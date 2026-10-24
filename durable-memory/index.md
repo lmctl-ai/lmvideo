@@ -1,22 +1,50 @@
 # lmvideo durable memory
 
-lmvideo is an experimental C++ library and lmscript host for raster drawing, SVG, and short video output. The host owns the process and native resources; a single compiled DSL chunk configures the run and performs its loops.
+`lmvideo` is a static, high-performance lmscript `_dsl_` host embedding Google Skia for 2D graphics, raster drawing, canvas geometry, chart plotting, explicit layout management, and MP4/GIF video rendering.
+Repository: https://github.com/lmctl-ai/lmvideo.
 
-Public entry points:
+## 60-second takeover
 
-| File | Purpose |
+```sh
+scripts/fetch-skia.sh                 # Download pinned Skia prebuilt libraries
+make -j4                              # Build lmvideo binary
+./test.sh                             # Run tests, golden pixel checks, examples
+```
+
+## Document map
+
+| File | Contents |
 | --- | --- |
-| `README.md` | installation, examples, dependency relationship, and public usage |
-| `docs/design.md` | design rationale and dependency boundaries |
-| `schema/lmvideo.dsl.json` | host object and method contract |
-| `scripts/fetch-skia.sh`, `scripts/skia.lock` | pinned external Skia download and checksum |
-| `durable-memory/03-build-run-test.md` | repeatable validation procedure |
-| `durable-memory/04-gotchas.md` | build and runtime cautions |
-| `durable-memory/05-open-items.md` | deliberately deferred work |
-| `durable-memory/06-ffmpeg-in-process-feasibility.md` | evaluation (with a reproducible spike in `tools/ffmpeg-spike/`) of linking libav instead of running `ffmpeg` |
-| `durable-memory/07-plot-proposal.md` | typed Plot/Series API and implementation facts for high-level Skia charts |
-| `durable-memory/08-layout-managers.md` | typed schema and behavior for explicit Tk/Swing-style container layout |
+| [01-purpose-and-place.md](01-purpose-and-place.md) | Architectural role, Skia embedding, and video rendering scope |
+| [02-decisions.md](02-decisions.md) | Design decisions, Skia bindings, memory ownership, and video pipelines |
+| [03-build-run-test.md](03-build-run-test.md) | Build commands, test runner, golden image checks, and CI |
+| [04-gotchas.md](04-gotchas.md) | Gotchas, Skia resource lifetimes, font fallback, determinism |
+| [05-open-items.md](05-open-items.md) | Technical roadmap, deferred features, and backlog |
+| [06-ffmpeg-in-process-feasibility.md](06-ffmpeg-in-process-feasibility.md) | Analysis of in-process libav vs CLI ffmpeg execution |
+| [07-plot-proposal.md](07-plot-proposal.md) | High-level 2D plotting APIs, series types, and styling |
+| [08-layout-managers.md](08-layout-managers.md) | Explicit Tk/Swing-style container layout managers (pack, grid, border) |
+| [09-plot-chart-kinds-proposal.md](09-plot-chart-kinds-proposal.md) | Extended chart types (bar, line, scatter, histogram, area) |
 
-The current source tree is prepared for lmscript 0.2.347 or newer from `PATH`. The C++ runtime header remains pinned by `sdk.lock`; the pin is unchanged during publication preparation.
+## SDK pin and sync
 
-The bundled font license, Skia provenance, actual archive notices, and binary redistribution follow-up are recorded in `THIRD_PARTY_NOTICES.md`.
+The vendored SDK header is pinned via `sdk.lock` pointing to `https://github.com/lmctl-ai/lmcode-cpp`:
+```sh
+scripts/sync-sdk.sh                   # Refetches pinned cpp/dslvm.hpp and verifies sha256
+```
+
+## Adding an example or function
+
+### Adding an example
+1. Create `examples/<name>.lms` using `_dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest"`.
+2. Generate its rendered output: `lmscript examples/<name>.lms <output.png>`.
+3. Add the example to `test.sh` with golden pixel comparison checks.
+4. Save the image to `docs/images/<name>.png` and update `README.md` demo table with `lmctl autorun` command.
+
+### Adding a host function or layout feature
+1. Declare the method/function in the DSL schema (`schema/lmvideo.dsl.json`).
+2. Implement and register the method in C++ source under `src/` using `dslvm::Registry`.
+3. Verify that `./test.sh` passes and signatures match `lmscript --dsl-signatures`.
+
+## Releases
+
+Releases are published automatically on push across Linux and macOS platforms. Artifacts include standalone host binaries with Skia statically linked.
