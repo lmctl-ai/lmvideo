@@ -32,7 +32,7 @@ B="$WORK/build"
 ok "library, CLI, tests and DSL host build"
 
 # 2. Phase 1: library tests (pixels, text, PNG/JPEG round trips, SVG, golden) and CLI.
-"$B/skia_test" >"$WORK/skia.out" 2>&1 || { tail -20 "$WORK/skia.out"; fail "skia_test"; }
+"$B/skia_test" >"$WORK/skia.out" 2>&1 || { grep -a "^not ok" "$WORK/skia.out"; tail -5 "$WORK/skia.out"; fail "skia_test"; }
 ok "skia_test: $(tail -1 "$WORK/skia.out")"
 "$B/lmvideo" demo "$WORK/demo.png" || fail "lmvideo demo"
 [ "$($PNGPX "$WORK/demo.png")" = "500x350" ] || fail "demo.png size"
