@@ -58,3 +58,11 @@ All coordinates are logical canvas pixels and all data values are finite binary6
 Legend positions are `top_right`, `top_left`, `bottom_right`, `bottom_left`, or `none`. Series kinds, scale names, axis names, legend positions, dash names (`solid`, `dashed`, `dotted`, `dash_dot`), marker names (`none`, `circle`, `square`, `triangle`, `plus`) and colors are validated. `vline`/`hline` widths and series widths are positive pixels. `annotate` places left-aligned DejaVu Sans text at the given data coordinate. The plot uses the bundled DejaVu Sans face and the same deterministic Skia text settings as the low-level API.
 
 The initial implementation covers independent linear/log X and left Y axes, optional right Y axis, line/scatter/bar/step/area/error-bar series, text and reference-line annotations, range selection, grid, and a positioned legend. It intentionally leaves retained groups, node mutation, and additional chart families for a later slice.
+
+## Implementation notes
+
+The schema is implemented by `cpp/plot.cpp` and registered in `cpp/host.cpp`. `Plot` retains the `CanvasSlot*`, not a copied Skia canvas, so a plot created for `canvas` before `video.frame()` can draw on the newly rebound surface each frame. Plot rendering saves/restores the Skia canvas and clips samples and annotations to the data rectangle; the chart background is transparent unless set explicitly. All text uses `lmv::Font`, whose typeface is the embedded DejaVu Sans face.
+
+The host limits each plot to 32 series and 250,000 total samples; series stroke width is in `(0, 256]` pixels. Bars are grouped by sample x, share the zero baseline when zero is in range, and otherwise start at the lower Y bound. Area series close to the same baseline. Error-bar low/high values are absolute Y coordinates and must surround the sample's Y value. The right axis uses the same linear/log scale selection as the left Y axis, with its own range and label.
+
+`tests/plot_test.cpp` checks fixed pixel probes for the linear axis/grid and legend, plus log-decade grid and sub-decade tick placement. `test.sh` builds and runs these probes and continues to compare the host's registered signatures against lmscript's schema signatures.

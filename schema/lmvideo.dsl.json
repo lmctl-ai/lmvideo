@@ -50,6 +50,7 @@
     },
     "Canvas": {
       "methods": {
+        "plot": [{"params":["float","float","float","float"],"returns":"Plot"}],
         "clear": [{"params":["string"],"returns":"void"}],
         "rect": [{"params":["float","float","float","float","Paint"],"returns":"void"}],
         "round_rect": [{"params":["float","float","float","float","float","float","Paint"],"returns":"void"}],
@@ -67,6 +68,39 @@
         "scale": [{"params":["float","float"],"returns":"void"}],
         "rotate": [{"params":["float"],"returns":"void"}],
         "clip_rect": [{"params":["float","float","float","float"],"returns":"void"}]
+      }
+    },
+    "Plot": {
+      "methods": {
+        "title": [{"params":["string"],"returns":"Plot"}],
+        "xlabel": [{"params":["string"],"returns":"Plot"}],
+        "ylabel": [{"params":["string"],"returns":"Plot"}],
+        "y2label": [{"params":["string"],"returns":"Plot"}],
+        "x_range": [{"params":["float","float"],"returns":"Plot"}],
+        "y_range": [{"params":["float","float"],"returns":"Plot"}],
+        "y2_range": [{"params":["float","float"],"returns":"Plot"}],
+        "x_scale": [{"params":["string"],"returns":"Plot"}],
+        "y_scale": [{"params":["string"],"returns":"Plot"}],
+        "legend": [{"params":["string"],"returns":"Plot"}],
+        "grid": [{"params":["bool"],"returns":"Plot"}],
+        "background": [{"params":["string"],"returns":"Plot"}],
+        "series": [{"params":["string","string","string"],"returns":"Series"}],
+        "annotate": [{"params":["float","float","string","string"],"returns":"Plot"}],
+        "vline": [{"params":["float","string","float"],"returns":"Plot"}],
+        "hline": [{"params":["float","string","float"],"returns":"Plot"}],
+        "draw": [{"params":[],"returns":"Plot"}]
+      }
+    },
+    "Series": {
+      "methods": {
+        "add": [{"params":["float","float"],"returns":"Series"}],
+        "add_error": [{"params":["float","float","float","float"],"returns":"Series"}],
+        "clear": [{"params":[],"returns":"Series"}],
+        "axis": [{"params":["string"],"returns":"Series"}],
+        "color": [{"params":["string"],"returns":"Series"}],
+        "width": [{"params":["float"],"returns":"Series"}],
+        "dash": [{"params":["string"],"returns":"Series"}],
+        "marker": [{"params":["string"],"returns":"Series"}]
       }
     },
     "Surface": {

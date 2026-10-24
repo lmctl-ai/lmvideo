@@ -34,6 +34,8 @@ ok "library, CLI, tests and DSL host build"
 # 2. Phase 1: library tests (pixels, text, PNG/JPEG round trips, SVG, golden) and CLI.
 "$B/skia_test" >"$WORK/skia.out" 2>&1 || { grep -a "^not ok" "$WORK/skia.out"; tail -5 "$WORK/skia.out"; fail "skia_test"; }
 ok "skia_test: $(tail -1 "$WORK/skia.out")"
+"$B/plot_test" >"$WORK/plot.out" 2>&1 || { cat "$WORK/plot.out"; fail "plot_test"; }
+ok "plot_test: $(tail -1 "$WORK/plot.out")"
 "$B/lmvideo" demo "$WORK/demo.png" || fail "lmvideo demo"
 [ "$($PNGPX "$WORK/demo.png")" = "500x350" ] || fail "demo.png size"
 ok "lmvideo demo writes a valid 500x350 PNG"
