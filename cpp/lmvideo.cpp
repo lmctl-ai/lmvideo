@@ -32,8 +32,12 @@
 #include "include/effects/SkGradientShader.h"
 #include "include/encode/SkJpegEncoder.h"
 #include "include/encode/SkPngEncoder.h"
+#if defined(__APPLE__)
+#include "include/ports/SkFontMgr_mac_ct.h"
+#else
 #include "include/ports/SkFontMgr_data.h"
 #include "include/ports/SkFontMgr_empty.h"
+#endif
 #include "include/utils/SkParsePath.h"
 #include "modules/skshaper/include/SkShaper_factory.h"
 #include "modules/svg/include/SkSVGDOM.h"
@@ -104,10 +108,15 @@ inline int parse_hex_char(char c) {
 
 sk_sp<SkFontMgr> get_font_mgr() {
     static sk_sp<SkFontMgr> s_mgr = []() {
+#if defined(__APPLE__)
+        // The macOS Skia pack has no FreeType (so no custom-data manager); CoreText loads the bundled face from memory via makeFromData.
+        return SkFontMgr_New_CoreText(nullptr);
+#else
         size_t font_size = dejavu_sans_end - dejavu_sans_start;
         sk_sp<SkData> fontData = SkData::MakeWithoutCopy(dejavu_sans_start, font_size);
         sk_sp<SkData> dataArray[] = { fontData };
         return SkFontMgr_New_Custom_Data(SkSpan<sk_sp<SkData>>(dataArray, 1));
+#endif
     }();
     return s_mgr;
 }
