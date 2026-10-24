@@ -22,7 +22,7 @@ within() { python3 -I -c 'import sys; a=list(map(int,sys.argv[1:4])); b=list(map
 px() { $PNGPX "$1" "$2" "$3" | awk '{print $1, $2, $3}'; }   # prints "r g b" of one pixel
 expect_px() { local file=$1 x=$2 y=$3 r=$4 g=$5 b=$6 tol=$7; within $(px "$file" "$x" "$y") $r $g $b $tol || fail "$file pixel ($x,$y) is $(px "$file" "$x" "$y"), expected ~ $r $g $b (tol $tol)"; }
 
-# 0. The vendored runtime must be the pinned cpp-dsl-sdk header.
+# 0. The vendored runtime must be the pinned lmcode-cpp header.
 scripts/sync-sdk.sh --verify >/dev/null || fail "cpp/dslvm.hpp differs from sdk.lock (run scripts/sync-sdk.sh)"
 ok "cpp/dslvm.hpp matches sdk.lock ($(sed -n 's/^commit=//p' sdk.lock | cut -c1-12))"
 

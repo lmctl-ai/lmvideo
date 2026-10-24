@@ -55,6 +55,6 @@ lmvideo does not link FFmpeg or redistribute an FFmpeg binary. It starts the use
 ## lmscript and the DSL runtime
 
 The lmvideo host consumes lmscript compiler output and vendors the C++ DSL runtime header `cpp/dslvm.hpp` from
-[cpp-dsl-sdk](https://github.com/lmctl-ai/cpp-dsl-sdk) (MIT License, Copyright (c) 2026 Lattice Systems LLC, the same terms as lmvideo itself),
+[lmcode-cpp](https://github.com/lmctl-ai/lmcode-cpp) (MIT License, Copyright (c) 2026 Lattice Systems LLC, the same terms as lmvideo itself),
 pinned by [sdk.lock](sdk.lock) and synchronized by [scripts/sync-sdk.sh](scripts/sync-sdk.sh). The header is unmodified. lmscript itself is a
 separate build-time dependency and is not included in this repository.
