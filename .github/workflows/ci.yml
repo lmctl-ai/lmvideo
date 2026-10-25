@@ -103,7 +103,6 @@ jobs:
           mkdir -p dist
           cp build/lmvideo "dist/lmvideo-${{ matrix.name }}"
           scripts/stage-release-notices.sh dist
-          (cd dist && shasum -a 256 "lmvideo-${{ matrix.name }}" > "lmvideo-${{ matrix.name }}.sha256")
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: lmvideo-${{ matrix.name }}
@@ -135,6 +134,7 @@ jobs:
         run: |
           # License files are identical across the platform artifacts and merge into one copy; assets cannot be directories.
           (cd dist && tar -czf lmvideo-third-party-licenses.tar.gz licenses && rm -rf licenses)
+          (cd dist && sha256sum lmvideo-* LICENSE THIRD_PARTY_NOTICES.md > SHA256SUMS)
           ls -l dist
           if gh release view "v$REL_VERSION" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "v$REL_VERSION" -R "$GITHUB_REPOSITORY" --clobber dist/*
