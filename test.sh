@@ -18,7 +18,7 @@ SCHEMA="$HERE/schema/lmvideo.dsl.json"
 PNGPX="python3 -I $HERE/tools/pngpx.py"
 compile() {
   local source="${1:-}"
-  if [ -f "$source" ] && grep -Eq '([[:alnum:]_]+\.)?(plot|panel)\(|document\(|pdf_document\(' "$source"; then
+  if [ -f "$source" ] && grep -Eq '([[:alnum:]_]+\.)?(plot|panel)\(|document\(|pdf_document\(|canvas\.(box|diamond|cylinder|note|cluster|connector|grid|lifeline|message|activation|self_message)\(' "$source"; then
     local local_schema="$WORK/$(basename "$source" .lms)-local-schema.lms"
     sed -E "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@[^\"]+\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
     shift
@@ -50,6 +50,8 @@ ok "vector_test: $(tail -1 "$WORK/vector.out")"
 ok "plot_test: $(tail -1 "$WORK/plot.out")"
 "$B/layout_test" >"$WORK/layout.out" 2>&1 || { cat "$WORK/layout.out"; fail "layout_test"; }
 ok "layout_test: $(tail -1 "$WORK/layout.out")"
+"$B/diagram_test" >"$WORK/diagram.out" 2>&1 || { cat "$WORK/diagram.out"; fail "diagram_test"; }
+ok "diagram_test: $(tail -1 "$WORK/diagram.out")"
 "$B/lmvideo" demo "$WORK/demo.png" || fail "lmvideo demo"
 [ "$($PNGPX "$WORK/demo.png")" = "500x350" ] || fail "demo.png size"
 ok "lmvideo demo writes a valid 500x350 PNG"
@@ -200,7 +202,9 @@ bad t4 'let p = paint().color(5);' 'expects string'
 bad t5 'video.size("a", 2);' 'expects int'
 bad t6 'let x = 1.0 + 2;' 'no implicit conversion'
 bad t7 'let f = sin(1);' 'expects (float) -> float'
-ok "seven ill-typed chunks are rejected at lmscript check time with located errors"
+bad t8 'canvas.box(1, 2.0, 3.0, 4.0, "l", "#ffffff", "none", 0.0, 12.0);' 'has no overload for (int, float'
+bad t9 'canvas.grid(0.0, 0.0, 100.0, 100.0, 2.0, 2, 5.0, 5.0);' 'expects int for argument 5'
+ok "nine ill-typed chunks are rejected at lmscript check time with located errors"
 
 # 8. Host refusals before anything runs: schema hash mismatch, truncated file, wrong version.
 sed 's/"name": "lmvideo"/"name": "lmvideo2"/' "$SCHEMA" >"$WORK/other.json"
@@ -386,5 +390,95 @@ assert (d/'surface-pdf-export.pdf').read_bytes().startswith(b'%PDF-')
 assert (d/'vector-outputs.skp').stat().st_size > 0
 PY
 ok "vector-outputs: PNG 1x/2x/3x, outlined-text SVG, PDF, SKP, exact SVG PNG round-trip, and two-page PDF"
+# 15. Diagram vocabulary refusals (lmdraw-parity validation): located run-time errors, exit 3.
+DIAG_SETUP='video.size(320, 200); video.frames(1); video.output("'"$WORK"'/d.png"); video.begin(); video.frame();'
+run_err d1 3 'connector routing must be straight, elbow, or curve' "$DIAG_SETUP canvas.connector(10.0, 10.0, 60.0, 60.0, \"diagonal\", \"none\", \"arrow\", \"none\", \"#8fb4d9\", 2.0, \"\", 0.5, 0.0, 0.0); video.end();"
+run_err d2 3 'connector markers must be none, arrow, dot, or diamond' "$DIAG_SETUP canvas.connector(10.0, 10.0, 60.0, 60.0, \"straight\", \"none\", \"star\", \"none\", \"#8fb4d9\", 2.0, \"\", 0.5, 0.0, 0.0); video.end();"
+run_err d3 3 'dash must be' "$DIAG_SETUP canvas.connector(10.0, 10.0, 60.0, 60.0, \"straight\", \"none\", \"arrow\", \"wide\", \"#8fb4d9\", 2.0, \"\", 0.5, 0.0, 0.0); video.end();"
+run_err d4 3 'connector label position must be from 0 to 1' "$DIAG_SETUP canvas.connector(10.0, 10.0, 60.0, 60.0, \"straight\", \"none\", \"arrow\", \"none\", \"#8fb4d9\", 2.0, \"x\", 1.5, 0.0, 0.0); video.end();"
+run_err d5 3 'cylinder height must be greater than 20 pixels' "$DIAG_SETUP canvas.cylinder(80.0, 80.0, 90.0, 20.0, \"db\", \"#1e3247\", \"#6fbdb4\", 12.0); video.end();"
+run_err d6 3 'must be positive' "$DIAG_SETUP canvas.box(80.0, 80.0, 0.0, 40.0, \"x\", \"#1e3247\", \"none\", 0.0, 12.0); video.end();"
+run_err d7 3 'anchor must be one of n, s, e, w, ne, nw, se, sw, c' "$DIAG_SETUP let b = canvas.box(80.0, 80.0, 80.0, 40.0, \"x\", \"#1e3247\", \"none\", 0.0, 12.0); canvas.connector(b, \"middle\", 200.0, 100.0, \"straight\", \"none\", \"arrow\", \"none\", \"#8fb4d9\", 2.0, \"\", 0.5, 0.0, 0.0); video.end();"
+run_err d8 3 'grid cell column out of range' "$DIAG_SETUP let g = canvas.grid(10.0, 10.0, 200.0, 100.0, 2, 3, 5.0, 5.0); g.cell(3, 0); video.end();"
+run_err d9 3 'grid cell row out of range' "$DIAG_SETUP let g = canvas.grid(10.0, 10.0, 200.0, 100.0, 2, 3, 5.0, 5.0); g.cell(0, 2); video.end();"
+run_err d10 3 'grid gaps must leave a positive cell width' "$DIAG_SETUP canvas.grid(10.0, 10.0, 100.0, 100.0, 1, 3, 60.0, 0.0); video.end();"
+run_err d11 3 'lifeline end must be below its start' "$DIAG_SETUP canvas.lifeline(50.0, 150.0, 50.0, \"#4a6a88\"); video.end();"
+run_err d12 3 'unsupported attribute' "$DIAG_SETUP let b = canvas.box(80.0, 80.0, 80.0, 40.0, \"x\", \"#1e3247\", \"none\", 0.0, 12.0); b.set_attr(\"rotated\", \"true\"); video.end();"
+run_err d13 3 'Group.set_attr: unsupported attribute' "$DIAG_SETUP let e = canvas.connector(10.0, 10.0, 60.0, 60.0, \"straight\", \"none\", \"arrow\", \"none\", \"#8fb4d9\", 2.0, \"\", 0.5, 0.0, 0.0); e.set_attr(\"warp\", \"4\"); video.end();"
+run_err d14 3 'opacity must be a number from 0 to 1' "$DIAG_SETUP let b = canvas.box(80.0, 80.0, 80.0, 40.0, \"x\", \"#1e3247\", \"none\", 0.0, 12.0); b.set_attr(\"opacity\", \"2\"); video.end();"
+ok "14 diagram-vocabulary refusals: routing, markers, dash, label position, cylinder height, sizes, anchors, grid ranges and gaps, lifeline direction, unknown attributes (exit 3, located)"
+
+# 15b. Diagram + layout composition: a box shape used as a place-manager child
+#      gets its bounds from panel.draw(); a connector addressing (shape, "e")/
+#      (shape, "w") resolves those bounds when canvas.draw_diagram() runs.
+cat >"$WORK/diag-layout.lms" <<EOF_LMS
+p = _dsl_ schema="$SCHEMA";
+video.size(300, 200); video.frames(1); video.output("$WORK/diag-layout.png"); video.begin(); video.frame();
+canvas.clear("#101820");
+let panel = canvas.panel(10.0, 10.0, 280.0, 180.0).manager("place").background("#131c28").edge("#2c4156", 1.0);
+let a_item = panel.add_shape("box").place(20.0, 30.0, 100.0, 44.0);
+let a = a_item.shape();
+a.label("alpha").fill("#1e3247").stroke("#6fbdb4").radius(8.0);
+let b_item = panel.add_shape("box").place(170.0, 110.0, 100.0, 44.0);
+let b = b_item.shape();
+b.label("beta").fill("#1e3247").stroke("#6fbdb4").radius(8.0);
+canvas.connector(a, "e", b, "w", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "", 0.5, 0.0, 0.0);
+panel.draw();
+canvas.draw_diagram();
+video.end();
+end _dsl_
+savedsl(p, "$WORK/diag-layout.dslb");
+EOF_LMS
+"$LMSCRIPT" "$WORK/diag-layout.lms" >/dev/null 2>&1 || { cat "$WORK/diag-layout.lms"; fail "compile diag-layout"; }
+"$HOST" --dsl "$WORK/diag-layout.dslb" >/dev/null 2>"$WORK/diag-layout.err" || { cat "$WORK/diag-layout.err"; fail "run diag-layout"; }
+[ "$($PNGPX "$WORK/diag-layout.png")" = "300x200" ] || fail "diag-layout.png size"
+expect_px "$WORK/diag-layout.png" 40 45 30 50 71 20      # box alpha fill #1e3247
+expect_px "$WORK/diag-layout.png" 155 102 245 193 108 12 # the connector midpoint #f5c16c
+expect_px "$WORK/diag-layout.png" 190 125 30 50 71 20    # box beta fill
+ok "diagram shapes compose with Panel layouts; connector anchors resolve after the layout pass"
+
+# 16. The eight ported lmdraw diagram examples: still PNGs with structure probes.
+for n in flowchart-order-approval etl-pipeline sequence-oauth-refresh state-machines org-chart-grid decision-tree swimlane-process timeline-gantt; do
+  compile examples/$n.lms "$WORK/$n.dslb" "$WORK/$n.png" >/dev/null || fail "compile $n.lms"
+  "$HOST" --dsl "$WORK/$n.dslb" >/dev/null 2>"$WORK/$n.err" || { cat "$WORK/$n.err"; fail "run $n.lms"; }
+done
+[ "$($PNGPX "$WORK/flowchart-order-approval.png")" = "960x600" ] || fail "flowchart size"
+[ "$($PNGPX "$WORK/etl-pipeline.png")" = "1000x540" ] || fail "etl size"
+[ "$($PNGPX "$WORK/sequence-oauth-refresh.png")" = "1000x620" ] || fail "sequence size"
+[ "$($PNGPX "$WORK/state-machines.png")" = "1100x800" ] || fail "state machines size"
+[ "$($PNGPX "$WORK/org-chart-grid.png")" = "1000x640" ] || fail "org chart size"
+[ "$($PNGPX "$WORK/decision-tree.png")" = "1100x640" ] || fail "decision tree size"
+[ "$($PNGPX "$WORK/swimlane-process.png")" = "1300x660" ] || fail "swimlane size"
+[ "$($PNGPX "$WORK/timeline-gantt.png")" = "1100x640" ] || fail "gantt size"
+expect_px "$WORK/flowchart-order-approval.png" 5 5 16 24 32 6        # canvas background #101820
+expect_px "$WORK/flowchart-order-approval.png" 480 98 245 193 108 40 # start box gold stroke #f5c16c
+expect_px "$WORK/etl-pipeline.png" 880 290 30 50 71 20               # warehouse cylinder body fill #1e3247
+expect_px "$WORK/sequence-oauth-refresh.png" 340 160 245 193 108 40  # first message arrow line #f5c16c
+expect_px "$WORK/decision-tree.png" 215 489 35 61 46 30            # approve leaf fill #233d2e
+ok "8 lmdraw diagram ports: compile, run, exact dimensions, structure pixels"
+mv "$WORK/flowchart-order-approval.png" "$WORK/fc1.png"
+"$HOST" --dsl "$WORK/flowchart-order-approval.dslb" >/dev/null 2>&1 || fail "second flowchart run"
+[ "$($PNGPX "$WORK/flowchart-order-approval.png" --sha256)" = "$($PNGPX "$WORK/fc1.png" --sha256)" ] || fail "flowchart rerun differs"
+ok "flowchart-order-approval: a second run gives identical pixels (deterministic)"
+
+# 17. Four animated diagram videos: 240-frame h264 plus a PNG still each.
+for spec in etl-pipeline-draw:1000x540 sequence-messages-reveal:960x540 state-machine-traffic-light:960x540 flowchart-path-trace:960x600; do
+  n="${spec%%:*}"; dims="${spec##*:}"
+  compile examples/$n.lms "$WORK/$n.dslb" "$WORK/$n.mp4" "$WORK/$n.png" >/dev/null || fail "compile $n.lms"
+  "$HOST" --dsl "$WORK/$n.dslb" >/dev/null 2>"$WORK/$n.err" || { cat "$WORK/$n.err"; fail "run $n.lms"; }
+  INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/$n.mp4" | tr '\n' ' ')"
+  [ "$INFO" = "codec_name=h264 width=${dims%x*} height=${dims#*x} nb_read_frames=240 " ] || fail "$n.mp4: $INFO"
+  [ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
+done
+frame "$WORK/sequence-messages-reveal.mp4" 0 "$WORK/sr0.png"; frame "$WORK/sequence-messages-reveal.mp4" 239 "$WORK/sr239.png"
+python3 -I - "$WORK/sr0.png" "$WORK/sr239.png" <<'PY' || fail "sequence reveal did not change frames"
+import sys, subprocess
+def px(f, x, y):
+    out = subprocess.run(["python3", "-I", "/home/mma/repos/lmctlhq/lmvideo/tools/pngpx.py", f, str(x), str(y)], capture_output=True, text=True)
+    return out.stdout.split()
+# the message-1 line at y=140: absent on frame 0, present on the last frame
+assert px(sys.argv[1], 320, 140) != px(sys.argv[2], 320, 140), "frame 0 and frame 239 agree at (320,140)"
+PY
+ok "4 animated diagram videos: connector draw-on, message reveal, state highlight, path trace (h264, 240 frames)"
 
 echo "PASS $pass checks"
