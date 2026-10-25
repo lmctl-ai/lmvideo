@@ -59,6 +59,24 @@ struct SurfaceObj {
   CanvasSlot slot;
 };
 
+struct DocumentObj {
+  DocumentObj(int w, int h) : recorder(w, h) { slot.canvas = recorder.canvas(); }
+  lmv::PictureRecorder recorder;
+  CanvasSlot slot;
+  bool finished = false;
+  lmv::Picture finish() {
+    if (finished) throw lmv::Error("Document.finish: document is already finished");
+    slot.canvas.reset();
+    finished = true;
+    return recorder.finish();
+  }
+};
+
+struct PdfDocumentObj {
+  PdfDocumentObj(float w, float h) : document(w, h) {}
+  lmv::PdfDocument document;
+};
+
 struct VideoState {
   bool begun = false;
   bool ended = false;
@@ -115,6 +133,13 @@ void write_image(const lmv::Surface& s, const std::string& path) {
   if (has_suffix(path, ".png")) write_atomic(path, s.encode_png());
   else if (has_suffix(path, ".jpg") || has_suffix(path, ".jpeg")) write_atomic(path, s.encode_jpeg(90));
   else throw lmv::Error("unsupported image extension (use .png, .jpg or .jpeg): " + path);
+}
+
+std::string read_binary_file(const std::string& path) {
+  if (path.empty()) throw lmv::Error("input path cannot be empty");
+  std::ifstream input(path, std::ios::binary);
+  if (!input) throw lmv::Error("cannot open " + path);
+  return std::string(std::istreambuf_iterator<char>(input), std::istreambuf_iterator<char>());
 }
 
 float F(const Value& v) { return static_cast<float>(v.f); }
@@ -329,6 +354,10 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
     cv(p).draw_svg(*static_cast<lmv::Svg*>(a[0].obj), F(a[1]), F(a[2]), F(a[3]), F(a[4]));
     return Value::none();
   });
+  reg.method("Canvas", "picture", {"Picture", "float", "float", "float", "float"}, "void", [=](void* p, Args& a) {
+    static_cast<lmv::Picture*>(a[0].obj)->draw(cv(p), F(a[1]), F(a[2]), F(a[3]), F(a[4]));
+    return Value::none();
+  });
   reg.method("Canvas", "save", {}, "void", [=](void* p, Args&) { cv(p).save(); return Value::none(); });
   reg.method("Canvas", "restore", {}, "void", [=](void* p, Args&) { cv(p).restore(); return Value::none(); });
   reg.method("Canvas", "translate", {"float", "float"}, "void", [=](void* p, Args& a) { cv(p).translate(F(a[0]), F(a[1])); return Value::none(); });
@@ -462,6 +491,83 @@ void register_schema(Registrar& reg, Arena& arena, OutputState& output) {
   reg.method("Surface", "canvas", {}, "Canvas", [](void* p, Args&) { return Value::object("Canvas", &static_cast<SurfaceObj*>(p)->slot); });
   reg.method("Surface", "image", {}, "Image", [&arena](void* p, Args&) {
     return Value::object("Image", arena.make<lmv::Image>(static_cast<SurfaceObj*>(p)->surface.snapshot()));
+  });
+  reg.method("Surface", "png", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".png")) throw lmv::Error("Surface.png requires a .png path");
+    write_atomic(a[0].s, static_cast<SurfaceObj*>(p)->surface.encode_png());
+    return Value::none();
+  });
+  reg.method("Surface", "svg", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".svg")) throw lmv::Error("Surface.svg requires a .svg path");
+    write_atomic(a[0].s, static_cast<SurfaceObj*>(p)->surface.encode_svg());
+    return Value::none();
+  });
+  reg.method("Surface", "pdf", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".pdf")) throw lmv::Error("Surface.pdf requires a .pdf path");
+    write_atomic(a[0].s, static_cast<SurfaceObj*>(p)->surface.encode_pdf());
+    return Value::none();
+  });
+
+  // ---- Retained canvas recordings and vector outputs ----
+  reg.function("document", {"int", "int"}, "Document", [&arena](Args& a) {
+    if (a[0].i < 1 || a[1].i < 1 || a[0].i > 16384 || a[1].i > 16384)
+      throw lmv::Error("document dimensions must be in [1, 16384]");
+    return Value::object("Document", arena.make<DocumentObj>(static_cast<int>(a[0].i), static_cast<int>(a[1].i)));
+  });
+  reg.method("Document", "canvas", {}, "Canvas", [](void* p, Args&) {
+    auto* d = static_cast<DocumentObj*>(p);
+    if (d->finished || !d->slot.canvas) throw lmv::Error("Document.canvas called after finish");
+    return Value::object("Canvas", &d->slot);
+  });
+  reg.method("Document", "finish", {}, "Picture", [&arena](void* p, Args&) {
+    return Value::object("Picture", arena.make<lmv::Picture>(static_cast<DocumentObj*>(p)->finish()));
+  });
+  auto picture = [](void* p) -> lmv::Picture& { return *static_cast<lmv::Picture*>(p); };
+  reg.method("Picture", "width", {}, "int", [=](void* p, Args&) { return Value::integer(picture(p).width()); });
+  reg.method("Picture", "height", {}, "int", [=](void* p, Args&) { return Value::integer(picture(p).height()); });
+  reg.method("Picture", "draw", {"Canvas", "float", "float", "float", "float"}, "void", [=](void* p, Args& a) {
+    auto* slot = static_cast<CanvasSlot*>(a[0].obj);
+    if (!slot->canvas) throw lmv::Error("Picture.draw requires an active Canvas");
+    picture(p).draw(*slot->canvas, F(a[1]), F(a[2]), F(a[3]), F(a[4]));
+    return Value::none();
+  });
+  reg.method("Picture", "png", {"string", "int"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".png")) throw lmv::Error("Picture.png requires a .png path");
+    write_atomic(a[0].s, picture(p).encode_png(static_cast<int>(a[1].i)));
+    return Value::none();
+  });
+  reg.method("Picture", "svg", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".svg")) throw lmv::Error("Picture.svg requires a .svg path");
+    write_atomic(a[0].s, picture(p).encode_svg());
+    return Value::none();
+  });
+  reg.method("Picture", "pdf", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".pdf")) throw lmv::Error("Picture.pdf requires a .pdf path");
+    write_atomic(a[0].s, picture(p).encode_pdf());
+    return Value::none();
+  });
+  reg.method("Picture", "skp", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".skp")) throw lmv::Error("Picture.skp requires a .skp path");
+    write_atomic(a[0].s, picture(p).serialize());
+    return Value::none();
+  });
+  reg.function("picture_file", {"string"}, "Picture", [&arena](Args& a) {
+    return Value::object("Picture", arena.make<lmv::Picture>(lmv::Picture::deserialize(read_binary_file(a[0].s))));
+  });
+  reg.function("pdf_document", {"float", "float"}, "PdfDocument", [&arena](Args& a) {
+    return Value::object("PdfDocument", arena.make<PdfDocumentObj>(F(a[0]), F(a[1])));
+  });
+  reg.method("PdfDocument", "add_page", {"Picture"}, "PdfDocument", [=](void* p, Args& a) {
+    static_cast<PdfDocumentObj*>(p)->document.add_page(*static_cast<lmv::Picture*>(a[0].obj));
+    return Value::object("PdfDocument", p);
+  });
+  reg.method("PdfDocument", "pages", {}, "int", [](void* p, Args&) {
+    return Value::integer(static_cast<PdfDocumentObj*>(p)->document.pages());
+  });
+  reg.method("PdfDocument", "write", {"string"}, "void", [=](void* p, Args& a) {
+    if (!has_suffix(a[0].s, ".pdf")) throw lmv::Error("PdfDocument.write requires a .pdf path");
+    write_atomic(a[0].s, static_cast<PdfDocumentObj*>(p)->document.finish());
+    return Value::none();
   });
 
   // A small host-owned collection used by the template example. The DSL only sees

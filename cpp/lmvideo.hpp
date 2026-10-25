@@ -174,6 +174,38 @@ private:
     std::shared_ptr<Impl> pimpl_;
 };
 
+class Canvas;
+
+// Immutable Skia recording that can replay to raster, SVG, or PDF targets.
+class Picture {
+public:
+    Picture();
+    ~Picture();
+    Picture(const Picture& other);
+    Picture& operator=(const Picture& other);
+    Picture(Picture&& other) noexcept;
+    Picture& operator=(Picture&& other) noexcept;
+
+    int width() const;
+    int height() const;
+    void playback(Canvas& canvas) const;
+    void draw(Canvas& canvas, float x, float y, float width, float height) const;
+    std::string encode_png(int scale = 1) const;
+    std::string encode_svg() const;
+    std::string encode_pdf() const;
+    std::string serialize() const;
+    static Picture deserialize(const std::string& bytes);
+
+    struct Impl;
+    const Impl& impl() const { return *pimpl_; }
+    Impl& impl() { return *pimpl_; }
+    explicit Picture(std::shared_ptr<Impl> impl);
+
+private:
+    friend class PdfDocument;
+    std::shared_ptr<Impl> pimpl_;
+};
+
 // Non-owning drawing canvas valid while its parent Surface lives.
 class Canvas {
 public:
@@ -200,7 +232,47 @@ public:
     explicit Canvas(Impl* impl);
 
 private:
+    friend class Picture;
     Impl* pimpl_;
+};
+
+// Records a single canvas command stream for replay into one or more outputs.
+class PictureRecorder {
+public:
+    PictureRecorder(int width, int height);
+    ~PictureRecorder();
+    PictureRecorder(const PictureRecorder&) = delete;
+    PictureRecorder& operator=(const PictureRecorder&) = delete;
+    PictureRecorder(PictureRecorder&& other) noexcept;
+    PictureRecorder& operator=(PictureRecorder&& other) noexcept;
+
+    Canvas canvas();
+    Picture finish();
+
+    struct Impl;
+
+private:
+    std::unique_ptr<Impl> pimpl_;
+};
+
+// Multi-page PDF writer. Each page replays an immutable Picture at its natural size.
+class PdfDocument {
+public:
+    PdfDocument(float width, float height);
+    ~PdfDocument();
+    PdfDocument(const PdfDocument&) = delete;
+    PdfDocument& operator=(const PdfDocument&) = delete;
+    PdfDocument(PdfDocument&& other) noexcept;
+    PdfDocument& operator=(PdfDocument&& other) noexcept;
+
+    void add_page(const Picture& picture);
+    int pages() const;
+    std::string finish();
+
+    struct Impl;
+
+private:
+    std::unique_ptr<Impl> pimpl_;
 };
 
 // Raster surface (premultiplied RGBA8888).
@@ -218,6 +290,8 @@ public:
     Canvas canvas();
     std::string encode_png() const;
     std::string encode_jpeg(int quality = 80) const;
+    std::string encode_svg() const;
+    std::string encode_pdf() const;
     void write_png(const std::string& path) const;
     std::string rgba() const; // exactly w*h*4 bytes, row-major
     Image snapshot() const;

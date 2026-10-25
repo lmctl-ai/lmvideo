@@ -63,6 +63,7 @@
         "image": [{"params":["Image","float","float"],"returns":"void"}],
         "image_rect": [{"params":["Image","float","float","float","float"],"returns":"void"}],
         "svg": [{"params":["Svg","float","float","float","float"],"returns":"void"}],
+        "picture": [{"params":["Picture","float","float","float","float"],"returns":"void"}],
         "save": [{"params":[],"returns":"void"}],
         "restore": [{"params":[],"returns":"void"}],
         "translate": [{"params":["float","float"],"returns":"void"}],
@@ -201,10 +202,37 @@
         "fit": [{"params":["string"],"returns":"ImageView"}]
       }
     },
+    "Document": {
+      "methods": {
+        "canvas": [{"params":[],"returns":"Canvas"}],
+        "finish": [{"params":[],"returns":"Picture"}]
+      }
+    },
+    "Picture": {
+      "methods": {
+        "width": [{"params":[],"returns":"int"}],
+        "height": [{"params":[],"returns":"int"}],
+        "draw": [{"params":["Canvas","float","float","float","float"],"returns":"void"}],
+        "png": [{"params":["string","int"],"returns":"void"}],
+        "svg": [{"params":["string"],"returns":"void"}],
+        "pdf": [{"params":["string"],"returns":"void"}],
+        "skp": [{"params":["string"],"returns":"void"}]
+      }
+    },
+    "PdfDocument": {
+      "methods": {
+        "add_page": [{"params":["Picture"],"returns":"PdfDocument"}],
+        "pages": [{"params":[],"returns":"int"}],
+        "write": [{"params":["string"],"returns":"void"}]
+      }
+    },
     "Surface": {
       "methods": {
         "canvas": [{"params":[],"returns":"Canvas"}],
-        "image": [{"params":[],"returns":"Image"}]
+        "image": [{"params":[],"returns":"Image"}],
+        "png": [{"params":["string"],"returns":"void"}],
+        "svg": [{"params":["string"],"returns":"void"}],
+        "pdf": [{"params":["string"],"returns":"void"}]
       }
     },
     "Keyframes": {
@@ -260,6 +288,9 @@
     "svg": [{"params":["string"],"returns":"Svg"}],
     "svg_file": [{"params":["string"],"returns":"Svg"}],
     "surface": [{"params":["int","int"],"returns":"Surface"}],
+    "document": [{"params":["int","int"],"returns":"Document"}],
+    "pdf_document": [{"params":["float","float"],"returns":"PdfDocument"}],
+    "picture_file": [{"params":["string"],"returns":"Picture"}],
     "keyframes": [{"params":[],"returns":"Keyframes"}],
     "template_svg": [{"params":["string"],"returns":"TemplateSvg"}],
     "mix": [{"params":["string","string","float"],"returns":"string"}]

@@ -20,11 +20,17 @@
 #include "include/core/SkPaint.h"
 #include "include/core/SkPath.h"
 #include "include/core/SkPixmap.h"
+#include "include/core/SkDocument.h"
+#include "include/core/SkPicture.h"
+#include "include/core/SkPictureRecorder.h"
+#include "include/core/SkSerialProcs.h"
 #include "include/core/SkRect.h"
 #include "include/core/SkRefCnt.h"
 #include "include/core/SkSamplingOptions.h"
 #include "include/core/SkStream.h"
 #include "include/core/SkSurface.h"
+#include "include/docs/SkPDFDocument.h"
+#include "include/svg/SkSVGCanvas.h"
 #include "include/core/SkTileMode.h"
 #include "include/core/SkTypeface.h"
 #include "include/effects/SkBlurMaskFilter.h"
@@ -737,6 +743,44 @@ struct Canvas::Impl {
     explicit Impl(SkCanvas* c) : canvas(c) {}
 };
 
+struct Picture::Impl {
+    int width = 0;
+    int height = 0;
+    sk_sp<SkPicture> picture;
+    Impl(int w, int h, sk_sp<SkPicture> p) : width(w), height(h), picture(std::move(p)) {}
+};
+
+struct PictureRecorder::Impl {
+    int width = 0;
+    int height = 0;
+    SkPictureRecorder recorder;
+    Canvas::Impl canvas_impl;
+    bool active = true;
+
+    Impl(int w, int h) : width(w), height(h), canvas_impl(nullptr) {
+        canvas_impl.canvas = recorder.beginRecording(static_cast<SkScalar>(w), static_cast<SkScalar>(h));
+        if (!canvas_impl.canvas) throw Error("PictureRecorder: Skia failed to start recording");
+    }
+};
+
+struct PdfDocument::Impl {
+    float width = 0;
+    float height = 0;
+    std::unique_ptr<SkDynamicMemoryWStream> stream;
+    sk_sp<SkDocument> document;
+    int page_count = 0;
+    bool finished = false;
+
+    Impl(float w, float h)
+        : width(w), height(h), stream(std::make_unique<SkDynamicMemoryWStream>()) {
+        SkPDF::Metadata metadata;
+        metadata.fProducer = SkString("lmvideo");
+        metadata.allowNoJpegs = true;  // all recorded raster images can be deflated without optional JPEG callbacks
+        document = SkPDF::MakeDocument(stream.get(), metadata);
+        if (!document) throw Error("PdfDocument: Skia failed to create a PDF document");
+    }
+};
+
 Canvas::Canvas(Impl* impl) : pimpl_(impl) {}
 
 void Canvas::clear(Color c) {
@@ -886,6 +930,193 @@ void Canvas::clip_rect(float x, float y, float w, float h) {
 }
 
 // ============================================================================
+// Recorded pictures and vector outputs
+// ============================================================================
+
+namespace {
+
+std::string take_stream(SkDynamicMemoryWStream& stream, const char* operation) {
+    auto data = stream.detachAsData();
+    if (!data) throw Error(std::string(operation) + ": Skia failed to produce output data");
+    return std::string(reinterpret_cast<const char*>(data->data()), data->size());
+}
+
+void check_vector_page_size(float width, float height, const char* operation) {
+    check_finite(width, operation, "width");
+    check_finite(height, operation, "height");
+    if (width <= 0 || height <= 0 || width > 16384 || height > 16384)
+        throw Error(std::string(operation) + ": dimensions must be in (0, 16384]");
+}
+
+SkSVGCanvas::Options svg_options() {
+    SkSVGCanvas::Options options;
+    options.flags = static_cast<SkSVGCanvas::Flags>(SkSVGCanvas::kConvertTextToPaths_Flag |
+                                                     SkSVGCanvas::kNoPrettyXML_Flag);
+    return options;
+}
+
+SkSerialReturnType serialize_picture_image(SkImage* image, void*) {
+    if (!image) return nullptr;
+    SkPixmap pixels;
+    if (!image->peekPixels(&pixels)) return nullptr;
+    SkDynamicMemoryWStream stream;
+    if (!SkPngEncoder::Encode(&stream, pixels, {})) return nullptr;
+    return stream.detachAsData();
+}
+
+sk_sp<SkImage> deserialize_picture_image(const void* bytes, size_t length, void*) {
+    if (!bytes || length == 0) return nullptr;
+    return SkImages::DeferredFromEncodedData(SkData::MakeWithCopy(bytes, length));
+}
+
+}  // namespace
+
+Picture::Picture() = default;
+Picture::~Picture() = default;
+Picture::Picture(const Picture& other) = default;
+Picture& Picture::operator=(const Picture& other) = default;
+Picture::Picture(Picture&& other) noexcept = default;
+Picture& Picture::operator=(Picture&& other) noexcept = default;
+Picture::Picture(std::shared_ptr<Impl> impl) : pimpl_(std::move(impl)) {}
+
+int Picture::width() const { return pimpl_ ? pimpl_->width : 0; }
+int Picture::height() const { return pimpl_ ? pimpl_->height : 0; }
+
+void Picture::playback(Canvas& canvas) const {
+    if (!pimpl_ || !pimpl_->picture || !canvas.pimpl_ || !canvas.pimpl_->canvas)
+        throw Error("Picture.playback: picture or canvas is unavailable");
+    pimpl_->picture->playback(canvas.pimpl_->canvas);
+}
+
+void Picture::draw(Canvas& canvas, float x, float y, float width, float height) const {
+    check_finite(x, "Picture.draw", "x");
+    check_finite(y, "Picture.draw", "y");
+    check_finite(width, "Picture.draw", "width");
+    check_finite(height, "Picture.draw", "height");
+    if (width <= 0 || height <= 0) throw Error("Picture.draw: width and height must be positive");
+    if (!pimpl_ || !pimpl_->picture || !canvas.pimpl_ || !canvas.pimpl_->canvas)
+        throw Error("Picture.draw: picture or canvas is unavailable");
+    SkCanvas* target = canvas.pimpl_->canvas;
+    target->save();
+    target->translate(x, y);
+    target->scale(width / pimpl_->width, height / pimpl_->height);
+    pimpl_->picture->playback(target);
+    target->restore();
+}
+
+std::string Picture::encode_png(int scale) const {
+    if (!pimpl_ || !pimpl_->picture) throw Error("Picture.encode_png: picture is unavailable");
+    if (scale < 1 || scale > 4) throw Error("Picture.encode_png: scale must be between 1 and 4");
+    const int output_width = pimpl_->width * scale, output_height = pimpl_->height * scale;
+    if (output_width > 16384 || output_height > 16384) throw Error("Picture.encode_png: scaled dimensions exceed 16384");
+    const auto info = SkImageInfo::Make(output_width, output_height, kRGBA_8888_SkColorType, kPremul_SkAlphaType);
+    auto surface = SkSurfaces::Raster(info);
+    if (!surface) throw Error("Picture.encode_png: failed to allocate raster target");
+    SkCanvas* canvas = surface->getCanvas();
+    canvas->scale(static_cast<SkScalar>(scale), static_cast<SkScalar>(scale));
+    pimpl_->picture->playback(canvas);
+    SkPixmap pixels;
+    if (!surface->peekPixels(&pixels)) throw Error("Picture.encode_png: failed to read raster output");
+    SkDynamicMemoryWStream stream;
+    if (!SkPngEncoder::Encode(&stream, pixels, {})) throw Error("Picture.encode_png: failed to encode PNG");
+    return take_stream(stream, "Picture.encode_png");
+}
+
+std::string Picture::encode_svg() const {
+    if (!pimpl_ || !pimpl_->picture) throw Error("Picture.encode_svg: picture is unavailable");
+    SkDynamicMemoryWStream stream;
+    auto canvas = SkSVGCanvas::Make(SkRect::MakeWH(pimpl_->width, pimpl_->height), &stream, svg_options());
+    if (!canvas) throw Error("Picture.encode_svg: Skia failed to create an SVG canvas");
+    pimpl_->picture->playback(canvas.get());
+    canvas.reset();
+    return take_stream(stream, "Picture.encode_svg");
+}
+
+std::string Picture::encode_pdf() const {
+    if (!pimpl_ || !pimpl_->picture) throw Error("Picture.encode_pdf: picture is unavailable");
+    PdfDocument doc(static_cast<float>(pimpl_->width), static_cast<float>(pimpl_->height));
+    doc.add_page(*this);
+    return doc.finish();
+}
+
+std::string Picture::serialize() const {
+    if (!pimpl_ || !pimpl_->picture) throw Error("Picture.serialize: picture is unavailable");
+    SkSerialProcs procs;
+    procs.fImageProc = serialize_picture_image;
+    auto data = pimpl_->picture->serialize(&procs);
+    if (!data) throw Error("Picture.serialize: Skia failed to serialize picture");
+    return std::string(reinterpret_cast<const char*>(data->data()), data->size());
+}
+
+Picture Picture::deserialize(const std::string& bytes) {
+    if (bytes.empty()) throw Error("Picture.deserialize: data is empty");
+    SkDeserialProcs procs;
+    procs.fImageProc = deserialize_picture_image;
+    auto picture = SkPicture::MakeFromData(bytes.data(), bytes.size(), &procs);
+    if (!picture) throw Error("Picture.deserialize: invalid or unsupported SKP data");
+    const SkRect bounds = picture->cullRect();
+    const int width = static_cast<int>(std::lround(bounds.width()));
+    const int height = static_cast<int>(std::lround(bounds.height()));
+    if (width <= 0 || height <= 0) throw Error("Picture.deserialize: invalid picture bounds");
+    return Picture(std::make_shared<Impl>(width, height, std::move(picture)));
+}
+
+PictureRecorder::PictureRecorder(int width, int height) {
+    if (width <= 0 || height <= 0 || width > 16384 || height > 16384)
+        throw Error("PictureRecorder: dimensions must be in [1, 16384]");
+    pimpl_ = std::make_unique<Impl>(width, height);
+}
+PictureRecorder::~PictureRecorder() = default;
+PictureRecorder::PictureRecorder(PictureRecorder&& other) noexcept = default;
+PictureRecorder& PictureRecorder::operator=(PictureRecorder&& other) noexcept = default;
+
+Canvas PictureRecorder::canvas() {
+    if (!pimpl_ || !pimpl_->active || !pimpl_->canvas_impl.canvas)
+        throw Error("PictureRecorder.canvas: recorder is already finished");
+    return Canvas(&pimpl_->canvas_impl);
+}
+
+Picture PictureRecorder::finish() {
+    if (!pimpl_ || !pimpl_->active) throw Error("PictureRecorder.finish: recorder is already finished");
+    auto picture = pimpl_->recorder.finishRecordingAsPicture();
+    pimpl_->canvas_impl.canvas = nullptr;
+    pimpl_->active = false;
+    if (!picture) throw Error("PictureRecorder.finish: Skia failed to finish recording");
+    return Picture(std::make_shared<Picture::Impl>(pimpl_->width, pimpl_->height, std::move(picture)));
+}
+
+PdfDocument::PdfDocument(float width, float height) {
+    check_vector_page_size(width, height, "PdfDocument");
+    pimpl_ = std::make_unique<Impl>(width, height);
+}
+PdfDocument::~PdfDocument() = default;
+PdfDocument::PdfDocument(PdfDocument&& other) noexcept = default;
+PdfDocument& PdfDocument::operator=(PdfDocument&& other) noexcept = default;
+
+void PdfDocument::add_page(const Picture& picture) {
+    if (!pimpl_ || pimpl_->finished || !pimpl_->document) throw Error("PdfDocument.add_page: document is closed");
+    if (!picture.pimpl_ || !picture.pimpl_->picture) throw Error("PdfDocument.add_page: picture is unavailable");
+    if (picture.width() != static_cast<int>(std::lround(pimpl_->width)) ||
+        picture.height() != static_cast<int>(std::lround(pimpl_->height)))
+        throw Error("PdfDocument.add_page: picture dimensions must match the PDF page size");
+    SkCanvas* canvas = pimpl_->document->beginPage(pimpl_->width, pimpl_->height);
+    if (!canvas) throw Error("PdfDocument.add_page: Skia failed to create a page");
+    picture.pimpl_->picture->playback(canvas);
+    pimpl_->document->endPage();
+    ++pimpl_->page_count;
+}
+
+int PdfDocument::pages() const { return pimpl_ ? pimpl_->page_count : 0; }
+
+std::string PdfDocument::finish() {
+    if (!pimpl_ || pimpl_->finished || !pimpl_->document) throw Error("PdfDocument.finish: document is already closed");
+    pimpl_->document->close();
+    pimpl_->document.reset();
+    pimpl_->finished = true;
+    return take_stream(*pimpl_->stream, "PdfDocument.finish");
+}
+
+// ============================================================================
 // Surface Implementation
 // ============================================================================
 
@@ -958,6 +1189,33 @@ std::string Surface::encode_jpeg(int quality) const {
     }
     auto data = stream.detachAsData();
     return std::string(reinterpret_cast<const char*>(data->data()), data->size());
+}
+
+std::string Surface::encode_svg() const {
+    SkDynamicMemoryWStream stream;
+    auto canvas = SkSVGCanvas::Make(SkRect::MakeWH(pimpl_->width, pimpl_->height), &stream, svg_options());
+    if (!canvas) throw Error("Surface.encode_svg: Skia failed to create an SVG canvas");
+    auto image = pimpl_->sk_surface->makeImageSnapshot();
+    if (!image) throw Error("Surface.encode_svg: failed to snapshot raster surface");
+    canvas->drawImage(image.get(), 0, 0);
+    canvas.reset();
+    return take_stream(stream, "Surface.encode_svg");
+}
+
+std::string Surface::encode_pdf() const {
+    SkDynamicMemoryWStream stream;
+    SkPDF::Metadata metadata;
+    metadata.fProducer = SkString("lmvideo");
+    metadata.allowNoJpegs = true;
+    auto document = SkPDF::MakeDocument(&stream, metadata);
+    if (!document) throw Error("Surface.encode_pdf: Skia failed to create a PDF document");
+    SkCanvas* canvas = document->beginPage(pimpl_->width, pimpl_->height);
+    auto image = pimpl_->sk_surface->makeImageSnapshot();
+    if (!canvas || !image) throw Error("Surface.encode_pdf: failed to create raster-backed PDF page");
+    canvas->drawImage(image.get(), 0, 0);
+    document->endPage();
+    document->close();
+    return take_stream(stream, "Surface.encode_pdf");
 }
 
 void Surface::write_png(const std::string& path) const {

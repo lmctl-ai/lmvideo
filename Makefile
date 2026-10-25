@@ -47,7 +47,7 @@ endif
 
 .PHONY: all test clean fetch_skia
 
-all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/plot_test $(BUILD)/layout_test $(BUILD)/encoder_test
+all: fetch_skia $(BUILD)/liblmvideo.a $(BUILD)/lmvideo $(BUILD)/skia_test $(BUILD)/vector_test $(BUILD)/plot_test $(BUILD)/layout_test $(BUILD)/encoder_test
 
 fetch_skia:
 	@scripts/fetch-skia.sh --quiet
@@ -80,6 +80,12 @@ $(BUILD)/skia_test.o: tests/skia_test.cpp cpp/lmvideo.hpp | $(BUILD)
 
 $(BUILD)/skia_test: $(BUILD)/skia_test.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
 	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/skia_test.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
+
+$(BUILD)/vector_test.o: tests/vector_test.cpp cpp/lmvideo.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -Icpp -c $< -o $@
+
+$(BUILD)/vector_test: $(BUILD)/vector_test.o $(BUILD)/liblmvideo.a | $(BUILD) fetch_skia
+	$(CXX) $(CXXFLAGS) -o $@ $(BUILD)/vector_test.o $(BUILD)/liblmvideo.a $(LINK_SKIA)
 
 $(BUILD)/plot_test.o: tests/plot_test.cpp cpp/plot.hpp cpp/lmvideo.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Icpp -c $< -o $@
