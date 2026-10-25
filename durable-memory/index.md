@@ -25,6 +25,7 @@ make -j4                              # Build lmvideo binary
 | [08-layout-managers.md](08-layout-managers.md) | Explicit Tk/Swing-style container layout managers (pack, grid, border) |
 | [09-plot-chart-kinds-proposal.md](09-plot-chart-kinds-proposal.md) | Typed schema and implementation facts for field, statistical, symlog, and date charts |
 | [10-vector-recording.md](10-vector-recording.md) | Pinned Skia vector modules and the typed Document/Picture/PDF output API |
+| [11-diagram-vocabulary.md](11-diagram-vocabulary.md) | lmdraw-compatible diagram shapes, anchored connectors, grids, and sequence notation |
 
 ## SDK pin and sync
 
