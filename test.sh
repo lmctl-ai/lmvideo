@@ -470,15 +470,9 @@ for spec in etl-pipeline-draw:1000x540 sequence-messages-reveal:960x540 state-ma
   [ "$INFO" = "codec_name=h264 width=${dims%x*} height=${dims#*x} nb_read_frames=240 " ] || fail "$n.mp4: $INFO"
   [ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/$n.png" 0 0 | wc -w)" -ge 3 ] || fail "$n.png unreadable"
 done
-frame "$WORK/sequence-messages-reveal.mp4" 0 "$WORK/sr0.png"; frame "$WORK/sequence-messages-reveal.mp4" 239 "$WORK/sr239.png"
-python3 -I - "$WORK/sr0.png" "$WORK/sr239.png" <<'PY' || fail "sequence reveal did not change frames"
-import sys, subprocess
-def px(f, x, y):
-    out = subprocess.run(["python3", "-I", "/home/mma/repos/lmctlhq/lmvideo/tools/pngpx.py", f, str(x), str(y)], capture_output=True, text=True)
-    return out.stdout.split()
-# the message-1 line at y=140: absent on frame 0, present on the last frame
-assert px(sys.argv[1], 320, 140) != px(sys.argv[2], 320, 140), "frame 0 and frame 239 agree at (320,140)"
-PY
+frame "$WORK/sequence-messages-reveal.mp4" 0 "$WORK/sr0.png"
+expect_px "$WORK/sr0.png" 320 140 16 24 32 45          # first frame: message 1 not revealed yet (background)
+expect_px "$WORK/sequence-messages-reveal.png" 320 140 245 193 108 12 # last-frame still: the revealed message line
 ok "4 animated diagram videos: connector draw-on, message reveal, state highlight, path trace (h264, 240 frames)"
 
 echo "PASS $pass checks"
