@@ -12,7 +12,7 @@ nice bash test.sh
 
 `test.sh` puts its freshly built `lmvideo` first on `PATH` so examples declaring `cli="lmvideo"` use it. `scripts/stage-release-notices.sh dist` collects the license texts that every binary release carries.
 
-`test.sh` checks the compiler version, verifies `cpp/dslvm.hpp` against `sdk.lock`, builds in a temporary directory, runs the Skia, plot-pixel, layout-pixel, and encoder tests, exercises the CLI, compares host and schema signatures, checks the embedded schema (`--dsl-schema --json` byte-identical to the file, the shared `--dsl-schema` summary, `--schema FILE` refused with exit 2), compiles all DSL examples, checks PNG and MP4 facts, and covers host error paths. It does not install packages or modify system directories.
+`test.sh` checks the compiler version, verifies `cpp/dslvm.hpp` against `sdk.lock`, builds in a temporary directory, runs the Skia, vector-output, plot-pixel, layout-pixel, and encoder tests, exercises the CLI, compares host and schema signatures, checks the embedded schema (`--dsl-schema --json` byte-identical to the file, the shared `--dsl-schema` summary, `--schema FILE` refused with exit 2), compiles all DSL examples, checks PNG/SVG/PDF/SKP and MP4 facts, checks a pixel-identical SVG-to-PNG round trip, and covers host error paths. It does not install packages or modify system directories.
 
 For sources that call `Canvas.plot()` or `Canvas.panel()`, `test.sh` compiles a temporary copy against the checked-in schema and runs that bytecode on the freshly built host. The Plot examples pin the release that introduced `Plot`/`Series`; the Layout examples pin the release that introduced `Panel`/`LayoutItem`.
 

@@ -25,7 +25,7 @@ Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see [dura
 
 ## Gallery
 
-Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The reusable `Canvas.plot()` / `Plot` / `Series` API includes heatmaps, contours, vector fields, statistical chart kinds, date and symlog axes, error bands, and insets alongside lines, bars, and scatter; plots redraw on the current video frame and compose with low-level Canvas drawing. `Canvas.panel()` adds explicit pack, grid, place, border, flow, and box managers for predictable multi-panel layouts. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
+Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The reusable `Canvas.plot()` / `Plot` / `Series` API includes heatmaps, contours, vector fields, statistical chart kinds, date and symlog axes, error bands, and insets alongside lines, bars, and scatter; plots redraw on the current video frame and compose with low-level Canvas drawing. `Document` records a Canvas once and replays it to 1×–4× PNG, outlined-text SVG, PDF, and serialized Skia Picture; `PdfDocument` writes multi-page reports. `Canvas.panel()` adds explicit pack, grid, place, border, flow, and box managers for predictable multi-panel layouts. Other ports and examples keep using the same Canvas primitives. For retained scene graphs, see [lmdraw](https://github.com/lmctl-ai/lmdraw); for gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.
 
 | **Damped oscillator** | **Kepler's second law** | **Lotka–Volterra** |
 | --- | --- | --- |
@@ -78,6 +78,11 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The
 
 `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmplot/main/examples/confusion_matrix.lms` · `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/confusion-matrix.lms`
 
+| **One recorded chart, multiple outputs** |
+| --- |
+| ![Recorded chart with vector output](docs/images/vector-outputs.png) |
+| Same Canvas recording written as [PNG 1×](docs/images/vector-outputs.png), [PNG 2×](docs/images/vector-outputs-2x.png), [PNG 3×](docs/images/vector-outputs-3x.png), [SVG](docs/vectors/vector-outputs.svg), [PDF](docs/vectors/vector-outputs.pdf), and [SKP](docs/vectors/vector-outputs.skp). The [SVG-loader round trip](docs/images/vector-roundtrip.png) is pixel-identical to the direct PNG. [Two-page PDF](docs/vectors/vector-report.pdf) uses a chart page and a Panel dashboard page.<br>`lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/vector-outputs.lms` |
+
 
 | **Terminal screenshot** |
 | --- |
@@ -90,7 +95,7 @@ Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The
 npm install -g @lmctl-ai/lmctl
 scripts/fetch-skia.sh
 nice make                      # build/lmvideo (STATIC=1 links a fully static Linux executable)
-nice bash test.sh              # builds in a temp dir and runs 34+ checks
+nice bash test.sh              # builds in a temp dir and runs 36+ checks
 build/lmvideo demo build/demo.png
 build/lmvideo render tests/golden/scene.svg build/scene.png
 ```

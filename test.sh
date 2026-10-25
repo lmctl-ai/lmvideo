@@ -18,7 +18,7 @@ SCHEMA="$HERE/schema/lmvideo.dsl.json"
 PNGPX="python3 -I $HERE/tools/pngpx.py"
 compile() {
   local source="${1:-}"
-  if [ -f "$source" ] && grep -Eq 'canvas\.(plot|panel)\(' "$source"; then
+  if [ -f "$source" ] && grep -Eq '([[:alnum:]_]+\.)?(plot|panel)\(|document\(|pdf_document\(' "$source"; then
     local local_schema="$WORK/$(basename "$source" .lms)-local-schema.lms"
     sed -E "s#program = _dsl_ cli=\"lmvideo\" install=\"github:lmctl-ai/lmvideo@[^\"]+\";#program = _dsl_ schema=\"$SCHEMA\";#" "$source" >"$local_schema"
     shift
@@ -44,6 +44,8 @@ ok "library, CLI, tests and DSL host build"
 # 2. Phase 1: library tests (pixels, text, PNG/JPEG round trips, SVG, golden) and CLI.
 "$B/skia_test" >"$WORK/skia.out" 2>&1 || { grep -a "^not ok" "$WORK/skia.out"; tail -5 "$WORK/skia.out"; fail "skia_test"; }
 ok "skia_test: $(tail -1 "$WORK/skia.out")"
+"$B/vector_test" >"$WORK/vector.out" 2>&1 || { cat "$WORK/vector.out"; fail "vector_test"; }
+ok "vector_test: $(tail -1 "$WORK/vector.out")"
 "$B/plot_test" >"$WORK/plot.out" 2>&1 || { cat "$WORK/plot.out"; fail "plot_test"; }
 ok "plot_test: $(tail -1 "$WORK/plot.out")"
 "$B/layout_test" >"$WORK/layout.out" 2>&1 || { cat "$WORK/layout.out"; fail "layout_test"; }
@@ -359,5 +361,30 @@ compile examples/standing-wave-field.lms "$WORK/standing-wave-field.dslb" "$WORK
 INFO="$(ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=codec_name,width,height,nb_read_frames -of default=nw=1 "$WORK/standing-wave-field.mp4" | tr '\n' ' ')"
 [ "$INFO" = "codec_name=h264 width=960 height=540 nb_read_frames=60 " ] || fail "standing-wave-field.mp4: $INFO"
 ok "standing-wave-field: evolving 33x33 heatmap/quiver, 60-frame H.264 output"
+
+# Slice 4: replay one recorded chart to raster, SVG, PDF, SKP, high-DPI PNG, and a multi-page PDF.
+compile examples/vector-outputs.lms "$WORK/vector-outputs.dslb" "$WORK/vector-outputs.mp4" "$WORK/vector-outputs.png" \
+  "$WORK/vector-outputs.svg" "$WORK/vector-outputs-2x.png" "$WORK/vector-outputs-3x.png" "$WORK/vector-outputs.pdf" \
+  "$WORK/vector-outputs.skp" "$WORK/vector-report.pdf" "$WORK/vector-roundtrip.png" "$WORK/surface-svg-export.svg" \
+  "$WORK/surface-pdf-export.pdf" >/dev/null || fail "compile vector-outputs.lms"
+"$HOST" --dsl "$WORK/vector-outputs.dslb" >/dev/null 2>"$WORK/vector-outputs.err" || { cat "$WORK/vector-outputs.err"; fail "run vector-outputs.lms"; }
+[ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/vector-outputs.png")" = "960x540" ] || fail "vector-outputs.png dimensions"
+[ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/vector-outputs-2x.png")" = "1920x1080" ] || fail "vector-outputs-2x.png dimensions"
+[ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/vector-outputs-3x.png")" = "2880x1620" ] || fail "vector-outputs-3x.png dimensions"
+[ "$(python3 -I "$HERE/tools/pngpx.py" "$WORK/vector-roundtrip.png")" = "960x540" ] || fail "SVG round-trip PNG dimensions"
+cmp -s "$WORK/vector-outputs.png" "$WORK/vector-roundtrip.png" || fail "SVG round-trip pixels differ from direct recorded PNG"
+python3 - "$WORK" <<'PY' || fail "vector output signatures / multipage PDF"
+import pathlib, re, sys
+d=pathlib.Path(sys.argv[1])
+svg=(d/'vector-outputs.svg').read_text()
+assert '<svg' in svg and '<text' not in svg
+assert '<svg' in (d/'surface-svg-export.svg').read_text()
+assert (d/'vector-outputs.pdf').read_bytes().startswith(b'%PDF-')
+pdf=(d/'vector-report.pdf').read_bytes()
+assert pdf.startswith(b'%PDF-') and len(re.findall(rb'/Type\s*/Page\b',pdf)) == 2
+assert (d/'surface-pdf-export.pdf').read_bytes().startswith(b'%PDF-')
+assert (d/'vector-outputs.skp').stat().st_size > 0
+PY
+ok "vector-outputs: PNG 1x/2x/3x, outlined-text SVG, PDF, SKP, exact SVG PNG round-trip, and two-page PDF"
 
 echo "PASS $pass checks"
