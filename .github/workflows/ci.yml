@@ -78,7 +78,7 @@ jobs:
           node-version: 24
       - name: lmscript compiler (npm @lmctl-ai/lmctl, DSL v5)
         run: |
-          npm install --global @lmctl-ai/lmctl@0.2.401
+          npm install --global @lmctl-ai/lmctl@0.2.419
           lmscript --version
       - name: cache the Skia pack download
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4

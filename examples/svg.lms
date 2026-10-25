@@ -6,7 +6,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/svg.dslb";
 png = ARGV.len() > 1 ? ARGV[1] : "images/svg.png";
 svgfile = ARGV.len() > 2 ? ARGV[2] : "tests/golden/scene.svg";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(640, 360);
 video.frames(1);
 video.output(${png});
@@ -18,7 +18,7 @@ video.frame();
   canvas.rect(0.0, 0.0, 640.0, 6.0, paint().color("#333333"));
   out.print("svg is " + str(doc.width()) + "x" + str(doc.height()));
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));
 savedsl(program, dslout);
 # No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.

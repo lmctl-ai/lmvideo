@@ -8,7 +8,7 @@ mp4 = ARGV.len() > 1 ? ARGV[1] : "images/video.mp4";
 frames = ARGV.len() > 2 ? num(ARGV[2]) : 60;
 fps = ARGV.len() > 3 ? num(ARGV[3]) : 30;
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(320, 180);
 video.fps(${fps});
 video.frames(${frames});
@@ -34,7 +34,7 @@ for (f in range(0, video.count())) {
   canvas.text("frame " + str(video.index() + 1) + "/" + str(video.count()), 20.0, 30.0, font(18.0), paint().color("#ffffff"));
 }
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));
 savedsl(program, dslout);
 # No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.

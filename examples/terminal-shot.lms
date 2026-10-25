@@ -138,7 +138,7 @@ let c38 = all_cmds.len() > 38 ? all_cmds[38] : false;
 let l39 = all_lines.len() > 39 ? all_lines[39] : "";
 let c39 = all_cmds.len() > 39 ? all_cmds[39] : false;
 
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(1000, ${canvas_height});
 video.frames(1);
 video.output(${out_png});
@@ -234,7 +234,7 @@ row(${l38}, y0 + 38.0 * line_h, ${c38});
 row(${l39}, y0 + 39.0 * line_h, ${c39});
 
 video.end();
-end _dsl_
+end _lmcode_
 
 savedsl(program, dslout);
 r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);

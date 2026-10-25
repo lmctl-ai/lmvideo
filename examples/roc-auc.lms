@@ -14,11 +14,11 @@ for(k in range(0,n)){
   let x=num(fp)/num(neg);let y=num(tp)/num(pos);auc=auc+(x-prevx)*(y+prevy)/2.0;prevx=x;prevy=y;
 }
 mkdir("images");standalone=ARGV.len()==0;dslout=ARGV.len()>0?ARGV[0]:"build/roc-auc.dslb";let mp4=ARGV.len()>1?ARGV[1]:"images/roc-auc.mp4";let png=ARGV.len()>2?ARGV[2]:"images/roc-auc.png";
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
 video.size(960,540);video.frames(1);video.output(${mp4});video.begin();video.frame();canvas.clear("#f5f7fa");
 let p=canvas.plot(30.0,20.0,900.0,500.0).title("ROC curve · AUC "+${str(round(auc*1000.0)/1000.0)}).xlabel("false positive rate").ylabel("true positive rate").x_range(0.0,1.0).y_range(0.0,1.0).background("#ffffff");
 let random=p.series("random baseline","line","#94a3b8").dash("dashed");random.add(0.0,0.0).add(1.0,1.0);
 let roc=p.series("classifier","line","#2878b5").width(3.0);for(k in range(0,101)){let threshold=1.0-float(k)/100.0;let local_seed=20261;let local_pos=0;let local_neg=0;let tp=0;let fp=0;for(i in range(0,300)){let g=-6.0;for(j in range(0,12)){local_seed=(local_seed*16807)%2147483647;g=g+float(local_seed)/2147483647.0;}local_seed=(local_seed*16807)%2147483647;let positive=float(local_seed)/2147483647.0<0.4;let shift=0.0;if(positive){shift=1.2;local_pos=local_pos+1;}else{local_neg=local_neg+1;}let score=1.0/(1.0+pow(2.718281828459045,-(shift+g)));if(score>=threshold){if(positive){tp=tp+1;}else{fp=fp+1;}}}roc.add(float(fp)/float(local_neg),float(tp)/float(local_pos));}
 p.draw();video.save_frame(${png});video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--dsl",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}

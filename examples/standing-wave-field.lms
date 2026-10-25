@@ -1,8 +1,8 @@
 # Standing-wave scalar and gradient-vector fields evolve together on each video frame.
 mkdir("images");standalone=ARGV.len()==0;dslout=ARGV.len()>0?ARGV[0]:"build/standing-wave-field.dslb";let mp4=ARGV.len()>1?ARGV[1]:"images/standing-wave-field.mp4";let png=ARGV.len()>2?ARGV[2]:"images/standing-wave-field.png";
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
 video.size(960,540);video.fps(15);video.frames(60);video.crf(20);video.output(${mp4});video.begin();let pi=3.141592653589793;let p=canvas.plot(30.0,20.0,900.0,500.0).title("Standing wave · evolving scalar and gradient field").xlabel("x").ylabel("y").x_range(0.0,1.0).y_range(0.0,1.0).legend("none").background("#ffffff");let h=p.heatmap("displacement",33,33).palette("coolwarm").range(-1.0,1.0).colorbar(true);let field=p.quiver("gradient").color("#17202a").scale(0.8);
 for(frame in range(0,video.count())){video.frame();canvas.clear("#f5f7fa");let phase=2.0*pi*video.t();h.clear();field.clear();for(j in range(0,33)){for(i in range(0,33)){let x=float(i)/32.0;let y=float(j)/32.0;h.cell(32-j,i,sin(pi*x)*sin(pi*y)*cos(phase));}}for(j in range(0,7)){for(i in range(0,7)){let x=0.12+float(i)*0.1266666666667;let y=0.12+float(j)*0.1266666666667;field.add(x,y,cos(pi*x)*sin(pi*y)*cos(phase)*0.08,sin(pi*x)*cos(pi*y)*cos(phase)*0.08);}}p.draw();if(video.index()==video.count()-1){video.save_frame(${png});}}
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--dsl",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}

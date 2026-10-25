@@ -7,7 +7,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/hohmann-transfer.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/hohmann-transfer.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/hohmann-transfer.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(960, 540);
 video.fps(30);
 video.frames(240);
@@ -124,7 +124,7 @@ for (f in range(0, video.count())) {
   if (video.index() == 170) { video.save_frame(${png}); }
 }
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));
 savedsl(program, dslout);
 if (standalone) {

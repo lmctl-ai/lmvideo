@@ -9,7 +9,7 @@ width = ARGV.len() > 2 ? num(ARGV[2]) : 640;
 height = ARGV.len() > 3 ? num(ARGV[3]) : 360;
 title = ARGV.len() > 4 ? ARGV[4] : "Hello lmvideo";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(${width}, ${height});
 video.frames(1);
 video.output(${png});
@@ -27,7 +27,7 @@ video.frame();
   canvas.text(${title}, w * 0.06, h * 0.22, font(h * 0.12).bold(true), paint().color("#ffffff"));
   out.print("drew " + str(video.width()) + "x" + str(video.height()));
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));
 savedsl(program, dslout);
 # No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.

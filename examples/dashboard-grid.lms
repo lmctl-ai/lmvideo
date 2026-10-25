@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/dashboard-grid.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/dashboard-grid.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/dashboard-grid.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.25";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.25";
 video.size(960, 540); video.fps(30); video.frames(1); video.crf(20); video.output(${mp4}); video.begin(); video.frame(); canvas.clear("#f5f7fa");
 let dashboard = canvas.panel(18.0, 18.0, 924.0, 504.0).manager("grid").columns(2).row_weight(0, 1.0).row_weight(1, 1.0).column_weight(0, 1.0).column_weight(1, 1.0).padding(10.0, 10.0, 10.0, 10.0).gap(12.0).background("#f5f7fa");
 let trend_item = dashboard.add_plot().grid(0, 0, 1, 1).sticky("nsew");
@@ -24,7 +24,7 @@ let forecast = forecast_item.plot().title("Adoption projection").xlabel("month")
 let forecast_area = forecast.series("projected", "area", "#df5b36").width(2.0);
 forecast_area.add(0.0, 3.0).add(2.0, 8.0).add(4.0, 20.0).add(6.0, 50.0).add(8.0, 78.0).add(10.0, 92.0).add(12.0, 98.0);
 dashboard.draw(); video.save_frame(${png}); video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
   r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);

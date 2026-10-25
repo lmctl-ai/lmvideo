@@ -1,6 +1,6 @@
 # Histogram, box summary, grouped and stacked bars, donut, date ticks, error band and inset.
 mkdir("images");standalone=ARGV.len()==0;dslout=ARGV.len()>0?ARGV[0]:"build/chart-kinds-workbench.dslb";let mp4=ARGV.len()>1?ARGV[1]:"images/chart-kinds-workbench.mp4";let png=ARGV.len()>2?ARGV[2]:"images/chart-kinds-workbench.png";
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
 video.size(960,720);video.frames(1);video.output(${mp4});video.begin();video.frame();canvas.clear("#f5f7fa");let board=canvas.panel(12.0,10.0,936.0,700.0).manager("grid").columns(2).gap(10.0).padding(8.0,8.0,8.0,8.0).background("#f5f7fa");board.row_weight(0,1.0).row_weight(1,1.0).row_weight(2,1.0);
 let hist=board.add_plot().grid(0,0,1,1).fill("both").plot().title("Histogram").background("#ffffff");let seed=4409;let hs=hist.series("observations","histogram","#2878b5").histogram(12);for(i in range(0,200)){let g=-6.0;for(k in range(0,12)){seed=(seed*16807)%2147483647;g=g+float(seed)/2147483647.0;}hs.add(g,1.0);}
 let box=board.add_plot().grid(0,1,1,1).fill("both").plot().title("Box summaries").y_range(0.0,10.0).background("#ffffff");let bs=box.series("quartiles","box","#805ad5");bs.box(1.0,2.4,3.0,4.2,6.8).box(1.8,3.2,4.0,5.4,8.6).box(0.8,2.1,2.8,3.9,5.7);
@@ -9,5 +9,5 @@ let stacked=board.add_plot().grid(1,1,1,1).fill("both").plot().title("Stacked ba
 let pie=board.add_plot().grid(2,0,1,1).fill("both").plot().title("Donut · quarterly revenue mix").legend("none").background("#ffffff");let donut=pie.series("revenue","donut","#2878b5").donut(0.52);donut.add(0.0,32.0).add(1.0,24.0).add(2.0,18.0).add(3.0,26.0);
 let time=board.add_plot().grid(2,1,1,1).fill("both").plot().title("Date ticks · band · inset").x_range(1704067200.0,1735689600.0).y_range(0.0,30.0).x_date("%Y-%m").background("#ffffff");let line=time.series("mean","line","#d05a38").width(2.5);let base=1704067200.0;for(i in range(0,12)){let x=base+float(i)*2628000.0;let y=12.0+8.0*sin(float(i)*0.55);line.add(x,y);line.add_band(x,y-2.5,y+2.5);}let zoom=time.inset(0.55,0.10,0.40,0.72).title("detail").x_range(base+5.0*2628000.0,base+8.0*2628000.0).x_date("%Y-%m").y_range(5.0,25.0).xlabel("").ylabel("").background("#ffffff");let detail=zoom.series("detail","line","#7256a8").width(2.0);for(i in range(5,9)){let x=base+float(i)*2628000.0;detail.add(x,12.0+8.0*sin(float(i)*0.55));}
 board.draw();video.save_frame(${png});video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--dsl",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}

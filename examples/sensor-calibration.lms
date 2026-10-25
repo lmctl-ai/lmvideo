@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/sensor-calibration.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/sensor-calibration.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/sensor-calibration.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 let figure = canvas.panel(24.0, 20.0, 912.0, 500.0).manager("border").padding(12.0, 12.0, 12.0, 12.0).gap(8.0).background("#f5f7fa").edge("#cbd5e1", 1.0);
 let header = figure.add_text("Sensor calibration · observed value and uncertainty").border("north").preferred_size(880.0, 36.0).text().size(18.0).bold(true);
@@ -28,7 +28,7 @@ for (frame in range(0, video.count())) {
   if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
   r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);

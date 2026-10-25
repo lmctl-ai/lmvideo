@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/rc-lowpass.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/rc-lowpass.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/rc-lowpass.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 let plot = canvas.plot(24.0, 28.0, 590.0, 484.0).title("RC low-pass · fc ≈ 1.59 kHz").xlabel("frequency (Hz, log)").ylabel("magnitude (dB)").y2label("phase (°)").x_range(10.0, 1000000.0).y_range(-85.0, 3.0).y2_range(-185.0, 5.0).x_scale("log").background("#ffffff");
 let mag1 = plot.series("magnitude · one stage", "line", "#2878b5").width(2.5);
@@ -65,7 +65,7 @@ for (frame in range(0, video.count())) {
   if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
   r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);

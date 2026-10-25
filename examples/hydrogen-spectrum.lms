@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/hydrogen-spectrum.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/hydrogen-spectrum.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/hydrogen-spectrum.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 let plot = canvas.plot(42.0, 22.0, 876.0, 264.0).title("Hydrogen · Balmer emission spectrum").xlabel("wavelength (nm)").ylabel("relative intensity").x_range(380.0, 700.0).y_range(0.0, 1.2).legend("none").background("#ffffff");
 let lines = plot.series("visible Balmer lines", "bar", "#7256a8");
@@ -33,7 +33,7 @@ for (frame in range(0, video.count())) {
   if (video.index() == video.count() - 1) { video.save_frame(${png}); }
 }
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
   r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);

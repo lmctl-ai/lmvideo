@@ -9,7 +9,7 @@ standalone = ARGV.len() == 0;
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/timeline-gantt.dslb";
 png = ARGV.len() > 1 ? ARGV[1] : "images/timeline-gantt.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(1100, 640); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
 canvas.clear("#101820");
 
@@ -81,7 +81,7 @@ canvas.connector(docs, "e", launch, "n", "straight", "none", "arrow", "none", "#
 
 canvas.draw_diagram();
 video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
   r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);

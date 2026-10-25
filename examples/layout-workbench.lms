@@ -4,7 +4,7 @@ dslout = ARGV.len() > 0 ? ARGV[0] : "build/layout-workbench.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/layout-workbench.mp4";
 png = ARGV.len() > 2 ? ARGV[2] : "images/layout-workbench.png";
 mkdir("images");
-program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.25";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.25";
 video.size(960, 540); video.fps(30); video.frames(1); video.crf(20); video.output(${mp4}); video.begin(); video.frame(); canvas.clear("#f5f7fa");
 let thumbnail = surface(120, 80); let thumb_canvas = thumbnail.canvas();
 thumb_canvas.clear("#dbeafe"); thumb_canvas.circle(34.0, 40.0, 20.0, paint().color("#2878b5"));
@@ -38,7 +38,7 @@ let signal = plot.series("signal", "line", "#2878b5").width(2.5).marker("circle"
 signal.add(0.0, 0.0).add(1.0, 0.7).add(2.0, 1.0).add(3.0, 0.7).add(4.0, 0.0).add(5.0, -0.7).add(6.0, -1.0).add(7.0, -0.7).add(8.0, 0.0);
 let footer = figure.add_text("Canvas panel → explicit manager → constrained children").border("south").preferred_size(896.0, 26.0).text().size(12.0).color("#667085");
 figure.draw(); video.save_frame(${png}); video.end();
-end _dsl_
+end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
   r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
