@@ -1,0 +1,89 @@
+# Four small state machines on one canvas (2x2 panels): traffic light,
+# TCP connection, door lock and thermostat. States are rounded boxes from
+# the host diagram API, each panel has a filled initial-state dot with an
+# arrow, and transitions are labeled arrows (straight or curved). The two
+# door-lock arcs stay as explicit cubic path data. Positions stay explicit.
+# Port of lmdraw's state-machines to lmvideo.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/state-machines.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/state-machines.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1100, 800); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("State machines", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("four small protocols, one notation", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+fn panel(x: float, y: float, title: string) -> void {
+  canvas.cluster(x, y, 510.0, 350.0, "", "#131c28", "#2c4156", 12.0, 13.0);
+  canvas.text(title, x + 22.0, y + 36.0, font(16.0).bold(true), paint().color("#dbe7f3"));
+}
+
+fn initial_dot(x: float, y: float, state: Shape) -> void {
+  canvas.circle(x, y, 6.0, paint().color("#f5c16c"));
+  canvas.connector(x + 8.0, y, state, "w", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "", 0.5, 0.0, 0.0);
+}
+
+# --- panel 1: traffic light (top-left)
+panel(40.0, 90.0, "traffic light");
+let red = canvas.box(170.0, 220.0, 110.0, 48.0, "red", "#1e3247", "#4a6a88", 10.0, 14.0);
+let green = canvas.box(420.0, 220.0, 110.0, 48.0, "green", "#1e3247", "#4a6a88", 10.0, 14.0);
+let yellow = canvas.box(295.0, 360.0, 120.0, 48.0, "yellow", "#1e3247", "#4a6a88", 10.0, 14.0);
+initial_dot(80.0, 220.0, red);
+canvas.connector(red, "e", green, "w", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "after 30 s", 0.5, 0.0, -15.0);
+canvas.connector(410.0, 244.0, 345.0, 338.0, "straight", "none", "arrow", "none", "#f5c16c", 2.0, "after 25 s", 0.5, 37.5, 9.0);
+canvas.connector(245.0, 338.0, 180.0, 244.0, "straight", "none", "arrow", "none", "#f5c16c", 2.0, "after 5 s", 0.5, -37.5, 9.0);
+
+# --- panel 2: TCP connection (top-right)
+panel(590.0, 90.0, "TCP connection");
+let closed_st = canvas.box(720.0, 350.0, 130.0, 48.0, "CLOSED", "#1e3247", "#4a6a88", 10.0, 14.0);
+let syn_sent = canvas.box(720.0, 170.0, 130.0, 48.0, "SYN_SENT", "#1e3247", "#4a6a88", 10.0, 14.0);
+let established = canvas.box(945.0, 170.0, 130.0, 48.0, "ESTABLISHED", "#1e3247", "#4a6a88", 10.0, 14.0);
+let fin_wait = canvas.box(945.0, 350.0, 130.0, 48.0, "FIN_WAIT", "#1e3247", "#4a6a88", 10.0, 14.0);
+initial_dot(625.0, 350.0, closed_st);
+canvas.connector(closed_st, "n", syn_sent, "s", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "SYN", 0.5, -22.0, 2.0);
+canvas.connector(syn_sent, "e", established, "w", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "SYN + ACK", 0.5, 0.0, -15.0);
+canvas.connector(established, "s", fin_wait, "n", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "FIN", 0.5, 23.0, 0.0);
+canvas.connector(fin_wait, "w", closed_st, "e", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "ACK", 0.5, 0.0, 22.0);
+
+# --- panel 3: door lock (bottom-left); the two arcs are custom curves
+# (same-height endpoints) drawn as explicit path data. Immediate canvas
+# drawing lands above the diagram layer, so the flush happens first and
+# the arcs paint over the panel exactly like lmdraw's creation order.
+panel(40.0, 440.0, "door lock");
+let locked = canvas.box(165.0, 600.0, 150.0, 52.0, "LOCKED", "#1e3247", "#4a6a88", 10.0, 14.0);
+let unlocked = canvas.box(425.0, 600.0, 160.0, 52.0, "UNLOCKED", "#1e3247", "#4a6a88", 10.0, 14.0);
+initial_dot(58.0, 600.0, locked);
+
+# --- panel 4: thermostat (bottom-right)
+panel(590.0, 440.0, "thermostat");
+let idle = canvas.box(700.0, 600.0, 130.0, 50.0, "IDLE", "#1e3247", "#4a6a88", 10.0, 14.0);
+let heating = canvas.box(945.0, 510.0, 130.0, 50.0, "HEATING", "#1e3247", "#4a6a88", 10.0, 14.0);
+let cooling = canvas.box(945.0, 690.0, 130.0, 50.0, "COOLING", "#1e3247", "#4a6a88", 10.0, 14.0);
+initial_dot(605.0, 600.0, idle);
+canvas.connector(idle, "ne", heating, "sw", "curve", "none", "arrow", "none", "#f5c16c", 2.0, "T < set - 1", 0.5, 20.0, -10.0);
+canvas.connector(heating, "sw", idle, "ne", "curve", "none", "arrow", "none", "#f5c16c", 2.0, "T >= set", 0.5, 24.0, 18.0);
+canvas.connector(idle, "se", cooling, "nw", "curve", "none", "arrow", "none", "#f5c16c", 2.0, "T > set + 1", 0.5, -25.0, 45.0);
+canvas.connector(cooling, "nw", idle, "se", "curve", "none", "arrow", "none", "#f5c16c", 2.0, "T <= set", 0.5, -45.0, -25.0);
+
+canvas.draw_diagram();
+let unlock = path().move_to(240.0, 582.0).cubic_to(290.0, 530.0, 350.0, 530.0, 350.0, 582.0);
+canvas.path(unlock, paint().stroke().stroke_width(2.0).color("#f5c16c"));
+let unlock_head = path().move_to(350.0, 584.0).line_to(345.5, 573.5).line_to(354.5, 573.5).close();
+canvas.path(unlock_head, paint().color("#f5c16c"));
+let lock = path().move_to(350.0, 618.0).cubic_to(350.0, 670.0, 290.0, 670.0, 240.0, 618.0);
+canvas.path(lock, paint().stroke().stroke_width(2.0).color("#f5c16c"));
+let lock_head = path().move_to(239.0, 617.0).line_to(249.4, 621.4).line_to(243.0, 627.6).close();
+canvas.path(lock_head, paint().color("#f5c16c"));
+let mid_font = font(12.0);
+canvas.text("unlock (code ok)", 295.0 - mid_font.measure("unlock (code ok)") / 2.0, 545.0, mid_font, paint().color("#9db4c8"));
+canvas.text("lock / 30 s timeout", 295.0 - mid_font.measure("lock / 30 s timeout") / 2.0, 690.0, mid_font, paint().color("#9db4c8"));
+
+video.end();
+end _dsl_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");

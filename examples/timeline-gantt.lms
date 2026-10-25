@@ -1,0 +1,89 @@
+# Release-plan Gantt: week axis across the top, seven task rows with
+# rounded bars, dependency arrows between bar ends, a dashed summary
+# bracket over the two "build" rows, a milestone diamond for launch and
+# a dashed today line. x(w) = 200 + w * 107.5 for week w in 0..8. Bars
+# are host shapes so dependencies can address their anchors; week
+# mapping and the summary bracket stay in-script. Port of lmdraw's
+# timeline-gantt to lmvideo.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/timeline-gantt.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/timeline-gantt.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1100, 640); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("Release plan", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("eight-week Gantt with dependencies and a today line", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+fn xw(w: float) -> float {
+  return 200.0 + w * 107.5;
+}
+
+fn row_y(i: float) -> float {
+  return 150.0 + i * 62.0;
+}
+
+fn bar(i: float, w1: float, w2: float, color: string) -> Shape {
+  return canvas.box((xw(w1) + xw(w2)) / 2.0, row_y(i), xw(w2) - xw(w1), 28.0, "", color, "none", 6.0, 13.0);
+}
+
+fn row_label(i: float, label: string) -> void {
+  let rf = font(14.0);
+  canvas.text(label, 186.0 - rf.measure(label), row_y(i) + 5.0, rf, paint().color("#dbe7f3"));
+}
+
+# week grid + labels
+for (w in range(0, 9)) {
+  canvas.line(xw(float(w)), 118.0, xw(float(w)), 606.0, paint().stroke().stroke_width(1.0).color("#2c4156").dash(3.0, 6.0));
+}
+for (w in range(1, 9)) {
+  let wf = font(13.0);
+  let label = "W" + str(w);
+  canvas.text(label, xw(float(w)) - 53.75 - wf.measure(label) / 2.0, 108.0, wf, paint().color("#9db4c8"));
+}
+
+# today line (middle of week 4)
+canvas.line(576.0, 118.0, 576.0, 606.0, paint().stroke().stroke_width(1.8).color("#d9897a").dash(8.0, 5.0));
+canvas.text("today", 584.0, 140.0, font(12.0), paint().color("#d9897a"));
+
+# task bars
+let req = bar(0.0, 0.0, 2.0, "#6fbdb4");
+let proto = bar(1.0, 1.0, 3.0, "#6fbdb4");
+let api = bar(2.0, 2.0, 5.0, "#f5c16c");
+let ui = bar(3.0, 3.0, 6.0, "#f5c16c");
+let testing = bar(4.0, 5.0, 7.0, "#8fb4d9");
+let docs = bar(5.0, 6.0, 8.0, "#b49cf0");
+row_label(0.0, "Requirements");
+row_label(1.0, "Prototype");
+row_label(2.0, "Build API");
+row_label(3.0, "Build UI");
+row_label(4.0, "Testing");
+row_label(5.0, "Docs");
+row_label(6.0, "Launch");
+
+# summary bracket over the two build rows (dashed)
+let bracket = path().move_to(xw(2.0), 260.0).line_to(xw(2.0), 248.0).line_to(xw(6.0), 248.0).line_to(xw(6.0), 260.0);
+canvas.path(bracket, paint().stroke().stroke_width(1.5).color("#9db4c8").dash(5.0, 4.0));
+let sf = font(12.0);
+canvas.text("v1.0 scope", (xw(2.0) + xw(6.0)) / 2.0 - sf.measure("v1.0 scope") / 2.0, 242.0, sf, paint().color("#9db4c8"));
+
+# dependencies (from a bar end to the next bar's start)
+canvas.connector(req, "e", proto, "n", "elbow", "none", "arrow", "none", "#9db4c8", 1.8, "", 0.5, 0.0, 0.0);
+canvas.connector(req, "e", api, "n", "elbow", "none", "arrow", "none", "#9db4c8", 1.8, "", 0.5, 0.0, 0.0);
+canvas.connector(api, "e", ui, "n", "straight", "none", "arrow", "none", "#9db4c8", 1.8, "", 0.5, 0.0, 0.0);
+canvas.connector(ui, "s", testing, "n", "straight", "none", "arrow", "none", "#9db4c8", 1.8, "", 0.5, 0.0, 0.0);
+
+# launch milestone
+let launch = canvas.diamond(xw(8.0), 522.0, 24.0, 32.0, "", "#f5c16c", "#f5c16c", 13.0);
+canvas.connector(testing, "e", launch, "nw", "elbow", "none", "arrow", "none", "#9db4c8", 1.8, "", 0.5, 0.0, 0.0);
+canvas.connector(docs, "e", launch, "n", "straight", "none", "arrow", "none", "#9db4c8", 1.8, "", 0.5, 0.0, 0.0);
+
+canvas.draw_diagram();
+video.end();
+end _dsl_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");

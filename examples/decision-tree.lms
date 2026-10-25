@@ -1,0 +1,69 @@
+# Loan-approval decision tree: one root split, four internal decision
+# diamonds, six outcome leaves with a different fill for approvals,
+# rejections and neutral offers; every edge carries its branch label.
+# Diamonds, leaves, and labeled edges come from the host diagram API;
+# branch endpoints stay explicit. Port of lmdraw's decision-tree to lmvideo.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/decision-tree.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/decision-tree.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1100, 640); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("Loan approval decision tree", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("toy data: five splits, six outcomes", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+fn leaf(x: float, y: float, label: string, kind: string) -> void {
+  let fill = "#1e3247";
+  let stroke = "#4a6a88";
+  if (kind == "approve") { fill = "#233d2e"; stroke = "#8fd694"; }
+  if (kind == "reject") { fill = "#3d2330"; stroke = "#d9897a"; }
+  canvas.box(x, y, 130.0, 50.0, label, fill, stroke, 10.0, 13.0);
+}
+
+# level 0
+canvas.diamond(550.0, 100.0, 170.0, 76.0, "age <= 30?", "#1e3247", "#4a6a88", 13.0);
+# level 1
+canvas.diamond(320.0, 240.0, 180.0, 76.0, "income <= 50k?", "#1e3247", "#4a6a88", 13.0);
+canvas.diamond(790.0, 240.0, 170.0, 76.0, "owns home?", "#1e3247", "#4a6a88", 13.0);
+# level 2
+canvas.diamond(360.0, 370.0, 150.0, 70.0, "student?", "#1e3247", "#4a6a88", 13.0);
+canvas.diamond(900.0, 370.0, 170.0, 70.0, "client > 5 yrs?", "#1e3247", "#4a6a88", 13.0);
+
+# root branches
+canvas.connector(465.0, 100.0, 320.0, 200.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, -17.5, -8.0);
+canvas.connector(635.0, 100.0, 790.0, 200.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.5, 17.5, -8.0);
+
+# income <= 50k branches
+canvas.connector(230.0, 240.0, 120.0, 332.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, -20.0, -8.0);
+canvas.connector(410.0, 240.0, 360.0, 333.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.5, 13.0, -4.5);
+
+# owns home branches
+canvas.connector(705.0, 240.0, 650.0, 332.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, -19.5, -8.0);
+canvas.connector(875.0, 240.0, 900.0, 333.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.5, 20.5, -4.5);
+
+# student branches
+canvas.connector(330.0, 402.0, 270.0, 482.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, -17.0, -4.0);
+canvas.connector(390.0, 402.0, 430.0, 482.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.5, 18.0, -4.0);
+
+# client > 5 yrs branches
+canvas.connector(870.0, 402.0, 820.0, 482.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, -13.0, -4.0);
+canvas.connector(930.0, 402.0, 990.0, 482.0, "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.5, 12.0, -4.0);
+
+# leaves
+leaf(120.0, 510.0, "Decline", "reject");
+leaf(270.0, 510.0, "Student card", "approve");
+leaf(430.0, 510.0, "Standard", "neutral");
+leaf(650.0, 510.0, "Prime rate", "approve");
+leaf(820.0, 510.0, "Gold card", "approve");
+leaf(990.0, 510.0, "Standard", "neutral");
+
+canvas.draw_diagram();
+video.end();
+end _dsl_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");

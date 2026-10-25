@@ -1,0 +1,56 @@
+# Order approval flowchart: start stadium, validation, two decision
+# diamonds in series (in stock? payment ok?), approve/reject branches,
+# elbow connectors with named markers and yes/no labels. Shapes and
+# connectors come from the host diagram API; positions stay explicit.
+# Port of lmdraw's flowchart-order-approval to lmvideo's Canvas vocabulary.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/flowchart-order-approval.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/flowchart-order-approval.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 600); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("Order approval", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("two decision gates: inventory, then payment", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+# main spine
+let start = canvas.box(480.0, 120.0, 170.0, 44.0, "order received", "#1e3247", "#f5c16c", 22.0, 15.0);
+let validate = canvas.box(480.0, 196.0, 210.0, 56.0, "validate order details", "#1e3247", "#4a6a88", 8.0, 15.0);
+let stock = canvas.diamond(480.0, 290.0, 200.0, 94.0, "in stock?", "#1e3247", "#4a6a88", 14.0);
+
+# yes: approve, then payment gate
+let approve = canvas.box(730.0, 235.0, 170.0, 56.0, "approve order", "#1e3247", "#4a6a88", 8.0, 15.0);
+let payment = canvas.diamond(730.0, 378.0, 200.0, 94.0, "payment ok?", "#1e3247", "#4a6a88", 14.0);
+
+# no: backorder, park on hold
+let backorder = canvas.box(220.0, 235.0, 170.0, 56.0, "backorder items", "#1e3247", "#4a6a88", 8.0, 15.0);
+let hold = canvas.box(220.0, 332.0, 150.0, 42.0, "on hold", "#1e3247", "#f5c16c", 21.0, 15.0);
+
+# payment ok: fulfill and ship
+let fulfill = canvas.box(480.0, 441.0, 170.0, 56.0, "fulfill order", "#1e3247", "#4a6a88", 8.0, 15.0);
+let shipped = canvas.box(480.0, 522.0, 140.0, 42.0, "shipped", "#1e3247", "#f5c16c", 21.0, 15.0);
+
+# payment fails: reject and close
+let reject = canvas.box(885.0, 441.0, 130.0, 56.0, "reject order", "#1e3247", "#4a6a88", 8.0, 15.0);
+let closed = canvas.box(885.0, 522.0, 150.0, 42.0, "order closed", "#1e3247", "#f5c16c", 21.0, 15.0);
+
+canvas.connector(start, "s", validate, "n", "straight", "none", "arrow", "none", "#f5c16c", 2.5, "", 0.5, 0.0, 0.0);
+canvas.connector(validate, "s", stock, "n", "straight", "none", "arrow", "none", "#f5c16c", 2.5, "", 0.5, 0.0, 0.0);
+canvas.connector(stock, "e", approve, "w", "elbow", "none", "arrow", "none", "#6fbdb4", 2.5, "yes", 0.5, 0.0, -12.0);
+canvas.connector(approve, "s", payment, "n", "straight", "none", "arrow", "none", "#f5c16c", 2.5, "", 0.5, 0.0, 0.0);
+canvas.connector(stock, "w", backorder, "e", "elbow", "none", "arrow", "none", "#d9897a", 2.5, "no", 0.25, 0.0, -12.0);
+canvas.connector(backorder, "s", hold, "n", "straight", "none", "arrow", "none", "#d9897a", 2.5, "", 0.5, 0.0, 0.0);
+canvas.connector(payment, "w", fulfill, "n", "elbow", "none", "arrow", "none", "#6fbdb4", 2.5, "yes", 0.5, 0.0, -12.0);
+canvas.connector(fulfill, "s", shipped, "n", "straight", "none", "arrow", "none", "#6fbdb4", 2.5, "", 0.5, 0.0, 0.0);
+canvas.connector(payment, "e", reject, "n", "elbow", "none", "arrow", "none", "#d9897a", 2.5, "no", 0.75, 0.0, -12.0);
+canvas.connector(reject, "s", closed, "n", "straight", "none", "arrow", "none", "#d9897a", 2.5, "", 0.5, 0.0, 0.0);
+
+canvas.draw_diagram();
+video.end();
+end _dsl_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");

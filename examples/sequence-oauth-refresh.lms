@@ -1,0 +1,51 @@
+# OAuth refresh-token sequence diagram: three participants, dashed
+# lifelines, solid request arrows and dashed response arrows with
+# numbered labels, a self-message loop on the gateway, and activation
+# bars on the gateway and auth-server lifelines. Sequence notation comes
+# from the host diagram API; positions stay explicit. Port of lmdraw's
+# sequence-oauth-refresh to lmvideo.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/sequence-oauth-refresh.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/sequence-oauth-refresh.png";
+mkdir("images");
+program = _dsl_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1000, 620); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("OAuth refresh token flow", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("an expired access token, refreshed mid-request", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+canvas.box(180.0, 106.0, 160.0, 44.0, "client", "#1e3247", "#4a6a88", 8.0, 15.0);
+canvas.box(500.0, 106.0, 160.0, 44.0, "API gateway", "#1e3247", "#4a6a88", 8.0, 15.0);
+canvas.box(820.0, 106.0, 160.0, 44.0, "auth server", "#1e3247", "#4a6a88", 8.0, 15.0);
+
+canvas.lifeline(180.0, 128.0, 580.0, "#4a6a88");
+canvas.lifeline(500.0, 128.0, 580.0, "#4a6a88");
+canvas.lifeline(820.0, 128.0, 580.0, "#4a6a88");
+
+# activation bars (drawn before messages so arrows stay on top)
+canvas.activation(500.0, 140.0, 500.0, "#3d5a76", "#8fb4d9");
+canvas.activation(820.0, 195.0, 440.0, "#3d5a76", "#8fb4d9");
+
+canvas.message(188.0, 160.0, 492.0, 160.0, "1  GET /orders (access token)", false, "#f5c16c");
+canvas.message(508.0, 215.0, 812.0, 215.0, "2  introspect token", false, "#f5c16c");
+canvas.message(812.0, 270.0, 508.0, 270.0, "3  401 token expired", true, "#f5c16c");
+canvas.self_message(504.0, 315.0, "4  rotate refresh token", "#f5c16c");
+canvas.message(508.0, 375.0, 812.0, 375.0, "5  POST /oauth/refresh", false, "#f5c16c");
+canvas.message(812.0, 430.0, 508.0, 430.0, "6  200 OK + new tokens", true, "#f5c16c");
+canvas.message(492.0, 485.0, 188.0, 485.0, "7  200 OK (retry)", true, "#f5c16c");
+
+# legend
+canvas.connector(700.0, 48.0, 742.0, 48.0, "straight", "none", "arrow", "none", "#f5c16c", 2.0, "", 0.5, 0.0, 0.0);
+canvas.text("request", 750.0, 52.0, font(12.0), paint().color("#9db4c8"));
+canvas.connector(700.0, 70.0, 742.0, 70.0, "straight", "none", "arrow", "6 5", "#f5c16c", 2.0, "", 0.5, 0.0, 0.0);
+canvas.text("response", 750.0, 74.0, font(12.0), paint().color("#9db4c8"));
+
+canvas.draw_diagram();
+video.end();
+end _dsl_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");
