@@ -1,5 +1,7 @@
 #include "layout.hpp"
 
+#include "diagram.hpp"
+
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -38,7 +40,14 @@ std::pair<double,double> intrinsic(LayoutItem& item) {
       lmv::Font f(static_cast<float>(t.size)); if(t.bold) f.embolden(true);
       return {f.measure(t.value)+8,t.size*1.6};
     }
-    case ChildKind::Shape: return {64,32};
+    case ChildKind::Shape: {
+      auto& s=*static_cast<Shape*>(item.child);
+      if((s.kind=="box"||s.kind=="cluster")&&!s.label.empty()) {
+        lmv::Font f(static_cast<float>(s.label_size));
+        return {std::max(64.0,f.measure(s.label)+32.0),std::max(32.0,s.label_size*2.0)};
+      }
+      return {64,32};
+    }
     case ChildKind::Image: {
       auto* image=static_cast<ImageView*>(item.child)->source;
       if(!image) throw lmv::Error("Layout: image item has no Image");
@@ -106,6 +115,12 @@ void draw_text(lmv::Canvas& c, Text& t, Rect r) {
   c.draw_text(t.value,static_cast<float>(x),static_cast<float>(y),font,fill(t.color));
 }
 void draw_shape(lmv::Canvas& c, Shape& s, Rect r) {
+  // Every kind records its current rect so diagram anchors and cx()/cy() read
+  // valid geometry after the layout pass, whatever assigned it.
+  s.x=r.x; s.y=r.y; s.w=r.w; s.h=r.h;
+  const bool diagram_kind=s.kind=="box"||s.kind=="diamond"||s.kind=="cylinder"||
+                          s.kind=="note"||s.kind=="cluster"||s.kind=="cell";
+  if(diagram_kind) { lmvdiagram::render_shape(c,s,r.x,r.y,r.w,r.h); return; }
   const bool has_fill=s.fill!=""&&s.fill!="transparent";
   const bool has_stroke=s.stroke!=""&&s.stroke!="transparent"&&s.stroke_width>0;
   if(s.kind=="line") {

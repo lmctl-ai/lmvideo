@@ -29,6 +29,15 @@ struct Shape {
   std::string stroke = "";
   double stroke_width = 1;
   double radius = 0;
+  // Diagram vocabulary (labeled shapes, grid cells): a shape carries its
+  // current rect so connectors can resolve named anchors and cx()/cy() at
+  // draw time. Canvas-created shapes set explicit geometry at construction;
+  // shapes used as layout children receive theirs from the layout pass.
+  std::string label;
+  double label_size = 13;
+  double x = 0, y = 0, w = 0, h = 0;
+  double opacity = 1;
+  bool visible = true;
 };
 
 struct ImageView {

@@ -19,8 +19,8 @@ struct Sig {
 };
 
 struct Schema {
-  std::map<std::string, std::map<std::string, Sig>> types;  // type -> method -> signature
-  std::map<std::string, Sig> functions;
+  std::map<std::string, std::map<std::string, std::vector<Sig>>> types;  // type -> method -> overloads
+  std::map<std::string, std::vector<Sig>> functions;
   std::map<std::string, std::string> context;               // variable -> type
 };
 
@@ -117,21 +117,20 @@ inline Schema parse(const std::string& text) {
       const detail::Json* methods = t.second.find("methods");
       auto& dst = out.types[t.first];
       if (methods) for (const auto& m : methods->members) {
-        // Schema 2 keeps one or more signatures in an array under each name. The
-        // lmvideo host currently has no overloaded registrations, so retain the
-        // sole declaration while accepting the common representation.
-        if (m.second.kind != detail::Json::ARR || m.second.items.size() != 1)
-          throw dslvm::Error("schema: host registration requires exactly one signature array for method " + t.first + "." + m.first);
-        const detail::Json* entry = &m.second.items.front();
-        dst[m.first] = detail::sig(*entry, t.first);
+        // Schema 2 keeps one or more signatures in an array under each name;
+        // distinct parameter tuples overload a name.
+        if (m.second.kind != detail::Json::ARR || m.second.items.empty())
+          throw dslvm::Error("schema: method " + t.first + "." + m.first + " needs a non-empty signature array");
+        auto& overloads = dst[m.first];
+        for (const detail::Json& entry : m.second.items) overloads.push_back(detail::sig(entry, t.first));
       }
     }
   if (const detail::Json* fns = root.find("functions"))
     for (const auto& f : fns->members) {
-      if (f.second.kind != detail::Json::ARR || f.second.items.size() != 1)
-        throw dslvm::Error("schema: host registration requires exactly one signature array for function " + f.first);
-      const detail::Json* entry = &f.second.items.front();
-      out.functions[f.first] = detail::sig(*entry);
+      if (f.second.kind != detail::Json::ARR || f.second.items.empty())
+        throw dslvm::Error("schema: function " + f.first + " needs a non-empty signature array");
+      auto& overloads = out.functions[f.first];
+      for (const detail::Json& entry : f.second.items) overloads.push_back(detail::sig(entry));
     }
   if (const detail::Json* ctx = root.find("context"))
     for (const auto& c : ctx->members) out.context[c.first] = c.second.s;

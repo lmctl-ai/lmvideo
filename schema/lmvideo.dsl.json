@@ -52,6 +52,27 @@
       "methods": {
         "panel": [{"params":["float","float","float","float"],"returns":"Panel"}],
         "plot": [{"params":["float","float","float","float"],"returns":"Plot"}],
+        "box": [
+          {"params":["float","float","float","float","string","string","string","float","float"],"returns":"Shape"},
+          {"params":["Shape","string","float","float","string","string","string","float","float"],"returns":"Shape"}
+        ],
+        "diamond": [{"params":["float","float","float","float","string","string","string","float"],"returns":"Shape"}],
+        "cylinder": [{"params":["float","float","float","float","string","string","string","float"],"returns":"Shape"}],
+        "note": [{"params":["float","float","float","float","string","string","string","float"],"returns":"Shape"}],
+        "cluster": [{"params":["float","float","float","float","string","string","string","float","float"],"returns":"Shape"}],
+        "connector": [
+          {"params":["float","float","float","float","string","string","string","string","string","float","string","float","float","float"],"returns":"Group"},
+          {"params":["Shape","string","Shape","string","string","string","string","string","string","float","string","float","float","float"],"returns":"Group"},
+          {"params":["float","float","Shape","string","string","string","string","string","string","float","string","float","float","float"],"returns":"Group"},
+          {"params":["Shape","string","float","float","string","string","string","string","string","float","string","float","float","float"],"returns":"Group"}
+        ],
+        "grid": [{"params":["float","float","float","float","int","int","float","float"],"returns":"Grid"}],
+        "lifeline": [{"params":["float","float","float","string"],"returns":"Group"}],
+        "message": [{"params":["float","float","float","float","string","bool","string"],"returns":"Group"}],
+        "activation": [{"params":["float","float","float","string","string"],"returns":"Group"}],
+        "self_message": [{"params":["float","float","string","string"],"returns":"Group"}],
+        "group": [{"params":[],"returns":"Group"}],
+        "draw_diagram": [{"params":[],"returns":"void"}],
         "clear": [{"params":["string"],"returns":"void"}],
         "rect": [{"params":["float","float","float","float","Paint"],"returns":"void"}],
         "round_rect": [{"params":["float","float","float","float","float","float","Paint"],"returns":"void"}],
@@ -194,7 +215,22 @@
         "fill": [{"params":["string"],"returns":"Shape"}],
         "stroke": [{"params":["string"],"returns":"Shape"}],
         "stroke_width": [{"params":["float"],"returns":"Shape"}],
-        "radius": [{"params":["float"],"returns":"Shape"}]
+        "radius": [{"params":["float"],"returns":"Shape"}],
+        "label": [{"params":["string"],"returns":"Shape"}],
+        "set_attr": [{"params":["string","string"],"returns":"Shape"}],
+        "cx": [{"params":[],"returns":"float"}],
+        "cy": [{"params":[],"returns":"float"}]
+      }
+    },
+    "Group": {
+      "methods": {
+        "add": [{"params":["Group"],"returns":"Group"}],
+        "set_attr": [{"params":["string","string"],"returns":"Group"}]
+      }
+    },
+    "Grid": {
+      "methods": {
+        "cell": [{"params":["int","int"],"returns":"Shape"}]
       }
     },
     "ImageView": {

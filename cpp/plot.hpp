@@ -4,8 +4,11 @@
 
 #include <optional>
 #include <array>
+#include <memory>
 #include <string>
 #include <vector>
+
+namespace lmvdiagram { class Layer; }
 
 namespace lmvplot {
 
@@ -16,6 +19,7 @@ struct VectorField;
 // The host rebinds this stable slot to each video frame's Skia canvas.
 struct CanvasSlot {
   std::optional<lmv::Canvas> canvas;
+  std::shared_ptr<lmvdiagram::Layer> diagram;  // retained diagram layer, created lazily by the diagram API
   lmv::Canvas& get();
 };
 

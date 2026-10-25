@@ -5,6 +5,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 namespace lmv {
 
@@ -57,6 +58,7 @@ public:
     Paint& stroke_join(const std::string& join); // "miter", "round", "bevel"
     Paint& linear_gradient(float x0, float y0, float x1, float y1, Color c0, Color c1);
     Paint& dash(float on, float off);
+    Paint& dash_list(const std::vector<float>& intervals, float phase); // arbitrary dash pattern with a phase offset
     Paint& blur(float sigma);
     Paint& alpha(float a);                       // 0.0f .. 1.0f
 

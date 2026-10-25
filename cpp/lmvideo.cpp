@@ -349,6 +349,25 @@ Paint& Paint::dash(float on, float off) {
     return *this;
 }
 
+Paint& Paint::dash_list(const std::vector<float>& intervals, float phase) {
+    check_finite(phase, "Paint.dash_list", "phase");
+    bool any_positive = false;
+    for (float interval : intervals) {
+        check_finite(interval, "Paint.dash_list", "interval");
+        if (interval < 0.0f) {
+            throw Error("Paint.dash_list: dash intervals must be non-negative");
+        }
+        if (interval > 0.0f) any_positive = true;
+    }
+    if (intervals.size() >= 2 && intervals.size() <= 32 && any_positive) {
+        pimpl_->sk_paint.setPathEffect(SkDashPathEffect::Make(
+            SkSpan<const SkScalar>(intervals.data(), static_cast<int>(intervals.size())), phase));
+    } else {
+        pimpl_->sk_paint.setPathEffect(nullptr);
+    }
+    return *this;
+}
+
 Paint& Paint::blur(float sigma) {
     check_finite(sigma, "Paint.blur", "sigma");
     if (sigma < 0.0f) {
