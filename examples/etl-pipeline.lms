@@ -1,0 +1,62 @@
+# ETL pipeline: two source datastores drawn as cylinders, an Extract box,
+# a labeled cluster box grouping three transform nodes, a Load box and a
+# warehouse cylinder. Extract->transform->load edges are dashed, the
+# warehouse sync edge is bidirectional (marker-start + marker-end), every
+# edge carries a label. Shapes and connectors come from the host diagram
+# API; positions stay explicit. Port of lmdraw's etl-pipeline to lmvideo.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/etl-pipeline.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/etl-pipeline.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1000, 540); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("ETL pipeline", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("extract -> transform -> load, with a verify back-channel", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+# sources
+let crm = canvas.cylinder(105.0, 190.0, 130.0, 96.0, "CRM db", "#1e3247", "#6fbdb4", 14.0);
+let orders = canvas.cylinder(105.0, 380.0, 130.0, 96.0, "orders db", "#1e3247", "#6fbdb4", 14.0);
+
+# extract
+let extract = canvas.box(275.0, 285.0, 80.0, 64.0, "extract", "#1e3247", "#f5c16c", 8.0, 14.0);
+
+# source -> extract (solid fan-in)
+canvas.connector(crm, "e", extract, "w", "elbow", "none", "arrow", "none", "#f5c16c", 2.5, "pull", 0.35, 30.0, -14.0);
+canvas.connector(orders, "e", extract, "w", "elbow", "none", "arrow", "none", "#f5c16c", 2.5, "", 0.5, 0.0, 0.0);
+
+# transform cluster box
+canvas.cluster(385.0, 150.0, 290.0, 270.0, "transform cluster", "#131c28", "#6fbdb4", 12.0, 15.0);
+
+# transform nodes inside the cluster
+let clean = canvas.box(460.0, 245.0, 110.0, 56.0, "clean", "#1e3247", "#4a6a88", 8.0, 14.0);
+let join = canvas.box(610.0, 245.0, 110.0, 56.0, "join", "#1e3247", "#4a6a88", 8.0, 14.0);
+let aggregate = canvas.box(535.0, 355.0, 120.0, 56.0, "aggregate", "#1e3247", "#4a6a88", 8.0, 14.0);
+
+# inside-cluster edges (solid)
+canvas.connector(clean, "e", join, "w", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+canvas.connector(clean, "s", aggregate, "w", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+canvas.connector(join, "s", aggregate, "e", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+
+# extract -> transform (dashed, labeled)
+canvas.connector(extract, "e", clean, "w", "elbow", "none", "arrow", "7 5", "#8fb4d9", 2.5, "raw rows", 0.5, 0.0, -12.0);
+
+# load
+let load = canvas.box(785.0, 285.0, 80.0, 64.0, "load", "#1e3247", "#f5c16c", 8.0, 14.0);
+
+# transform -> load (dashed, labeled)
+canvas.connector(join, "e", load, "w", "elbow", "none", "arrow", "7 5", "#8fb4d9", 2.5, "clean rows", 0.5, 0.0, -12.0);
+
+# warehouse with a bidirectional verify/sync edge
+let warehouse = canvas.cylinder(925.0, 285.0, 110.0, 96.0, "warehouse", "#1e3247", "#6fbdb4", 14.0);
+canvas.connector(load, "e", warehouse, "w", "straight", "arrow", "arrow", "none", "#f5c16c", 2.5, "load / verify", 0.5, -10.0, -42.0);
+
+canvas.draw_diagram();
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");

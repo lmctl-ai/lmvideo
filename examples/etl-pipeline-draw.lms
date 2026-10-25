@@ -1,0 +1,89 @@
+# ETL pipeline drawn edge by edge: every connector reveals itself with a
+# stroke-dashoffset sweep (no marker until the line arrives, then the arrow
+# and label land). Demonstrates updating retained connector attributes per
+# video frame; the diagram layer redraws in creation order after each clear.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/etl-pipeline-draw.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/etl-pipeline-draw.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/etl-pipeline-draw.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1000, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+
+let crm = canvas.cylinder(105.0, 190.0, 130.0, 96.0, "CRM db", "#1e3247", "#6fbdb4", 14.0);
+let orders = canvas.cylinder(105.0, 380.0, 130.0, 96.0, "orders db", "#1e3247", "#6fbdb4", 14.0);
+let extract = canvas.box(275.0, 285.0, 80.0, 64.0, "extract", "#1e3247", "#f5c16c", 8.0, 14.0);
+canvas.cluster(385.0, 150.0, 290.0, 270.0, "transform cluster", "#131c28", "#6fbdb4", 12.0, 15.0);
+let clean = canvas.box(460.0, 245.0, 110.0, 56.0, "clean", "#1e3247", "#4a6a88", 8.0, 14.0);
+let join = canvas.box(610.0, 245.0, 110.0, 56.0, "join", "#1e3247", "#4a6a88", 8.0, 14.0);
+let aggregate = canvas.box(535.0, 355.0, 120.0, 56.0, "aggregate", "#1e3247", "#4a6a88", 8.0, 14.0);
+let load = canvas.box(785.0, 285.0, 80.0, 64.0, "load", "#1e3247", "#f5c16c", 8.0, 14.0);
+let warehouse = canvas.cylinder(925.0, 285.0, 110.0, 96.0, "warehouse", "#1e3247", "#6fbdb4", 14.0);
+
+# one retained group per edge; a long on/off dash pair and a per-frame
+# dashoffset sweep produce the draw-on without rebuilding geometry
+let e1 = canvas.connector(crm, "e", extract, "w", "elbow", "none", "arrow", "none", "#f5c16c", 2.5, "pull", 0.35, 30.0, -14.0);
+let e2 = canvas.connector(orders, "e", extract, "w", "elbow", "none", "arrow", "none", "#f5c16c", 2.5, "", 0.5, 0.0, 0.0);
+let e3 = canvas.connector(extract, "e", clean, "w", "elbow", "none", "arrow", "7 5", "#8fb4d9", 2.5, "raw rows", 0.5, 0.0, -12.0);
+let e4 = canvas.connector(clean, "e", join, "w", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+let e5 = canvas.connector(clean, "s", aggregate, "w", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+let e6 = canvas.connector(join, "s", aggregate, "e", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+let e7 = canvas.connector(join, "e", load, "w", "elbow", "none", "arrow", "7 5", "#8fb4d9", 2.5, "clean rows", 0.5, 0.0, -12.0);
+let e8 = canvas.connector(load, "e", warehouse, "w", "straight", "arrow", "arrow", "none", "#f5c16c", 2.5, "load / verify", 0.5, -10.0, -42.0);
+
+fn arm(edge: Group) -> void {
+  edge.set_attr("visibility", "hidden");
+  edge.set_attr("stroke-dasharray", "900 900");
+  edge.set_attr("stroke-dashoffset", "900");
+  edge.set_attr("marker-start", "none");
+  edge.set_attr("marker-end", "none");
+}
+fn reveal(edge: Group, label: string, local: float) -> void {
+  if (local <= 0.0) {
+    edge.set_attr("visibility", "hidden");
+  } else {
+    edge.set_attr("visibility", "visible");
+    edge.set_attr("stroke-dashoffset", str(900.0 * (1.0 - local)));
+    let done = "none";
+    let text = "";
+    if (local >= 1.0) { done = "arrow"; text = label; }
+    edge.set_attr("marker-end", done);
+    edge.set_attr("label", text);
+  }
+}
+fn clamp01(v: float) -> float {
+  let r = v;
+  if (r < 0.0) { r = 0.0; }
+  if (r > 1.0) { r = 1.0; }
+  return r;
+}
+
+arm(e1); arm(e2); arm(e3); arm(e4); arm(e5); arm(e6); arm(e7); arm(e8);
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#101820");
+  let sweep = video.t() * 5.0;
+  reveal(e1, "pull", clamp01(sweep - 0.0));
+  reveal(e2, "", clamp01(sweep - 1.0));
+  reveal(e3, "raw rows", clamp01(sweep - 2.0));
+  reveal(e4, "", clamp01(sweep - 3.0));
+  reveal(e5, "", clamp01(sweep - 3.2));
+  reveal(e6, "", clamp01(sweep - 3.4));
+  reveal(e7, "clean rows", clamp01(sweep - 4.0));
+  reveal(e8, "load / verify", clamp01(sweep - 4.5));
+  if (clamp01(sweep - 4.5) >= 1.0) { e8.set_attr("marker-start", "arrow"); }
+  canvas.draw_diagram();
+  canvas.text("ETL pipeline", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+  canvas.text("each connector draws itself, dashoffset by dashoffset", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/etl-pipeline-draw.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/etl-pipeline-draw.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

@@ -1,0 +1,46 @@
+# A Border + Box + Flow + Place composition with text, shapes, an image, and a Plot.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/layout-workbench.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/layout-workbench.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/layout-workbench.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.25";
+video.size(960, 540); video.fps(30); video.frames(1); video.crf(20); video.output(${mp4}); video.begin(); video.frame(); canvas.clear("#f5f7fa");
+let thumbnail = surface(120, 80); let thumb_canvas = thumbnail.canvas();
+thumb_canvas.clear("#dbeafe"); thumb_canvas.circle(34.0, 40.0, 20.0, paint().color("#2878b5"));
+thumb_canvas.line(58.0, 60.0, 106.0, 20.0, paint().stroke().stroke_width(5.0).color("#df5b36"));
+let thumbnail_image = thumbnail.image();
+let figure = canvas.panel(20.0, 18.0, 920.0, 504.0).manager("border").min_size(720.0, 420.0).max_size(1200.0, 650.0).padding(12.0, 12.0, 12.0, 12.0).gap(10.0).background("#ffffff").edge("#cbd5e1", 1.0);
+let header_item = figure.add_panel().border("north").preferred_size(896.0, 54.0);
+let header = header_item.panel().manager("place").min_size(280.0, 48.0).max_size(896.0, 64.0).background("#16233a");
+let title_item = header.add_text("Explicit layout managers").place(16.0, 10.0, 500.0, 34.0);
+title_item.text().size(20.0).bold(true).color("#ffffff");
+let badge_item = header.add_shape("round_rect").place(780.0, 10.0, 96.0, 34.0);
+badge_item.shape().fill("#2878b5").radius(8.0);
+let badge_text = header.add_text("Skia · DSL").place(790.0, 14.0, 80.0, 26.0);
+badge_text.text().size(12.0).bold(true).color("#ffffff").align("center");
+let body_item = figure.add_panel().border("center");
+let body = body_item.panel().manager("box_h").gap(12.0);
+let info_item = body.add_panel().preferred_size(260.0, 360.0).min_size(240.0, 320.0).max_size(300.0, 420.0).fill("both");
+let info = info_item.panel().manager("flow_v").padding(14.0, 12.0, 12.0, 12.0).gap(10.0).background("#f6f8fa").edge("#d0d7de", 1.0);
+let info_title = info.add_text("Composition, not coordinates").preferred_size(230.0, 40.0).text().size(15.0).bold(true);
+let image_item = info.add_image(thumbnail_image).preferred_size(230.0, 150.0).fill("none");
+image_item.image().fit("contain");
+let info_copy1 = info.add_text("Border assigns regions.").preferred_size(230.0, 22.0).text().size(13.0);
+let info_copy2 = info.add_text("Box shares the row.").preferred_size(230.0, 22.0).text().size(13.0);
+let info_copy3 = info.add_text("Flow stacks the card.").preferred_size(230.0, 22.0).text().size(13.0);
+let info_copy4 = info.add_text("Place pins the badge.").preferred_size(230.0, 22.0).text().size(13.0);
+let accent_item = info.add_shape("round_rect").preferred_size(230.0, 12.0).shape().fill("#b6e3ff").radius(6.0);
+let spacer = body.add_glue().weight(1.0);
+let chart_item = body.add_plot().weight(2.0).fill("both");
+let plot = chart_item.plot().title("Layout still lets a plot redraw").xlabel("time").ylabel("signal").x_range(0.0, 8.0).y_range(-1.2, 1.2).background("#ffffff");
+let signal = plot.series("signal", "line", "#2878b5").width(2.5).marker("circle");
+signal.add(0.0, 0.0).add(1.0, 0.7).add(2.0, 1.0).add(3.0, 0.7).add(4.0, 0.0).add(5.0, -0.7).add(6.0, -1.0).add(7.0, -0.7).add(8.0, 0.0);
+let footer = figure.add_text("Canvas panel → explicit manager → constrained children").border("south").preferred_size(896.0, 26.0).text().size(12.0).color("#667085");
+figure.draw(); video.save_frame(${png}); video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({mp4}, {png})");

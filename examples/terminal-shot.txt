@@ -1,0 +1,22 @@
+$ lmctl --version
+lmctl 0.2.347 (x86_64-linux)
+
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+$ lmvideo --version
+lmvideo 0.1.20
+
+$ nice bash test.sh
+ok 1 - cpp/dslvm.hpp matches sdk.lock (a876646a0bb6)
+ok 2 - library, CLI, tests and DSL host build
+ok 3 - skia_test: PASS 77 checks
+ok 4 - encoder_test: PASS 32 checks
+ok 5 - terminal-shot.lms: 1000px PNG with title bar dots and dark card
+PASS 28 checks
+
+$ lmscript examples/terminal-shot.lms session.txt docs/images/terminal-shot.png "Terminal"
+wrote docs/images/terminal-shot.png (1000x520)

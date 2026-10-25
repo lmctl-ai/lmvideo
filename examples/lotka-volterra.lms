@@ -1,0 +1,40 @@
+# Predator–prey cycles drawn as time-series and phase-portrait plots.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/lotka-volterra.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/lotka-volterra.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/lotka-volterra.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let pop = canvas.plot(26.0, 30.0, 560.0, 480.0).title("Predator and prey populations").xlabel("time").ylabel("population").x_range(0.0, 24.0).y_range(0.0, 80.0).background("#ffffff");
+let prey = pop.series("prey", "line", "#168c83").width(2.5);
+let predator = pop.series("predator", "line", "#df5b36").width(2.5);
+let phase = canvas.plot(600.0, 30.0, 334.0, 480.0).title("Phase portrait").xlabel("prey").ylabel("predator").x_range(0.0, 80.0).y_range(0.0, 80.0).background("#ffffff");
+let orbit = phase.series("closed orbit", "line", "#7256a8").width(2.5);
+fn simulate(prey: Series, predator: Series, orbit: Series, progress: float) -> void {
+  prey.clear(); predator.clear(); orbit.clear();
+  let x = 10.0; let y = 38.0; let dt = 0.03;
+  for (k in range(0, 801)) {
+    let t = float(k) * dt;
+    if (float(k) / 800.0 <= progress) { prey.add(t, x); predator.add(t, y); orbit.add(x, y); }
+    let dx = 0.55 * x - 0.02 * x * y;
+    let dy = -0.45 * y + 0.018 * x * y;
+    x = x + dt * dx; y = y + dt * dy;
+  }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa");
+  simulate(prey, predator, orbit, video.t()); pop.draw(); phase.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/lotka-volterra.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/lotka-volterra.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

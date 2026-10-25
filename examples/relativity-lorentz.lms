@@ -1,0 +1,43 @@
+# Lorentz factor, relativistic momentum, length contraction, and atmospheric muons.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/relativity-lorentz.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/relativity-lorentz.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/relativity-lorentz.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(30.0, 32.0, 610.0, 476.0).title("Special relativity · γ, γβ and L/L₀").xlabel("speed fraction β = v/c").ylabel("dimensionless value").x_range(0.0, 1.0).y_range(0.0, 6.0).legend("top_left").background("#ffffff");
+let gamma = plot.series("Lorentz factor γ", "line", "#d89b00").width(3.0);
+let momentum = plot.series("relativistic momentum γβ", "line", "#7256a8").width(2.5);
+let length = plot.series("contracted length L/L₀", "line", "#168c83").width(2.5);
+let classical = plot.series("classical momentum β", "line", "#667085").width(2.0).dash("dashed");
+plot.vline(1.0, "#df5b36", 1.5).annotate(0.55, 5.4, "γ → ∞ as β → 1", "#df5b36");
+let muons = canvas.plot(660.0, 32.0, 286.0, 476.0).title("Muon mean path").xlabel("speed β = 0.998").ylabel("mean travel (km)").x_range(0.0, 2.0).y_range(0.0, 12.0).legend("none").background("#ffffff");
+let travel_bars = muons.series("mean path", "bar", "#2878b5");
+travel_bars.add(0.5, 0.658).add(1.5, 10.42);
+muons.annotate(0.08, 2.0, "classical", "#263244").annotate(1.08, 11.0, "relativistic", "#263244");
+fn fill_curves(g: Series, p: Series, l: Series, c: Series, progress: float) -> void {
+  g.clear(); p.clear(); l.clear(); c.clear();
+  for (k in range(0, 200)) {
+    let u = float(k) / 200.0;
+    if (u <= progress) {
+      let beta = 0.995 * u; let factor = 1.0 / sqrt(1.0 - beta * beta);
+      g.add(beta, factor); p.add(beta, factor * beta); l.add(beta, 1.0 / factor); c.add(beta, beta);
+    }
+  }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); fill_curves(gamma, momentum, length, classical, video.t()); plot.draw(); muons.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/relativity-lorentz.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/relativity-lorentz.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

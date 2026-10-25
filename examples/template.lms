@@ -1,0 +1,50 @@
+# Host collection/template example. The bytecode has no list value: keyframes()
+# returns a host object and the DSL walks it with len()/at() inside its frame loop.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/template.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/template.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/template.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(320, 180);
+video.fps(12);
+video.frames(12);
+video.output(${mp4});
+video.begin();
+let items = keyframes().add(40.0, 90.0, "#ffd166").add(160.0, 55.0, "#06d6a0").add(280.0, 90.0, "#ef476f");
+let dot = template_svg("<svg width=\"320\" height=\"180\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"{{x}}\" cy=\"{{y}}\" r=\"16\" fill=\"{{color}}\" fill-opacity=\"{{opacity}}\"/></svg>");
+for (f in range(0, video.count())) {
+  video.frame();
+  canvas.clear("#101820");
+  let a = items.at(0);
+  let b = items.at(items.len() - 1);
+  let e = ease(video.t());
+  # Attributes are interpolated in a nested loop, once per frame.
+  let x = 0.0;
+  let y = 0.0;
+  for (attribute in range(0, 2)) {
+    if (attribute == 0) { x = lerp(a.x(), b.x(), e); }
+    else { y = lerp(a.y(), b.y(), e); }
+  }
+  # Instantiate each keyframe from the same SVG template using host data.
+  for (i in range(0, items.len())) {
+    let item = items.at(i);
+    let marker = dot.render(item.x(), 145.0, item.color());
+    canvas.svg(marker, 0.0, 0.0, 320.0, 180.0);
+  }
+  let image = dot.render(x, y, mix(a.color(), b.color(), e));
+  canvas.svg(image, 0.0, 0.0, 320.0, 180.0);
+  # Save a still from the same invocation while the mp4 encoder remains active.
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+# No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+}
+println(f"wrote {dslout} ({mp4}, {png})");

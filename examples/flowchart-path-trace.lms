@@ -1,0 +1,111 @@
+# Order-approval flowchart with the taken path traced in: the yes branch
+# (approve -> payment ok -> fulfill -> ship) lights up node by node while
+# each connector draws itself with a dashoffset sweep. The not-taken
+# branch stays dimmed. Demonstrates per-frame Shape and Group updates.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/flowchart-path-trace.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/flowchart-path-trace.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/flowchart-path-trace.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 600); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+
+let start = canvas.box(480.0, 120.0, 170.0, 44.0, "order received", "#1e3247", "#f5c16c", 22.0, 15.0);
+let validate = canvas.box(480.0, 196.0, 210.0, 56.0, "validate order details", "#1e3247", "#4a6a88", 8.0, 15.0);
+let stock = canvas.diamond(480.0, 290.0, 200.0, 94.0, "in stock?", "#1e3247", "#4a6a88", 14.0);
+let approve = canvas.box(730.0, 235.0, 170.0, 56.0, "approve order", "#1e3247", "#4a6a88", 8.0, 15.0);
+let payment = canvas.diamond(730.0, 378.0, 200.0, 94.0, "payment ok?", "#1e3247", "#4a6a88", 14.0);
+let fulfill = canvas.box(480.0, 441.0, 170.0, 56.0, "fulfill order", "#1e3247", "#4a6a88", 8.0, 15.0);
+let shipped = canvas.box(480.0, 522.0, 140.0, 42.0, "shipped", "#1e3247", "#f5c16c", 21.0, 15.0);
+
+# the not-taken branch stays dim
+let backorder = canvas.box(220.0, 235.0, 170.0, 56.0, "backorder items", "#1e3247", "#4a6a88", 8.0, 15.0);
+let hold = canvas.box(220.0, 332.0, 150.0, 42.0, "on hold", "#1e3247", "#f5c16c", 21.0, 15.0);
+let reject = canvas.box(885.0, 441.0, 130.0, 56.0, "reject order", "#1e3247", "#4a6a88", 8.0, 15.0);
+let closed = canvas.box(885.0, 522.0, 150.0, 42.0, "order closed", "#1e3247", "#f5c16c", 21.0, 15.0);
+backorder.set_attr("opacity", "0.3");
+hold.set_attr("opacity", "0.3");
+reject.set_attr("opacity", "0.3");
+closed.set_attr("opacity", "0.3");
+
+# taken-path edges, armed for a dashoffset sweep
+let p0 = canvas.connector(start, "s", validate, "n", "straight", "none", "arrow", "none", "#6fbdb4", 2.5, "", 0.5, 0.0, 0.0);
+let p1 = canvas.connector(validate, "s", stock, "n", "straight", "none", "arrow", "none", "#6fbdb4", 2.5, "", 0.5, 0.0, 0.0);
+let p2 = canvas.connector(stock, "e", approve, "w", "elbow", "none", "arrow", "none", "#6fbdb4", 2.5, "yes", 0.5, 0.0, -12.0);
+let p3 = canvas.connector(approve, "s", payment, "n", "straight", "none", "arrow", "none", "#6fbdb4", 2.5, "", 0.5, 0.0, 0.0);
+let p4 = canvas.connector(payment, "w", fulfill, "n", "elbow", "none", "arrow", "none", "#6fbdb4", 2.5, "yes", 0.5, 0.0, -12.0);
+let p5 = canvas.connector(fulfill, "s", shipped, "n", "straight", "none", "arrow", "none", "#6fbdb4", 2.5, "", 0.5, 0.0, 0.0);
+
+# not-taken edges, dimmed
+let n0 = canvas.connector(stock, "w", backorder, "e", "elbow", "none", "arrow", "none", "#d9897a", 2.5, "no", 0.25, 0.0, -12.0);
+let n1 = canvas.connector(backorder, "s", hold, "n", "straight", "none", "arrow", "none", "#d9897a", 2.5, "", 0.5, 0.0, 0.0);
+let n2 = canvas.connector(payment, "e", reject, "n", "elbow", "none", "arrow", "none", "#d9897a", 2.5, "no", 0.75, 0.0, -12.0);
+let n3 = canvas.connector(reject, "s", closed, "n", "straight", "none", "arrow", "none", "#d9897a", 2.5, "", 0.5, 0.0, 0.0);
+n0.set_attr("opacity", "0.3");
+n1.set_attr("opacity", "0.3");
+n2.set_attr("opacity", "0.3");
+n3.set_attr("opacity", "0.3");
+
+fn arm(edge: Group) -> void {
+  edge.set_attr("visibility", "hidden");
+  edge.set_attr("stroke-dasharray", "900 900");
+  edge.set_attr("stroke-dashoffset", "900");
+  edge.set_attr("marker-end", "none");
+}
+fn reveal(edge: Group, local: float) -> void {
+  if (local <= 0.0) {
+    edge.set_attr("visibility", "hidden");
+  } else {
+    edge.set_attr("visibility", "visible");
+    edge.set_attr("stroke-dashoffset", str(900.0 * (1.0 - local)));
+    if (local >= 1.0) { edge.set_attr("marker-end", "arrow"); }
+  }
+}
+fn clamp01(v: float) -> float {
+  let r = v;
+  if (r < 0.0) { r = 0.0; }
+  if (r > 1.0) { r = 1.0; }
+  return r;
+}
+fn light(s: Shape, reached: bool) -> void {
+  if (reached) {
+    s.set_attr("opacity", "1");
+    s.set_attr("stroke", "#6fbdb4");
+  } else {
+    s.set_attr("opacity", "0.45");
+  }
+}
+
+arm(p0); arm(p1); arm(p2); arm(p3); arm(p4); arm(p5);
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#101820");
+  let step = video.t() * 13.0;
+  light(start, step >= 0.0);
+  light(validate, step >= 2.0);
+  light(stock, step >= 4.0);
+  light(approve, step >= 6.0);
+  light(payment, step >= 8.0);
+  light(fulfill, step >= 10.0);
+  light(shipped, step >= 12.0);
+  reveal(p0, clamp01(step - 1.0));
+  reveal(p1, clamp01(step - 3.0));
+  reveal(p2, clamp01(step - 5.0));
+  reveal(p3, clamp01(step - 7.0));
+  reveal(p4, clamp01(step - 9.0));
+  reveal(p5, clamp01(step - 11.0));
+  canvas.draw_diagram();
+  canvas.text("Order approval: tracing the taken path", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+  canvas.text("yes -> approve -> payment ok -> fulfill -> shipped", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/flowchart-path-trace.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/flowchart-path-trace.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

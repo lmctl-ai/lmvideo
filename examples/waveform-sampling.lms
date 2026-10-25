@@ -1,0 +1,38 @@
+# A continuous waveform compared with discrete measurements.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/waveform-sampling.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/waveform-sampling.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/waveform-sampling.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(42.0, 34.0, 876.0, 474.0).title("Continuous signal and sampled measurements").xlabel("phase (radians)").ylabel("amplitude").x_range(0.0, 6.283185307179586).y_range(-1.35, 1.35).background("#ffffff");
+let signal = plot.series("continuous signal", "line", "#2878b5").width(2.5);
+let samples = plot.series("sampled points", "scatter", "#df5b36").width(3.5).marker("circle");
+plot.hline(0.0, "#667085", 1.0).vline(3.141592653589793, "#98a2b3", 1.0);
+fn fill_wave(line: Series, dots: Series, progress: float) -> void {
+  line.clear(); dots.clear();
+  for (k in range(0, 121)) {
+    let u = float(k) / 120.0;
+    if (u <= progress) { let x = 6.283185307179586 * u; line.add(x, sin(x) + 0.18 * sin(3.0 * x)); }
+  }
+  for (k in range(0, 13)) {
+    let u = float(k) / 12.0;
+    if (u <= progress) { let x = 6.283185307179586 * u; dots.add(x, sin(x) + 0.18 * sin(3.0 * x)); }
+  }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); fill_wave(signal, samples, video.t()); plot.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/waveform-sampling.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/waveform-sampling.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

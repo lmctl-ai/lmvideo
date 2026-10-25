@@ -1,0 +1,69 @@
+# Swimlane process diagram: four horizontal lanes (customer / frontend /
+# backend / payments) with process boxes and a decision diamond placed
+# per lane; connectors flow left to right, drop or climb between lanes,
+# and carry small labels; the payment-failure retry edge is dashed. The
+# retry loop needs three bends, so it stays as explicit path data. Port of
+# lmdraw's swimlane-process to lmvideo.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/swimlane-process.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/swimlane-process.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(1300, 660); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
+canvas.clear("#101820");
+
+canvas.text("Checkout swimlane", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+canvas.text("who does what, flowing left to right", 40.0, 68.0, font(14.0), paint().color("#9db4c8"));
+
+fn lane(y1: float, y2: float, label: string) -> void {
+  canvas.cluster(40.0, y1, 1240.0, y2 - y1, "", "#131c28", "#2c4156", 0.0, 13.0);
+  canvas.text(label, 56.0, (y1 + y2) / 2.0 + 5.0, font(14.0).bold(true), paint().color("#6fbdb4"));
+}
+
+lane(90.0, 220.0, "customer");
+lane(220.0, 350.0, "frontend");
+lane(350.0, 480.0, "backend");
+lane(480.0, 610.0, "payments");
+
+# nodes
+let submit = canvas.box(240.0, 155.0, 150.0, 56.0, "submit order", "#1e3247", "#4a6a88", 8.0, 14.0);
+let validate = canvas.box(420.0, 285.0, 150.0, 56.0, "validate cart", "#1e3247", "#4a6a88", 8.0, 14.0);
+let show_soldout = canvas.box(700.0, 285.0, 150.0, 56.0, "show sold out", "#1e3247", "#4a6a88", 8.0, 14.0);
+let notice = canvas.box(700.0, 155.0, 150.0, 56.0, "sold-out notice", "#1e3247", "#4a6a88", 8.0, 14.0);
+let stock = canvas.diamond(600.0, 415.0, 150.0, 84.0, "in stock?", "#1e3247", "#f5c16c", 13.0);
+let reserve = canvas.box(860.0, 415.0, 150.0, 56.0, "reserve items", "#1e3247", "#4a6a88", 8.0, 14.0);
+let charge = canvas.box(860.0, 545.0, 150.0, 56.0, "charge card", "#1e3247", "#4a6a88", 8.0, 14.0);
+let charge_ok = canvas.diamond(1020.0, 545.0, 140.0, 84.0, "charge ok?", "#1e3247", "#f5c16c", 13.0);
+let create = canvas.box(1020.0, 415.0, 150.0, 56.0, "create order", "#1e3247", "#4a6a88", 8.0, 14.0);
+let confirm = canvas.box(1020.0, 285.0, 150.0, 56.0, "show confirmation", "#1e3247", "#4a6a88", 8.0, 14.0);
+let receipt = canvas.box(1020.0, 155.0, 150.0, 56.0, "gets receipt", "#1e3247", "#4a6a88", 8.0, 14.0);
+let failed = canvas.box(1215.0, 155.0, 150.0, 56.0, "payment failed", "#1e3247", "#4a6a88", 8.0, 14.0);
+
+# flow
+canvas.connector(submit, "e", validate, "n", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "order", 0.2, 0.0, -12.0);
+canvas.connector(validate, "e", stock, "n", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "cart", 0.5, 0.0, -9.0);
+canvas.connector(stock, "e", show_soldout, "w", "curve", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.5, 20.0, 0.0);
+canvas.connector(show_soldout, "n", notice, "s", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "notice", 0.5, 28.0, 0.0);
+canvas.connector(stock, "e", reserve, "w", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, 0.0, -13.0);
+canvas.connector(reserve, "s", charge, "n", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "charge", 0.5, 28.0, 0.0);
+canvas.connector(charge, "e", charge_ok, "w", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+canvas.connector(charge_ok, "n", create, "s", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "yes", 0.5, 26.0, 0.0);
+canvas.connector(create, "n", confirm, "s", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+canvas.connector(confirm, "n", receipt, "s", "straight", "none", "arrow", "none", "#8fb4d9", 2.0, "", 0.5, 0.0, 0.0);
+canvas.connector(charge_ok, "e", failed, "s", "elbow", "none", "arrow", "none", "#8fb4d9", 2.0, "no", 0.1, 62.0, 36.0);
+canvas.draw_diagram();
+# retry loop: three bends as explicit path data, dashed; immediate drawing
+# after the flush keeps it above the lanes, like lmdraw's creation order
+let retry = path().move_to(1215.0, 127.0).line_to(1215.0, 100.0).line_to(500.0, 100.0).line_to(500.0, 545.0).line_to(782.0, 545.0);
+canvas.path(retry, paint().stroke().stroke_width(2.0).color("#8fb4d9").dash(6.0, 5.0));
+let retry_head = path().move_to(784.0, 545.0).line_to(774.0, 540.5).line_to(774.0, 549.5).close();
+canvas.path(retry_head, paint().color("#8fb4d9"));
+canvas.text("retry", 857.0 - font(12.0).measure("retry") / 2.0, 92.0, font(12.0), paint().color("#9db4c8"));
+
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+}
+println(f"wrote {dslout} ({png})");

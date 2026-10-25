@@ -1,0 +1,44 @@
+# Revenue columns and net margin use independent Y axes.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/quarterly-revenue.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/quarterly-revenue.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/quarterly-revenue.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let figure = canvas.panel(24.0, 20.0, 912.0, 500.0).manager("box_v").padding(12.0, 12.0, 12.0, 12.0).gap(8.0).background("#f5f7fa").edge("#cbd5e1", 1.0);
+let heading = figure.add_text("Quarterly revenue and net margin").preferred_size(800.0, 30.0).align("left", "center").text().size(18.0).bold(true);
+let chart_item = figure.add_plot().weight(1.0).fill("both");
+let plot = chart_item.plot().title("Revenue ($M) and net margin (%)").xlabel("quarter").ylabel("revenue ($M)").y2label("net margin (%)").x_range(0.5, 8.5).y_range(0.0, 80.0).y2_range(-5.0, 35.0).legend("top_left").background("#ffffff");
+let revenue = plot.series("revenue", "bar", "#2878b5");
+let margin = plot.series("net margin", "step", "#df5b36").width(3.0).marker("circle").axis("right");
+fn fill_quarters(bars: Series, line: Series, progress: float) -> void {
+  bars.clear(); line.clear();
+  for (k in range(0, 8)) {
+    let q = float(k + 1); let sales = 0.0; let net = 0.0;
+    if (k == 0) { sales=42.0; net=8.0; }
+    if (k == 1) { sales=48.0; net=10.0; }
+    if (k == 2) { sales=45.0; net=9.0; }
+    if (k == 3) { sales=55.0; net=13.0; }
+    if (k == 4) { sales=59.0; net=16.0; }
+    if (k == 5) { sales=57.0; net=15.0; }
+    if (k == 6) { sales=68.0; net=21.0; }
+    if (k == 7) { sales=74.0; net=24.0; }
+    if (float(k) / 7.0 <= progress) { bars.add(q, sales); line.add(q, net); }
+  }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); fill_quarters(revenue, margin, video.t()); figure.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/quarterly-revenue.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/quarterly-revenue.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

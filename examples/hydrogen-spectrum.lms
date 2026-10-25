@@ -1,0 +1,45 @@
+# Balmer emission lines as a wavelength/intensity plot.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/hydrogen-spectrum.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/hydrogen-spectrum.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/hydrogen-spectrum.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(42.0, 22.0, 876.0, 264.0).title("Hydrogen · Balmer emission spectrum").xlabel("wavelength (nm)").ylabel("relative intensity").x_range(380.0, 700.0).y_range(0.0, 1.2).legend("none").background("#ffffff");
+let lines = plot.series("visible Balmer lines", "bar", "#7256a8");
+plot.annotate(410.0, 1.08, "Hδ 410 nm", "#263244");
+plot.annotate(434.0, 0.95, "Hγ 434 nm", "#263244");
+plot.annotate(486.0, 1.08, "Hβ 486 nm", "#263244");
+plot.annotate(656.0, 1.08, "Hα 656 nm", "#263244");
+let levels = canvas.plot(42.0, 286.0, 876.0, 232.0).title("Bohr levels · Balmer transitions end at n = 2").xlabel("transition").ylabel("energy (eV)").x_range(0.0, 6.0).y_range(-14.5, 0.5).legend("none").background("#ffffff");
+let n1 = levels.series("n = 1", "line", "#667085").width(2.0); n1.add(0.5, -13.6).add(5.5, -13.6);
+let n2 = levels.series("n = 2", "line", "#667085").width(2.0); n2.add(0.5, -3.4).add(5.5, -3.4);
+let n3 = levels.series("n = 3", "line", "#98a2b3").width(1.5); n3.add(0.5, -1.511).add(5.5, -1.511);
+let n4 = levels.series("n = 4", "line", "#98a2b3").width(1.5); n4.add(0.5, -0.85).add(5.5, -0.85);
+let n5 = levels.series("n = 5", "line", "#98a2b3").width(1.5); n5.add(0.5, -0.544).add(5.5, -0.544);
+let n6 = levels.series("n = 6", "line", "#98a2b3").width(1.5); n6.add(0.5, -0.378).add(5.5, -0.378);
+let h_alpha = levels.series("Hα", "line", "#df5b36").width(2.5); h_alpha.add(2.0, -1.511).add(2.0, -3.4);
+let h_beta = levels.series("Hβ", "line", "#d89b00").width(2.5); h_beta.add(3.0, -0.85).add(3.0, -3.4);
+let h_gamma = levels.series("Hγ", "line", "#168c83").width(2.5); h_gamma.add(4.0, -0.544).add(4.0, -3.4);
+let h_delta = levels.series("Hδ", "line", "#7256a8").width(2.5); h_delta.add(5.0, -0.378).add(5.0, -3.4);
+fn fill_lines(s: Series, progress: float) -> void {
+  s.clear();
+  s.add(410.0, 0.66 * progress).add(434.0, 0.76 * progress);
+  s.add(486.0, 0.91 * progress).add(656.0, progress);
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); fill_lines(lines, video.t()); plot.draw(); levels.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/hydrogen-spectrum.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/hydrogen-spectrum.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

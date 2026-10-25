@@ -1,0 +1,46 @@
+# The four strokes of an ideal Carnot engine on a pressure–volume plot.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/carnot-cycle.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/carnot-cycle.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/carnot-cycle.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(42.0, 28.0, 876.0, 482.0).title("Carnot heat engine · pressure–volume cycle").xlabel("volume (relative units)").ylabel("pressure (relative units)").x_range(0.7, 4.3).y_range(0.0, 5.6).background("#ffffff");
+let hot = plot.series("1→2 isothermal expansion", "line", "#df5b36").width(3.0);
+let expand = plot.series("2→3 adiabatic expansion", "line", "#7256a8").width(3.0);
+let cold = plot.series("3→4 isothermal compression", "line", "#168c83").width(3.0);
+let compress = plot.series("4→1 adiabatic compression", "line", "#2878b5").width(3.0);
+fn stroke_segment(series: Series, segment: int, progress: float) -> void {
+  series.clear();
+  for (k in range(0, 81)) {
+    let u = float(k) / 80.0;
+    if (u <= progress) {
+      let v = 1.0 + u;
+      let p = 5.0 / v;
+      if (segment == 1) { v = 2.0 + 2.0 * u; p = 2.5 * pow(2.0 / v, 1.4); }
+      if (segment == 2) { v = 4.0 - 2.0 * u; p = 3.788 / v; }
+      if (segment == 3) { v = 2.0 - u; p = 1.894 * pow(2.0 / v, 1.4); }
+      series.add(v, p);
+    }
+  }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa");
+  let progress = video.t();
+  stroke_segment(hot, 0, progress); stroke_segment(expand, 1, progress);
+  stroke_segment(cold, 2, progress); stroke_segment(compress, 3, progress);
+  plot.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/carnot-cycle.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/carnot-cycle.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

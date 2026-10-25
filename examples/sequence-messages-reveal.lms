@@ -1,0 +1,65 @@
+# OAuth refresh-token sequence diagram revealed message by message: the
+# lifelines and activation bars stay put while each message group flips
+# from hidden to visible in order. Demonstrates per-frame set_attr on the
+# retained sequence-notation groups.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/sequence-messages-reveal.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/sequence-messages-reveal.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/sequence-messages-reveal.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+
+canvas.box(170.0, 84.0, 160.0, 44.0, "client", "#1e3247", "#4a6a88", 8.0, 15.0);
+canvas.box(480.0, 84.0, 160.0, 44.0, "API gateway", "#1e3247", "#4a6a88", 8.0, 15.0);
+canvas.box(790.0, 84.0, 160.0, 44.0, "auth server", "#1e3247", "#4a6a88", 8.0, 15.0);
+
+canvas.lifeline(170.0, 106.0, 505.0, "#4a6a88");
+canvas.lifeline(480.0, 106.0, 505.0, "#4a6a88");
+canvas.lifeline(790.0, 106.0, 505.0, "#4a6a88");
+
+canvas.activation(480.0, 118.0, 470.0, "#3d5a76", "#8fb4d9");
+canvas.activation(790.0, 173.0, 395.0, "#3d5a76", "#8fb4d9");
+
+let m1 = canvas.message(178.0, 140.0, 472.0, 140.0, "1  GET /orders (access token)", false, "#f5c16c");
+let m2 = canvas.message(488.0, 190.0, 782.0, 190.0, "2  introspect token", false, "#f5c16c");
+let m3 = canvas.message(782.0, 240.0, 488.0, 240.0, "3  401 token expired", true, "#f5c16c");
+let m4 = canvas.self_message(484.0, 285.0, "4  rotate refresh token", "#f5c16c");
+let m5 = canvas.message(488.0, 340.0, 782.0, 340.0, "5  POST /oauth/refresh", false, "#f5c16c");
+let m6 = canvas.message(782.0, 390.0, 488.0, 390.0, "6  200 OK + new tokens", true, "#f5c16c");
+let m7 = canvas.message(472.0, 440.0, 178.0, 440.0, "7  200 OK (retry)", true, "#f5c16c");
+
+m1.set_attr("visibility", "hidden");
+m2.set_attr("visibility", "hidden");
+m3.set_attr("visibility", "hidden");
+m4.set_attr("visibility", "hidden");
+m5.set_attr("visibility", "hidden");
+m6.set_attr("visibility", "hidden");
+m7.set_attr("visibility", "hidden");
+
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#101820");
+  let order = video.t() * 8.0;
+  if (order > 1.0) { m1.set_attr("visibility", "visible"); }
+  if (order > 2.0) { m2.set_attr("visibility", "visible"); }
+  if (order > 3.0) { m3.set_attr("visibility", "visible"); }
+  if (order > 4.0) { m4.set_attr("visibility", "visible"); }
+  if (order > 5.0) { m5.set_attr("visibility", "visible"); }
+  if (order > 6.0) { m6.set_attr("visibility", "visible"); }
+  if (order > 7.0) { m7.set_attr("visibility", "visible"); }
+  canvas.draw_diagram();
+  canvas.text("OAuth refresh token flow", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+  canvas.text("messages reveal one by one, retained handles updated per frame", 40.0, 524.0, font(14.0), paint().color("#9db4c8"));
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/sequence-messages-reveal.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/sequence-messages-reveal.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

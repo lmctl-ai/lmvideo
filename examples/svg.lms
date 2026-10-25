@@ -1,0 +1,30 @@
+# lmvideo SVG example (EXPERIMENTAL _dsl_): an SVG file is the general drawing format; the chunk places it on a canvas it also
+# draws on, scaled to a target rectangle. Run from the repo root:
+#   $LMSCRIPT_BIN examples/svg.lms [OUT.dslb] [OUT.png] [SVG_FILE]   (no arguments: compile and run with the released host; with arguments: compile only, then lmvideo --dsl OUT.dslb)
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/svg.dslb";
+png = ARGV.len() > 1 ? ARGV[1] : "images/svg.png";
+svgfile = ARGV.len() > 2 ? ARGV[2] : "tests/golden/scene.svg";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(640, 360);
+video.frames(1);
+video.output(${png});
+video.begin();
+video.frame();
+  canvas.clear("#ffffff");
+  let doc = svg_file(${svgfile});
+  canvas.svg(doc, 20.0, 20.0, 600.0, 320.0);
+  canvas.rect(0.0, 0.0, 640.0, 6.0, paint().color("#333333"));
+  out.print("svg is " + str(doc.width()) + "x" + str(doc.height()));
+video.end();
+end _lmcode_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+# No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+}
+println(f"wrote {dslout} ({svgfile} -> {png})");

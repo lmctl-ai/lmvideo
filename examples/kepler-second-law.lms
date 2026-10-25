@@ -1,0 +1,154 @@
+# Kepler's second law, ported from lmdraw (https://github.com/lmctl-ai/lmdraw/blob/main/examples/kepler-second-law.lms) to lmvideo:
+# an e = 0.6 orbit is cut into 12 wedges of equal time (Kepler's equation M = E - e sin E, Newton's method in the DSL); the wedges fade in,
+# then the planet rides the orbit with the last twelfth of a year shaded: its area never changes while the speed arrow grows and shrinks.
+# Known answers: wedge area = pi a b / 12; speed at perihelion / aphelion = (1 + e) / (1 - e) = 4.
+# Writes images/kepler-second-law.mp4 (8 s, 960x540), images/kepler-second-law.png (frame 170) and, with ffmpeg, a GIF.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/kepler-second-law.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/kepler-second-law.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/kepler-second-law.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540);
+video.fps(30);
+video.frames(240);
+video.crf(20);
+video.output(${mp4});
+video.begin();
+fn c_bg() -> string { return "#0d1320"; }
+fn c_panel() -> string { return "#141c2e"; }
+fn c_grid() -> string { return "#26324a"; }
+fn c_ink() -> string { return "#dfe7f5"; }
+fn c_muted() -> string { return "#8a99b8"; }
+fn c_gold() -> string { return "#f2c14e"; }
+fn c_teal() -> string { return "#5ec4b6"; }
+fn c_coral() -> string { return "#ef8354"; }
+fn c_violet() -> string { return "#b89cf0"; }
+fn c_blue() -> string { return "#6aa9ff"; }
+fn pi() -> float { return 3.141592653589793; }
+fn txt(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size), paint().color(color)); }
+fn txtb(s: string, x: float, y: float, size: float, color: string) -> void { canvas.text(s, x, y, font(size).bold(true), paint().color(color)); }
+fn txtc(s: string, cx: float, y: float, size: float, color: string) -> void { canvas.text(s, cx - font(size).measure(s) * 0.5, y, font(size), paint().color(color)); }
+fn txtr(s: string, rx: float, y: float, size: float, color: string) -> void { canvas.text(s, rx - font(size).measure(s), y, font(size), paint().color(color)); }
+fn seg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).stroke_cap("round").color(color)); }
+fn dseg(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void { canvas.line(x1, y1, x2, y2, paint().stroke().stroke_width(w).dash(7.0, 6.0).color(color)); }
+fn dot(x: float, y: float, r: float, color: string) -> void { canvas.circle(x, y, r, paint().color(color)); }
+fn ring(x: float, y: float, r: float, w: float, color: string) -> void { canvas.circle(x, y, r, paint().stroke().stroke_width(w).color(color)); }
+fn arrow(x1: float, y1: float, x2: float, y2: float, w: float, color: string) -> void {
+  let dx = x2 - x1;
+  let dy = y2 - y1;
+  let len = sqrt(dx * dx + dy * dy) + 0.0001;
+  let ux = dx / len;
+  let uy = dy / len;
+  let hs = 6.0 + w * 2.0;
+  seg(x1, y1, x2 - ux * hs * 0.6, y2 - uy * hs * 0.6, w, color);
+  let head = path().move_to(x2, y2).line_to(x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5).line_to(x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5).close();
+  canvas.path(head, paint().color(color));
+}
+fn card(x: float, y: float, w: float, h: float) -> void { canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().color(c_panel())); canvas.round_rect(x, y, w, h, 10.0, 10.0, paint().stroke().stroke_width(1.0).color(c_grid())); }
+fn title(head: string, sub: string) -> void { txtb(head, 36.0, 48.0, 26.0, c_ink()); txt(sub, 36.0, 74.0, 15.0, c_muted()); }
+fn fade(t: float, a: float, b: float) -> float { return clamp((t - a) / (b - a), 0.0, 1.0); }
+fn atan_pos(x: float) -> float {
+  let r = 0.0;
+  if (x <= 1.0) { r = pi() / 4.0 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; r = pi() / 2.0 - (pi() / 4.0 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return r;
+}
+for (f in range(0, video.count())) {
+  video.frame();
+  let t = video.t();
+  canvas.clear(c_bg());
+  title("Kepler's second law: equal areas in equal times", "An e = 0.6 orbit, one year in 12 slices. The Sun sits at a focus, so the planet is fastest where it is closest.");
+  let cx = 390.0;
+  let cy = 312.0;
+  let a = 250.0;
+  let e = 0.6;
+  let b = a * sqrt(1.0 - e * e);
+  let sx = cx + a * e;
+  let sy = cy;
+  card(36.0, 96.0, 700.0, 420.0);
+  # the orbit
+  canvas.path(path().oval(cx - a, cy - b, 2.0 * a, 2.0 * b), paint().stroke().stroke_width(2.0).color(c_blue()));
+  # twelve equal-time wedges fade in one after another
+  for (k in range(0, 12)) {
+    let appear = fade(t, 0.02 + float(k) * 0.02, 0.06 + float(k) * 0.02);
+    if (appear > 0.0) {
+      let wedge = path().move_to(sx, sy);
+      for (j in range(0, 25)) {
+        let tau = (float(k) + float(j) / 24.0) / 12.0;
+        let m = 2.0 * pi() * tau;
+        let big = m + e * sin(m);
+        for (it in range(0, 7)) { big = big - (big - e * sin(big) - m) / (1.0 - e * cos(big)); }
+        wedge = wedge.line_to(cx + a * cos(big), cy - b * sin(big));
+      }
+      wedge = wedge.close();
+      let shade = 0.16;
+      if (k % 2 == 1) { shade = 0.30; }
+      canvas.path(wedge, paint().color(c_blue()).alpha(shade * appear));
+    }
+  }
+  # Sun
+  dot(sx, sy, 15.0, c_gold());
+  ring(sx, sy, 22.0, 1.5, c_gold());
+  txtc("Sun", sx, sy + 40.0, 13.0, c_gold());
+  txt("perihelion: fast, wide angle", cx + a - 150.0, cy + 75.0, 12.0, c_muted());
+  txt("aphelion: slow, narrow", cx - a + 8.0, cy + 75.0, 12.0, c_muted());
+  # the planet: one full year across the second part of the animation
+  let go = fade(t, 0.40, 1.0);
+  let tau_now = go * 1.0;
+  let m_now = 2.0 * pi() * tau_now;
+  let en = m_now + e * sin(m_now);
+  for (it in range(0, 7)) { en = en - (en - e * sin(en) - m_now) / (1.0 - e * cos(en)); }
+  let px = cx + a * cos(en);
+  let py = cy - b * sin(en);
+  if (go > 0.0) {
+    # the constant-area wedge swept during the last twelfth of a year
+    let sweep = path().move_to(sx, sy);
+    for (j in range(0, 25)) {
+      let tj = tau_now - (1.0 - float(j) / 24.0) / 12.0;
+      let mj = 2.0 * pi() * tj;
+      let ej = mj + e * sin(mj);
+      for (it in range(0, 7)) { ej = ej - (ej - e * sin(ej) - mj) / (1.0 - e * cos(ej)); }
+      sweep = sweep.line_to(cx + a * cos(ej), cy - b * sin(ej));
+    }
+    sweep = sweep.close();
+    canvas.path(sweep, paint().color(c_gold()).alpha(0.55));
+    canvas.path(sweep, paint().stroke().stroke_width(1.5).color(c_gold()));
+    dot(px, py, 8.0, c_coral());
+    let r = a * (1.0 - e * cos(en));
+    let speed = sqrt(2.0 * a / r - 1.0);
+    let tx = -a * sin(en);
+    let ty = -b * cos(en);
+    let tl = sqrt(tx * tx + ty * ty);
+    arrow(px, py, px + tx / tl * speed * 38.0, py + ty / tl * speed * 38.0, 3.0, c_coral());
+    card(752.0, 96.0, 176.0, 420.0);
+    txtb("Checked in the DSL", 764.0, 126.0, 14.0, c_violet());
+    txt("area of every slice", 764.0, 160.0, 12.0, c_muted());
+    txtb(str(floor(pi() * a * b / 12.0)) + " px²", 764.0, 186.0, 20.0, c_ink());
+    txt("= π a b / 12", 764.0, 206.0, 12.0, c_muted());
+    txt("speed now (v / v_mean)", 764.0, 250.0, 12.0, c_muted());
+    txtb(str(floor(speed * 100.0) / 100.0) + "×", 764.0, 278.0, 22.0, c_coral());
+    txt("perihelion 2.00×, aphelion 0.50×", 764.0, 300.0, 11.0, c_muted());
+    txt("ratio (1+e)/(1-e) = 4", 764.0, 318.0, 11.0, c_muted());
+    txt("year fraction", 764.0, 360.0, 12.0, c_muted());
+    canvas.rect(764.0, 372.0, 150.0, 8.0, paint().color(c_grid()));
+    canvas.rect(764.0, 372.0, 150.0 * go, 8.0, paint().color(c_gold()));
+  }
+
+  if (video.index() == 170) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout));
+savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  if (r.code != 0) { println(r.stderr + r.stdout); }
+  assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/kepler-second-law.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/kepler-second-law.gif;
+    assert(g.code == 0);
+    println("wrote images/kepler-second-law.gif");
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

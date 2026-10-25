@@ -1,0 +1,59 @@
+# Traffic-light state machine cycling its highlighted active state:
+# red -> green -> yellow -> red. The active state's fill, stroke, and
+# stroke width update per frame through the retained Shape handles; a
+# status line reports the current state each frame.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/state-machine-traffic-light.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/state-machine-traffic-light.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/state-machine-traffic-light.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+
+canvas.cluster(120.0, 120.0, 720.0, 360.0, "traffic light", "#131c28", "#2c4156", 12.0, 15.0);
+let red = canvas.box(290.0, 250.0, 150.0, 64.0, "red", "#1e3247", "#4a6a88", 12.0, 16.0);
+let green = canvas.box(670.0, 250.0, 150.0, 64.0, "green", "#1e3247", "#4a6a88", 12.0, 16.0);
+let yellow = canvas.box(480.0, 410.0, 150.0, 64.0, "yellow", "#1e3247", "#4a6a88", 12.0, 16.0);
+canvas.circle(172.0, 250.0, 6.0, paint().color("#f5c16c"));
+canvas.connector(180.0, 250.0, red, "w", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "", 0.5, 0.0, 0.0);
+canvas.connector(red, "e", green, "w", "straight", "none", "arrow", "none", "#f5c16c", 2.0, "after 30 s", 0.5, 0.0, -16.0);
+let drop = canvas.connector(662.0, 282.0, 555.0, 378.0, "straight", "none", "arrow", "none", "#f5c16c", 2.0, "after 25 s", 0.5, 37.5, 9.0);
+let rise = canvas.connector(405.0, 378.0, 298.0, 282.0, "straight", "none", "arrow", "none", "#f5c16c", 2.0, "after 5 s", 0.5, -37.5, 9.0);
+
+fn set_state(s: Shape, active: bool) -> void {
+  if (active) {
+    s.set_attr("fill", "#31465e");
+    s.set_attr("stroke", "#f5c16c");
+    s.set_attr("stroke-width", "3");
+  } else {
+    s.set_attr("fill", "#1e3247");
+    s.set_attr("stroke", "#4a6a88");
+    s.set_attr("stroke-width", "2");
+  }
+}
+
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#101820");
+  let phase = int(video.t() * 3.0);
+  set_state(red, phase == 0);
+  set_state(green, phase == 1);
+  set_state(yellow, phase == 2);
+  canvas.draw_diagram();
+  canvas.text("Traffic light state machine", 40.0, 44.0, font(22.0).bold(true), paint().color("#dbe7f3"));
+  let name = "red";
+  if (phase == 1) { name = "green"; }
+  if (phase == 2) { name = "yellow"; }
+  canvas.text("active state: " + name, 40.0, 524.0, font(14.0), paint().color("#9db4c8"));
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/state-machine-traffic-light.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/state-machine-traffic-light.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

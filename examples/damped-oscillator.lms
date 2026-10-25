@@ -1,0 +1,58 @@
+# Damped harmonic oscillator as a reusable Skia plot; reveal the traces over time.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/damped-oscillator.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/damped-oscillator.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/damped-oscillator.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(26.0, 22.0, 560.0, 496.0).title("Damped oscillator · x'' + 2ζx' + x = 0").xlabel("time (ω₀t)").ylabel("displacement x").x_range(0.0, 16.0).y_range(-1.2, 1.2).background("#ffffff");
+let phase = canvas.plot(600.0, 22.0, 334.0, 496.0).title("Phase portrait").xlabel("displacement x").ylabel("velocity x′").x_range(-1.2, 1.2).y_range(-1.5, 1.5).legend("none").background("#ffffff");
+let light = plot.series("ζ = 0.15", "line", "#d89b00").width(2.5);
+let medium = plot.series("ζ = 0.4", "line", "#168c83").width(2.5);
+let critical = plot.series("ζ = 1.0 critical", "line", "#df5b36").width(3.0);
+let heavy = plot.series("ζ = 2.0", "line", "#7256a8").width(2.5).dash("dashed");
+let phase_light = phase.series("ζ = 0.15", "line", "#d89b00").width(2.0);
+let phase_medium = phase.series("ζ = 0.4", "line", "#168c83").width(2.0);
+let phase_critical = phase.series("ζ = 1.0", "line", "#df5b36").width(2.5);
+let phase_heavy = phase.series("ζ = 2.0", "line", "#7256a8").width(2.0).dash("dashed");
+fn response(series: Series, phase_series: Series, z: float, progress: float) -> void {
+  series.clear(); phase_series.clear();
+  let wd = sqrt(abs(1.0 - z * z));
+  for (k in range(0, 321)) {
+    let u = float(k) / 320.0;
+    if (u <= progress) {
+      let t = float(k) * 0.05;
+      let x = 0.0;
+      let velocity = 0.0;
+      if (z < 1.0) { x = pow(2.718281828459045, -z * t) * (cos(wd * t) + z / wd * sin(wd * t)); }
+      if (z < 1.0) { velocity = -pow(2.718281828459045, -z * t) * sin(wd * t) / wd; }
+      if (z == 1.0) { x = (1.0 + t) * pow(2.718281828459045, -t); velocity = -t * pow(2.718281828459045, -t); }
+      if (z > 1.0) {
+        let r1 = -z + wd; let r2 = -z - wd;
+        x = (r2 * pow(2.718281828459045, r1 * t) - r1 * pow(2.718281828459045, r2 * t)) / (r2 - r1);
+        velocity = (pow(2.718281828459045, r1 * t) - pow(2.718281828459045, r2 * t)) / (r2 - r1);
+      }
+      series.add(t, x); phase_series.add(x, velocity);
+    }
+  }
+}
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa");
+  let progress = video.t();
+  response(light, phase_light, 0.15, progress); response(medium, phase_medium, 0.4, progress);
+  response(critical, phase_critical, 1.0, progress); response(heavy, phase_heavy, 2.0, progress);
+  plot.draw(); phase.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/damped-oscillator.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/damped-oscillator.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");

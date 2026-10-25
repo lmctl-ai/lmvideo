@@ -1,0 +1,77 @@
+# RC step response and a two-stage log-frequency Bode plot.
+standalone = ARGV.len() == 0;
+dslout = ARGV.len() > 0 ? ARGV[0] : "build/rc-lowpass.dslb";
+mp4 = ARGV.len() > 1 ? ARGV[1] : "images/rc-lowpass.mp4";
+png = ARGV.len() > 2 ? ARGV[2] : "images/rc-lowpass.png";
+mkdir("images");
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
+let plot = canvas.plot(24.0, 28.0, 590.0, 484.0).title("RC low-pass · fc ≈ 1.59 kHz").xlabel("frequency (Hz, log)").ylabel("magnitude (dB)").y2label("phase (°)").x_range(10.0, 1000000.0).y_range(-85.0, 3.0).y2_range(-185.0, 5.0).x_scale("log").background("#ffffff");
+let mag1 = plot.series("magnitude · one stage", "line", "#2878b5").width(2.5);
+let mag2 = plot.series("magnitude · two stages", "line", "#7256a8").width(2.5).dash("dashed");
+let phase1 = plot.series("phase · one stage", "line", "#df5b36").width(2.5).axis("right");
+let phase2 = plot.series("phase · two stages", "line", "#168c83").width(2.5).dash("dashed").axis("right");
+let step = canvas.plot(628.0, 28.0, 308.0, 484.0).title("Step response").xlabel("time / τ").ylabel("output").x_range(0.0, 5.0).y_range(0.0, 1.1).background("#ffffff");
+let step1 = step.series("one stage", "line", "#2878b5").width(2.5);
+let step2 = step.series("two stages", "line", "#7256a8").width(2.5).dash("dashed");
+fn ln_small(m: float) -> float {
+  let y = (m - 1.0) / (m + 1.0); let term = y; let total = 0.0;
+  for (k in range(0, 48)) { total = total + term / float(2 * k + 1); term = term * y * y; }
+  return 2.0 * total;
+}
+fn log10(x: float) -> float {
+  let m = x; let exponent = 0.0;
+  while (m >= 10.0) { m = m / 10.0; exponent = exponent + 1.0; }
+  while (m < 1.0) { m = m * 10.0; exponent = exponent - 1.0; }
+  return exponent + ln_small(m) / 2.302585092994046;
+}
+fn atan_pos(x: float) -> float {
+  let a = 0.0;
+  if (x <= 1.0) { a = 0.7853981633974483 * x - x * (x - 1.0) * (0.2447 + 0.0663 * x); }
+  else { let y = 1.0 / x; a = 1.570796326794897 - (0.7853981633974483 * y - y * (y - 1.0) * (0.2447 + 0.0663 * y)); }
+  return a;
+}
+fn fill_response(s: Series, stages: float, is_phase: bool, progress: float) -> void {
+  s.clear();
+  for (k in range(0, 121)) {
+    let u = float(k) / 120.0;
+    if (u <= progress) {
+      let f = 10.0 * pow(10.0, 5.0 * u); let ratio = f / 1591.549430918953;
+      let value = -10.0 * stages * log10(1.0 + ratio * ratio);
+      if (is_phase) { value = -stages * atan_pos(ratio) * 180.0 / 3.141592653589793; }
+      s.add(f, value);
+    }
+  }
+}
+fn fill_step(s: Series, stages: float, progress: float) -> void {
+  s.clear();
+  for (k in range(0, 101)) {
+    let u = float(k) / 100.0;
+    if (u <= progress) {
+      let t = 5.0 * u; let decay = pow(2.718281828459045, -t);
+      let value = 1.0 - decay;
+      if (stages == 2.0) { value = 1.0 - (1.0 + t) * decay; }
+      s.add(t, value);
+    }
+  }
+}
+plot.vline(1591.549430918953, "#667085", 1.0);
+for (frame in range(0, video.count())) {
+  video.frame(); canvas.clear("#f5f7fa"); let progress = video.t();
+  fill_response(mag1, 1.0, false, progress); fill_response(mag2, 2.0, false, progress);
+  fill_response(phase1, 1.0, true, progress); fill_response(phase2, 2.0, true, progress);
+  fill_step(step1, 1.0, progress); fill_step(step2, 2.0, progress);
+  plot.draw(); step.draw();
+  if (video.index() == video.count() - 1) { video.save_frame(${png}); }
+}
+video.end();
+end _lmcode_
+mkdir(dirname(dslout)); savedsl(program, dslout);
+if (standalone) {
+  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  if (which("ffmpeg") != null) {
+    g = system ffmpeg -y -loglevel error -i images/rc-lowpass.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/rc-lowpass.gif;
+    assert(g.code == 0);
+  }
+}
+println(f"wrote {dslout} ({mp4}, {png})");
