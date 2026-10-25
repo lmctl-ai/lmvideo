@@ -124,7 +124,7 @@ $(BUILD)/generated/schema_embedded.hpp: $(LMVIDEO_SCHEMA)
 	  od -An -v -tx1 $(LMVIDEO_SCHEMA) | sed 's/ *\([0-9a-f][0-9a-f]\)/0x\1,/g'; \
 	  printf '};\ninline constexpr std::size_t embedded_schema_size = sizeof(embedded_schema); }\n'; } >$@.tmp && mv $@.tmp $@
 
-$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp cpp/encoder.hpp cpp/lmvideo.hpp cpp/plot.hpp cpp/layout.hpp cpp/diagram.hpp cpp/schema.hpp $(BUILD)/generated/schema_embedded.hpp | $(BUILD)
+$(BUILD)/host.o: cpp/host.cpp cpp/dslvm.hpp $(wildcard cpp/stdlib/*.hpp) cpp/encoder.hpp cpp/lmvideo.hpp cpp/plot.hpp cpp/layout.hpp cpp/diagram.hpp cpp/schema.hpp $(BUILD)/generated/schema_embedded.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -Wall -Wextra -Icpp -I$(BUILD)/generated -c cpp/host.cpp -o $@
 
 $(BUILD)/main.o: cpp/main.cpp VERSION | $(BUILD)

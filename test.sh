@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
-# End-to-end test of lmvideo, offline and deterministic. Needs g++ (or CXX), make, python3, ffmpeg + ffprobe and lmscript >= 0.2.346.
+# End-to-end test of lmvideo, offline and deterministic. Needs g++ (or CXX), make, python3, ffmpeg + ffprobe and lmscript >= 0.2.420.
 # Set LMSCRIPT_BIN to override the lmscript executable; otherwise the released command is resolved from PATH.
 # Skia is fetched once into third_party/ by scripts/fetch-skia.sh (pinned sha256; LMVIDEO_SKIA_ZIP=path reuses a local zip).
 set -u
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$HERE"
-LMSCRIPT="${LMSCRIPT_BIN:-$(command -v lmscript || true)}"
-[ -n "$LMSCRIPT" ] && [ -x "$LMSCRIPT" ] || { echo "FAIL: lmscript >= 0.2.346 not found in PATH (or set LMSCRIPT_BIN)" >&2; exit 1; }
-LMSCRIPT_VERSION="$($LMSCRIPT --version 2>/dev/null | sed -nE 's/.*([0-9]+\.[0-9]+\.[0-9]+).*/\1/p' | head -1)"
-[ -n "$LMSCRIPT_VERSION" ] || { echo "FAIL: cannot read lmscript version from $LMSCRIPT" >&2; exit 1; }
-[ "$(printf '%s\n' 0.2.346 "$LMSCRIPT_VERSION" | sort -V | head -1)" = "0.2.346" ] || { echo "FAIL: lmscript $LMSCRIPT_VERSION is older than 0.2.346" >&2; exit 1; }
+LMSCRIPT="$(scripts/select-compiler.sh)" || exit 1
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/lmvideo-test-XXXXXX")"
 trap 'rm -rf "$WORK"' EXIT
 fail() { echo "FAIL: $*" >&2; exit 1; }
@@ -474,5 +470,23 @@ frame "$WORK/sequence-messages-reveal.mp4" 0 "$WORK/sr0.png"
 expect_px "$WORK/sr0.png" 320 140 16 24 32 45          # first frame: message 1 not revealed yet (background)
 expect_px "$WORK/sequence-messages-reveal.png" 320 140 245 193 108 12 # last-frame still: the revealed message line
 ok "4 animated diagram videos: connector draw-on, message reveal, state highlight, path trace (h264, 240 frames)"
+
+# The published compiler injects std; the host embeds only its own schema bytes.
+"$LMSCRIPT" --dsl-signatures schema/lmvideo.dsl.json --without-std > "$WORK/std-host-only.sig"
+"$LMSCRIPT" --dsl-signatures cpp/std/lmcode-std.schema.json > "$WORK/std-builtins.sig"
+"$HOST" --dsl-signatures > "$WORK/std-registry.sig"
+python3 - "$WORK" <<'PYSTD' || fail "host-only signature parity"
+import pathlib,sys,json
+w=pathlib.Path(sys.argv[1])
+read=lambda name:set((w/name).read_text().splitlines())
+assert read('std-registry.sig')-read('std-builtins.sig') == read('std-host-only.sig'), 'host-only registry drift'
+schema=str(pathlib.Path('schema/lmvideo.dsl.json').resolve()).replace('\\','/')
+out=str(w/'std-probe.dslb').replace('\\','/')
+image=json.dumps(str(w/'std-probe.png').replace('\\','/'))
+(w/'std-probe.lms').write_text('p = _lmcode_ schema='+json.dumps(schema)+';\nlet values = str_list().add("abc");\nif (str_len(values.at(0)) != 3) { let bad = int_list().at(0); }\nvideo.size(4,4); video.frames(1); video.output('+image+'); video.begin(); video.frame(); video.end();\nend _lmcode_\nsavedsl(p, '+json.dumps(out)+');\n')
+PYSTD
+"$LMSCRIPT" "$WORK/std-probe.lms" > "$WORK/std-probe.log" 2>&1 || { cat "$WORK/std-probe.log"; fail "implicit std compile"; }
+"$HOST" --dsl "$WORK/std-probe.dslb" > "$WORK/std-run.log" 2>&1 || { cat "$WORK/std-run.log"; fail "implicit std runtime"; }
+ok "host-only signatures and implicit std runtime"
 
 echo "PASS $pass checks"

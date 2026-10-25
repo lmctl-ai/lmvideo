@@ -50,3 +50,5 @@ scripts/sync-sdk.sh                   # Refetches pinned cpp/dslvm.hpp and verif
 ## Releases
 
 Releases are published automatically on push across Linux and macOS platforms. Artifacts include standalone host binaries with Skia statically linked.
+
+Compiler >=0.2.420 resolves std from the pinned SDK bundle by default; host schema bytes remain host-only, with full and `--without-std` parity plus a standard-only runtime probe in `test.sh`.
