@@ -8,7 +8,7 @@ The project is licensed under the MIT License. See [THIRD_PARTY_NOTICES.md](THIR
 
 ## Requirements
 
-- Linux (x86-64, arm64) or macOS (arm64, x86-64) with a C++17 compiler, `make`, Python 3, `curl`, `unzip`, `ffmpeg` and `ffprobe` (FFmpeg is only needed to write video; images do not use it).
+- Linux x86-64 or arm64 with a C++17 compiler, `make`, Python 3, `curl`, `unzip`, `ffmpeg` and `ffprobe` (FFmpeg is only needed to write video; images do not use it). Earlier releases may contain macOS assets; macOS is not produced by the current release lane.
 - Node.js and npm for the released compiler package, with released lmscript **0.2.347 or newer** on `PATH` (set `LMSCRIPT_BIN` for another executable).
 - A network connection for the pinned JetBrains Skia archive of your platform, or a local copy supplied through `LMVIDEO_SKIA_ZIP`.
 
@@ -16,7 +16,7 @@ The build downloads `Skia-m144-e2e6623374-4-<os>-Release-<arch>.zip`, verifies t
 
 ## Install and run
 
-Every push to `main` is released automatically (executables `lmvideo-linux-x64`, `-linux-arm64`, `-macos-arm64`, `-macos-x64`; the Linux ones are fully static). lmscript installs the right one on first use:
+Every push to `main` is released automatically for Linux (executables `lmvideo-linux-x64` and `lmvideo-linux-arm64`; the Linux ones are fully static). Earlier releases may contain macOS assets; the current lane does not produce them. lmscript installs the right one on first use:
 
 ```sh
 npm install -g @lmctl-ai/lmctl
