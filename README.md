@@ -149,6 +149,6 @@ The SDK deliberately leaves host policy in lmvideo: image dimensions, frame coun
 ## License
 
 
-Releases up to and including v0.1.35 were published under the MIT License (see the LICENSE asset of that release). Releases after v0.1.35 are published under the Lattice Systems Personal Use License (this file).
+Releases up to and including v0.1.35 were published under the MIT License (see the LICENSE asset of that release). Releases after v0.1.35 are published under the Lattice Systems Binary License 1.0 (this file).
 The README, docs, images, and `examples/*.lms` are MIT-licensed under `LICENSE-examples`.
 Binary releases are licensed under `LICENSE`. Third-party components remain under their own licenses and notices.
