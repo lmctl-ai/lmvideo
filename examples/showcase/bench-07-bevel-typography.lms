@@ -1,6 +1,6 @@
 # B07: bundled-font outlines, counters, depth and bevel-ready metallic stage.
 mkdir("build"); program=_lmcode_ cli="lmvideo";
-let face=font_load("bundled:DejaVuSans"); let letters=mesh_text(face,"A B O 8",32.0,5.0,0.25); image_assert_true(letters.triangles()>100);
+let face=font_load("bundled:DejaVuSans"); let letters=mesh_text_bevel(face,"A B O 8 &",32.0,5.0,0.25,0.28); image_assert_true(letters.triangles()>100);
 let scene=scene3d().background("#111923").ambient(0.2); scene.camera(camera3d().look_at(0.0,0.0,140.0,0.0,0.0,0.0).perspective(46.0,0.1,300.0)); scene.add(mesh_plane(180.0,120.0),"#202b37").position(0.0,-24.0,0.0);
 let gold=material("#d99a35",0.68,0.28).double_sided(true).emissive("#130b03",0.04); let logo=scene.add(letters,gold); logo.position(-(letters.bound(0)+letters.bound(3))/2.0,-(letters.bound(1)+letters.bound(4))/2.0,0.0); scene.directional_light(-2.0,4.0,5.0,"#fff1d4",1.0).directional_light(3.0,1.0,-2.0,"#93bde8",0.35).shadows(256,0.0004,0.001,1);
 let image=scene.render_image(900,560,2); image.save("build/bench-07-bevel-typography.png"); image_assert_true(image.stddev(0)>0.03); out.print("A B O 8 bundled outline witness; counters preserved; bevel-depth request recorded");
