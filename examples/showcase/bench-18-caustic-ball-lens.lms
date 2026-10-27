@@ -1,0 +1,15 @@
+# B18 / G.10: analytic-area CPU MNEE caustic lens candidate.
+# All geometry, materials and lighting are original procedural content.
+mkdir("build"); program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#11151d").ambient(0.0);
+scene.camera(camera3d().look_at(0.0,4.5,6.0,0.0,0.0,0.0).orthographic(4.2,0.1,30.0));
+let floor=scene.add(mesh_box(5.0,0.1,5.0),material("#6c6c6c",0.0,0.72)).position(0.0,-0.05,0.0);
+let lens=scene.add(mesh_sphere(0.72,32,48),material("#ffffff",0.0,0.08).transmission(1.0).ior(1.52));
+lens.position(0.0,1.2465,0.0).cast_caustics(true); floor.receive_caustics(true);
+scene.area_light(0.0,8.0,0.0,0.0,-1.0,0.0,0.5,0.5,"#ffffff",80.0,20.0); scene.light_caustics(0,true);
+let image=scene.render_image(900,560,"cycles",512,8,991,true);
+image_assert_true(image.width()==900&&image.height()==560&&image.stddev(0)>0.01);
+image.save("build/bench-18-caustic-ball-lens.png");
+out.print("B18 analytic-area CPU MNEE lens | 512 spp | 8 bounces | seed 991 | OIDN | floor ROI/normal-mask proof in native gate");
+end _lmcode_
+savedsl(program,"build/bench-18-caustic-ball-lens.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-18-caustic-ball-lens.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

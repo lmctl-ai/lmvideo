@@ -3501,6 +3501,35 @@
         "catalogue_revision": "Original project-authored procedural scene; written benchmark specification"
       },
       "implementation_commit": "4d9c5865246c6dba85db4bbc0975816b05e8679a"
+    },
+    {
+      "id": "B18",
+      "slug": "bench-18-caustic-ball-lens",
+      "title": "Analytic Area Light Caustic Ball Lens",
+      "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
+      "script_sha256": "d36b2d5ed15a654d2b67f6a22670a48804d931d9942cfc82fb248cb67f149581",
+      "source_commit": "CANDIDATE",
+      "status": "PLANNED",
+      "publication_status": "UNPUBLISHED",
+      "backend": "cycles",
+      "metadata": "examples/showcase/scenes/b18.json",
+      "required_feature_witnesses": [
+        "closed transmissive ball lens",
+        "analytic rectangular area light",
+        "explicit caustics caster and receiver roles",
+        "focused receiver-floor ROI",
+        "512/1024 spp peak and energy convergence"
+      ],
+      "assets": [{
+        "kind": "original-procedural-source",
+        "creator": "lmvideo project",
+        "source": "examples/showcase/bench-18-caustic-ball-lens.lms",
+        "sha256": "d36b2d5ed15a654d2b67f6a22670a48804d931d9942cfc82fb248cb67f149581",
+        "license": "MIT",
+        "license_file": "LICENSE-examples",
+        "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+      }],
+      "rights_note": "Original procedural lens, floor, materials and analytic light; no borrowed model or reference render is copied."
     }
   ],
   "groups": [
@@ -3910,6 +3939,22 @@
               "local_store_file": "bench-17-glass-goblets-volume-2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f.png",
               "sha256": "2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f",
               "caption": "Glass Goblets with Homogeneous Absorption"
+            }
+          ]
+        },
+        {
+          "id": "B18",
+          "title": "Analytic Area Light Caustic Ball Lens",
+          "featured": false,
+          "blocks": [
+            {
+              "type": "text",
+              "text": "Original closed clear ball lens above a matte receiver floor with one analytic rectangular area emitter and explicit CPU MNEE caster/receiver roles. B18 remains planned until masked 512/1024 spp focus and convergence evidence passes."
+            },
+            {
+              "type": "code",
+              "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
+              "script_sha256": "d36b2d5ed15a654d2b67f6a22670a48804d931d9942cfc82fb248cb67f149581"
             }
           ]
         }
