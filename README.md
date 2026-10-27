@@ -16,7 +16,7 @@ The build downloads `Skia-m144-e2e6623374-4-<os>-Release-<arch>.zip`, verifies t
 
 ## Install and run
 
-Every push to `main` is released automatically for Linux (executables `lmvideo-linux-x64` and `lmvideo-linux-arm64`; the Linux ones are fully static). Earlier releases may contain macOS assets; the current lane does not produce them. lmscript installs the right one on first use:
+Published Linux releases provide `lmvideo-linux-x64` and `lmvideo-linux-arm64`. Development commits do not publish binaries automatically; release staging and promotion are separate. Earlier releases may contain macOS assets. lmscript installs a released host on first use:
 
 ```sh
 npm install -g @lmctl-ai/lmctl
@@ -24,6 +24,18 @@ lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/v
 ```
 
 Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see private implementation detail for the in-process option.
+
+## Development showcase sources
+
+The [Tier-1 content manifest](examples/showcase/manifest.json) contains fifteen
+original reproducible scenes and exact local render hashes. These sources require
+the matching development implementation recorded in the manifest; they are not a
+claim that the APIs exist in the latest published binary. Renders stay in the
+local content-addressed store; this repository adds source and metadata only.
+The separate [CPU Cycles/OIDN example](examples/cycles-product-still.lms) exports
+and imports GLB, returns an ordinary Image, and applies Image postprocessing.
+Its [prototype record](examples/showcase/cycles-prototype.json) states the pinned
+implementation and initial Linux x64 development limits.
 
 ## Gallery
 
