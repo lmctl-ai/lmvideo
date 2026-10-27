@@ -41,6 +41,18 @@ implementation and initial Linux x64 development limits. The
 [orthographic camera witness](examples/cycles-orthographic-handoff.lms) preserves
 physical scale across depth and vertical framing across portrait/landscape.
 
+## Phase 6 development witnesses
+
+[Fourteen CPU Cycles companions](examples/showcase/cycles/manifest.json) preserve
+the original Tier-1 scene sources, with raster comparisons, independent geometry
+probes, CPU denoising and recorded precision. B12's screen-space sprites remain
+explicitly raster-only. The [CAD preview/final story](examples/cad-final-render.lms)
+uses real lmcad geometry, labels, an eight-frame movie and Timeline; its
+[record](examples/showcase/cycles/cad-final-render.json) contains source and media
+hashes. These sources require the matching private development implementation
+and compiler contract 0.2.426. They do not claim a published binary API. Rendered
+media stays in the local store; this repository contains source and metadata.
+
 ## Gallery
 
 Animated 2D physics and maths diagrams drawn with Skia and encoded to video. The reusable `Canvas.plot()` / `Plot` / `Series` API includes heatmaps, contours, vector fields, statistical chart kinds, date and symlog axes, error bands, and insets alongside lines, bars, and scatter; plots redraw on the current video frame and compose with low-level Canvas drawing. `Document` records a Canvas once and replays it to 1×–4× PNG, outlined-text SVG, PDF, and serialized Skia Picture; `PdfDocument` writes multi-page reports. `Canvas.panel()` adds explicit pack, grid, place, border, flow, and box managers for predictable multi-panel layouts, and the lmdraw-compatible diagram vocabulary (labeled shapes, anchored connectors, grids, sequence notation) adds retained flowcharts, trees, state machines, and timelines that animate per frame. Other ports and examples keep using the same Canvas primitives. For gnuplot-based charts, see [lmplot](https://github.com/lmctl-ai/lmplot). Captions link a still PNG and give the `lmctl autorun` command.

@@ -3015,5 +3015,10 @@
     }
   ],
   "implementation_repository": "lmctlhq/lmvideo",
-  "implementation_visibility": "private; commit records local test provenance, not a public source checkout"
+  "implementation_visibility": "private; commit records local test provenance, not a public source checkout",
+  "phase6": {
+    "metadata": "examples/showcase/cycles/manifest.json",
+    "cad_story": "examples/showcase/cycles/cad-final-render.json",
+    "status": "LOCALLY_VERIFIED_UNRELEASED_API"
+  }
 }

@@ -1,0 +1,9 @@
+# CPU Cycles/OIDN companion; original scene geometry/assets unchanged.
+# B03: original low-poly room hierarchy with orthographic isometric camera.
+mkdir("build");program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#f2eadc").ambient(0.16);scene.camera(camera3d().look_at(6.0,5.0,7.0,0.0,1.0,0.0).ortho(6.5,0.1,100.0));
+let room=scene.group().rotation(0.0,-18.0,0.0);scene.add(mesh_box(5.0,2.5,0.16),material("#c7865f",0.0,0.85)).position(0.0,1.25,-1.92).parent(room);scene.add(mesh_box(0.16,2.5,4.0),material("#8eafbd",0.0,0.8)).position(-2.4,1.25,0.0).parent(room);scene.add(mesh_box(5.0,0.16,4.0),material("#e6d2ae",0.0,0.9)).position(0.0,-0.08,0.0).parent(room);
+scene.add(mesh_box(1.5,0.35,0.8),material("#ad644b",0.0,0.72)).position(0.0,1.0,0.2).parent(room);scene.add(mesh_box(0.18,1.1,0.18),material("#6e4939",0.0,0.8)).position(-0.55,0.4,0.2).parent(room);scene.add(mesh_box(0.18,1.1,0.18),material("#6e4939",0.0,0.8)).position(0.55,0.4,0.2).parent(room);scene.add(mesh_cylinder(0.32,0.85,16),material("#d9a64f",0.0,0.65)).position(1.2,0.35,-0.6).parent(room);
+scene.directional_light(-3.0,6.0,4.0,"#ffe8bf",2.4).directional_light(3.0,2.0,-2.0,"#b7d8ff",0.45);scene.shadows(1024,0.0003,0.001,1);scene.save_job("build/cycles-target.lmjob",900,560,"cycles",32,4,42,true);let image=scene.render_image(900,560,"cycles",32,4,42,true);image_assert_true(image.width()==900&&image.height()==560&&image.stddev(0)>0.04);image.save("build/bench-03-cube-diorama.png");
+end _lmcode_
+savedsl(program,"build/bench-03-cube-diorama.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-03-cube-diorama.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

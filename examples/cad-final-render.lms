@@ -1,0 +1,34 @@
+# Phase 6.5: actual lmcad B-rep -> STL millimetres -> canonical lmvideo metres.
+# Development APIs require the matching implementation in the content manifest.
+mkdir("build");cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.4";
+let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shininess(48.0);
+let housing=scene.box(120.0,70.0,80.0,alloy);let bore=scene.cylinder(15.0,80.0,alloy);
+housing.cut(bore);bore.visible(false);scene.export_stl("build/cad-final-housing.stl");
+end _lmcode_
+savedsl(cad,"build/cad-final-geometry.dslb");r=system(concat(dsl_cli(cad),["--dsl","build/cad-final-geometry.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);
+p=_lmcode_ cli="lmvideo";
+let mesh=mesh_load("build/cad-final-housing.stl");image_assert_true(mesh.triangles()>100);image_assert_close(mesh.bound(3)-mesh.bound(0),120.0,0.01);
+let scene=scene3d().threads(4).background("#edf3f8").ambient(0.15).tonemap("aces",1.0);
+scene.add(mesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);
+scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8).directional_light(-3.0,1.0,-1.0,"#aec8e5",0.6);
+scene.clip_plane(-1.0,0.0,0.0,0.0);
+let timeline=timeline_create();video.size(900,560);video.fps(4);video.frames(8);video.crf(20);video.output("build/cad-final-render.mp4");video.begin();
+for(frame in range(0,video.count())) {
+ video.frame();let t=float(frame)/4.0;scene.time(t);let angle=0.55+0.35*t;
+ scene.camera(camera3d().look_at(0.24*cos(angle),0.14,0.24*sin(angle),0.0,0.0,0.0).perspective(40.0,0.001,2.0));
+ let preview=scene.render_image(420,400,2);let final=scene.render_image(420,400,"cycles",16,4,42,true);
+ image_assert_true(final.stddev(0)>0.02&&preview.stddev(0)>0.02);
+ if(frame==0){scene.save_job("build/cad-final-job",420,400,"cycles",16,4,42,true);preview.save("build/cad-preview.png");final.save("build/cad-cycles.png");}
+ canvas.clear("#edf3f8");canvas.text("CAD geometry · CPU preview / CPU final",24.0,35.0,font(26.0),paint().color("#17364d"));
+ canvas.image(preview,20.0,85.0);canvas.image(final,460.0,85.0);
+ canvas.text("Raster preview",24.0,68.0,font(21.0),paint().color("#17364d"));canvas.text("Cycles · 16 spp · OIDN",464.0,68.0,font(21.0),paint().color("#17364d"));
+ let label=scene.projection(420,400).at(-0.01,0.035,0.04);image_assert_true(label.visible());
+ canvas.line(460.0+label.x(),85.0+label.y(),790.0,105.0,paint().color("#c45238").stroke().stroke_width(2.0));canvas.text("Through bore",748.0,98.0,font(17.0),paint().color("#9e3e2c"));
+ canvas.text("120 × 70 × 80 mm · STL scale 0.001 m/mm · uncapped x ≤ 0 section",24.0,520.0,font(18.0),paint().color("#17364d"));
+ canvas.text("One canonical mesh/camera per frame; original B-rep/STL preserved",24.0,547.0,font(17.0),paint().color("#315571"));
+ let composed=canvas.snapshot();timeline.add(composed,25);if(frame==0){composed.save("build/cad-final-render.png");}
+}
+video.end();timeline.save("build/cad-final-timeline.gif");image_assert_true(timeline.size()==8);image_assert_close(timeline.duration(),2.0,0.000001);
+out.print("Real CAD STL, shared preview/final camera, projected labels, eight CPU-denoised frames and Timeline.");
+end _lmcode_
+savedsl(p,"build/cad-final-render.dslb");r=system(concat(dsl_cli(p),["--dsl","build/cad-final-render.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

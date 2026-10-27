@@ -1,0 +1,1206 @@
+{
+  "format": 1,
+  "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+  "implementation_repository": "lmctlhq/lmvideo",
+  "implementation_commit": "eeaaf7f899f0242b71e5dcc864ab5c6120e3786c",
+  "implementation_visibility": "private; hashes record independently tested implementation provenance",
+  "host_sha256": "ecaa93267715f5d77e30310256624484b2040841f260032006f79be6013aeb52",
+  "module_sha256": "0149276283b40b2ab1ee676cdb10fb862de96b993ef0856c775f79d38a73491f",
+  "render_threads": 4,
+  "affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "memory_limit_bytes": 2147483648,
+  "predeclared_acceptance": {
+    "matte_probe_ssim_min": 0.85,
+    "mask_outside_one_pixel_max": 0.005,
+    "repeat_channel_error_max": 1
+  },
+  "targets": [
+    {
+      "id": "B01",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
+      "base_sha256": "1b5f94427b8ebf4a35cadc886947a85823982e8f00ff239bbde8b83240ed8f0a",
+      "script": "examples/showcase/cycles/bench-01-pbr-metallic-roughness.lms",
+      "script_sha256": "3b439fd27ca13e7bb87f444b83871cbeea76de980fc88f20f0ad518107fd10f3",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 5.01,
+        "max_rss_kib": 539012
+      },
+      "repeat_timing": {
+        "elapsed_s": 5.37,
+        "max_rss_kib": 540920
+      },
+      "raster_timing": {
+        "elapsed_s": 1.06,
+        "max_rss_kib": 300164
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-01-pbr-metallic-roughness.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-01-pbr-metallic-roughness.png",
+          "ssim_global": 0.9744278686761746,
+          "max_channel_error": 230,
+          "changed_channels": 1489513,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9968609952949119,
+        "max_channel_error": 104,
+        "changed_channels": 168746,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          115448,
+          114740
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b01-cycles-56eb90961ea37c7d7ea8db7006617e75d49235f24c04541c50cb35996c78019a.png",
+          "sha256": "56eb90961ea37c7d7ea8db7006617e75d49235f24c04541c50cb35996c78019a",
+          "bytes": 210384
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B02",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
+      "base_sha256": "62493584bbd13e4ac309135b9e75bc3fa0590e71a622193083ee9807b0d8393e",
+      "script": "examples/showcase/cycles/bench-02-pcf-soft-shadow-pedestal.lms",
+      "script_sha256": "b3c1c445c75ff380f24e051e931705bdd57f527d5a4fab44f0f972d16e52d771",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 7.0,
+        "max_rss_kib": 529992
+      },
+      "repeat_timing": {
+        "elapsed_s": 5.19,
+        "max_rss_kib": 530100
+      },
+      "raster_timing": {
+        "elapsed_s": 1.07,
+        "max_rss_kib": 309716
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-02-pcf-soft-shadow-pedestal.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-02-pcf-soft-shadow-pedestal.png",
+          "ssim_global": 0.6458429970213888,
+          "max_channel_error": 229,
+          "changed_channels": 575664,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9991702457941888,
+        "max_channel_error": 89,
+        "changed_channels": 213888,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          187943,
+          187648
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b02-cycles-06b614c9d2a663172fe81d98662a71b4c4ce90eef21ca22ea5d631f524bc1a12.png",
+          "sha256": "06b614c9d2a663172fe81d98662a71b4c4ce90eef21ca22ea5d631f524bc1a12",
+          "bytes": 61474
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B03",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-03-cube-diorama.lms",
+      "base_sha256": "1dd3f53c62ed3db561962f3bcadb9d39e20a5bbc09ff8c88cdf9a91db4d669a0",
+      "script": "examples/showcase/cycles/bench-03-cube-diorama.lms",
+      "script_sha256": "72aac6348ce99539b8c9c1a3c7a6f45ee47a43b71fd3e2b3c95cc59487ccd0ad",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 5.32,
+        "max_rss_kib": 529056
+      },
+      "repeat_timing": {
+        "elapsed_s": 5.59,
+        "max_rss_kib": 529000
+      },
+      "raster_timing": {
+        "elapsed_s": 0.97,
+        "max_rss_kib": 303968
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-03-cube-diorama.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-03-cube-diorama.png",
+          "ssim_global": 0.8878365615875564,
+          "max_channel_error": 130,
+          "changed_channels": 518287,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.998655153783866,
+        "max_channel_error": 95,
+        "changed_channels": 468471,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          168129,
+          167571
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b03-cycles-612e2518360b3d28376ced4e954426c330b643b27b0da705d69462eb52b052ec.png",
+          "sha256": "612e2518360b3d28376ced4e954426c330b643b27b0da705d69462eb52b052ec",
+          "bytes": 121912
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B04",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
+      "base_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535",
+      "script": "examples/showcase/cycles/bench-04-tiled-pbr-swatches.lms",
+      "script_sha256": "0a492c38ad5e6e7464e78dbdb52a7ee8351981867f5420ba3927aa25d89c4d77",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 7.99,
+        "max_rss_kib": 561208
+      },
+      "repeat_timing": {
+        "elapsed_s": 7.45,
+        "max_rss_kib": 560928
+      },
+      "raster_timing": {
+        "elapsed_s": 1.31,
+        "max_rss_kib": 301268
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-04-tiled-pbr-swatches-warm.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        },
+        {
+          "path": "build/bench-04-tiled-pbr-swatches.png",
+          "ssim_global": 0.9999999083092986,
+          "max_channel_error": 1,
+          "changed_channels": 39,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-04-tiled-pbr-swatches.png",
+          "ssim_global": 0.9185863687138498,
+          "max_channel_error": 250,
+          "changed_channels": 91217,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9978086806353783,
+        "max_channel_error": 103,
+        "changed_channels": 17219,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          30522,
+          30364
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b04-cycles-6c936e0ea0839d7cf86f967807c4fab91df98df19e4e26d8173e2afa7907d159.png",
+          "sha256": "6c936e0ea0839d7cf86f967807c4fab91df98df19e4e26d8173e2afa7907d159",
+          "bytes": 61847
+        },
+        {
+          "store_file": "b04-cycles-cd8b50291b2fb5f0b277fad9ead621d8ab523a63c04f8103c6704add96a9076d.png",
+          "sha256": "cd8b50291b2fb5f0b277fad9ead621d8ab523a63c04f8103c6704add96a9076d",
+          "bytes": 61850
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B05",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-05-tangent-relief-medallion.lms",
+      "base_sha256": "240e33a1b4ddf9ec1e4e79dd3813625ff40d711385587cee04b9b48c3c508c64",
+      "script": "examples/showcase/cycles/bench-05-tangent-relief-medallion.lms",
+      "script_sha256": "250e1e167b41a1f7b23edfd5472c39d93fec52154ebea22c42f5c05bafc87663",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 17.48,
+        "max_rss_kib": 604976
+      },
+      "repeat_timing": {
+        "elapsed_s": 15.42,
+        "max_rss_kib": 610892
+      },
+      "raster_timing": {
+        "elapsed_s": 1.34,
+        "max_rss_kib": 307204
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-05-tangent-relief-medallion.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-05-tangent-relief-medallion.png",
+          "ssim_global": 0.8824976731550056,
+          "max_channel_error": 159,
+          "changed_channels": 596533,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9993824911161611,
+        "max_channel_error": 104,
+        "changed_channels": 7620,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          194496,
+          194278
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b05-cycles-b0ec254bd596170345135c21a139840ac5f25d861c2568d495e278df0c922d24.png",
+          "sha256": "b0ec254bd596170345135c21a139840ac5f25d861c2568d495e278df0c922d24",
+          "bytes": 176180
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B06",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-06-helmet-ibl.lms",
+      "base_sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723",
+      "script": "examples/showcase/cycles/bench-06-helmet-ibl.lms",
+      "script_sha256": "302dbfd9dc60614c8b6ca9a60b2d18cc019fb855ab92a0de82b9f3f8f9c1a698",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 8.26,
+        "max_rss_kib": 543660
+      },
+      "repeat_timing": {
+        "elapsed_s": 8.53,
+        "max_rss_kib": 544516
+      },
+      "raster_timing": {
+        "elapsed_s": 2.18,
+        "max_rss_kib": 301592
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-06-helmet-ibl.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-06-helmet-ibl.png",
+          "ssim_global": 0.9893850590223556,
+          "max_channel_error": 188,
+          "changed_channels": 239431,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9984197321031235,
+        "max_channel_error": 89,
+        "changed_channels": 18635,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          31955,
+          31795
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b06-cycles-72611df98bb4bc3ac504cee58312e894dc4322da6fce60786217fc5af96c8089.png",
+          "sha256": "72611df98bb4bc3ac504cee58312e894dc4322da6fce60786217fc5af96c8089",
+          "bytes": 162672
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B07",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-07-bevel-typography.lms",
+      "base_sha256": "0e7a5146ac9593e05863b77c9fe138bb6496a6dea1518f5fc540986814cbe32f",
+      "script": "examples/showcase/cycles/bench-07-bevel-typography.lms",
+      "script_sha256": "fafe54f5788f8009e107c29b499a4ddaef3f46357ef008fd0c5da56006397071",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 8.79,
+        "max_rss_kib": 538092
+      },
+      "repeat_timing": {
+        "elapsed_s": 9.53,
+        "max_rss_kib": 537608
+      },
+      "raster_timing": {
+        "elapsed_s": 2.14,
+        "max_rss_kib": 302684
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-07-bevel-typography.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-07-bevel-typography.png",
+          "ssim_global": 0.8388308557918849,
+          "max_channel_error": 226,
+          "changed_channels": 1508527,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9971527759631327,
+        "max_channel_error": 95,
+        "changed_channels": 163440,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          76241,
+          75439
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b07-cycles-09b7d4adada199cbf9e42bf4f8291a8429861b5ebf176c535be3716dc211cbc1.png",
+          "sha256": "09b7d4adada199cbf9e42bf4f8291a8429861b5ebf176c535be3716dc211cbc1",
+          "bytes": 111620
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B08",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-08-lathe-closed-knot.lms",
+      "base_sha256": "cd757039982f7478310f39abe8564f4140e4bf2a626631906a864e8fe7890ee2",
+      "script": "examples/showcase/cycles/bench-08-lathe-closed-knot.lms",
+      "script_sha256": "d9cb4f963e26724c8cde832aa3ace9f835fbad3af02feaa540448bd39a6f7dc3",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 7.11,
+        "max_rss_kib": 529988
+      },
+      "repeat_timing": {
+        "elapsed_s": 7.06,
+        "max_rss_kib": 530260
+      },
+      "raster_timing": {
+        "elapsed_s": 0.99,
+        "max_rss_kib": 301440
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-08-lathe-closed-knot.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-08-lathe-closed-knot.png",
+          "ssim_global": 0.8897507039492935,
+          "max_channel_error": 153,
+          "changed_channels": 76926,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9971819824191271,
+        "max_channel_error": 95,
+        "changed_channels": 20725,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          23938,
+          23790
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b08-cycles-93443bf621ead83ce972cfb4b1ece1c39095471d5589a002750ebd5d88dbfc38.png",
+          "sha256": "93443bf621ead83ce972cfb4b1ece1c39095471d5589a002750ebd5d88dbfc38",
+          "bytes": 48426
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B09",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-09-terrain-contours.lms",
+      "base_sha256": "0c5437e36044a555825a6392d7427f79cf8e3fb568a6872df86d72866be649c4",
+      "script": "examples/showcase/cycles/bench-09-terrain-contours.lms",
+      "script_sha256": "fad1064f6cf531ff6a4e13e142bda41ebb3e0eacb6f8001802e04ee8d1565440",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 5.48,
+        "max_rss_kib": 343880
+      },
+      "repeat_timing": {
+        "elapsed_s": 4.99,
+        "max_rss_kib": 343960
+      },
+      "raster_timing": {
+        "elapsed_s": 2.24,
+        "max_rss_kib": 301752
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-09-terrain-contours.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-09-terrain-contours.png",
+          "ssim_global": 0.9786254201404471,
+          "max_channel_error": 119,
+          "changed_channels": 135568,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9985698163666847,
+        "max_channel_error": 96,
+        "changed_channels": 35002,
+        "dimensions": [
+          560,
+          460
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          42135,
+          42005
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b09-cycles-95f6ffbfb4a6c23db61b9c47b5f0adfd4f0af91c88584d9e029e50f57198136c.png",
+          "sha256": "95f6ffbfb4a6c23db61b9c47b5f0adfd4f0af91c88584d9e029e50f57198136c",
+          "bytes": 122937
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B10",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-10-fem-callout-dashboard.lms",
+      "base_sha256": "4fdc9d2d6614db5a559900b5c3bda470637b412755e5f6c82ad59f0613748262",
+      "script": "examples/showcase/cycles/bench-10-fem-callout-dashboard.lms",
+      "script_sha256": "e9ab582398c22afc829e86021d3f32d83aa69b2a6d3a9de79d799f45818d5c28",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 3.57,
+        "max_rss_kib": 316532
+      },
+      "repeat_timing": {
+        "elapsed_s": 2.54,
+        "max_rss_kib": 317060
+      },
+      "raster_timing": {
+        "elapsed_s": 0.75,
+        "max_rss_kib": 306016
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-10-fem-callout-dashboard.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-10-fem-callout-dashboard.png",
+          "ssim_global": 0.9756253288636425,
+          "max_channel_error": 180,
+          "changed_channels": 68213,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9981969391706168,
+        "max_channel_error": 90,
+        "changed_channels": 3682,
+        "dimensions": [
+          540,
+          440
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          19562,
+          19430
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b10-cycles-8d431f128e435791051687ca43565ea7cda0b2b66a6267f23bd116a43c9f70f7.png",
+          "sha256": "8d431f128e435791051687ca43565ea7cda0b2b66a6267f23bd116a43c9f70f7",
+          "bytes": 83364
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B11",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
+      "base_sha256": "b6145b48004aaebed2748b5c1bc874680a8bf099d32fcad77f5291ad8ff58bf5",
+      "script": "examples/showcase/cycles/bench-11-dynamic-matrix-instancing.lms",
+      "script_sha256": "59b2ec0218ef2ea00800f421045427532c91d5860e1d52646a67ef2be2ff1ac7",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 4.28,
+        "max_rss_kib": 530800
+      },
+      "repeat_timing": {
+        "elapsed_s": 5.88,
+        "max_rss_kib": 531292
+      },
+      "raster_timing": {
+        "elapsed_s": 0.77,
+        "max_rss_kib": 308704
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-11-dynamic-matrix-instancing.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-11-dynamic-matrix-instancing.png",
+          "ssim_global": 0.9782254698555041,
+          "max_channel_error": 120,
+          "changed_channels": 254687,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9898749639433223,
+        "max_channel_error": 104,
+        "changed_channels": 167111,
+        "dimensions": [
+          900,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          70182,
+          68543
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b11-cycles-0bca7ffc9985f25d7a63204baa6bbf3059b931095cb0c1ea70a9e8655ef0694f.png",
+          "sha256": "0bca7ffc9985f25d7a63204baa6bbf3059b931095cb0c1ea70a9e8655ef0694f",
+          "bytes": 216203
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B12",
+      "eligible": false,
+      "reason": "Screen-space depth-sorted Gaussian point sprites are a raster capability, not triangle/path-traced geometry."
+    },
+    {
+      "id": "B13",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-13-aov-post-processing.lms",
+      "base_sha256": "c078c2772697d54dc5055e49d0d02445a3551798a59f3b33c25ad33380e6deca",
+      "script": "examples/showcase/cycles/bench-13-aov-post-processing.lms",
+      "script_sha256": "53acb12117f6e9ac37c13ffcf65c9ed64df7a2b1702e120c760e3fae1e9609cd",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "note": "Beauty is Cycles; depth/normal panels explicitly remain canonical raster diagnostic passes.",
+      "timing": {
+        "elapsed_s": 2.15,
+        "max_rss_kib": 303520
+      },
+      "repeat_timing": {
+        "elapsed_s": 2.33,
+        "max_rss_kib": 303036
+      },
+      "raster_timing": {
+        "elapsed_s": 1.01,
+        "max_rss_kib": 303316
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-13-aov-post-processing.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-13-aov-post-processing.png",
+          "ssim_global": 0.9966623623878152,
+          "max_channel_error": 149,
+          "changed_channels": 93830,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9977778395098128,
+        "max_channel_error": 89,
+        "changed_channels": 5676,
+        "dimensions": [
+          420,
+          260
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          9181,
+          9109
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b13-cycles-e767bcfe3c5f93ef931413d442952ee93042a215f99049520c882d066ae4e5b4.png",
+          "sha256": "e767bcfe3c5f93ef931413d442952ee93042a215f99049520c882d066ae4e5b4",
+          "bytes": 113658
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B14",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-14-cad-four-view-section.lms",
+      "base_sha256": "6a02970f9f2cd738d971155bd36d1850ed1d8b6381fd15bfb160942db63f5ad4",
+      "script": "examples/showcase/cycles/bench-14-cad-four-view-section.lms",
+      "script_sha256": "297ae7aaf6658737474d5816212b547f24b5564f276d2ebc772dea72c89da97d",
+      "samples": 32,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "timing": {
+        "elapsed_s": 4.45,
+        "max_rss_kib": 341424
+      },
+      "repeat_timing": {
+        "elapsed_s": 4.4,
+        "max_rss_kib": 347260
+      },
+      "raster_timing": {
+        "elapsed_s": 0.7,
+        "max_rss_kib": 303300
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-14-cad-four-view-section.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-14-cad-four-view-section.png",
+          "ssim_global": 0.5995429556369228,
+          "max_channel_error": 145,
+          "changed_channels": 232714,
+          "dimensions": [
+            900,
+            560
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9990979376085465,
+        "max_channel_error": 43,
+        "changed_channels": 2848,
+        "dimensions": [
+          440,
+          260
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          20880,
+          20880
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b14-cycles-49bbe5b22970a80d30e826056b5e6ce5bd6aa282e38ad086a374e658dc77e325.png",
+          "sha256": "49bbe5b22970a80d30e826056b5e6ce5bd6aa282e38ad086a374e658dc77e325",
+          "bytes": 60435
+        }
+      ],
+      "status": "LOCAL_PASS"
+    },
+    {
+      "id": "B15",
+      "eligible": true,
+      "base_source": "examples/showcase/bench-15-molecular-trajectory.lms",
+      "base_sha256": "0b38b14efbf848d62738077f1dc9c8250ce091c23e986c12dd01d0e966b14747",
+      "script": "examples/showcase/cycles/bench-15-molecular-trajectory.lms",
+      "script_sha256": "39a1aed9c6c919ddbd6444a2b4b598f70cba39da57d79f49b69806a422dfda95",
+      "samples": 16,
+      "bounces": 4,
+      "seed": 42,
+      "denoise": true,
+      "note": "Twelve resolved frames over the same four-second orbit; original 120-frame raster cache benchmark remains unchanged.",
+      "timing": {
+        "elapsed_s": 35.18,
+        "max_rss_kib": 735996
+      },
+      "repeat_timing": {
+        "elapsed_s": 34.95,
+        "max_rss_kib": 712832
+      },
+      "raster_timing": {
+        "elapsed_s": 19.08,
+        "max_rss_kib": 298480
+      },
+      "repeat_metrics": [
+        {
+          "path": "build/bench-15-molecular-trajectory-still.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            900,
+            560
+          ]
+        },
+        {
+          "path": "build/bench-15-molecular-trajectory.png",
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "beauty_comparison": [
+        {
+          "path": "build/bench-15-molecular-trajectory.png",
+          "reference_path": "build/bench-15-frames/frame-110.png",
+          "ssim_global": 0.9860605323458101,
+          "max_channel_error": 174,
+          "changed_channels": 115500,
+          "dimensions": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "matched_probe": {
+        "ssim_global": 0.9985469673266162,
+        "max_channel_error": 95,
+        "changed_channels": 18724,
+        "dimensions": [
+          820,
+          560
+        ]
+      },
+      "mask_probe": {
+        "mask_pixels": [
+          36248,
+          36096
+        ],
+        "outside_one_pixel_fraction": 0.0
+      },
+      "outputs": [
+        {
+          "store_file": "b15-cycles-3f7f43edc15c0d2b2ac0ec75bbc35639664d403b0862c8ea435c200ff20e0f22.png",
+          "sha256": "3f7f43edc15c0d2b2ac0ec75bbc35639664d403b0862c8ea435c200ff20e0f22",
+          "bytes": 57564
+        },
+        {
+          "store_file": "b15-cycles-7af157cb22704899ad9d3af4f0a505476e206a5bb8e08737ecafc364c872a2fc.png",
+          "sha256": "7af157cb22704899ad9d3af4f0a505476e206a5bb8e08737ecafc364c872a2fc",
+          "bytes": 67276
+        },
+        {
+          "store_file": "b15-cycles-07571dc6dcf25bde279024e4c918aa95835551144e8492f5651479bbe34a6dcd.mp4",
+          "sha256": "07571dc6dcf25bde279024e4c918aa95835551144e8492f5651479bbe34a6dcd",
+          "bytes": 39075
+        }
+      ],
+      "status": "LOCAL_PASS",
+      "frame_repeat_metrics": [
+        {
+          "index": 0,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 1,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 2,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 3,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 4,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 5,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 6,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 7,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 8,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 9,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 10,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        },
+        {
+          "index": 11,
+          "ssim_global": 1.0,
+          "max_channel_error": 0,
+          "changed_channels": 0,
+          "dimensions": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "video": {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "3/1",
+        "nb_read_frames": "12"
+      }
+    }
+  ],
+  "media_publication": false,
+  "phase7_started": false
+}

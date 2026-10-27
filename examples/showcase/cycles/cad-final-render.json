@@ -1,0 +1,114 @@
+{
+  "format": 1,
+  "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+  "implementation_repository": "lmctlhq/lmvideo",
+  "implementation_commit": "eeaaf7f899f0242b71e5dcc864ab5c6120e3786c",
+  "script": "examples/cad-final-render.lms",
+  "script_sha256": "b5bd3dce19bafc8777b24a4092a41b22436768a547965e437f13a12b2b206c82",
+  "hosts": {
+    "lmcad": "v0.1.4",
+    "lmvideo": "matching private development implementation"
+  },
+  "units": "STL millimetres scaled0.001 to metres; coordinates unchanged",
+  "frames": 8,
+  "duration_seconds": 2,
+  "cycles": {
+    "samples": 16,
+    "bounces": 4,
+    "seed": 42,
+    "denoise": true,
+    "threads": 4
+  },
+  "outputs": [
+    {
+      "store_file": "cad-final-render-4e37dc47858cb1f586cd492932b759ad483fe63c9743eac86175681a83e085ea.png",
+      "sha256": "4e37dc47858cb1f586cd492932b759ad483fe63c9743eac86175681a83e085ea",
+      "bytes": 20535,
+      "path": "build/cad-cycles.png",
+      "dimensions": [
+        420,
+        400
+      ]
+    },
+    {
+      "store_file": "cad-final-render-f5e23aa39bf0b77ff551c5666434492763fa943cd501b15d8e425172407bda74.mp4",
+      "sha256": "f5e23aa39bf0b77ff551c5666434492763fa943cd501b15d8e425172407bda74",
+      "bytes": 42909,
+      "path": "build/cad-final-render.mp4",
+      "video": {
+        "codec_name": "h264",
+        "width": 900,
+        "height": 560,
+        "r_frame_rate": "4/1",
+        "nb_read_frames": "8"
+      }
+    },
+    {
+      "store_file": "cad-final-render-58af13525c9938381ada0bb6c89af20bfda6f1073ddef02aaae1ad2abb5a95fc.png",
+      "sha256": "58af13525c9938381ada0bb6c89af20bfda6f1073ddef02aaae1ad2abb5a95fc",
+      "bytes": 60211,
+      "path": "build/cad-final-render.png",
+      "dimensions": [
+        900,
+        560
+      ]
+    },
+    {
+      "store_file": "cad-final-render-419f352de3187496585f2ac6e2f3677df1c434a922750973ef6f190bc2337676.gif",
+      "sha256": "419f352de3187496585f2ac6e2f3677df1c434a922750973ef6f190bc2337676",
+      "bytes": 4577545,
+      "path": "build/cad-final-timeline.gif",
+      "video": {
+        "codec_name": "gif",
+        "width": 900,
+        "height": 560,
+        "r_frame_rate": "4/1",
+        "nb_read_frames": "8"
+      }
+    },
+    {
+      "store_file": "cad-final-render-d601de0a16517f3cde48b2e406e72e207249abc3a651fdb93e4198d8bf4384ee.png",
+      "sha256": "d601de0a16517f3cde48b2e406e72e207249abc3a651fdb93e4198d8bf4384ee",
+      "bytes": 7404,
+      "path": "build/cad-preview.png",
+      "dimensions": [
+        420,
+        400
+      ]
+    }
+  ],
+  "repeat_metrics": [
+    {
+      "path": "build/cad-cycles.png",
+      "ssim_global": 1.0,
+      "max_channel_error": 0,
+      "changed_channels": 0,
+      "dimensions": [
+        420,
+        400
+      ]
+    },
+    {
+      "path": "build/cad-final-render.png",
+      "ssim_global": 1.0,
+      "max_channel_error": 0,
+      "changed_channels": 0,
+      "dimensions": [
+        900,
+        560
+      ]
+    },
+    {
+      "path": "build/cad-preview.png",
+      "ssim_global": 1.0,
+      "max_channel_error": 0,
+      "changed_channels": 0,
+      "dimensions": [
+        420,
+        400
+      ]
+    }
+  ],
+  "licence": "MIT original model/example; bundled font retains its own licence",
+  "media_publication": false
+}
