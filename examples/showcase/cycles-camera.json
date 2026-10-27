@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "status": "DEVELOPMENT_API_UNRELEASED",
+  "implementation_repository": "lmctlhq/lmvideo",
+  "implementation_visibility": "private; commit records local test provenance, not a public source checkout",
+  "implementation_commit": "8d33ca3ef51cc00a764e7b9bd8b9d60a47cfc16a",
+  "script": "examples/cycles-orthographic-handoff.lms",
+  "script_sha256": "93d47da14f41254f4cad4d9baed2d972bfc908de2ce5f01d8fa322c800a137ae",
+  "schema_sha256": "3f3465c86f719339444aafb6abcd15466dc6cd61982ed06dfb4f67448d2195e7",
+  "host_sha256": "b367d42ec840547c9e51963750a8d8ebbd0c233d8459675328e254282d42dc52",
+  "internal_module_sha256": "7e2a5028302e6580c049a82c9ec34052b6a183b76221b9910720a8cf83bec545",
+  "samples": 8,
+  "bounces": 0,
+  "seed": 23,
+  "denoise": false,
+  "orthographic_vertical_span": 4.0,
+  "outputs": [
+    {
+      "path": "build/cycles-orthographic-landscape.png",
+      "sha256": "3de799b1acdd4f544f46c698e8194bb01321ff148c87786a5c964f1f88e87d00",
+      "bytes": 5127,
+      "dimensions": [
+        640,
+        360
+      ],
+      "rgba_sha256": "72fc000f1ebecd02f09f5d0c7872d491c4d0df0615a0f772281e5c8721ceb45c",
+      "store_file": "cycles-orthographic-3de799b1acdd4f544f46c698e8194bb01321ff148c87786a5c964f1f88e87d00.png"
+    },
+    {
+      "path": "build/cycles-orthographic-portrait.png",
+      "sha256": "6f3821326e3e31b3bdca00bfb869d771e42d5ececa67901a908b868fb1f200b4",
+      "bytes": 9779,
+      "dimensions": [
+        360,
+        640
+      ],
+      "rgba_sha256": "2b691d71e91c914c72d839500098266344a5459a9d2a6bbb92b4d7a2eced325a",
+      "store_file": "cycles-orthographic-6f3821326e3e31b3bdca00bfb869d771e42d5ececa67901a908b868fb1f200b4.png"
+    }
+  ],
+  "repeat_png_and_pixels_identical": true,
+  "gltf_validation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "acceptance": [
+    "GLB orthographic camera preserved",
+    "independent projected bounds in portrait and landscape for both projection modes",
+    "orthographic scale independent of object depth and camera distance"
+  ],
+  "licence": "MIT original example; no imported artwork",
+  "limitations": "Native Linux x64 development profile; full Phase6 parity and portable packaging remain pending."
+}

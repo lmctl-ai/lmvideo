@@ -1,0 +1,19 @@
+# Original Phase-6 camera witness: equal cubes at different depths, landscape + portrait.
+# Requires the matching development lmvideo recorded in the content manifest.
+mkdir("build"); p=_lmcode_ cli="lmvideo";
+image_assert_true(render_available("cycles"));
+let source=scene3d().threads(4).background("#000000").ambient(0.0);
+source.camera(camera3d().look_at(0.0,0.0,5.0,0.0,0.0,0.0).ortho(4.0,0.1,100.0));
+source.add(mesh_box(0.7,0.7,0.05),material("#000000",0.0,1.0).emissive("#ff0000",1.0)).position(-0.6,0.0,0.0);
+source.add(mesh_box(0.7,0.7,0.05),material("#000000",0.0,1.0).emissive("#00ff00",1.0)).position(0.6,0.0,-2.0);
+source.export_gltf("build/cycles-orthographic.glb",true);
+let scene=scene3d().threads(4).background("#000000").ambient(0.0);
+let imported=scene.import_gltf("build/cycles-orthographic.glb",1.0);
+let landscape=scene.render_image(640,360,"cycles",8,0,23,false);
+let portrait=scene.render_image(360,640,"cycles",8,0,23,false);
+image_assert_true(landscape.mean(0)>0.01&&landscape.mean(1)>0.01&&portrait.mean(0)>0.01&&portrait.mean(1)>0.01);
+landscape.save("build/cycles-orthographic-landscape.png");
+portrait.save("build/cycles-orthographic-portrait.png");
+out.print("GLB orthographic camera: equal physical scale across depths and vertical span across aspect ratios.");
+end _lmcode_
+savedsl(p,"build/cycles-orthographic-handoff.dslb");r=system(concat(dsl_cli(p),["--dsl","build/cycles-orthographic-handoff.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

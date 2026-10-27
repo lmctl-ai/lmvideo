@@ -3005,6 +3005,13 @@
       "script": "examples/cycles-product-still.lms",
       "status": "LOCAL_PROTOTYPE_UNPUBLISHED",
       "description": "Initial glTF-to-canonical-Image CPU Cycles/OIDN prototype; separate from the Tier-1 raster gate."
+    },
+    {
+      "slug": "cycles-orthographic-handoff",
+      "metadata": "examples/showcase/cycles-camera.json",
+      "script": "examples/cycles-orthographic-handoff.lms",
+      "status": "DEVELOPMENT_API_UNRELEASED",
+      "description": "Canonical vertical camera span through GLB into CPU Cycles in portrait and landscape."
     }
   ],
   "implementation_repository": "lmctlhq/lmvideo",

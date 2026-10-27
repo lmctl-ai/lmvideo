@@ -37,7 +37,9 @@ local content-addressed store; this repository adds source and metadata only.
 The separate [CPU Cycles/OIDN example](examples/cycles-product-still.lms) exports
 and imports GLB, returns an ordinary Image, and applies Image postprocessing.
 Its [prototype record](examples/showcase/cycles-prototype.json) states the pinned
-implementation and initial Linux x64 development limits.
+implementation and initial Linux x64 development limits. The
+[orthographic camera witness](examples/cycles-orthographic-handoff.lms) preserves
+physical scale across depth and vertical framing across portrait/landscape.
 
 ## Gallery
 
