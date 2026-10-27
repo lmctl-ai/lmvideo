@@ -1,11 +1,12 @@
 {
   "format": 1,
-  "status": "LOCALLY_VERIFIED_UNRELEASED_API",
-  "implementation_repository": "lmctlhq/lmvideo",
-  "implementation_commit": "ff88eb0a9550f4f5dc6036dcadad65c00530fdff",
-  "implementation_visibility": "private; hashes record independently tested implementation provenance",
-  "host_sha256": "efc73577244a67c95491f569dc1db1599b5a69570605067cbefb7b98bf419458",
-  "module_sha256": "77822b59cdc1e248d091f5b80aeb45e6862338c208126958f62ed39094634f8d",
+  "metric_channels": {
+    "ssim_global": "RGB",
+    "max_channel_error": "RGBA",
+    "changed_channels": "RGBA"
+  },
+  "host_sha256": "055336b8feab93692e064fc0fc14b5ca723f1514413e895ab35209a01372a3c2",
+  "module_sha256": "2f247c20caf7c393f2fe77ed9e6890544e31bbe61921c263aa4e9890f7f77464",
   "render_threads": 4,
   "affinity": [
     0,
@@ -32,16 +33,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 8.84,
-        "max_rss_kib": 540648
+        "elapsed_s": 4.47,
+        "max_rss_kib": 539708
       },
       "repeat_timing": {
-        "elapsed_s": 4.52,
-        "max_rss_kib": 540452
+        "elapsed_s": 4.88,
+        "max_rss_kib": 539764
       },
       "raster_timing": {
-        "elapsed_s": 0.85,
-        "max_rss_kib": 305652
+        "elapsed_s": 0.82,
+        "max_rss_kib": 304776
       },
       "repeat_metrics": [
         {
@@ -59,7 +60,7 @@
         {
           "path": "build/bench-01-pbr-metallic-roughness.png",
           "reference_path": "build/bench-01-pbr-metallic-roughness.png",
-          "ssim_global": 0.9744278686761746,
+          "ssim_global": 0.9744278575071508,
           "max_channel_error": 230,
           "changed_channels": 1489513,
           "dimensions": [
@@ -69,9 +70,9 @@
         }
       ],
       "matched_probe": {
-        "ssim_global": 0.9968609952949119,
+        "ssim_global": 0.996860997640986,
         "max_channel_error": 104,
-        "changed_channels": 174821,
+        "changed_channels": 174820,
         "dimensions": [
           900,
           560
@@ -86,9 +87,9 @@
       },
       "outputs": [
         {
-          "store_file": "b01-cycles-56eb90961ea37c7d7ea8db7006617e75d49235f24c04541c50cb35996c78019a.png",
-          "sha256": "56eb90961ea37c7d7ea8db7006617e75d49235f24c04541c50cb35996c78019a",
-          "bytes": 210384
+          "store_file": "b01-cycles-54e645d45a450dda290faec094669536e5ddd45dd9c5a1a30add6a280dd80b70.png",
+          "sha256": "54e645d45a450dda290faec094669536e5ddd45dd9c5a1a30add6a280dd80b70",
+          "bytes": 210358
         }
       ],
       "status": "LOCAL_PASS"
@@ -105,16 +106,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 4.4,
-        "max_rss_kib": 529672
+        "elapsed_s": 4.92,
+        "max_rss_kib": 529400
       },
       "repeat_timing": {
-        "elapsed_s": 4.43,
-        "max_rss_kib": 529652
+        "elapsed_s": 4.27,
+        "max_rss_kib": 529436
       },
       "raster_timing": {
-        "elapsed_s": 0.9,
-        "max_rss_kib": 302400
+        "elapsed_s": 0.87,
+        "max_rss_kib": 304208
       },
       "repeat_metrics": [
         {
@@ -132,9 +133,9 @@
         {
           "path": "build/bench-02-pcf-soft-shadow-pedestal.png",
           "reference_path": "build/bench-02-pcf-soft-shadow-pedestal.png",
-          "ssim_global": 0.6458429970213888,
+          "ssim_global": 0.6458430635157104,
           "max_channel_error": 229,
-          "changed_channels": 575664,
+          "changed_channels": 575665,
           "dimensions": [
             900,
             560
@@ -159,8 +160,8 @@
       },
       "outputs": [
         {
-          "store_file": "b02-cycles-06b614c9d2a663172fe81d98662a71b4c4ce90eef21ca22ea5d631f524bc1a12.png",
-          "sha256": "06b614c9d2a663172fe81d98662a71b4c4ce90eef21ca22ea5d631f524bc1a12",
+          "store_file": "b02-cycles-f47070746878a9228621c8c33281ebfe602c3bf966e8f5fab02fc957aaa9985e.png",
+          "sha256": "f47070746878a9228621c8c33281ebfe602c3bf966e8f5fab02fc957aaa9985e",
           "bytes": 61474
         }
       ],
@@ -178,16 +179,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 8.24,
-        "max_rss_kib": 528852
+        "elapsed_s": 9.59,
+        "max_rss_kib": 529172
       },
       "repeat_timing": {
-        "elapsed_s": 9.13,
-        "max_rss_kib": 529408
+        "elapsed_s": 12.01,
+        "max_rss_kib": 528960
       },
       "raster_timing": {
-        "elapsed_s": 1.53,
-        "max_rss_kib": 299720
+        "elapsed_s": 1.51,
+        "max_rss_kib": 300184
       },
       "repeat_metrics": [
         {
@@ -205,7 +206,7 @@
         {
           "path": "build/bench-03-cube-diorama.png",
           "reference_path": "build/bench-03-cube-diorama.png",
-          "ssim_global": 0.8878365615875564,
+          "ssim_global": 0.8878365724981546,
           "max_channel_error": 130,
           "changed_channels": 518287,
           "dimensions": [
@@ -232,9 +233,9 @@
       },
       "outputs": [
         {
-          "store_file": "b03-cycles-612e2518360b3d28376ced4e954426c330b643b27b0da705d69462eb52b052ec.png",
-          "sha256": "612e2518360b3d28376ced4e954426c330b643b27b0da705d69462eb52b052ec",
-          "bytes": 121912
+          "store_file": "b03-cycles-18d797528660644aae6e20201d04e68392b7a334b985403ad25540d70190c54a.png",
+          "sha256": "18d797528660644aae6e20201d04e68392b7a334b985403ad25540d70190c54a",
+          "bytes": 121914
         }
       ],
       "status": "LOCAL_PASS"
@@ -251,23 +252,23 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 14.02,
-        "max_rss_kib": 560484
+        "elapsed_s": 7.88,
+        "max_rss_kib": 560012
       },
       "repeat_timing": {
-        "elapsed_s": 13.02,
-        "max_rss_kib": 559984
+        "elapsed_s": 14.82,
+        "max_rss_kib": 560232
       },
       "raster_timing": {
         "elapsed_s": 1.58,
-        "max_rss_kib": 301860
+        "max_rss_kib": 302728
       },
       "repeat_metrics": [
         {
           "path": "build/bench-04-tiled-pbr-swatches-warm.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
+          "ssim_global": 0.9999999059579674,
+          "max_channel_error": 1,
+          "changed_channels": 40,
           "dimensions": [
             900,
             560
@@ -275,9 +276,9 @@
         },
         {
           "path": "build/bench-04-tiled-pbr-swatches.png",
-          "ssim_global": 0.9999999811915993,
+          "ssim_global": 0.9999999905957866,
           "max_channel_error": 1,
-          "changed_channels": 8,
+          "changed_channels": 4,
           "dimensions": [
             900,
             560
@@ -288,7 +289,7 @@
         {
           "path": "build/bench-04-tiled-pbr-swatches.png",
           "reference_path": "build/bench-04-tiled-pbr-swatches.png",
-          "ssim_global": 0.9185865531698891,
+          "ssim_global": 0.91858641917661,
           "max_channel_error": 250,
           "changed_channels": 91216,
           "dimensions": [
@@ -315,14 +316,14 @@
       },
       "outputs": [
         {
-          "store_file": "b04-cycles-eefb713bc2ba2f17c9fed683fb24fe8e9882f5836207dc5105e4d4c6534f3fe5.png",
-          "sha256": "eefb713bc2ba2f17c9fed683fb24fe8e9882f5836207dc5105e4d4c6534f3fe5",
-          "bytes": 61842
+          "store_file": "b04-cycles-16dfefd8c9dbfe2b6c4d58f2c62e61c14f7a0f6445a4f70392a948b5ba0d4e9d.png",
+          "sha256": "16dfefd8c9dbfe2b6c4d58f2c62e61c14f7a0f6445a4f70392a948b5ba0d4e9d",
+          "bytes": 61825
         },
         {
-          "store_file": "b04-cycles-81cf767756f9c57e27affd0fd7e7741d19cfb4b192a1021bb7f7fd88c93b8050.png",
-          "sha256": "81cf767756f9c57e27affd0fd7e7741d19cfb4b192a1021bb7f7fd88c93b8050",
-          "bytes": 61842
+          "store_file": "b04-cycles-6a22fb293f57c414f0b9a9939b84ff800c347c6b5e41de713ead31ce211b0551.png",
+          "sha256": "6a22fb293f57c414f0b9a9939b84ff800c347c6b5e41de713ead31ce211b0551",
+          "bytes": 61838
         }
       ],
       "status": "LOCAL_PASS"
@@ -339,23 +340,23 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 30.42,
-        "max_rss_kib": 604300
+        "elapsed_s": 29.64,
+        "max_rss_kib": 611396
       },
       "repeat_timing": {
-        "elapsed_s": 29.32,
-        "max_rss_kib": 609996
+        "elapsed_s": 30.07,
+        "max_rss_kib": 605504
       },
       "raster_timing": {
-        "elapsed_s": 2.31,
-        "max_rss_kib": 305628
+        "elapsed_s": 2.01,
+        "max_rss_kib": 308360
       },
       "repeat_metrics": [
         {
           "path": "build/bench-05-tangent-relief-medallion.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
+          "ssim_global": 0.9999999942860178,
+          "max_channel_error": 1,
+          "changed_channels": 78,
           "dimensions": [
             900,
             560
@@ -366,7 +367,7 @@
         {
           "path": "build/bench-05-tangent-relief-medallion.png",
           "reference_path": "build/bench-05-tangent-relief-medallion.png",
-          "ssim_global": 0.8824976015352914,
+          "ssim_global": 0.8824976560951311,
           "max_channel_error": 159,
           "changed_channels": 596536,
           "dimensions": [
@@ -393,9 +394,9 @@
       },
       "outputs": [
         {
-          "store_file": "b05-cycles-6f048d9067efeeafd2595ce99e5ca715581679b2293108c8e4af14a77eb7e62b.png",
-          "sha256": "6f048d9067efeeafd2595ce99e5ca715581679b2293108c8e4af14a77eb7e62b",
-          "bytes": 176193
+          "store_file": "b05-cycles-5b8a73deab8550cd8ab3bd6a6e91c1caf368202d8cf891873e0c11d8085f4d75.png",
+          "sha256": "5b8a73deab8550cd8ab3bd6a6e91c1caf368202d8cf891873e0c11d8085f4d75",
+          "bytes": 176183
         }
       ],
       "status": "LOCAL_PASS"
@@ -412,23 +413,23 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 4.99,
-        "max_rss_kib": 543856
+        "elapsed_s": 9.53,
+        "max_rss_kib": 542792
       },
       "repeat_timing": {
-        "elapsed_s": 6.07,
-        "max_rss_kib": 543160
+        "elapsed_s": 5.23,
+        "max_rss_kib": 543504
       },
       "raster_timing": {
-        "elapsed_s": 1.9,
-        "max_rss_kib": 302024
+        "elapsed_s": 1.2,
+        "max_rss_kib": 307904
       },
       "repeat_metrics": [
         {
           "path": "build/bench-06-helmet-ibl.png",
-          "ssim_global": 0.9999999886614487,
+          "ssim_global": 0.9999999967604146,
           "max_channel_error": 1,
-          "changed_channels": 63,
+          "changed_channels": 18,
           "dimensions": [
             900,
             560
@@ -439,9 +440,9 @@
         {
           "path": "build/bench-06-helmet-ibl.png",
           "reference_path": "build/bench-06-helmet-ibl.png",
-          "ssim_global": 0.9893850592363148,
+          "ssim_global": 0.9893850671247915,
           "max_channel_error": 188,
-          "changed_channels": 239430,
+          "changed_channels": 239428,
           "dimensions": [
             900,
             560
@@ -449,7 +450,7 @@
         }
       ],
       "matched_probe": {
-        "ssim_global": 0.9984197321031235,
+        "ssim_global": 0.9984197355911206,
         "max_channel_error": 89,
         "changed_channels": 19670,
         "dimensions": [
@@ -466,9 +467,9 @@
       },
       "outputs": [
         {
-          "store_file": "b06-cycles-9d8ce56689eb1146e395620b8cd4f39c3e3886f90350f5330b2f427968ca7104.png",
-          "sha256": "9d8ce56689eb1146e395620b8cd4f39c3e3886f90350f5330b2f427968ca7104",
-          "bytes": 162663
+          "store_file": "b06-cycles-bf590b20c6a8ba22eafb123b15c3d916d073803ec3a5273dd4a1cd2312e09edc.png",
+          "sha256": "bf590b20c6a8ba22eafb123b15c3d916d073803ec3a5273dd4a1cd2312e09edc",
+          "bytes": 162674
         }
       ],
       "status": "LOCAL_PASS"
@@ -485,16 +486,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 3.87,
-        "max_rss_kib": 537876
+        "elapsed_s": 3.92,
+        "max_rss_kib": 537436
       },
       "repeat_timing": {
-        "elapsed_s": 5.61,
-        "max_rss_kib": 537664
+        "elapsed_s": 3.8,
+        "max_rss_kib": 536984
       },
       "raster_timing": {
-        "elapsed_s": 0.81,
-        "max_rss_kib": 301680
+        "elapsed_s": 0.79,
+        "max_rss_kib": 302440
       },
       "repeat_metrics": [
         {
@@ -512,7 +513,7 @@
         {
           "path": "build/bench-07-bevel-typography.png",
           "reference_path": "build/bench-07-bevel-typography.png",
-          "ssim_global": 0.8388308557918849,
+          "ssim_global": 0.8388308194879918,
           "max_channel_error": 226,
           "changed_channels": 1508527,
           "dimensions": [
@@ -522,9 +523,9 @@
         }
       ],
       "matched_probe": {
-        "ssim_global": 0.9971527759631327,
+        "ssim_global": 0.9971527766296907,
         "max_channel_error": 95,
-        "changed_channels": 167577,
+        "changed_channels": 167576,
         "dimensions": [
           900,
           560
@@ -539,9 +540,9 @@
       },
       "outputs": [
         {
-          "store_file": "b07-cycles-09b7d4adada199cbf9e42bf4f8291a8429861b5ebf176c535be3716dc211cbc1.png",
-          "sha256": "09b7d4adada199cbf9e42bf4f8291a8429861b5ebf176c535be3716dc211cbc1",
-          "bytes": 111620
+          "store_file": "b07-cycles-5ed253c15489e5585ae1e428c45c45f493273dbcd59447b13f1b98006731c341.png",
+          "sha256": "5ed253c15489e5585ae1e428c45c45f493273dbcd59447b13f1b98006731c341",
+          "bytes": 111619
         }
       ],
       "status": "LOCAL_PASS"
@@ -558,16 +559,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 3.07,
-        "max_rss_kib": 529828
+        "elapsed_s": 3.22,
+        "max_rss_kib": 529292
       },
       "repeat_timing": {
-        "elapsed_s": 3.08,
-        "max_rss_kib": 529880
+        "elapsed_s": 5.57,
+        "max_rss_kib": 528948
       },
       "raster_timing": {
-        "elapsed_s": 0.68,
-        "max_rss_kib": 302664
+        "elapsed_s": 0.7,
+        "max_rss_kib": 299636
       },
       "repeat_metrics": [
         {
@@ -585,9 +586,9 @@
         {
           "path": "build/bench-08-lathe-closed-knot.png",
           "reference_path": "build/bench-08-lathe-closed-knot.png",
-          "ssim_global": 0.8897507039492935,
+          "ssim_global": 0.8897505982985418,
           "max_channel_error": 153,
-          "changed_channels": 76926,
+          "changed_channels": 76925,
           "dimensions": [
             900,
             560
@@ -612,9 +613,9 @@
       },
       "outputs": [
         {
-          "store_file": "b08-cycles-93443bf621ead83ce972cfb4b1ece1c39095471d5589a002750ebd5d88dbfc38.png",
-          "sha256": "93443bf621ead83ce972cfb4b1ece1c39095471d5589a002750ebd5d88dbfc38",
-          "bytes": 48426
+          "store_file": "b08-cycles-3549bf46fe6157ca4aab53e5ec6e7a6bebd8cf1e87f928d2562cc3026cd8200c.png",
+          "sha256": "3549bf46fe6157ca4aab53e5ec6e7a6bebd8cf1e87f928d2562cc3026cd8200c",
+          "bytes": 48428
         }
       ],
       "status": "LOCAL_PASS"
@@ -631,16 +632,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 2.57,
-        "max_rss_kib": 342872
+        "elapsed_s": 2.62,
+        "max_rss_kib": 342980
       },
       "repeat_timing": {
-        "elapsed_s": 2.63,
-        "max_rss_kib": 342836
+        "elapsed_s": 2.61,
+        "max_rss_kib": 342976
       },
       "raster_timing": {
-        "elapsed_s": 1.03,
-        "max_rss_kib": 304936
+        "elapsed_s": 1.01,
+        "max_rss_kib": 303908
       },
       "repeat_metrics": [
         {
@@ -704,16 +705,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 3.63,
-        "max_rss_kib": 316016
+        "elapsed_s": 1.85,
+        "max_rss_kib": 315844
       },
       "repeat_timing": {
-        "elapsed_s": 1.82,
-        "max_rss_kib": 316052
+        "elapsed_s": 1.86,
+        "max_rss_kib": 316072
       },
       "raster_timing": {
         "elapsed_s": 0.63,
-        "max_rss_kib": 298812
+        "max_rss_kib": 302612
       },
       "repeat_metrics": [
         {
@@ -777,16 +778,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 4.0,
-        "max_rss_kib": 531008
+        "elapsed_s": 3.62,
+        "max_rss_kib": 530360
       },
       "repeat_timing": {
-        "elapsed_s": 6.26,
-        "max_rss_kib": 530992
+        "elapsed_s": 5.42,
+        "max_rss_kib": 530376
       },
       "raster_timing": {
-        "elapsed_s": 1.5,
-        "max_rss_kib": 303584
+        "elapsed_s": 0.72,
+        "max_rss_kib": 303740
       },
       "repeat_metrics": [
         {
@@ -856,16 +857,16 @@
       "denoise": true,
       "note": "Beauty is Cycles; depth/normal panels explicitly remain canonical raster diagnostic passes.",
       "timing": {
-        "elapsed_s": 1.64,
-        "max_rss_kib": 306716
+        "elapsed_s": 1.36,
+        "max_rss_kib": 299856
       },
       "repeat_timing": {
-        "elapsed_s": 3.42,
-        "max_rss_kib": 308488
+        "elapsed_s": 1.37,
+        "max_rss_kib": 303048
       },
       "raster_timing": {
-        "elapsed_s": 0.83,
-        "max_rss_kib": 308124
+        "elapsed_s": 0.73,
+        "max_rss_kib": 301476
       },
       "repeat_metrics": [
         {
@@ -929,16 +930,16 @@
       "seed": 42,
       "denoise": true,
       "timing": {
-        "elapsed_s": 4.7,
-        "max_rss_kib": 340920
+        "elapsed_s": 3.62,
+        "max_rss_kib": 340776
       },
       "repeat_timing": {
-        "elapsed_s": 6.36,
-        "max_rss_kib": 340076
+        "elapsed_s": 3.57,
+        "max_rss_kib": 340256
       },
       "raster_timing": {
-        "elapsed_s": 0.76,
-        "max_rss_kib": 313376
+        "elapsed_s": 0.65,
+        "max_rss_kib": 303536
       },
       "repeat_metrics": [
         {
@@ -956,7 +957,7 @@
         {
           "path": "build/bench-14-cad-four-view-section.png",
           "reference_path": "build/bench-14-cad-four-view-section.png",
-          "ssim_global": 0.5995429556369228,
+          "ssim_global": 0.5995429638572046,
           "max_channel_error": 145,
           "changed_channels": 232714,
           "dimensions": [
@@ -983,9 +984,9 @@
       },
       "outputs": [
         {
-          "store_file": "b14-cycles-49bbe5b22970a80d30e826056b5e6ce5bd6aa282e38ad086a374e658dc77e325.png",
-          "sha256": "49bbe5b22970a80d30e826056b5e6ce5bd6aa282e38ad086a374e658dc77e325",
-          "bytes": 60435
+          "store_file": "b14-cycles-a7d1cd257aa4153d5212c0d19c0d21629b3f8f8a94e375c0811b90aa8d55e861.png",
+          "sha256": "a7d1cd257aa4153d5212c0d19c0d21629b3f8f8a94e375c0811b90aa8d55e861",
+          "bytes": 60434
         }
       ],
       "status": "LOCAL_PASS"
@@ -1003,16 +1004,16 @@
       "denoise": true,
       "note": "Twelve resolved frames over the same four-second orbit; original 120-frame raster cache benchmark remains unchanged.",
       "timing": {
-        "elapsed_s": 28.61,
-        "max_rss_kib": 723340
+        "elapsed_s": 29.34,
+        "max_rss_kib": 821000
       },
       "repeat_timing": {
-        "elapsed_s": 31.42,
-        "max_rss_kib": 689048
+        "elapsed_s": 28.89,
+        "max_rss_kib": 728928
       },
       "raster_timing": {
-        "elapsed_s": 24.6,
-        "max_rss_kib": 306508
+        "elapsed_s": 15.95,
+        "max_rss_kib": 302108
       },
       "repeat_metrics": [
         {
@@ -1040,7 +1041,7 @@
         {
           "path": "build/bench-15-molecular-trajectory.png",
           "reference_path": "build/bench-15-frames/frame-110.png",
-          "ssim_global": 0.9860605323458101,
+          "ssim_global": 0.9860605342334352,
           "max_channel_error": 174,
           "changed_channels": 115500,
           "dimensions": [
@@ -1050,9 +1051,9 @@
         }
       ],
       "matched_probe": {
-        "ssim_global": 0.9985469673266162,
+        "ssim_global": 0.998546964165235,
         "max_channel_error": 95,
-        "changed_channels": 19833,
+        "changed_channels": 19832,
         "dimensions": [
           820,
           560
@@ -1067,19 +1068,19 @@
       },
       "outputs": [
         {
-          "store_file": "b15-cycles-3f7f43edc15c0d2b2ac0ec75bbc35639664d403b0862c8ea435c200ff20e0f22.png",
-          "sha256": "3f7f43edc15c0d2b2ac0ec75bbc35639664d403b0862c8ea435c200ff20e0f22",
-          "bytes": 57564
+          "store_file": "b15-cycles-21136cae4f7bdfb9aab71deeda119828c080cce8135b1493698de65279142350.png",
+          "sha256": "21136cae4f7bdfb9aab71deeda119828c080cce8135b1493698de65279142350",
+          "bytes": 57566
         },
         {
-          "store_file": "b15-cycles-7af157cb22704899ad9d3af4f0a505476e206a5bb8e08737ecafc364c872a2fc.png",
-          "sha256": "7af157cb22704899ad9d3af4f0a505476e206a5bb8e08737ecafc364c872a2fc",
-          "bytes": 67276
+          "store_file": "b15-cycles-ef72ac15dc95687a99b1ab49f83f95c5f4e1f1c667b34d6f1fe78adf47464bf4.png",
+          "sha256": "ef72ac15dc95687a99b1ab49f83f95c5f4e1f1c667b34d6f1fe78adf47464bf4",
+          "bytes": 67265
         },
         {
-          "store_file": "b15-cycles-07571dc6dcf25bde279024e4c918aa95835551144e8492f5651479bbe34a6dcd.mp4",
-          "sha256": "07571dc6dcf25bde279024e4c918aa95835551144e8492f5651479bbe34a6dcd",
-          "bytes": 39075
+          "store_file": "b15-cycles-0f3ea49f099edc9be46f5b499419033aeb5364dc8b815a07f907a353a7ef402b.mp4",
+          "sha256": "0f3ea49f099edc9be46f5b499419033aeb5364dc8b815a07f907a353a7ef402b",
+          "bytes": 38987
         }
       ],
       "status": "LOCAL_PASS",
@@ -1221,11 +1222,16 @@
       }
     }
   ],
+  "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+  "implementation_repository": "lmctlhq/lmvideo",
+  "implementation_commit": "6d38c85b8210204e70f874686642195b2a817ba2",
+  "implementation_cpp_tree": "9ca992dc8851a35b6b0ed8d27ab022675f72b324",
+  "implementation_visibility": "private; hashes record tested implementation provenance, not public source",
+  "renderer": "cycles",
+  "device": "CPU",
+  "build_profile": "release",
+  "native_only_development": false,
   "media_publication": false,
   "phase7_started": false,
-  "metric_channels": {
-    "ssim_global": "RGB",
-    "max_channel_error": "RGBA",
-    "changed_channels": "RGBA"
-  }
+  "source_content_commit": "ff88eb0a9550f4f5dc6036dcadad65c00530fdff"
 }
