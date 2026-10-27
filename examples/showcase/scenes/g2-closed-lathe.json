@@ -22,7 +22,7 @@
   "samples_per_axis": {
     "color": 2
   },
-  "status": "CANDIDATE",
+  "status": "LOCAL_PASS",
   "publication_status": "UNPUBLISHED",
   "assets": [
     {
@@ -34,5 +34,136 @@
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
-  ]
+  ],
+  "local_execution": {
+    "external_tools": [],
+    "generated_asset_hashes": [],
+    "id": "G2-closed-lathe",
+    "status": "PASS",
+    "timing": {
+      "wall_s": 1.69,
+      "user_s": 0.9,
+      "sys_s": 0.18,
+      "max_rss_kib": 302184,
+      "cold_job_wall_s": 1.69920959501178,
+      "packaging_webm_s": 0,
+      "phase_ms": {
+        "post": 6.490463,
+        "prepare": 0.137257,
+        "render": 287.073274,
+        "setup": 0.055053,
+        "write_media": 38.084536
+      },
+      "max_render_ms": 287.073274,
+      "max_frame_ms": 0,
+      "native_process": {
+        "wall_s": 1.69,
+        "user_s": 0.9,
+        "sys_s": 0.18,
+        "max_rss_kib": 302184,
+        "scope": "lmctl autorun process tree (time max RSS)",
+        "memory_limit_bytes": 2147483648,
+        "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+      },
+      "packaging_process": {
+        "applicable": false,
+        "scope": "no video packaging process",
+        "wall_s": null,
+        "user_s": null,
+        "sys_s": null,
+        "max_rss_kib": null,
+        "memory_limit_bytes": null
+      },
+      "peak_rss_kib": 302184,
+      "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes"
+    },
+    "outputs": {
+      "image": {
+        "path": "build/closed-lathe-goblets.png",
+        "store_file": "closed-lathe-goblets-5e518966c8442c29a43003b2723c8df72e8ae6438730b84d8e67a6b76f7e4f14.png",
+        "sha256": "5e518966c8442c29a43003b2723c8df72e8ae6438730b84d8e67a6b76f7e4f14",
+        "bytes": 46795,
+        "dimensions": [
+          900,
+          560
+        ]
+      }
+    },
+    "stdout": "{\"ok\": true, \"result\": {\"output\": [\"closed lathe annular, hollow bowl and axis-capped goblet; reversed contours normalize outward volume\"], \"file\": \"build/closed-lathe-goblets.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2969, \"instructions\": 127, \"wall_ms\": 331, \"phase_ms\": {\"post\":6.490463,\"prepare\":0.137257,\"render\":287.073274,\"setup\":0.055053,\"write_media\":38.084536}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 287.073274, \"render_calls\": 1}}\n\n",
+    "font_notices": [
+      {
+        "schema": "lmvideo-fonts/v1",
+        "payload_sha256": "5e518966c8442c29a43003b2723c8df72e8ae6438730b84d8e67a6b76f7e4f14",
+        "fonts": []
+      }
+    ],
+    "budget_seconds": 15,
+    "cache_hit": false,
+    "repeat_verified": true,
+    "container_repeat_sha256_equal": {},
+    "identity": {
+      "harness_sha256": "b8fc291b9fabea1440afff581916527dd7bd5445e19b685bc0c66152477d948c",
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "456c4831d39fc5d6bf0337a31d4fe3655a41d809060b0748703a30a00c94d8f5",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "edad46584e87ceda1f0fdec36cadc079cbc445a5e7f64cc7b8ae595b0dcd27da",
+        "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+        "denoise": false,
+        "seed": "authored in each script"
+      },
+      "script": "994aa416670f58cbd97842c8fc2d8d33fcc87487ddadc30400c916ee9c6eb247",
+      "metadata": "89b475f20880089f80534082e488c6ae8b29fd99e04bf446f738541e4efedb8c"
+    },
+    "cache_key": "1099906dec845a093a224d15afd5a04941e63839705c5a5b0dc37569e2b4ea68",
+    "source_commit": "ecab49265c159ad15dcea7c3f1fbfc0ad5dee7a4",
+    "implementation_commit": "4d9c5865246c6dba85db4bbc0975816b05e8679a",
+    "profile": {
+      "cpu": "Intel(R) Core(TM) i9-14900HX",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "architecture": "x86_64",
+      "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+      "render_threads": 4,
+      "memory_limit_bytes": 2147483648,
+      "binary_hashes": {
+        "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+        "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+        "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+        "host": "456c4831d39fc5d6bf0337a31d4fe3655a41d809060b0748703a30a00c94d8f5",
+        "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+        "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+      },
+      "compiler_version": "lmscript 0.2.426",
+      "host_version": "lmvideo 0.1.0",
+      "schema_sha256": "edad46584e87ceda1f0fdec36cadc079cbc445a5e7f64cc7b8ae595b0dcd27da",
+      "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+      "denoise": false,
+      "seed": "authored in each script",
+      "device": "CPU",
+      "backend": "raster"
+    }
+  }
 }

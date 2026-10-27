@@ -25,7 +25,7 @@
     ]
   },
   "cpu_budget_seconds": 15,
-  "status": "CANDIDATE",
+  "status": "LOCAL_PASS",
   "publication_status": "UNPUBLISHED",
   "assets": [
     {
@@ -37,5 +37,158 @@
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
-  ]
+  ],
+  "local_execution": {
+    "external_tools": [],
+    "generated_asset_hashes": [],
+    "id": "G9-volume-absorption",
+    "status": "PASS",
+    "timing": {
+      "wall_s": 4.94,
+      "user_s": 5.46,
+      "sys_s": 0.21,
+      "max_rss_kib": 304032,
+      "cold_job_wall_s": 4.948505555978045,
+      "packaging_webm_s": 0,
+      "phase_ms": {
+        "post": 0.013672,
+        "prepare": 0.008774,
+        "render": 3613.951823,
+        "setup": 0.02979,
+        "write_media": 5.10479
+      },
+      "max_render_ms": 3613.951823,
+      "max_frame_ms": 0,
+      "native_process": {
+        "wall_s": 4.94,
+        "user_s": 5.46,
+        "sys_s": 0.21,
+        "max_rss_kib": 304032,
+        "scope": "lmctl autorun process tree (time max RSS)",
+        "memory_limit_bytes": 2147483648,
+        "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+      },
+      "packaging_process": {
+        "applicable": false,
+        "scope": "no video packaging process",
+        "wall_s": null,
+        "user_s": null,
+        "sys_s": null,
+        "max_rss_kib": null,
+        "memory_limit_bytes": null
+      },
+      "peak_rss_kib": 304032,
+      "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes"
+    },
+    "outputs": {
+      "image": {
+        "path": "build/volume-absorption.png",
+        "store_file": "volume-absorption-b9cf0db1eea36bd1e7b03dca989168f536ead77de050415a2af04cca3aaa922f.png",
+        "sha256": "b9cf0db1eea36bd1e7b03dca989168f536ead77de050415a2af04cca3aaa922f",
+        "bytes": 4317,
+        "dimensions": [
+          256,
+          256
+        ]
+      }
+    },
+    "stdout": "{\"ok\": true, \"result\": {\"output\": [\"G9 volume candidate: homogeneous Beer-Lambert; B17 geometry pending\"], \"file\": \"build/volume-absorption.png\", \"width\": 256, \"height\": 256, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2539, \"instructions\": 112, \"wall_ms\": 3619, \"phase_ms\": {\"post\":0.013672,\"prepare\":0.008774,\"render\":3613.951823,\"setup\":0.029790,\"write_media\":5.104790}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 3613.951823, \"render_calls\": 1}}\n\n",
+    "font_notices": [
+      {
+        "schema": "lmvideo-fonts/v1",
+        "payload_sha256": "b9cf0db1eea36bd1e7b03dca989168f536ead77de050415a2af04cca3aaa922f",
+        "fonts": []
+      }
+    ],
+    "budget_seconds": 15,
+    "cache_hit": false,
+    "repeat_verified": true,
+    "container_repeat_sha256_equal": {},
+    "identity": {
+      "harness_sha256": "b8fc291b9fabea1440afff581916527dd7bd5445e19b685bc0c66152477d948c",
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "456c4831d39fc5d6bf0337a31d4fe3655a41d809060b0748703a30a00c94d8f5",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "edad46584e87ceda1f0fdec36cadc079cbc445a5e7f64cc7b8ae595b0dcd27da",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 48,
+          "bounces": 8,
+          "seed": 11,
+          "denoise": "none"
+        },
+        "samples_per_axis": 48,
+        "denoise": "none",
+        "seed": 11,
+        "cycles_module_sha256": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1"
+      },
+      "script": "324b5f689982e4be3b39b6c167459a60c550829e3ee0ad01bd699d7a3a119c4e",
+      "metadata": "383afc5f0f788260260852d966c52236219568233d4ef8e1dca13290edc51927"
+    },
+    "cache_key": "1b78e2e394a9c534d133f37ca83aac5ff923e865fa1742f5dc071c4793bd8242",
+    "source_commit": "ecab49265c159ad15dcea7c3f1fbfc0ad5dee7a4",
+    "implementation_commit": "4d9c5865246c6dba85db4bbc0975816b05e8679a",
+    "profile": {
+      "cpu": "Intel(R) Core(TM) i9-14900HX",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "architecture": "x86_64",
+      "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+      "render_threads": 4,
+      "memory_limit_bytes": 2147483648,
+      "binary_hashes": {
+        "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+        "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+        "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+        "host": "456c4831d39fc5d6bf0337a31d4fe3655a41d809060b0748703a30a00c94d8f5",
+        "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+        "cycles_module": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1",
+        "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+      },
+      "compiler_version": "lmscript 0.2.426",
+      "host_version": "lmvideo 0.1.0",
+      "schema_sha256": "edad46584e87ceda1f0fdec36cadc079cbc445a5e7f64cc7b8ae595b0dcd27da",
+      "backend": "cycles",
+      "renderer": "cycles",
+      "device": "CPU",
+      "cycles_profile": {
+        "threads": 4,
+        "samples": 48,
+        "bounces": 8,
+        "seed": 11,
+        "denoise": "none"
+      },
+      "samples_per_axis": 48,
+      "denoise": "none",
+      "seed": 11,
+      "cycles_module_sha256": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1"
+    }
+  }
 }

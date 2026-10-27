@@ -6355,7 +6355,7 @@
         "source_repository": "lmctl-ai/lmvideo",
         "source_commit": "8a2c5d667cd2f1333d59b10306b54b1b6da6f6df",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "1b31d642ad7c68abd26bb298d01a123c7f83528d",
+        "implementation_commit": "4d9c5865246c6dba85db4bbc0975816b05e8679a",
         "required_features": [
           "Cornell red and green wall colour bleed",
           "one actual rectangular ceiling area light",
@@ -6389,7 +6389,7 @@
           },
           {
             "source": "tests/scene3d_cycles_test.cpp",
-            "source_sha256": "07f1c44c971fcb0d96ce963c27f02230837debdcb1e2ab7c1a21c90c7da6ad37",
+            "source_sha256": "18a25b5e035478e543af6c813d21121253ed4bc01bfd3be368745930154a8e32",
             "stdout_sha256": "a00ac771cdb562aa390b50506de4703b47c2230e4503dca2abc49e5fd0d46efe",
             "stdout": "checker MSE=21.9022\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
             "command": [
@@ -6575,7 +6575,8 @@
           "suggestions": [],
           "reasoning": "The original Cornell composition remains legible with the corrected glass exit interface; numerical Snell/TIR and colour-bleed controls establish the transport behavior.",
           "generated_sha256": "ad0398ceed6471fe3a38efd1ad47f0c16459dd360123a6e814e95111d01091c2"
-        }
+        },
+        "capture_status": "VALID"
       }
     },
     {
@@ -6588,7 +6589,7 @@
         "source_repository": "lmctl-ai/lmvideo",
         "source_commit": "8a2c5d667cd2f1333d59b10306b54b1b6da6f6df",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "1b31d642ad7c68abd26bb298d01a123c7f83528d",
+        "implementation_commit": "4d9c5865246c6dba85db4bbc0975816b05e8679a",
         "required_features": [
           "closed goblet stem rim and cavity",
           "solid transmission 1.0",
@@ -6623,7 +6624,7 @@
           },
           {
             "source": "tests/scene3d_cycles_test.cpp",
-            "source_sha256": "07f1c44c971fcb0d96ce963c27f02230837debdcb1e2ab7c1a21c90c7da6ad37",
+            "source_sha256": "18a25b5e035478e543af6c813d21121253ed4bc01bfd3be368745930154a8e32",
             "stdout_sha256": "a00ac771cdb562aa390b50506de4703b47c2230e4503dca2abc49e5fd0d46efe",
             "stdout": "checker MSE=21.9022\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
             "command": [
@@ -6811,7 +6812,8 @@
           "suggestions": [],
           "reasoning": "Both original vessels expose rims, cavities and stems, with clear amber/emerald transmission and internal reflections. The physical transport claims are independently tested.",
           "generated_sha256": "2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f"
-        }
+        },
+        "capture_status": "VALID"
       }
     },
     {
