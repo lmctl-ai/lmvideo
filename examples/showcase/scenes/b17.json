@@ -1,0 +1,46 @@
+{
+  "id": "B17",
+  "title": "Glass Goblets with Homogeneous Absorption",
+  "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_materials_physical_transmission",
+  "visual_specification": "900x560 CPU Cycles still with two closed unit-metre goblets, visible stems/rims/cavities, white base colour, IOR 1.52, transmission 1.0, amber and emerald homogeneous volume absorption, generated HDR studio environment with values above 1, and denoised CPU profile.",
+  "required_feature_witnesses": [
+    "closed goblet stem rim and cavity",
+    "solid transmission 1.0",
+    "IOR 1.52",
+    "amber homogeneous volume absorption",
+    "emerald homogeneous volume absorption",
+    "generated HDR studio environment values above 1",
+    "fixed CPU Cycles 96 spp, 8 bounces, seed and OIDN",
+    "total internal reflection critical-angle controls"
+  ],
+  "cpu_budget_seconds": 180,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 96,
+    "bounces": 8,
+    "seed": 20261028,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
+      "sha256": "0fb1093f99663da6796e5e9ffe387590e90b74ea2ac81798a22f54b671786e4e",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "rights_note": "All geometry, environment values, lighting and materials are authored procedurally; no borrowed model or reference render is copied."
+}

@@ -3355,6 +3355,40 @@
         "catalogue_revision": "Original project-authored Cornell scene; written target in document10"
       },
       "verification_note": "Default closed-glass exit boundary was culled; requires a corrected renderer and fresh acceptance capture."
+    },
+    {
+      "id": "B17",
+      "slug": "bench-17-glass-goblets-volume",
+      "title": "Glass Goblets with Homogeneous Absorption",
+      "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
+      "script_sha256": "0fb1093f99663da6796e5e9ffe387590e90b74ea2ac81798a22f54b671786e4e",
+      "source_commit": "b0a18be",
+      "status": "PLANNED",
+      "publication_status": "UNPUBLISHED",
+      "backend": "cycles",
+      "metadata": "examples/showcase/scenes/b17.json",
+      "required_feature_witnesses": [
+        "closed goblet stem rim and cavity",
+        "solid transmission 1.0",
+        "IOR 1.52",
+        "amber homogeneous volume absorption",
+        "emerald homogeneous volume absorption",
+        "generated HDR studio environment values above 1",
+        "fixed CPU Cycles 96 spp, 8 bounces, seed and OIDN"
+      ],
+      "assets": [
+        {
+          "kind": "original-procedural-source",
+          "creator": "lmvideo project",
+          "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
+          "sha256": "0fb1093f99663da6796e5e9ffe387590e90b74ea2ac81798a22f54b671786e4e",
+          "license": "MIT",
+          "license_file": "LICENSE-examples",
+          "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+        }
+      ],
+      "expected_outputs": [],
+      "rights_note": "Original procedural scene; no borrowed model or reference render."
     }
   ],
   "groups": [
