@@ -2291,8 +2291,8 @@
       "title": "Dynamic Matrix Instancing",
       "script": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
       "script_sha256": "b6145b48004aaebed2748b5c1bc874680a8bf099d32fcad77f5291ad8ff58bf5",
-      "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "source_commit": "b9816486ae3191e390d5fb755098753ca7518dfe",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -2330,14 +2330,14 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-11-dynamic-matrix-instancing.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
       "frame_hashes_sha256": null,
       "captured_stdout": [
-        "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-11-dynamic-matrix-instancing.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2572, \"instructions\": 62530, \"wall_ms\": 174, \"phase_ms\": {\"post\":2.298532,\"prepare\":0.007049,\"render\":149.092733,\"setup\":3.369608,\"write_media\":18.246628}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 149.092733, \"render_calls\": 1}}",
+        "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-11-dynamic-matrix-instancing.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2572, \"instructions\": 62530, \"wall_ms\": 435, \"phase_ms\": {\"post\":10.367066,\"prepare\":0.012338,\"render\":367.083176,\"setup\":6.509357,\"write_media\":49.698714}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 367.083176, \"render_calls\": 1}}",
         ""
       ],
       "profile": {
@@ -2356,37 +2356,80 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.75,
-        "user_s": 0.78,
+        "wall_s": 1.9,
+        "user_s": 0.91,
         "sys_s": 0.17,
-        "max_rss_kib": 303704,
-        "cold_job_wall_s": 0.7533776869822759,
+        "max_rss_kib": 299760,
+        "cold_job_wall_s": 1.9074514319945592,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 2.298532,
-          "prepare": 0.007049,
-          "render": 149.092733,
-          "setup": 3.369608,
-          "write_media": 18.246628
+          "post": 10.367066,
+          "prepare": 0.012338,
+          "render": 367.083176,
+          "setup": 6.509357,
+          "write_media": 49.698714
         },
-        "max_render_ms": 149.092733,
-        "max_frame_ms": 0
+        "max_render_ms": 367.083176,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 1.9,
+          "user_s": 0.91,
+          "sys_s": 0.17,
+          "max_rss_kib": 299760,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 299760,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 15,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 15,
       "repeat_verified": true,
@@ -2398,8 +2441,8 @@
       "title": "Animated Particle Wave & Point Sprites",
       "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
       "script_sha256": "9e8bf0f77b18dc8686ba4e5705655ea7212a8f99529bf45d857f99a41ff17d9e",
-      "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "source_commit": "b9816486ae3191e390d5fb755098753ca7518dfe",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -2442,21 +2485,21 @@
       "generated_asset_hashes": [],
       "expected_outputs": [
         {
-          "store_file": "bench-12-particle-wave-sprites-d59d5728e8e0acff0f0714449790e936066975247453f8e0afdb015691a168ac.png",
-          "sha256": "d59d5728e8e0acff0f0714449790e936066975247453f8e0afdb015691a168ac",
-          "bytes": 221718,
+          "store_file": "bench-12-particle-wave-sprites-1e8034ddc03006b81ff8f2f1e3f7af612a86afa61c9a7aa0d7079ae3171b3371.png",
+          "sha256": "1e8034ddc03006b81ff8f2f1e3f7af612a86afa61c9a7aa0d7079ae3171b3371",
+          "bytes": 222298,
           "dimensions": [
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-12-particle-wave-sprites-still.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         },
         {
-          "store_file": "bench-12-particle-wave-sprites-88fde26db6d25757ebcd9e8e8fe433cd92a5ed315eba8e52baee7ddffecbf36c.mp4",
-          "sha256": "88fde26db6d25757ebcd9e8e8fe433cd92a5ed315eba8e52baee7ddffecbf36c",
-          "bytes": 771071,
+          "store_file": "bench-12-particle-wave-sprites-ffb8c719b4e93fa224dae8e58384efd5c15393610d82f385c6d0d3bc7d2f9694.mp4",
+          "sha256": "ffb8c719b4e93fa224dae8e58384efd5c15393610d82f385c6d0d3bc7d2f9694",
+          "bytes": 785317,
           "codec": "h264",
           "pixel_format": "yuv420p",
           "dimensions": [
@@ -2466,26 +2509,26 @@
           "frames": 120,
           "fps": 30.0,
           "duration_s": 4.0,
-          "kind": "mp4",
           "file": "build/bench-12-particle-wave-sprites.mp4",
+          "kind": "mp4",
           "availability": "LOCAL_STORE_ONLY"
         },
         {
-          "store_file": "bench-12-particle-wave-sprites-poster-f2d79028fcee0812be2a625cbc677d90123f182d5ac6116a3d376094b718813e.png",
-          "sha256": "f2d79028fcee0812be2a625cbc677d90123f182d5ac6116a3d376094b718813e",
-          "bytes": 288467,
+          "store_file": "bench-12-particle-wave-sprites-poster-5dda03ecf7277b357c85f124e0b5135788b2c54fac1ef6d964e23a9bca5911e1.png",
+          "sha256": "5dda03ecf7277b357c85f124e0b5135788b2c54fac1ef6d964e23a9bca5911e1",
+          "bytes": 288810,
           "dimensions": [
             1280,
             720
           ],
-          "kind": "poster",
           "file": "build/bench-12-particle-wave-sprites.png",
+          "kind": "poster",
           "availability": "LOCAL_STORE_ONLY"
         },
         {
-          "store_file": "bench-12-particle-wave-sprites-5e1fdb244c1da6a58384de97a7c710950acf511a11e1dff319bced09dfe65c0b.webm",
-          "sha256": "5e1fdb244c1da6a58384de97a7c710950acf511a11e1dff319bced09dfe65c0b",
-          "bytes": 679045,
+          "store_file": "bench-12-particle-wave-sprites-361fa16bc8e751f6d2e60746d82a8c4117a90fc7b98ed7ca298f87027603bc3f.webm",
+          "sha256": "361fa16bc8e751f6d2e60746d82a8c4117a90fc7b98ed7ca298f87027603bc3f",
+          "bytes": 691562,
           "codec": "vp9",
           "pixel_format": "yuv420p",
           "dimensions": [
@@ -2495,14 +2538,14 @@
           "frames": 120,
           "fps": 30.0,
           "duration_s": 4.0,
-          "kind": "webm",
           "file": "build/bench-12-particle-wave-sprites.webm",
+          "kind": "webm",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
-      "frame_hashes_sha256": "420b767d2082b1ca3d83c7a0d1b10030978ab52218bfa66d592972c22d45d921",
+      "frame_hashes_sha256": "ecf1f25860fe5c88aeb9aabd33e46b65a0a89479e2d6a1af6e66d74933acaebe",
       "captured_stdout": [
-        "{\"ok\": true, \"result\": {\"output\": [\"B12: 2500 point sprites, 120 frames, 1280x720@30\"], \"file\": \"build/bench-12-particle-wave-sprites.mp4\", \"width\": 1280, \"height\": 720, \"frames\": 120, \"fps\": 30, \"bytecode_bytes\": 5796, \"instructions\": 15125103, \"wall_ms\": 8466, \"phase_ms\": {\"compose\":507.848188,\"encode\":718.512602,\"post\":75.088516,\"prepare\":4.643767,\"render\":2690.035626,\"setup\":67.994037,\"write_media\":4059.812038}, \"max_frame_ms\": 441.136516, \"max_render_ms\": 33.221187, \"render_calls\": 120}}",
+        "{\"ok\": true, \"result\": {\"output\": [\"B12: 2500 point sprites, 120 frames, 1280x720@30\"], \"file\": \"build/bench-12-particle-wave-sprites.mp4\", \"width\": 1280, \"height\": 720, \"frames\": 120, \"fps\": 30, \"bytecode_bytes\": 6747, \"instructions\": 15130170, \"wall_ms\": 7370, \"phase_ms\": {\"compose\":450.594750,\"encode\":610.071930,\"post\":61.349409,\"prepare\":4.231024,\"render\":2285.694841,\"setup\":73.534227,\"write_media\":3586.510113}, \"max_frame_ms\": 376.410547, \"max_render_ms\": 27.979708, \"render_calls\": 120}}",
         ""
       ],
       "profile": {
@@ -2521,39 +2564,81 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 1,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 1,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 9.03,
-        "user_s": 9.64,
-        "sys_s": 0.97,
-        "max_rss_kib": 302388,
-        "cold_job_wall_s": 9.035474757984048,
-        "packaging_webm_s": 4.52156779600773,
+        "wall_s": 7.9,
+        "user_s": 9.21,
+        "sys_s": 0.83,
+        "max_rss_kib": 301460,
+        "cold_job_wall_s": 7.908713934011757,
+        "packaging_webm_s": 4.062965125980554,
         "phase_ms": {
-          "compose": 507.848188,
-          "encode": 718.512602,
-          "post": 75.088516,
-          "prepare": 4.643767,
-          "render": 2690.035626,
-          "setup": 67.994037,
-          "write_media": 4059.812038
+          "compose": 450.59475,
+          "encode": 610.07193,
+          "post": 61.349409,
+          "prepare": 4.231024,
+          "render": 2285.694841,
+          "setup": 73.534227,
+          "write_media": 3586.510113
         },
-        "max_render_ms": 33.221187,
-        "max_frame_ms": 441.136516
+        "max_render_ms": 27.979708,
+        "max_frame_ms": 376.410547,
+        "native_process": {
+          "wall_s": 7.9,
+          "user_s": 9.21,
+          "sys_s": 0.83,
+          "max_rss_kib": 301460,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "wall_s": 4.06,
+          "user_s": 4.93,
+          "sys_s": 0.06,
+          "max_rss_kib": 218956,
+          "scope": "single ffmpeg packaging process",
+          "memory_limit_bytes": 2147483648
+        },
+        "peak_rss_kib": 301460,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 240,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 240,
       "repeat_verified": true,
@@ -2568,8 +2653,8 @@
       "title": "3D Render + 3D Hald CLUT & Post-Processing",
       "script": "examples/showcase/bench-13-aov-post-processing.lms",
       "script_sha256": "c078c2772697d54dc5055e49d0d02445a3551798a59f3b33c25ad33380e6deca",
-      "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "source_commit": "b9816486ae3191e390d5fb755098753ca7518dfe",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster+img",
@@ -2619,14 +2704,14 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-13-aov-post-processing.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
       "frame_hashes_sha256": null,
       "captured_stdout": [
-        "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-13-aov-post-processing.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 4562, \"instructions\": 231, \"wall_ms\": 198, \"phase_ms\": {\"compose\":10.411211,\"post\":129.305983,\"prepare\":0.150984,\"render\":30.971909,\"setup\":0.034256,\"write_media\":27.171962}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 26.245407, \"render_calls\": 3}}",
+        "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-13-aov-post-processing.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 4562, \"instructions\": 231, \"wall_ms\": 218, \"phase_ms\": {\"compose\":10.770247,\"post\":146.032807,\"prepare\":0.162212,\"render\":33.493487,\"setup\":0.042828,\"write_media\":28.126638}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 28.214313, \"render_calls\": 3}}",
         ""
       ],
       "profile": {
@@ -2645,38 +2730,81 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.86,
-        "user_s": 0.81,
+        "wall_s": 0.89,
+        "user_s": 0.86,
         "sys_s": 0.15,
-        "max_rss_kib": 307992,
-        "cold_job_wall_s": 0.8634828249923885,
+        "max_rss_kib": 301768,
+        "cold_job_wall_s": 0.8962749199999962,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "compose": 10.411211,
-          "post": 129.305983,
-          "prepare": 0.150984,
-          "render": 30.971909,
-          "setup": 0.034256,
-          "write_media": 27.171962
+          "compose": 10.770247,
+          "post": 146.032807,
+          "prepare": 0.162212,
+          "render": 33.493487,
+          "setup": 0.042828,
+          "write_media": 28.126638
         },
-        "max_render_ms": 26.245407,
-        "max_frame_ms": 0
+        "max_render_ms": 28.214313,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 0.89,
+          "user_s": 0.86,
+          "sys_s": 0.15,
+          "max_rss_kib": 301768,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 301768,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 20,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 20,
       "repeat_verified": true,
@@ -2688,8 +2816,8 @@
       "title": "Four-View CAD Engineering Quad & Uncapped Section View",
       "script": "examples/showcase/bench-14-cad-four-view-section.lms",
       "script_sha256": "cf2a154949f5bc5ae2f8d38c0384513efe0e72e30f23fa36948e7db4daa6b1b2",
-      "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "source_commit": "b9816486ae3191e390d5fb755098753ca7518dfe",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "cad+raster",
@@ -2745,7 +2873,9 @@
           "asset": "lmcad-linux-x64",
           "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
           "purpose": "External CAD producer for the authored STL; not bundled with lmvideo.",
-          "licence_notice": "The generated STL is authored procedural output under the example licence; lmcad and OCCT retain their own release licences."
+          "licence_notice": "The generated STL is authored procedural output under the example licence; lmcad and OCCT retain their own release licences.",
+          "verified_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
+          "selection": "verified copy first on job PATH"
         }
       ],
       "expected_outputs": [
@@ -2757,8 +2887,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-14-cad-four-view-section.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -2766,7 +2896,7 @@
       "captured_stdout": [
         "{\"ok\": true, \"result\": null}",
         "",
-        "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-14-cad-four-view-section.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3660, \"instructions\": 186, \"wall_ms\": 94, \"phase_ms\": {\"compose\":11.896489,\"post\":57.763746,\"prepare\":0.115635,\"render\":10.995694,\"setup\":0.036568,\"write_media\":13.345528}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 3.225958, \"render_calls\": 4}}",
+        "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-14-cad-four-view-section.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3660, \"instructions\": 186, \"wall_ms\": 76, \"phase_ms\": {\"compose\":10.107399,\"post\":45.378683,\"prepare\":0.102334,\"render\":9.451367,\"setup\":0.039582,\"write_media\":11.281583}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 2.647643, \"render_calls\": 4}}",
         ""
       ],
       "profile": {
@@ -2785,38 +2915,81 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.75,
-        "user_s": 0.71,
-        "sys_s": 0.14,
-        "max_rss_kib": 302748,
-        "cold_job_wall_s": 0.751774629985448,
+        "wall_s": 0.63,
+        "user_s": 0.64,
+        "sys_s": 0.17,
+        "max_rss_kib": 302772,
+        "cold_job_wall_s": 0.6321060939808376,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "compose": 11.896489,
-          "post": 57.763746,
-          "prepare": 0.115635,
-          "render": 10.995694,
-          "setup": 0.036568,
-          "write_media": 13.345528
+          "compose": 10.107399,
+          "post": 45.378683,
+          "prepare": 0.102334,
+          "render": 9.451367,
+          "setup": 0.039582,
+          "write_media": 11.281583
         },
-        "max_render_ms": 3.225958,
-        "max_frame_ms": 0
+        "max_render_ms": 2.647643,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 0.63,
+          "user_s": 0.64,
+          "sys_s": 0.17,
+          "max_rss_kib": 302772,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 302772,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 30,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 30,
       "repeat_verified": true,
@@ -2828,8 +3001,8 @@
       "title": "Molecular Trajectory Video with Live 2D Plot",
       "script": "examples/showcase/bench-15-molecular-trajectory.lms",
       "script_sha256": "0b38b14efbf848d62738077f1dc9c8250ce091c23e986c12dd01d0e966b14747",
-      "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "source_commit": "b9816486ae3191e390d5fb755098753ca7518dfe",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -2880,8 +3053,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-15-molecular-trajectory-still.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         },
         {
@@ -2897,8 +3070,8 @@
           "frames": 120,
           "fps": 30.0,
           "duration_s": 4.0,
-          "kind": "mp4",
           "file": "build/bench-15-molecular-trajectory.mp4",
+          "kind": "mp4",
           "availability": "LOCAL_STORE_ONLY"
         },
         {
@@ -2909,8 +3082,8 @@
             1280,
             720
           ],
-          "kind": "poster",
           "file": "build/bench-15-molecular-trajectory.png",
+          "kind": "poster",
           "availability": "LOCAL_STORE_ONLY"
         },
         {
@@ -2926,14 +3099,14 @@
           "frames": 120,
           "fps": 30.0,
           "duration_s": 4.0,
-          "kind": "webm",
           "file": "build/bench-15-molecular-trajectory.webm",
+          "kind": "webm",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
       "frame_hashes_sha256": "b7cb92c64acc3055158d544cc79a038dfaec45f0416e2f4ee76d83e6eab7600e",
       "captured_stdout": [
-        "{\"ok\": true, \"result\": {\"output\": [\"B15: projected trajectory labels, world orbital path, live energy plot, frame_cache 120 misses + 120 hits\"], \"file\": \"build/bench-15-molecular-trajectory.mp4\", \"width\": 1280, \"height\": 720, \"frames\": 120, \"fps\": 30, \"bytecode_bytes\": 9585, \"instructions\": 258416, \"wall_ms\": 17982, \"phase_ms\": {\"compose\":333.949509,\"encode\":551.055893,\"post\":72.865702,\"prepare\":3.747385,\"render_cache\":13387.105617,\"setup\":539.609168,\"write_media\":3078.986034}, \"max_frame_ms\": 392.709456, \"max_render_ms\": 119.973137, \"render_calls\": 240}}",
+        "{\"ok\": true, \"result\": {\"output\": [\"B15: projected trajectory labels, world orbital path, live energy plot, frame_cache 120 misses + 120 hits\"], \"file\": \"build/bench-15-molecular-trajectory.mp4\", \"width\": 1280, \"height\": 720, \"frames\": 120, \"fps\": 30, \"bytecode_bytes\": 9585, \"instructions\": 258416, \"wall_ms\": 18118, \"phase_ms\": {\"compose\":336.736786,\"encode\":589.197324,\"post\":73.064298,\"prepare\":3.675452,\"render_cache\":13406.992370,\"setup\":569.126716,\"write_media\":3122.326064}, \"max_frame_ms\": 422.092684, \"max_render_ms\": 135.842295, \"render_calls\": 240}}",
         ""
       ],
       "profile": {
@@ -2952,39 +3125,81 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 18.6,
-        "user_s": 18.98,
-        "sys_s": 0.74,
-        "max_rss_kib": 302364,
-        "cold_job_wall_s": 18.609358565008733,
-        "packaging_webm_s": 2.552812695998,
+        "wall_s": 21.1,
+        "user_s": 19.54,
+        "sys_s": 1.02,
+        "max_rss_kib": 302508,
+        "cold_job_wall_s": 18.81308024498867,
+        "packaging_webm_s": 2.447708341991529,
         "phase_ms": {
-          "compose": 333.949509,
-          "encode": 551.055893,
-          "post": 72.865702,
-          "prepare": 3.747385,
-          "render_cache": 13387.105617,
-          "setup": 539.609168,
-          "write_media": 3078.986034
+          "compose": 336.736786,
+          "encode": 589.197324,
+          "post": 73.064298,
+          "prepare": 3.675452,
+          "render_cache": 13406.99237,
+          "setup": 569.126716,
+          "write_media": 3122.326064
         },
-        "max_render_ms": 119.973137,
-        "max_frame_ms": 392.709456
+        "max_render_ms": 135.842295,
+        "max_frame_ms": 422.092684,
+        "native_process": {
+          "wall_s": 21.1,
+          "user_s": 19.54,
+          "sys_s": 1.02,
+          "max_rss_kib": 302508,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "wall_s": 2.44,
+          "user_s": 2.92,
+          "sys_s": 0.05,
+          "max_rss_kib": 218860,
+          "scope": "single ffmpeg packaging process",
+          "memory_limit_bytes": 2147483648
+        },
+        "peak_rss_kib": 302508,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 240,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 240,
       "repeat_verified": true,
@@ -3259,20 +3474,20 @@
             },
             {
               "type": "image",
-              "local_store_file": "bench-12-particle-wave-sprites-d59d5728e8e0acff0f0714449790e936066975247453f8e0afdb015691a168ac.png",
-              "sha256": "d59d5728e8e0acff0f0714449790e936066975247453f8e0afdb015691a168ac",
+              "local_store_file": "bench-12-particle-wave-sprites-1e8034ddc03006b81ff8f2f1e3f7af612a86afa61c9a7aa0d7079ae3171b3371.png",
+              "sha256": "1e8034ddc03006b81ff8f2f1e3f7af612a86afa61c9a7aa0d7079ae3171b3371",
               "caption": "Animated Particle Wave & Point Sprites"
             },
             {
               "type": "video",
-              "local_store_file": "bench-12-particle-wave-sprites-88fde26db6d25757ebcd9e8e8fe433cd92a5ed315eba8e52baee7ddffecbf36c.mp4",
-              "sha256": "88fde26db6d25757ebcd9e8e8fe433cd92a5ed315eba8e52baee7ddffecbf36c",
+              "local_store_file": "bench-12-particle-wave-sprites-ffb8c719b4e93fa224dae8e58384efd5c15393610d82f385c6d0d3bc7d2f9694.mp4",
+              "sha256": "ffb8c719b4e93fa224dae8e58384efd5c15393610d82f385c6d0d3bc7d2f9694",
               "caption": "Animated Particle Wave & Point Sprites"
             },
             {
               "type": "video",
-              "local_store_file": "bench-12-particle-wave-sprites-5e1fdb244c1da6a58384de97a7c710950acf511a11e1dff319bced09dfe65c0b.webm",
-              "sha256": "5e1fdb244c1da6a58384de97a7c710950acf511a11e1dff319bced09dfe65c0b",
+              "local_store_file": "bench-12-particle-wave-sprites-361fa16bc8e751f6d2e60746d82a8c4117a90fc7b98ed7ca298f87027603bc3f.webm",
+              "sha256": "361fa16bc8e751f6d2e60746d82a8c4117a90fc7b98ed7ca298f87027603bc3f",
               "caption": "Animated Particle Wave & Point Sprites"
             }
           ]
@@ -3411,10 +3626,10 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "75d06cbc17e353832a6dfaee0c62b70af4fdc00d4a31bd3fe78c722d01e8a6a0",
+    "sha256": "b94dd3f89e93fff670f076469698691f80fe29de4fc80adc044e990be3d28010",
     "tiers": {
       "1": {
-        "verified": 10,
+        "verified": 15,
         "total": 15
       },
       "2": {
