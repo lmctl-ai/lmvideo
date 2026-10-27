@@ -1,0 +1,24 @@
+# Phase 6 CPU prototype: one canonical Scene, glTF data handoff, in-process Cycles/OIDN Image.
+# Uses a matching local candidate binary; no unreleased install tag is invented.
+mkdir("build");p=_lmcode_ cli="lmvideo";
+image_assert_true(render_available("cycles"));
+let source=scene3d().threads(4).background("#000000").ambient(0.0).tonemap("aces",1.0);
+source.camera(camera3d().look_at(0.0,1.5,5.5,0.0,1.1,0.0).perspective(42.0,0.1,100.0));
+let white=material("#dcdcdc",0.0,0.8);let red=material("#c23c2c",0.0,0.8);let green=material("#399d52",0.0,0.8);
+source.add(mesh_box(4.0,0.1,4.0),white).position(0.0,-0.05,0.0);
+source.add(mesh_box(4.0,3.0,0.1),white).position(0.0,1.45,-2.0);
+source.add(mesh_box(0.1,3.0,4.0),red).position(-2.0,1.45,0.0);
+source.add(mesh_box(0.1,3.0,4.0),green).position(2.0,1.45,0.0);
+source.add(mesh_box(1.3,0.04,1.0),material("#ffffff",0.0,1.0).emissive("#fff0d8",12.0)).position(0.0,2.8,0.0);
+source.add(mesh_beveled_box(1.0,1.3,1.0,0.05),white).position(-0.7,0.65,-0.3).rotation(0.0,22.0,0.0);
+source.add(mesh_sphere(0.65,24,36),material("#dcdcdc",0.7,0.2)).position(0.8,0.65,0.3);
+source.export_gltf("build/cycles-room.glb",true);
+let scene=scene3d().threads(4).background("#000000").ambient(0.0).tonemap("aces",1.0);let imported=scene.import_gltf("build/cycles-room.glb",1.0);
+# The third argument is render="cycles"; subsequent values are spp, bounces, seed, CPU denoise.
+let image=scene.render_image(640,480,"cycles",32,4,42,true);
+image_assert_true(image.width()==640&&image.height()==480&&image.stddev(0)>0.04&&image.mean(0)>0.02);
+image.save("build/cycles-product-still.png");
+image.copy().vignette(270.0,0.9).text(16.0,466.0,"CPU Cycles | 32 spp | 4 bounces | seed 42 | OIDN",16.0,1.0,1.0,1.0,1.0).save("build/cycles-product-still-captioned.png");
+out.print("GLB data imported; canonical Image returned by in-process CPU Cycles with source-built OIDN.");
+end _lmcode_
+savedsl(p,"build/cycles-product-still.dslb");r=system(concat(dsl_cli(p),["--dsl","build/cycles-product-still.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

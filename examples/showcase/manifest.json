@@ -2997,5 +2997,14 @@
         }
       ]
     }
+  ],
+  "additional_candidates": [
+    {
+      "slug": "cycles-product-still",
+      "metadata": "examples/showcase/cycles-prototype.json",
+      "script": "examples/cycles-product-still.lms",
+      "status": "LOCAL_PROTOTYPE_UNPUBLISHED",
+      "description": "Initial glTF-to-canonical-Image CPU Cycles/OIDN prototype; separate from the Tier-1 raster gate."
+    }
   ]
 }

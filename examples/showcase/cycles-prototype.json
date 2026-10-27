@@ -1,0 +1,50 @@
+{
+  "format": 1,
+  "status": "LOCAL_PROTOTYPE_UNPUBLISHED",
+  "implementation_commit": "8d112725b7828d25c7f8701d9904e7f94d9df8c7",
+  "source": "examples/cycles-product-still.lms",
+  "source_sha256": "17a4607cbc4445867d5f068951f0a443410084103d2aa66b81e9ff9e4a9daae5",
+  "schema_sha256": "3f3465c86f719339444aafb6abcd15466dc6cd61982ed06dfb4f67448d2195e7",
+  "host_sha256": "6e40d03fab2d6e86f62974fc8bad09cb2fc8b58cfbd76f94fde17e751ad5a6c3",
+  "internal_module_sha256": "faf4b6e451e6360c4111f296b5317346b61b45193ef6de4c20e007a97343f39b",
+  "sdk_config_sha256": "a15cf9f04bbf4c3bf502aa31533b935c54b49d84c0dac36faf92e4005bf9f256",
+  "cycles_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+  "samples": 32,
+  "bounces": 4,
+  "seed": 42,
+  "threads": 4,
+  "denoise": "source-built CPU OIDN 2.5.0",
+  "same_process": true,
+  "gltf_handoff": true,
+  "repeat_png_and_pixels_identical": true,
+  "outputs": [
+    {
+      "path": "build/cycles-product-still-captioned.png",
+      "sha256": "3612223dffc57ef0f59a530c0087a760a7ce9e8ef06862edb0ce0569cf1371d8",
+      "bytes": 189007,
+      "dimensions": [
+        640,
+        480
+      ],
+      "rgba_sha256": "232e353d1b8bb64504c9b2a4e7b9129d274797c0110fa21114d581916b7ed0f4",
+      "store_file": "cycles-product-still-3612223dffc57ef0f59a530c0087a760a7ce9e8ef06862edb0ce0569cf1371d8.png"
+    },
+    {
+      "path": "build/cycles-product-still.png",
+      "sha256": "21a5b7a075314398c3a610fffd361e81eb82420f6c42eb9ae26d57270e99c3d6",
+      "bytes": 177422,
+      "dimensions": [
+        640,
+        480
+      ],
+      "rgba_sha256": "37d3b36bf547273ad42a9e80b56ab55c4916463ce99126fda247aa71586da95c",
+      "store_file": "cycles-product-still-21a5b7a075314398c3a610fffd361e81eb82420f6c42eb9ae26d57270e99c3d6.png"
+    }
+  ],
+  "publication": false,
+  "limitations": [
+    "Linux x64 native development profile; not portable packaging",
+    "Initial supported triangle/Principled/camera/light profile only; not full Phase 6 parity"
+  ],
+  "licence": "MIT original example; no imported artwork"
+}
