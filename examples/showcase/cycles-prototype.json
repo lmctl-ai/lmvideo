@@ -46,5 +46,7 @@
     "Linux x64 native development profile; not portable packaging",
     "Initial supported triangle/Principled/camera/light profile only; not full Phase 6 parity"
   ],
-  "licence": "MIT original example; no imported artwork"
+  "licence": "MIT original example; no imported artwork",
+  "implementation_repository": "lmctlhq/lmvideo",
+  "implementation_visibility": "private; commit records local test provenance, not a public source checkout"
 }

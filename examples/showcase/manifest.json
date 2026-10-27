@@ -3006,5 +3006,7 @@
       "status": "LOCAL_PROTOTYPE_UNPUBLISHED",
       "description": "Initial glTF-to-canonical-Image CPU Cycles/OIDN prototype; separate from the Tier-1 raster gate."
     }
-  ]
+  ],
+  "implementation_repository": "lmctlhq/lmvideo",
+  "implementation_visibility": "private; commit records local test provenance, not a public source checkout"
 }

@@ -29,7 +29,9 @@ Video encoding runs the `ffmpeg` on your `PATH` as a separate process; see priva
 
 The [Tier-1 content manifest](examples/showcase/manifest.json) contains fifteen
 original reproducible scenes and exact local render hashes. These sources require
-the matching development implementation recorded in the manifest; they are not a
+the matching private development implementation recorded in the manifest; its
+commit identifiers record local test provenance, not publicly available source.
+These examples are not a
 claim that the APIs exist in the latest published binary. Renders stay in the
 local content-addressed store; this repository adds source and metadata only.
 The separate [CPU Cycles/OIDN example](examples/cycles-product-still.lms) exports
