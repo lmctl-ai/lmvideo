@@ -3626,7 +3626,7 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "b94dd3f89e93fff670f076469698691f80fe29de4fc80adc044e990be3d28010",
+    "sha256": "8f31f66cc0fc2a109e31f59ecc07d4489f76e42130b372994b64f71256968a4c",
     "tiers": {
       "1": {
         "verified": 15,

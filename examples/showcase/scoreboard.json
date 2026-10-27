@@ -4057,7 +4057,6 @@
       "id": "B11",
       "tier": 1,
       "status": "VERIFIED",
-      "reason": "Awaiting target-specific executed acceptance evidence.",
       "evidence": {
         "script": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
         "script_sha256": "b6145b48004aaebed2748b5c1bc874680a8bf099d32fcad77f5291ad8ff58bf5",
@@ -4468,7 +4467,6 @@
       "id": "B12",
       "tier": 1,
       "status": "VERIFIED",
-      "reason": "Awaiting target-specific executed acceptance evidence.",
       "evidence": {
         "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
         "script_sha256": "9e8bf0f77b18dc8686ba4e5705655ea7212a8f99529bf45d857f99a41ff17d9e",
@@ -4972,7 +4970,6 @@
       "id": "B13",
       "tier": 1,
       "status": "VERIFIED",
-      "reason": "Awaiting target-specific executed acceptance evidence.",
       "evidence": {
         "script": "examples/showcase/bench-13-aov-post-processing.lms",
         "script_sha256": "c078c2772697d54dc5055e49d0d02445a3551798a59f3b33c25ad33380e6deca",
@@ -5405,7 +5402,6 @@
       "id": "B14",
       "tier": 1,
       "status": "VERIFIED",
-      "reason": "Awaiting target-specific executed acceptance evidence.",
       "evidence": {
         "script": "examples/showcase/bench-14-cad-four-view-section.lms",
         "script_sha256": "cf2a154949f5bc5ae2f8d38c0384513efe0e72e30f23fa36948e7db4daa6b1b2",
@@ -5860,7 +5856,6 @@
       "id": "B15",
       "tier": 1,
       "status": "VERIFIED",
-      "reason": "Awaiting target-specific executed acceptance evidence.",
       "evidence": {
         "script": "examples/showcase/bench-15-molecular-trajectory.lms",
         "script_sha256": "0b38b14efbf848d62738077f1dc9c8250ce091c23e986c12dd01d0e966b14747",
