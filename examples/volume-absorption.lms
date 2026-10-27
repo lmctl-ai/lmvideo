@@ -1,0 +1,16 @@
+# G.9 candidate: homogeneous Beer-Lambert absorption through a closed solid.
+# The volume profile is CPU Cycles only; thin-wall absorption is rejected.
+mkdir("build");
+program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#101820").ambient(0.0);
+scene.camera(camera3d().look_at(0.0,0.0,4.0,0.0,0.0,0.0).ortho(3.0,0.1,30.0));
+let medium=material("#ffffff",0.0,0.0).transmission(1.0).ior(1.0).volume_absorption("#8040cc",1.0);
+scene.add(mesh_box(2.0,2.0,0.5),medium);
+scene.add(mesh_box(2.5,2.5,0.01),material("#000000",0.0,1.0).emissive("#ffffff",1.0)).position(0.0,0.0,-1.0);
+let image=scene.render_image(256,256,"cycles",48,8,11,false);
+image_assert_true(image.pixel(128,128,1)<image.pixel(128,128,0)&&image.pixel(128,128,0)<image.pixel(128,128,2));
+image_assert_true(image.pixel(30,128,0)>0.95);image.save("build/volume-absorption.png");
+out.print("G9 volume candidate: homogeneous Beer-Lambert; B17 geometry pending");
+end _lmcode_
+savedsl(program,"build/volume-absorption.dslb");
+r=system(concat(dsl_cli(program),["--dsl","build/volume-absorption.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

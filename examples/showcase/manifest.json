@@ -3831,6 +3831,13 @@
       "metadata": "examples/showcase/scenes/g2-closed-lathe.json",
       "status": "CANDIDATE",
       "description": "Original closed outer/inner profiles and solid geometry witness; B17 still requires independent optical acceptance."
+    },
+    {
+      "slug": "volume-absorption",
+      "script": "examples/volume-absorption.lms",
+      "metadata": "examples/showcase/scenes/g9-volume-absorption.json",
+      "status": "CANDIDATE",
+      "description": "Known-depth original volume feature witness; separate from B17 benchmark acceptance."
     }
   ],
   "implementation_repository": "lmctlhq/lmvideo",

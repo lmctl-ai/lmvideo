@@ -1,0 +1,41 @@
+{
+  "id": "G9-volume-absorption",
+  "title": "Homogeneous absorption through a known geometric depth",
+  "script": "examples/volume-absorption.lms",
+  "script_sha256": "324b5f689982e4be3b39b6c167459a60c550829e3ee0ad01bd699d7a3a119c4e",
+  "visual_specification": "256x256 white emitting panel viewed through a half-metre closed volume, with a chromatic centre and unobstructed white border.",
+  "required_feature_witnesses": [
+    "homogeneous closed manifold volume",
+    "linear attenuation factors decoded once from sRGB literals",
+    "world-distance Beer-Lambert attenuation",
+    "explicit raster/thin-wall refusals"
+  ],
+  "backend": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 48,
+    "bounces": 8,
+    "seed": 11,
+    "denoise": "none"
+  },
+  "dimensions": {
+    "still": [
+      256,
+      256
+    ]
+  },
+  "cpu_budget_seconds": 15,
+  "status": "CANDIDATE",
+  "publication_status": "UNPUBLISHED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project; original geometry and medium",
+      "source": "examples/volume-absorption.lms",
+      "sha256": "324b5f689982e4be3b39b6c167459a60c550829e3ee0ad01bd699d7a3a119c4e",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ]
+}
