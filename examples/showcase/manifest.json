@@ -2397,7 +2397,7 @@
       "slug": "bench-12-particle-wave-sprites",
       "title": "Animated Particle Wave & Point Sprites",
       "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
-      "script_sha256": "118ca48d4b6d5c067dc40e5aef1a16a45aa412a997487cece1ee62a5653cca00",
+      "script_sha256": "9e8bf0f77b18dc8686ba4e5705655ea7212a8f99529bf45d857f99a41ff17d9e",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
       "status": "LOCAL_PASS",
       "publication_status": "UNPUBLISHED",
@@ -2422,7 +2422,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-12-particle-wave-sprites.lms",
-          "sha256": "118ca48d4b6d5c067dc40e5aef1a16a45aa412a997487cece1ee62a5653cca00",
+          "sha256": "9e8bf0f77b18dc8686ba4e5705655ea7212a8f99529bf45d857f99a41ff17d9e",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -3244,7 +3244,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
-              "script_sha256": "118ca48d4b6d5c067dc40e5aef1a16a45aa412a997487cece1ee62a5653cca00"
+              "script_sha256": "9e8bf0f77b18dc8686ba4e5705655ea7212a8f99529bf45d857f99a41ff17d9e"
             },
             {
               "type": "image",
