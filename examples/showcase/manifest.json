@@ -3361,7 +3361,7 @@
       "slug": "bench-17-glass-goblets-volume",
       "title": "Glass Goblets with Homogeneous Absorption",
       "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
-      "script_sha256": "0fb1093f99663da6796e5e9ffe387590e90b74ea2ac81798a22f54b671786e4e",
+      "script_sha256": "dec0f36566b50454bbb373af094a5f307e2876bfab1781a4ba89950c2b063826",
       "source_commit": "b0a18be",
       "status": "PLANNED",
       "publication_status": "UNPUBLISHED",
@@ -3381,7 +3381,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
-          "sha256": "0fb1093f99663da6796e5e9ffe387590e90b74ea2ac81798a22f54b671786e4e",
+          "sha256": "dec0f36566b50454bbb373af094a5f307e2876bfab1781a4ba89950c2b063826",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
