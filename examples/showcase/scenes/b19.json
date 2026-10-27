@@ -1,0 +1,44 @@
+{
+  "id": "B19",
+  "title": "Abstract Busts with Random-Walk Subsurface",
+  "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
+  "visual_specification": "900x560 CPU Cycles still showing original jade and warm-skin abstract bust assemblies, closed primitive parts, raw metre channel radii, thin backlit ear laminas, and visible backlight transmission.",
+  "required_feature_witnesses": [
+    "original closed-part abstract bust assembly",
+    "warm skin subsurface radii in metres",
+    "jade subsurface radii in metres",
+    "thin backlit ear/lamina details",
+    "random-walk CPU Cycles method",
+    "fixed 96 spp, 8 bounces, seed and OIDN",
+    "closed manifold transport boundaries"
+  ],
+  "cpu_budget_seconds": 180,
+  "backend": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 96,
+    "bounces": 8,
+    "seed": 20261030,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-19-sss-abstract-bust.lms",
+      "sha256": "9d16f313bfccc7ea31d11b1e0267081b1a96810bf54b9e38e26cfbe2d7f013d4",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "rights_note": "No human scan, borrowed model, or third-party render; all bust parts and lighting are authored procedural geometry.",
+  "script_sha256": "9d16f313bfccc7ea31d11b1e0267081b1a96810bf54b9e38e26cfbe2d7f013d4"
+}
