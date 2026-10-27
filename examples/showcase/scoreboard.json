@@ -6348,14 +6348,14 @@
     {
       "id": "B16",
       "tier": 2,
-      "status": "PLANNED",
+      "status": "VERIFIED",
       "evidence": {
         "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
         "script_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
         "source_repository": "lmctl-ai/lmvideo",
-        "source_commit": "3410d618f56d603faeb2f7d5e484856c73d2f65e",
+        "source_commit": "8a2c5d667cd2f1333d59b10306b54b1b6da6f6df",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "70a6d1b6761f6bea45d7ba96a81aaf9dc63f0965",
+        "implementation_commit": "1b31d642ad7c68abd26bb298d01a123c7f83528d",
         "required_features": [
           "Cornell red and green wall colour bleed",
           "one actual rectangular ceiling area light",
@@ -6369,7 +6369,7 @@
           {
             "source": "examples/showcase/bench-16-cornell-transmission-ior.lms",
             "source_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
-            "stdout_sha256": "4d005839d01283b348a3c83c8141e7fbbcc74d031721cd2941df067f5f973d82",
+            "stdout_sha256": "09f990364017e8ce4102ae476ced880affe8b13eba18db41e7dd7b8a245097f7",
             "command": [
               "lmctl",
               "autorun",
@@ -6385,15 +6385,26 @@
               "fixed CPU Cycles 64 spp, 6 bounces, seed and OIDN",
               "quantitative one-bounce versus six-bounce GI witness"
             ],
-            "scope": "Actual two cold executions, signed red/green floor-patch gain, full denoised repeats and independent source/visual review."
+            "scope": "Two fresh exact public-source executions and independently reviewed authored inputs/assertions."
           },
           {
             "source": "tests/scene3d_cycles_test.cpp",
-            "source_sha256": "c767ec8253a540c4d13d94f8ae8ac47040fb87831ecd841aa6312b0d6d9bc3c3",
-            "stdout_sha256": "f7b8a52dabd0850b270e1a02905c97ba9526a796cfa6cb53624d94cddf61bc51",
-            "stdout": "checker MSE=21.9022\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 144 classified samples\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "source_sha256": "07f1c44c971fcb0d96ce963c27f02230837debdcb1e2ab7c1a21c90c7da6ad37",
+            "stdout_sha256": "a00ac771cdb562aa390b50506de4703b47c2230e4503dca2abc49e5fd0d46efe",
+            "stdout": "checker MSE=21.9022\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
             "command": [
-              "build/g9-cycles/scene3d_cycles_test"
+              "build/closed-boundary-cycles/scene3d_cycles_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "528fb92fc8e9041909a0bf8f4cdf04a4d24f58b4e7ab57fe72daccd879861006",
+            "stdout_sha256": "33ce25af8508620118df0a6ac2ba06ef707911abb57b1f910667ace78ebb613a",
+            "stdout": "106 checks, 0 failures\n",
+            "command": [
+              "build/scene3d_mesh_test"
             ],
             "exit_code": 0,
             "features": []
@@ -6423,9 +6434,9 @@
         ],
         "outputs": [
           {
-            "store_file": "bench-16-cornell-transmission-ior-3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb.png",
-            "sha256": "3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb",
-            "bytes": 152984,
+            "store_file": "bench-16-cornell-transmission-ior-ad0398ceed6471fe3a38efd1ad47f0c16459dd360123a6e814e95111d01091c2.png",
+            "sha256": "ad0398ceed6471fe3a38efd1ad47f0c16459dd360123a6e814e95111d01091c2",
+            "bytes": 153127,
             "dimensions": [
               900,
               560
@@ -6449,14 +6460,14 @@
             "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
             "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
             "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-            "host": "5101c7248f2f6d77d97650cda679182cf0f221a36e32edaf5927cb7b35f9a45c",
+            "host": "456c4831d39fc5d6bf0337a31d4fe3655a41d809060b0748703a30a00c94d8f5",
             "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
-            "cycles_module": "c3ba4a6b5bcd72db6b8923ff8973537b0d879f60ed817e9663614ded603a2064",
+            "cycles_module": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1",
             "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
           },
           "compiler_version": "lmscript 0.2.426",
           "host_version": "lmvideo 0.1.0",
-          "schema_sha256": "cb1c55a295e3300aeb7cf50aad9f142200cf7ad148efd67cdb6f2aa6d17a03dc",
+          "schema_sha256": "edad46584e87ceda1f0fdec36cadc079cbc445a5e7f64cc7b8ae595b0dcd27da",
           "backend": "cycles",
           "renderer": "cycles",
           "device": "CPU",
@@ -6470,35 +6481,34 @@
           "samples_per_axis": 64,
           "denoise": "OIDN",
           "seed": 20261027,
-          "cycles_module_sha256": "c3ba4a6b5bcd72db6b8923ff8973537b0d879f60ed817e9663614ded603a2064",
+          "cycles_module_sha256": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1",
           "build": {
-            "implementation_cpp_tree": "3a9732bb1d153306f055a1bfe7cddf625709d82b",
+            "implementation_cpp_tree": "558f6f902cf3d3d38e6c2ddbf8475223bddf8584",
             "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
-            "sdk_config_sha256": "aa43e7c54b3bea5224893e00cd1fcde0d930fc3f4aae3b089b1b2dd41a6ada70",
-            "scope": "Existing pinned CPU SDK; current source host and module rebuilt together; x86_64 local gate only."
+            "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
           }
         },
         "timing": {
-          "wall_s": 63.16,
-          "user_s": 135.55,
-          "sys_s": 1.08,
-          "max_rss_kib": 607496,
-          "cold_job_wall_s": 60.68820791898179,
+          "wall_s": 34.03,
+          "user_s": 130.12,
+          "sys_s": 0.9,
+          "max_rss_kib": 588880,
+          "cold_job_wall_s": 31.629895288002444,
           "packaging_webm_s": 0,
           "phase_ms": {
-            "post": 8.785728,
-            "prepare": 0.199766,
-            "render": 58812.998623,
-            "setup": 0.092601,
-            "write_media": 46.285929
+            "post": 7.930783,
+            "prepare": 0.1568,
+            "render": 31024.310307,
+            "setup": 0.080885,
+            "write_media": 42.177043
           },
-          "max_render_ms": 23751.506844,
+          "max_render_ms": 10977.886534,
           "max_frame_ms": 0,
           "native_process": {
-            "wall_s": 63.16,
-            "user_s": 135.55,
-            "sys_s": 1.08,
-            "max_rss_kib": 607496,
+            "wall_s": 34.03,
+            "user_s": 130.12,
+            "sys_s": 0.9,
+            "max_rss_kib": 588880,
             "scope": "lmctl autorun process tree (time max RSS)",
             "memory_limit_bytes": 2147483648,
             "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
@@ -6512,72 +6522,297 @@
             "max_rss_kib": null,
             "memory_limit_bytes": null
           },
-          "peak_rss_kib": 607496,
+          "peak_rss_kib": 588880,
           "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
-          "budget_seconds": 90,
           "cache_hit": false,
-          "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals are retained separately"
+          "budget_seconds": 90,
+          "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
         },
         "stages": {
           "bake": {
             "status": "UNAVAILABLE",
             "ms": null,
-            "reason": "Included in native prepare/render spans; no separate measurement."
+            "reason": "Included in native prepare/render spans; not separately measured."
           },
           "import": {
             "status": "UNAVAILABLE",
             "ms": null,
-            "reason": "Included in native prepare/render spans; no separate measurement."
+            "reason": "Included in native prepare/render spans; not separately measured."
           },
           "denoise": {
             "status": "UNAVAILABLE",
             "ms": null,
-            "reason": "Included in native prepare/render spans; no separate measurement."
+            "reason": "Included in native prepare/render spans; not separately measured."
           },
           "render": {
             "status": "MEASURED",
-            "ms": 58812.998623,
-            "scope": "All actual Cycles render sessions, including OIDN."
+            "ms": 31024.310307,
+            "scope": "Actual complete Cycles rendering including OIDN."
           },
           "encode": {
             "status": "MEASURED",
-            "ms": 46.285929,
-            "scope": "Native image encoding/write span."
+            "ms": 42.177043,
+            "scope": "Native image encode/write span."
           }
         },
         "repeat_verified": true,
-        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B16 Cornell CPU Cycles | 64 spp | 6 bounces | seed 20261027 | OIDN | GI PSNR one-bounce=33.8245771227825 | redPatch=0.0352941176470588,0.011764705882353 | greenPatch=0.0313725490196078,0.0196078431372549\"], \"file\": \"build/bench-16-cornell-transmission-ior.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 5693, \"instructions\": 378, \"wall_ms\": 58868, \"phase_ms\": {\"post\":8.785728,\"prepare\":0.199766,\"render\":58812.998623,\"setup\":0.092601,\"write_media\":46.285929}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 23751.506844, \"render_calls\": 3}}\n\n",
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B16 Cornell CPU Cycles | 64 spp | 6 bounces | seed 20261027 | OIDN | GI PSNR one-bounce=30.2597255851317 | redPatch=0.0352941176470588,0.011764705882353 | greenPatch=0.0274509803921569,0.0156862745098039\"], \"file\": \"build/bench-16-cornell-transmission-ior.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 5693, \"instructions\": 378, \"wall_ms\": 31074, \"phase_ms\": {\"post\":7.930783,\"prepare\":0.156800,\"render\":31024.310307,\"setup\":0.080885,\"write_media\":42.177043}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 10977.886534, \"render_calls\": 3}}\n\n",
         "font_notices": [
           {
             "schema": "lmvideo-fonts/v1",
-            "payload_sha256": "3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb",
+            "payload_sha256": "ad0398ceed6471fe3a38efd1ad47f0c16459dd360123a6e814e95111d01091c2",
             "fonts": []
           }
         ],
-        "budget_note": "Three64-spp renders per cold script, including direct/indirect probes and an internal repeat; compiler, job setup and PNG output included. No cache hit.",
+        "budget_note": "Fresh cold job, no cache hit; entire script/setup/render/encode included. Corrected default closed transport retains entry and exit boundaries.",
         "visual_check": {
           "score": 94,
           "verdict": "pass",
           "category_match": true,
           "differences": [
-            "The black outer surround is slightly larger than the room bounds",
-            "The glass sphere remains partly behind the short block but is clearly legible"
+            "Original piecewise geometry retains intentional faceting; no reference artwork is included."
           ],
-          "suggestions": [
-            "Keep the current centered camera and area-light-only setup",
-            "Retain the visible glass and mirror witnesses while preserving the measured patch oracle"
-          ],
-          "reasoning": "The revised render is a centered Cornell room with clearly visible red/green walls, rotated blocks, mirror and glass spheres, and an actual ceiling area light. The composition satisfies the written visual specification at the review threshold."
-        },
-        "capture_status": "INVALID_CLOSED_TRANSPORT_EXIT_INTERFACE"
-      },
-      "reason": "Default closed-glass exit boundary was culled; requires a corrected renderer and fresh acceptance capture."
+          "suggestions": [],
+          "reasoning": "The original Cornell composition remains legible with the corrected glass exit interface; numerical Snell/TIR and colour-bleed controls establish the transport behavior.",
+          "generated_sha256": "ad0398ceed6471fe3a38efd1ad47f0c16459dd360123a6e814e95111d01091c2"
+        }
+      }
     },
     {
       "id": "B17",
       "tier": 2,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
+        "script_sha256": "0d703d844fb4251563cea096786140723885cdd8181344ab075f23d69d014c96",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "8a2c5d667cd2f1333d59b10306b54b1b6da6f6df",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "1b31d642ad7c68abd26bb298d01a123c7f83528d",
+        "required_features": [
+          "closed goblet stem rim and cavity",
+          "solid transmission 1.0",
+          "IOR 1.52",
+          "amber homogeneous volume absorption",
+          "emerald homogeneous volume absorption",
+          "generated HDR studio environment values above 1",
+          "fixed CPU Cycles 96 spp, 8 bounces, seed and OIDN",
+          "total internal reflection critical-angle controls"
+        ],
+        "feature_checks": [
+          {
+            "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
+            "source_sha256": "0d703d844fb4251563cea096786140723885cdd8181344ab075f23d69d014c96",
+            "stdout_sha256": "d6eab1c20b36c08abad4fbcc8ba5afb8d6f7f6287f5cf1c1d8f92ccd5671ea5f",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-17-glass-goblets-volume.lms"
+            ],
+            "exit_code": 0,
+            "features": [
+              "closed goblet stem rim and cavity",
+              "solid transmission 1.0",
+              "IOR 1.52",
+              "amber homogeneous volume absorption",
+              "emerald homogeneous volume absorption",
+              "generated HDR studio environment values above 1",
+              "fixed CPU Cycles 96 spp, 8 bounces, seed and OIDN"
+            ],
+            "scope": "Two fresh exact public-source executions and independently reviewed authored inputs/assertions."
+          },
+          {
+            "source": "tests/scene3d_cycles_test.cpp",
+            "source_sha256": "07f1c44c971fcb0d96ce963c27f02230837debdcb1e2ab7c1a21c90c7da6ad37",
+            "stdout_sha256": "a00ac771cdb562aa390b50506de4703b47c2230e4503dca2abc49e5fd0d46efe",
+            "stdout": "checker MSE=21.9022\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "command": [
+              "build/closed-boundary-cycles/scene3d_cycles_test"
+            ],
+            "exit_code": 0,
+            "features": [
+              "total internal reflection critical-angle controls"
+            ]
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "528fb92fc8e9041909a0bf8f4cdf04a4d24f58b4e7ab57fe72daccd879861006",
+            "stdout_sha256": "33ce25af8508620118df0a6ac2ba06ef707911abb57b1f910667ace78ebb613a",
+            "stdout": "106 checks, 0 failures\n",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
+            "sha256": "0d703d844fb4251563cea096786140723885cdd8181344ab075f23d69d014c96",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-17-glass-goblets-volume-2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f.png",
+            "sha256": "2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f",
+            "bytes": 142321,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-17-glass-goblets-volume.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "456c4831d39fc5d6bf0337a31d4fe3655a41d809060b0748703a30a00c94d8f5",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "edad46584e87ceda1f0fdec36cadc079cbc445a5e7f64cc7b8ae595b0dcd27da",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 96,
+            "bounces": 8,
+            "seed": 20261028,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 96,
+          "denoise": "OIDN",
+          "seed": 20261028,
+          "cycles_module_sha256": "34d4e33c2e40a2f1efd13bdf8098088e7a0ef4f980648be4743d56cb0b6573b1",
+          "build": {
+            "implementation_cpp_tree": "558f6f902cf3d3d38e6c2ddbf8475223bddf8584",
+            "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+            "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+          }
+        },
+        "timing": {
+          "wall_s": 43.77,
+          "user_s": 53.16,
+          "sys_s": 0.47,
+          "max_rss_kib": 551252,
+          "cold_job_wall_s": 41.48495587898651,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 4.47623,
+            "prepare": 1.669398,
+            "render": 40220.592717,
+            "setup": 27.56776,
+            "write_media": 61.157931
+          },
+          "max_render_ms": 40220.592717,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 43.77,
+            "user_s": 53.16,
+            "sys_s": 0.47,
+            "max_rss_kib": 551252,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 551252,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "cache_hit": false,
+          "budget_seconds": 180,
+          "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 40220.592717,
+            "scope": "Actual complete Cycles rendering including OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 61.157931,
+            "scope": "Native image encode/write span."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B17 solid glass goblets | IOR 1.52 | transmission 1 | amber/emerald homogeneous absorption | 96 spp | 8 bounces | seed 20261028 | OIDN\"], \"file\": \"build/bench-17-glass-goblets-volume.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 5041, \"instructions\": 37175, \"wall_ms\": 40321, \"phase_ms\": {\"post\":4.476230,\"prepare\":1.669398,\"render\":40220.592717,\"setup\":27.567760,\"write_media\":61.157931}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 40220.592717, \"render_calls\": 1}}\n\n",
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f",
+            "fonts": []
+          }
+        ],
+        "budget_note": "Fresh cold job, no cache hit; entire script/setup/render/encode included. Corrected default closed transport retains entry and exit boundaries.",
+        "visual_check": {
+          "score": 96,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [
+            "Original piecewise geometry retains intentional faceting; no reference artwork is included."
+          ],
+          "suggestions": [],
+          "reasoning": "Both original vessels expose rims, cavities and stems, with clear amber/emerald transmission and internal reflections. The physical transport claims are independently tested.",
+          "generated_sha256": "2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f"
+        }
+      }
     },
     {
       "id": "B18",
@@ -6676,7 +6911,7 @@
       "total": 15
     },
     "2": {
-      "verified": 0,
+      "verified": 2,
       "total": 12
     },
     "3": {
