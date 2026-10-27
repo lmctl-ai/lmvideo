@@ -1,1 +1,34 @@
-{"id":"B11","title":"Dynamic Matrix Instancing","reference_url":"https://threejs.org/examples/#webgl_instancing_dynamic","spec":"900x560 still; procedural 32x32 wave-modulated shared beveled cube mesh (1,024 instances), per-instance colour and phase.","feature_witnesses":["Scene3D.add_instances","shared mesh","1,024 transforms","wave colour/phase modulation"],"budget_seconds":15,"assets":[{"kind":"procedural","license":"MIT","description":"wave array; no external bytes"}],"dimensions":{"width":900,"height":560,"type":"png"},"script":"examples/showcase/bench-11-dynamic-matrix-instancing.lms"}
+{
+  "id": "B11",
+  "title": "Dynamic Matrix Instancing",
+  "script": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_instancing_dynamic",
+  "visual_specification": "900x560 still; procedural 32x32 wave-modulated shared beveled cube mesh (1,024 instances), per-instance colour and phase.",
+  "required_feature_witnesses": [
+    "Scene3D.add_instances",
+    "shared mesh",
+    "1,024 transforms",
+    "wave colour/phase modulation"
+  ],
+  "cpu_budget_seconds": 15,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
+      "sha256": "b6145b48004aaebed2748b5c1bc874680a8bf099d32fcad77f5291ad8ff58bf5"
+    }
+  ]
+}

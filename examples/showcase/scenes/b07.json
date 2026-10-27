@@ -1,1 +1,35 @@
-{"id":"B07","title":"3D Extruded Bevel Typography & Logo Stage","reference_url":"https://threejs.org/examples/#webgl_geometry_text","visual_specification":"Bundled DejaVu glyph outlines A B O 8 are extruded into metallic gold lettering with open counters on a shadow-catching stage; the bevel witness is explicit and remains a capability gap if mesh_text has no bevel parameter.","required_feature_witnesses":["Bundled font license notice","Skia glyph outline and winding/hole preservation","3D extrusion depth and bevel chamfer witness","metallic material and directional shadows"],"output_dimensions":[900,560],"cpu_budget_seconds":{"cold":30,"warm":10},"licensed_original_assets":[{"path":"bundled:DejaVuSans","license":"Bitstream-Vera / bundled font notice"}]}
+{
+  "id": "B07",
+  "title": "3D Extruded Bevel Typography & Logo Stage",
+  "script": "examples/showcase/bench-07-bevel-typography.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_geometry_text",
+  "visual_specification": "Bundled DejaVu/Bitstream-Vera outlines A B O 8 & retain open counters, true offset-contour chamfers and gold PBR studio reflections on a shadow-catching stage.",
+  "required_feature_witnesses": [
+    "Bundled font license notice",
+    "Skia glyph outline and winding/hole preservation",
+    "3D extrusion depth and bevel chamfer witness",
+    "metallic material and directional shadows"
+  ],
+  "cpu_budget_seconds": 30,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-07-bevel-typography.lms",
+      "sha256": "0e7a5146ac9593e05863b77c9fe138bb6496a6dea1518f5fc540986814cbe32f"
+    }
+  ],
+  "warm_budget_seconds": 10
+}

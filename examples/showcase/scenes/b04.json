@@ -3,10 +3,37 @@
   "title": "Procedural Tiled PBR Material Swatches",
   "script": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
   "reference_url": "https://threejs.org/examples/#webgl_materials_texture_filters",
-  "asset_license": "MIT; original seeded procedural texture graphs and meshes; no third-party bytes",
-  "asset_source_hash": "sha256:TO-BE-FINALIZED",
   "visual_specification": "Exact 900x560 five-swatch PBR board using seeded Perlin, Worley, brick, checker and radial ramps; each material bakes albedo, linear ORM and height-derived normal relief with trilinear filtering and saves an .lmmat pack.",
-  "required_feature_witnesses": ["Perlin", "Worley", "brick", "checker", "radial", "albedo/ORM/normal channels", "trilinear sampling", "five .lmmat packs"],
-  "dimensions": [900, 560], "backend": "raster", "cpu_budget_seconds": 30, "warm_cpu_budget_seconds": 8, "status": "CANDIDATE",
-  "output": {"path": "build/bench-04-tiled-pbr-swatches.png", "sha256": "TO-BE-FINALIZED"}
+  "required_feature_witnesses": [
+    "Perlin",
+    "Worley",
+    "brick",
+    "checker",
+    "radial",
+    "albedo/ORM/normal channels",
+    "trilinear sampling",
+    "five .lmmat packs"
+  ],
+  "cpu_budget_seconds": 30,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
+      "sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+    }
+  ],
+  "warm_budget_seconds": 8
 }

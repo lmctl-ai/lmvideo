@@ -3,10 +3,34 @@
   "title": "PCF Soft-Shadow Architectural Pedestal",
   "script": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
   "reference_url": "https://threejs.org/examples/#webgl_shadowmap",
-  "asset_license": "MIT; original procedural box/cylinder/torus/plane geometry; no third-party bytes",
-  "asset_source_hash": "sha256:TO-BE-FINALIZED",
   "visual_specification": "Exact 900x560 architectural pedestal with box, cylinder, torus and ground plane, one 2048x2048 directional shadow map, 3x3 PCF/bias, and a blue spotlight fill.",
-  "required_feature_witnesses": ["box/cylinder/torus", "2048 shadow map", "3x3 PCF", "depth bias", "spotlight fill", "ground contact shadow"],
-  "dimensions": [900, 560], "backend": "raster", "cpu_budget_seconds": 8, "status": "CANDIDATE",
-  "output": {"path": "build/bench-02-pcf-soft-shadow-pedestal.png", "sha256": "TO-BE-FINALIZED"}
+  "required_feature_witnesses": [
+    "box/cylinder/torus",
+    "2048 shadow map",
+    "3x3 PCF",
+    "depth bias",
+    "spotlight fill",
+    "ground contact shadow"
+  ],
+  "cpu_budget_seconds": 8,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
+      "sha256": "62493584bbd13e4ac309135b9e75bc3fa0590e71a622193083ee9807b0d8393e"
+    }
+  ]
 }

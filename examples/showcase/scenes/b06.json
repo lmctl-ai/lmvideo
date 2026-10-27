@@ -1,1 +1,33 @@
-{"id":"B06","title":"Original glTF Helmet Analogue with Studio IBL","reference_url":"https://threejs.org/examples/#webgl_loader_gltf","visual_specification":"Original dome, visor, rim and ear helmet analogue is exported to and re-imported from GLB with authored albedo, ORM and normal inputs under a generated studio environment.","required_feature_witnesses":["GLB import with preserved original asset identity","albedo/ORM/normal maps","generated environment reflection and skybox"],"capability_gaps":["DSL Material.emissive currently accepts a constant color only; emissive texture binding requires root API work before this witness can pass"],"output_dimensions":[900,560],"cpu_budget_seconds":{"raster":15,"cycles":120},"licensed_original_assets":[{"path":"build/original-helmet-analogue.glb","license":"Project-authored original procedural geometry and generated textures","sha256":"recorded by root manifest"},{"path":"generated studio environment","license":"Project-authored procedural image"}]}
+{
+  "id": "B06",
+  "title": "Original glTF Helmet Analogue with Studio IBL",
+  "script": "examples/showcase/bench-06-helmet-ibl.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_loader_gltf",
+  "visual_specification": "Original dome, visor, rim and ear helmet analogue is exported to and re-imported from GLB with authored albedo, ORM and normal inputs under a generated studio environment.",
+  "required_feature_witnesses": [
+    "Original dome/visor/rim/ear meshes",
+    "Actual GLB import of albedo/ORM/normal/emissive textures",
+    "Generated linear HDR >1 studio IBL and background"
+  ],
+  "cpu_budget_seconds": 15,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-06-helmet-ibl.lms",
+      "sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723"
+    }
+  ]
+}

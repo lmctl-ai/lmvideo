@@ -1,1 +1,35 @@
-{"id":"B13","title":"3D Render + 3D Hald CLUT & Post-Processing","reference_url":"https://threejs.org/examples/#webgl_postprocessing_3dlut","spec":"900x560 still; 2x2 comparison of colour, Hald CLUT/tilt-shift/vignette grade, depth, and normal AOVs with Sobel edge witness.","feature_witnesses":["render_depth_image","render_normal_image","Image.clut(image_hald)","tilt_shift","vignette","Sobel edges","2x2 comparison"],"budget_seconds":20,"assets":[{"kind":"procedural","license":"MIT","description":"procedural torus/sphere scene and generated Hald CLUT"}],"dimensions":{"width":900,"height":560,"type":"png"},"script":"examples/showcase/bench-13-aov-post-processing.lms"}
+{
+  "id": "B13",
+  "title": "3D Render + 3D Hald CLUT & Post-Processing",
+  "script": "examples/showcase/bench-13-aov-post-processing.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_postprocessing_3dlut",
+  "visual_specification": "900x560 still; 2x2 comparison of colour, Hald CLUT/tilt-shift/vignette grade, depth, and normal AOVs with Sobel edge witness.",
+  "required_feature_witnesses": [
+    "Actual colour/depth/normal passes",
+    "Depth-masked blur and Hald CLUT",
+    "Pixel-radius tilt shift/vignette",
+    "Sobel blended into normals",
+    "Visible labelled 2x2 comparison grid"
+  ],
+  "cpu_budget_seconds": 20,
+  "backend": "raster+img",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-13-aov-post-processing.lms",
+      "sha256": "c078c2772697d54dc5055e49d0d02445a3551798a59f3b33c25ad33380e6deca"
+    }
+  ]
+}

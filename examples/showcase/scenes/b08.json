@@ -1,1 +1,33 @@
-{"id":"B08","title":"Spline Tubes & Lathe Ceramic Vessels (Opaque)","reference_url":"https://threejs.org/examples/#webgl_geometry_extrude_splines","visual_specification":"Original lathe profiles produce opaque ceramic vessels beside a closed Frenet-frame spline knot and a companion vessel.","required_feature_witnesses":["mesh_lathe revolution surface","mesh_tube_spline closed knot","opaque ceramic materials"],"output_dimensions":[900,560],"cpu_budget_seconds":{"raster":10},"licensed_original_assets":[{"path":"examples/showcase/bench-08-lathe-closed-knot.lms","license":"Project-authored original profiles and curves"}]}
+{
+  "id": "B08",
+  "title": "Spline Tubes & Lathe Ceramic Vessels (Opaque)",
+  "script": "examples/showcase/bench-08-lathe-closed-knot.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_geometry_extrude_splines",
+  "visual_specification": "Original lathe profiles produce opaque ceramic vessels beside a closed Frenet-frame spline knot and a companion vessel.",
+  "required_feature_witnesses": [
+    "mesh_lathe revolution surface",
+    "mesh_tube_spline closed knot",
+    "opaque ceramic materials"
+  ],
+  "cpu_budget_seconds": 10,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "samples_per_axis": {
+    "color": 2,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-08-lathe-closed-knot.lms",
+      "sha256": "cd757039982f7478310f39abe8564f4140e4bf2a626631906a864e8fe7890ee2"
+    }
+  ]
+}

@@ -1,1 +1,42 @@
-{"id":"B12","title":"Animated Particle Wave & Point Sprites","reference_url":"https://threejs.org/examples/#webgl_points_waves","spec":"900x560 poster; 1280x720, 30fps, 120 frames (4 seconds) video; 2,500 depth-sorted circular/gaussian sprites with distance attenuation and animated hero spheres.","feature_witnesses":["point-cloud sprites","2,500 particles","depth sorting","hero sphere instancing","animated timeline"],"budget_seconds":{"per_frame":1.5,"total":240},"assets":[{"kind":"procedural","license":"MIT","description":"sine/vortex particle field; no external bytes"}],"dimensions":{"width":1280,"height":720,"fps":30,"frames":120,"duration_seconds":4,"poster":"build/bench-12-particle-wave-sprites.png","poster_dimensions":[900,560],"video":["mp4","webm"]},"script":"examples/showcase/bench-12-particle-wave-sprites.lms"}
+{
+  "id": "B12",
+  "title": "Animated Particle Wave & Point Sprites",
+  "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_points_waves",
+  "visual_specification": "900x560 poster; 1280x720, 30fps, 120 frames (4 seconds) video; 2,500 depth-sorted circular/gaussian sprites with distance attenuation and animated hero spheres.",
+  "required_feature_witnesses": [
+    "point-cloud sprites",
+    "2,500 particles",
+    "depth sorting",
+    "hero sphere instancing",
+    "animated timeline"
+  ],
+  "cpu_budget_seconds": 240,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ],
+    "video": [
+      1280,
+      720
+    ]
+  },
+  "samples_per_axis": {
+    "color": 1,
+    "depth_normal": 1
+  },
+  "status": "CANDIDATE",
+  "assets": [
+    {
+      "kind": "original-script-and-procedural-data",
+      "license": "MIT",
+      "source": "examples/showcase/bench-12-particle-wave-sprites.lms",
+      "sha256": "118ca48d4b6d5c067dc40e5aef1a16a45aa412a997487cece1ee62a5653cca00"
+    }
+  ],
+  "fps": 30,
+  "frames": 120,
+  "frame_budget_seconds": 1.5
+}
