@@ -3208,6 +3208,48 @@
         "webm": true
       },
       "cache_witness": "120 cold misses and 120 warm hits, asserted in script; native test changes exactly 21 of 120 frames."
+    },
+    {
+      "id": "B16",
+      "slug": "bench-16-cornell-transmission-ior",
+      "title": "Cornell Box Transmission and IOR",
+      "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
+      "script_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
+      "source_commit": "a35236c",
+      "status": "PLANNED",
+      "publication_status": "UNPUBLISHED",
+      "backend": "cycles",
+      "metadata": "examples/showcase/scenes/b16.json",
+      "required_feature_witnesses": [
+        "Cornell red and green wall colour bleed",
+        "one actual rectangular ceiling area light",
+        "rotated tall and short blocks",
+        "solid transmission 1.0 and IOR 1.52 sphere",
+        "mirror sphere",
+        "fixed CPU Cycles 64 spp, 6 bounces, seed and OIDN",
+        "quantitative one-bounce versus six-bounce GI witness"
+      ],
+      "assets": [
+        {
+          "kind": "original-procedural-source",
+          "creator": "lmvideo project",
+          "source": "examples/showcase/bench-16-cornell-transmission-ior.lms",
+          "license": "MIT",
+          "license_file": "LICENSE-examples"
+        }
+      ],
+      "expected_outputs": [
+        {
+          "store_file": "bench-16-cornell-transmission-ior-3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb.png",
+          "sha256": "3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb",
+          "bytes": 152984,
+          "dimensions": [900, 560],
+          "file": "build/bench-16-cornell-transmission-ior.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        }
+      ],
+      "rights_note": "Original procedural scene; no borrowed model or reference render."
     }
   ],
   "groups": [
