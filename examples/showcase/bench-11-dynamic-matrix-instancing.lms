@@ -1,8 +1,8 @@
 # B11 / G.1: one shared beveled cube mesh, 32x32 = 1,024 wave instances.
 mkdir("build"); program=_lmcode_ cli="lmvideo";
-let scene=scene3d().background("#edf3f8").ambient(0.24);
+let scene=scene3d().background("#edf3f8").ambient(0.24).threads(4);
 scene.camera(camera3d().look_at(31.0,28.0,40.0,0.0,0.0,0.0).perspective(43.0,0.1,120.0));
-let cubes=scene.add_instances(mesh_box(0.62,0.62,0.62),"#359b9a");
+let cubes=scene.add_instances(mesh_beveled_box(0.62,0.62,0.62,0.06),"#359b9a");
 for(i in range(0,1024)) { let x=float(i%32)-15.5; let z=float(i/32)-15.5; let phase=(x+z)*0.18; let y=1.45*sin(x*0.27+phase)*cos(z*0.24-phase); let c="#359b9a"; if(i%32>15){c="#de7656";} cubes.add_instance(x,y,z,0.0,y*12.0,0.0,1.0,1.0,1.0,c); }
 image_assert_true(cubes.size()==1024);
 scene.directional_light(1.0,3.0,4.0,"#ffffff",0.95);
