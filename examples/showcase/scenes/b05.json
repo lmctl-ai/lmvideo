@@ -1,0 +1,13 @@
+{
+  "id": "B05",
+  "title": "Tangent-Space Normal & Bump Mapped Relief",
+  "script": "examples/showcase/bench-05-tangent-relief-medallion.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_materials_normalmap",
+  "asset_license": "MIT; original procedural medallion relief and generated height map; no third-party bytes",
+  "asset_source_hash": "sha256:TO-BE-FINALIZED",
+  "visual_specification": "Exact 900x560 relief medallion whose procedural height field is converted through the available CPU height-relief path and lit by a grazing directional key; a flat-vs-relief witness is asserted.",
+  "required_feature_witnesses": ["analytic UV basis input", "height-to-normal relief", "grazing directional light", "flat/relief pixel difference", "900x560 still"],
+  "capability_gaps": ["Dedicated tangent/bitangent normal-map API (G.3) is not exposed by the frozen Phase 5 host; current script witnesses height-relief path."],
+  "dimensions": [900, 560], "backend": "raster", "cpu_budget_seconds": 8, "status": "CANDIDATE",
+  "output": {"path": "build/bench-05-tangent-relief-medallion.png", "sha256": "TO-BE-FINALIZED"}
+}

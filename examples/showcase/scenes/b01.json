@@ -1,0 +1,12 @@
+{
+  "id": "B01",
+  "title": "PBR Metallic/Roughness Sphere Matrix",
+  "script": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
+  "reference_url": "https://threejs.org/examples/#webgl_materials_physical_clearcoat",
+  "asset_license": "MIT; original procedural geometry and generated environment; no third-party bytes",
+  "asset_source_hash": "sha256:TO-BE-FINALIZED",
+  "visual_specification": "Exact 900x560 still showing a 5x5 UV-sphere matrix with metallic 0..1 by row, roughness 0.05..1 by column, sky/ground gradient, key/fill/rim directional lights, and linear-light 2x2 SSAA.",
+  "required_feature_witnesses": ["5x5 sphere matrix", "metallic and roughness sweep", "directional key/fill/rim", "environment gradient", "2x2 SSAA", "PBR raster output"],
+  "dimensions": [900, 560], "backend": "raster", "cpu_budget_seconds": 5, "status": "CANDIDATE",
+  "output": {"path": "build/bench-01-pbr-metallic-roughness.png", "sha256": "TO-BE-FINALIZED"}
+}

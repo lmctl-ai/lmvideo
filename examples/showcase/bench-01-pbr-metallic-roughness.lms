@@ -1,0 +1,12 @@
+# B01: original procedural 5x5 PBR matrix, exact 900x560 still.
+mkdir("build");
+program=_lmcode_ cli="lmvideo";
+let studio=image_pattern(128,64,"0.18+0.72*exp(-180*(x-0.28)^2-35*(y-0.4)^2)","0.22+0.68*exp(-180*(x-0.28)^2-35*(y-0.4)^2)","0.3+0.64*exp(-180*(x-0.28)^2-35*(y-0.4)^2)","1");
+let scene=scene3d().background("#edf2f7").ambient(0.02).environment(environment_image(studio),1.2,25.0,false).tonemap("aces",1.0);
+scene.camera(camera3d().look_at(0.0,0.0,18.0,0.0,0.0,0.0).ortho(7.6,0.1,100.0));
+scene.directional_light(2.0,4.0,5.0,"#fff1d8",2.5).directional_light(-4.0,1.0,3.0,"#c0dfff",0.7).directional_light(0.0,-2.0,-3.0,"#ffffff",0.8);
+let sphere=mesh_sphere(0.52,18,32);
+for(row in range(0,5)){for(col in range(0,5)){let metallic=float(row)/4.0;let roughness=0.05+0.95*float(col)/4.0;scene.add(sphere,material("#cda87d",metallic,roughness)).position((float(col)-2.0)*1.5,(2.0-float(row))*1.4,0.0);}}
+let image=scene.render_image(900,560,2);image_assert_true(image.width()==900&&image.height()==560&&image.stddev(0)>0.08);image.save("build/bench-01-pbr-metallic-roughness.png");
+end _lmcode_
+savedsl(program,"build/bench-01-pbr-metallic-roughness.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-01-pbr-metallic-roughness.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);

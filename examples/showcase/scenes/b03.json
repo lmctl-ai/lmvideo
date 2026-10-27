@@ -1,0 +1,12 @@
+{
+  "id": "B03",
+  "title": "Cube Diorama Low-Poly Isometric Cutaway",
+  "script": "examples/showcase/bench-03-cube-diorama.lms",
+  "reference_url": "https://www.blender.org/download/demo-files/",
+  "asset_license": "MIT; original procedural replacement for the CC0 Cube Diorama archetype; no third-party bytes",
+  "asset_source_hash": "sha256:TO-BE-FINALIZED",
+  "visual_specification": "Exact 900x560 warm low-poly cutaway room viewed isometrically with an orthographic camera; walls, floor, table, legs and vase are retained under a room hierarchy and receive directional shadows.",
+  "required_feature_witnesses": ["orthographic camera", "hierarchical Node3D room", "flat and smooth PBR materials", "warm palette", "directional shadow"],
+  "dimensions": [900, 560], "backend": "raster", "cpu_budget_seconds": 5, "status": "CANDIDATE",
+  "output": {"path": "build/bench-03-cube-diorama.png", "sha256": "TO-BE-FINALIZED"}
+}
