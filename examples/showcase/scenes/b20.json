@@ -1,0 +1,50 @@
+{
+  "id": "B20",
+  "title": "Automotive Clearcoat, Metallic Flake & Anisotropy",
+  "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
+  "reference_url": "https://github.com/lmctl-ai/lmvideo",
+  "visual_specification": "900x560 original speed-form hood/fender with visible procedural metallic flake, dual-lobe clearcoat and a separate brushed anisotropic rotor under two CPU area emitters.",
+  "required_feature_witnesses": [
+    "original curved speed-form hood/fender",
+    "procedural flake albedo",
+    "clearcoat=1.0 clearcoat_roughness=0.03",
+    "metallic undercoat",
+    "anisotropy=0.8 brushed rotor",
+    "two area emitters",
+    "tangent-space highlight rotation"
+  ],
+  "cpu_budget_seconds": 180,
+  "backend": "cycles",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-20-car-paint-anisotropy.lms",
+      "sha256": "73fdbd0bf119db364fc6eb50dfa7071222bda17505f7f2f7fb909f2f3cfd7d74",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "publication_note": "Candidate only; no borrowed car model or external art. Runtime evidence is pending the integrated material-quality host.",
+  "script_sha256": "73fdbd0bf119db364fc6eb50dfa7071222bda17505f7f2f7fb909f2f3cfd7d74",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 8,
+    "seed": 20261031,
+    "denoise": "OIDN"
+  },
+  "renderer": "cycles",
+  "limitations": [
+    "Flecks are original albedo modulation over a metallic undercoat; no per-flake geometry BSDF is claimed.",
+    "Rotor uses scalar tangent-frame brushing, not a directional anisotropy texture."
+  ]
+}
