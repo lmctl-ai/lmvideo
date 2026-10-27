@@ -3572,7 +3572,7 @@
       "slug": "bench-20-car-paint-anisotropy",
       "title": "Automotive Clearcoat, Metallic Flake & Anisotropy",
       "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-      "script_sha256": "73fdbd0bf119db364fc6eb50dfa7071222bda17505f7f2f7fb909f2f3cfd7d74",
+      "script_sha256": "82d3e79bd6696308be62baa346033e741905c5283f5d93917357fcccc48a59b9",
       "source_commit": "CANDIDATE",
       "status": "PLANNED",
       "publication_status": "UNPUBLISHED",
@@ -3595,7 +3595,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-          "sha256": "73fdbd0bf119db364fc6eb50dfa7071222bda17505f7f2f7fb909f2f3cfd7d74",
+          "sha256": "82d3e79bd6696308be62baa346033e741905c5283f5d93917357fcccc48a59b9",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
