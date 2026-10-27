@@ -1,0 +1,159 @@
+{
+  "id": "G2-lathe-profile",
+  "title": "Sampled lathe geometry and finite input contract",
+  "script": "examples/lathe-profile-oracle.lms",
+  "visual_specification": "900x560 original sampled-profile vase pair with bounded tessellation and deterministic PBR raster shading.",
+  "required_feature_witnesses": [
+    "finite radius/height/zero-Z profile",
+    "bounded lathe tessellation",
+    "profile bounds and winding",
+    "invalid native NaN Z rejected"
+  ],
+  "cpu_budget_seconds": 15,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "LOCAL_PASS",
+  "script_sha256": "285c0f7e2077fc57dcd717cc93aa828af8a8fafa9dbb0d14e1bb47aeeda8776d",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project; original example authors in Git history",
+      "source": "examples/lathe-profile-oracle.lms",
+      "sha256": "285c0f7e2077fc57dcd717cc93aa828af8a8fafa9dbb0d14e1bb47aeeda8776d",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "publication_status": "UNPUBLISHED",
+  "local_execution": {
+    "generated_asset_hashes": [],
+    "id": "G2-lathe-profile",
+    "status": "PASS",
+    "timing": {
+      "wall_s": 1.26,
+      "user_s": 1.03,
+      "sys_s": 0.19,
+      "max_rss_kib": 301476,
+      "cold_job_wall_s": 1.2702670019934885,
+      "packaging_webm_s": 0,
+      "phase_ms": {
+        "post": 3.104206,
+        "prepare": 0.139981,
+        "render": 205.318194,
+        "setup": 0.04543,
+        "write_media": 38.239818
+      },
+      "max_render_ms": 205.318194,
+      "max_frame_ms": 0
+    },
+    "outputs": {
+      "image": {
+        "path": "build/lathe-profile-oracle.png",
+        "store_file": "lathe-profile-oracle-6cd06e8c02b6566749ef61d4ed58af3a2135e5f3afea8114cf7faa0f5d950d92.png",
+        "sha256": "6cd06e8c02b6566749ef61d4ed58af3a2135e5f3afea8114cf7faa0f5d950d92",
+        "bytes": 33174,
+        "dimensions": [
+          900,
+          560
+        ]
+      }
+    },
+    "stdout": "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/lathe-profile-oracle.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2426, \"instructions\": 103, \"wall_ms\": 246, \"phase_ms\": {\"post\":3.104206,\"prepare\":0.139981,\"render\":205.318194,\"setup\":0.045430,\"write_media\":38.239818}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 205.318194, \"render_calls\": 1}}\n\n",
+    "font_notices": [
+      {
+        "schema": "lmvideo-fonts/v1",
+        "payload_sha256": "6cd06e8c02b6566749ef61d4ed58af3a2135e5f3afea8114cf7faa0f5d950d92",
+        "fonts": []
+      }
+    ],
+    "budget_seconds": 15,
+    "cache_hit": false,
+    "repeat_verified": true,
+    "container_repeat_sha256_equal": {},
+    "identity": {
+      "harness_sha256": "b48d9af38ce1dd826447fb57139469f11211478d2e7111e595cc310e76228c58",
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+        "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+        "denoise": false,
+        "seed": "authored in each script"
+      },
+      "script": "285c0f7e2077fc57dcd717cc93aa828af8a8fafa9dbb0d14e1bb47aeeda8776d",
+      "metadata": "a85c92c410b27c6b3593b23853d7424a7d130c80508703ff8a139b3f619e18f0"
+    },
+    "cache_key": "7800ea5bec06dbaed461249ac8d6e4a5ed838acac2c53cc102b04808f180b52f",
+    "profile": {
+      "cpu": "Intel(R) Core(TM) i9-14900HX",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "architecture": "x86_64",
+      "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+      "render_threads": 4,
+      "memory_limit_bytes": 2147483648,
+      "binary_hashes": {
+        "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+        "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+        "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+        "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+        "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+        "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+      },
+      "compiler_version": "lmscript 0.2.426",
+      "host_version": "lmvideo 0.1.0",
+      "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+      "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+      "denoise": false,
+      "seed": "authored in each script"
+    },
+    "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141"
+  },
+  "expected_outputs": [
+    {
+      "path": "build/lathe-profile-oracle.png",
+      "store_file": "lathe-profile-oracle-6cd06e8c02b6566749ef61d4ed58af3a2135e5f3afea8114cf7faa0f5d950d92.png",
+      "sha256": "6cd06e8c02b6566749ef61d4ed58af3a2135e5f3afea8114cf7faa0f5d950d92",
+      "bytes": 33174,
+      "dimensions": [
+        900,
+        560
+      ]
+    }
+  ],
+  "native_acceptance": {
+    "source": "tests/scene3d_mesh_test.cpp",
+    "source_sha256": "f0b8cd903d70a03b69aa84abb21785d9185d7100cf88b7bc16e61f04f8fb0dca",
+    "stdout_sha256": "3b2e13fe5a801aa1dbe7f98e0940c20da2b7669bc6d713a8d72f5089b4403086",
+    "exit_code": 0
+  }
+}

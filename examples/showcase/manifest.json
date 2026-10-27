@@ -44,7 +44,7 @@
       "script": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
       "script_sha256": "1b5f94427b8ebf4a35cadc886947a85823982e8f00ff239bbde8b83240ed8f0a",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -84,8 +84,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-01-pbr-metallic-roughness.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -110,41 +110,69 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.99,
-        "user_s": 1.1,
-        "sys_s": 0.17,
-        "max_rss_kib": 304260,
-        "cold_job_wall_s": 0.9930019749735948,
+        "wall_s": 2.07,
+        "user_s": 1.98,
+        "sys_s": 0.28,
+        "max_rss_kib": 301492,
+        "cold_job_wall_s": 2.076997411000775,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 2.218687,
-          "prepare": 18.072279,
-          "render": 232.066299,
-          "setup": 0.29216,
-          "write_media": 32.772577
+          "post": 3.823615,
+          "prepare": 29.98559,
+          "render": 484.230918,
+          "setup": 0.597424,
+          "write_media": 94.638549
         },
-        "max_render_ms": 232.066299,
-        "max_frame_ms": 0
+        "max_render_ms": 484.230918,
+        "max_frame_ms": 0,
+        "budget_seconds": 5,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 5,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B01"
+      }
     },
     {
       "id": "B02",
@@ -153,7 +181,7 @@
       "script": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
       "script_sha256": "62493584bbd13e4ac309135b9e75bc3fa0590e71a622193083ee9807b0d8393e",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -193,8 +221,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-02-pcf-soft-shadow-pedestal.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -219,41 +247,69 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.94,
-        "user_s": 1.2,
-        "sys_s": 0.12,
-        "max_rss_kib": 302972,
-        "cold_job_wall_s": 0.9417965030006599,
+        "wall_s": 3.91,
+        "user_s": 1.77,
+        "sys_s": 0.34,
+        "max_rss_kib": 300644,
+        "cold_job_wall_s": 1.8973184160131495,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 1.744994,
-          "prepare": 0.057936,
-          "render": 359.664942,
-          "setup": 0.037022,
-          "write_media": 16.873289
+          "post": 2.797905,
+          "prepare": 0.098176,
+          "render": 597.061582,
+          "setup": 0.072655,
+          "write_media": 22.940468
         },
-        "max_render_ms": 359.664942,
-        "max_frame_ms": 0
+        "max_render_ms": 597.061582,
+        "max_frame_ms": 0,
+        "budget_seconds": 8,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 8,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B02"
+      }
     },
     {
       "id": "B03",
@@ -262,7 +318,7 @@
       "script": "examples/showcase/bench-03-cube-diorama.lms",
       "script_sha256": "1dd3f53c62ed3db561962f3bcadb9d39e20a5bbc09ff8c88cdf9a91db4d669a0",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -300,8 +356,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-03-cube-diorama.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -326,41 +382,69 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.79,
-        "user_s": 0.9,
-        "sys_s": 0.16,
-        "max_rss_kib": 299484,
-        "cold_job_wall_s": 0.7967707889911253,
+        "wall_s": 1.41,
+        "user_s": 1.36,
+        "sys_s": 0.32,
+        "max_rss_kib": 303292,
+        "cold_job_wall_s": 1.422218191990396,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 1.893746,
-          "prepare": 0.012164,
-          "render": 209.009677,
-          "setup": 0.031464,
-          "write_media": 14.271695
+          "post": 2.258599,
+          "prepare": 0.014496,
+          "render": 272.03432,
+          "setup": 0.056443,
+          "write_media": 54.490719
         },
-        "max_render_ms": 209.009677,
-        "max_frame_ms": 0
+        "max_render_ms": 272.03432,
+        "max_frame_ms": 0,
+        "budget_seconds": 5,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 5,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B03"
+      }
     },
     {
       "id": "B04",
@@ -369,7 +453,7 @@
       "script": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
       "script_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -1192,8 +1276,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-04-tiled-pbr-swatches.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -1218,41 +1302,72 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": [
+            17,
+            29
+          ]
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.97,
-        "user_s": 1.05,
-        "sys_s": 0.15,
-        "max_rss_kib": 302636,
-        "cold_job_wall_s": 0.9734433220000938,
+        "wall_s": 1.43,
+        "user_s": 1.49,
+        "sys_s": 0.21,
+        "max_rss_kib": 302864,
+        "cold_job_wall_s": 1.4334039500099607,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 2.186827,
-          "prepare": 67.151611,
-          "render": 293.685639,
-          "setup": 0.383202,
-          "write_media": 20.428966
+          "post": 2.932469,
+          "prepare": 152.185318,
+          "render": 412.3632,
+          "setup": 0.590766,
+          "write_media": 60.206247
         },
-        "max_render_ms": 148.903887,
-        "max_frame_ms": 0
+        "max_render_ms": 211.084188,
+        "max_frame_ms": 0,
+        "budget_seconds": 30,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 30,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B04"
+      }
     },
     {
       "id": "B05",
@@ -1261,7 +1376,7 @@
       "script": "examples/showcase/bench-05-tangent-relief-medallion.lms",
       "script_sha256": "240e33a1b4ddf9ec1e4e79dd3813625ff40d711385587cee04b9b48c3c508c64",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -1299,8 +1414,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-05-tangent-relief-medallion.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -1325,41 +1440,69 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 2.15,
-        "user_s": 1.61,
+        "wall_s": 1.55,
+        "user_s": 2.24,
         "sys_s": 0.17,
-        "max_rss_kib": 303784,
-        "cold_job_wall_s": 1.2169756720250007,
+        "max_rss_kib": 301536,
+        "cold_job_wall_s": 1.5563048250041902,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 2.791127,
-          "prepare": 17.101983,
-          "render": 569.888638,
-          "setup": 0.034812,
-          "write_media": 34.114482
+          "post": 3.317282,
+          "prepare": 20.88152,
+          "render": 700.814914,
+          "setup": 0.065396,
+          "write_media": 78.855692
         },
-        "max_render_ms": 199.634505,
-        "max_frame_ms": 0
+        "max_render_ms": 249.721577,
+        "max_frame_ms": 0,
+        "budget_seconds": 8,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 8,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B05"
+      }
     },
     {
       "id": "B06",
@@ -3012,6 +3155,20 @@
       "script": "examples/cycles-orthographic-handoff.lms",
       "status": "DEVELOPMENT_API_UNRELEASED",
       "description": "Canonical vertical camera span through GLB into CPU Cycles in portrait and landscape."
+    },
+    {
+      "slug": "seeded-surface-scatter",
+      "script": "examples/seeded-surface-scatter.lms",
+      "metadata": "examples/showcase/scenes/g1-seeded-surface-scatter.json",
+      "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+      "description": "Measured original geometry acceptance witness; separate from benchmark promotion."
+    },
+    {
+      "slug": "lathe-profile-oracle",
+      "script": "examples/lathe-profile-oracle.lms",
+      "metadata": "examples/showcase/scenes/g2-lathe-profile.json",
+      "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+      "description": "Measured original geometry acceptance witness; separate from benchmark promotion."
     }
   ],
   "implementation_repository": "lmctlhq/lmvideo",
@@ -3020,5 +3177,25 @@
     "metadata": "examples/showcase/cycles/manifest.json",
     "cad_story": "examples/showcase/cycles/cad-final-render.json",
     "status": "LOCALLY_VERIFIED_UNRELEASED_API"
-  }
+  },
+  "scoreboard": {
+    "metadata": "examples/showcase/scoreboard.json",
+    "sha256": "40a9d1d70df03d8b1e87f379ea4ccffba8d1937d300883fb8a90664645dd0c51",
+    "tiers": {
+      "1": {
+        "verified": 5,
+        "total": 15
+      },
+      "2": {
+        "verified": 0,
+        "total": 12
+      },
+      "3": {
+        "verified": 0,
+        "total": 5
+      }
+    },
+    "scope": "Local acceptance only; PLANNED targets have no benchmark pass."
+  },
+  "profile_scope": "Historical initial raster profile; verified benchmarks carry their own exact per-target profile."
 }

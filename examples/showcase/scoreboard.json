@@ -1,0 +1,2475 @@
+{
+  "format": 1,
+  "status": "PARTIAL_LOCAL_VERIFICATION",
+  "publication_status": "UNPUBLISHED",
+  "targets": [
+    {
+      "id": "B01",
+      "tier": 1,
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
+        "script_sha256": "1b5f94427b8ebf4a35cadc886947a85823982e8f00ff239bbde8b83240ed8f0a",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "aabf8675d323b2e77381ca120567d1f944784929",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+        "required_features": [
+          "5x5 sphere matrix",
+          "metallic and roughness sweep",
+          "directional key/fill/rim",
+          "environment gradient",
+          "2x2 SSAA",
+          "PBR raster output"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
+            "source_sha256": "1b5f94427b8ebf4a35cadc886947a85823982e8f00ff239bbde8b83240ed8f0a",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-01-pbr-metallic-roughness.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ab8798f7c1042686b657acca9fa6c41b3e9e728f8b66052d7e676a5f2954751f",
+            "features": [
+              "5x5 sphere matrix",
+              "metallic and roughness sweep",
+              "directional key/fill/rim",
+              "environment gradient",
+              "2x2 SSAA",
+              "PBR raster output"
+            ],
+            "scope": "Actual scene construction and authored assertions; independent native shader/geometry oracles listed alongside."
+          },
+          {
+            "name": "scene3d_mesh_test",
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "f0b8cd903d70a03b69aa84abb21785d9185d7100cf88b7bc16e61f04f8fb0dca",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "3b2e13fe5a801aa1dbe7f98e0940c20da2b7669bc6d713a8d72f5089b4403086",
+            "stdout": "75 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_pbr_reference_test",
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_material_render_test",
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "f0f86547e27bbcfcf8eb3b8a7d844f7b30dca3dfd661cf06d866d19c8d1bfccb",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_environment_test",
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_shadow_test",
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_area_test",
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_projection_test",
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_showcase_test",
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "name": "material_compiler_test",
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "name": "material_source_test",
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_gltf_export_test",
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "0a5855ee6d1d4f57baf46726d21dee7e34f8296add40a54f2997c90bcd4550d9",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "75802294a5ad7b867967e491d694f21bb9336129910a92cabb71b5765ac34f05",
+            "stdout": "PASS 27 standard scene export checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
+            "sha256": "1b5f94427b8ebf4a35cadc886947a85823982e8f00ff239bbde8b83240ed8f0a",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-01-pbr-metallic-roughness-556220d625ba92f9756c286243ea912bdfb4732f8447bdcc0c117af327906cd0.png",
+            "sha256": "556220d625ba92f9756c286243ea912bdfb4732f8447bdcc0c117af327906cd0",
+            "bytes": 157480,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-01-pbr-metallic-roughness.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 2.07,
+          "user_s": 1.98,
+          "sys_s": 0.28,
+          "max_rss_kib": 301492,
+          "cold_job_wall_s": 2.076997411000775,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 3.823615,
+            "prepare": 29.98559,
+            "render": 484.230918,
+            "setup": 0.597424,
+            "write_media": 94.638549
+          },
+          "max_render_ms": 484.230918,
+          "max_frame_ms": 0,
+          "budget_seconds": 5,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 484.230918,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 94.638549,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-01-pbr-metallic-roughness.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2987, \"instructions\": 1043, \"wall_ms\": 613, \"phase_ms\": {\"post\":3.823615,\"prepare\":29.985590,\"render\":484.230918,\"setup\":0.597424,\"write_media\":94.638549}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 484.230918, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "budget_note": "Cold job plus separately recorded WebM packaging; whole-job cache hits excluded."
+      }
+    },
+    {
+      "id": "B02",
+      "tier": 1,
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
+        "script_sha256": "62493584bbd13e4ac309135b9e75bc3fa0590e71a622193083ee9807b0d8393e",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "aabf8675d323b2e77381ca120567d1f944784929",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+        "required_features": [
+          "box/cylinder/torus",
+          "2048 shadow map",
+          "3x3 PCF",
+          "depth bias",
+          "spotlight fill",
+          "ground contact shadow"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
+            "source_sha256": "62493584bbd13e4ac309135b9e75bc3fa0590e71a622193083ee9807b0d8393e",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "3914ee13e18e6f6a518a9ea1d7d93cc64be6fef639b62e08298355a1aed27ff4",
+            "features": [
+              "box/cylinder/torus",
+              "2048 shadow map",
+              "3x3 PCF",
+              "depth bias",
+              "spotlight fill",
+              "ground contact shadow"
+            ],
+            "scope": "Actual scene construction and authored assertions; independent native shader/geometry oracles listed alongside."
+          },
+          {
+            "name": "scene3d_mesh_test",
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "f0b8cd903d70a03b69aa84abb21785d9185d7100cf88b7bc16e61f04f8fb0dca",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "3b2e13fe5a801aa1dbe7f98e0940c20da2b7669bc6d713a8d72f5089b4403086",
+            "stdout": "75 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_pbr_reference_test",
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_material_render_test",
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "f0f86547e27bbcfcf8eb3b8a7d844f7b30dca3dfd661cf06d866d19c8d1bfccb",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_environment_test",
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_shadow_test",
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_area_test",
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_projection_test",
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_showcase_test",
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "name": "material_compiler_test",
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "name": "material_source_test",
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_gltf_export_test",
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "0a5855ee6d1d4f57baf46726d21dee7e34f8296add40a54f2997c90bcd4550d9",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "75802294a5ad7b867967e491d694f21bb9336129910a92cabb71b5765ac34f05",
+            "stdout": "PASS 27 standard scene export checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
+            "sha256": "62493584bbd13e4ac309135b9e75bc3fa0590e71a622193083ee9807b0d8393e",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-02-pcf-soft-shadow-pedestal-e245f648e1212f387966e60808acee5986244f8f1fa67f25570ee05947d7dc77.png",
+            "sha256": "e245f648e1212f387966e60808acee5986244f8f1fa67f25570ee05947d7dc77",
+            "bytes": 40972,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-02-pcf-soft-shadow-pedestal.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 3.91,
+          "user_s": 1.77,
+          "sys_s": 0.34,
+          "max_rss_kib": 300644,
+          "cold_job_wall_s": 1.8973184160131495,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 2.797905,
+            "prepare": 0.098176,
+            "render": 597.061582,
+            "setup": 0.072655,
+            "write_media": 22.940468
+          },
+          "max_render_ms": 597.061582,
+          "max_frame_ms": 0,
+          "budget_seconds": 8,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 597.061582,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 22.940468,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-02-pcf-soft-shadow-pedestal.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2915, \"instructions\": 139, \"wall_ms\": 623, \"phase_ms\": {\"post\":2.797905,\"prepare\":0.098176,\"render\":597.061582,\"setup\":0.072655,\"write_media\":22.940468}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 597.061582, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "budget_note": "Cold job plus separately recorded WebM packaging; whole-job cache hits excluded."
+      }
+    },
+    {
+      "id": "B03",
+      "tier": 1,
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-03-cube-diorama.lms",
+        "script_sha256": "1dd3f53c62ed3db561962f3bcadb9d39e20a5bbc09ff8c88cdf9a91db4d669a0",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "aabf8675d323b2e77381ca120567d1f944784929",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+        "required_features": [
+          "orthographic camera",
+          "hierarchical Node3D room",
+          "flat and smooth PBR materials",
+          "warm palette",
+          "directional shadow"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-03-cube-diorama.lms",
+            "source_sha256": "1dd3f53c62ed3db561962f3bcadb9d39e20a5bbc09ff8c88cdf9a91db4d669a0",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-03-cube-diorama.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "2e9b078bfbc13343c126bd0ef5973d86609ed99b75398117b8aac2fdb26b4ff5",
+            "features": [
+              "orthographic camera",
+              "hierarchical Node3D room",
+              "flat and smooth PBR materials",
+              "warm palette",
+              "directional shadow"
+            ],
+            "scope": "Actual scene construction and authored assertions; independent native shader/geometry oracles listed alongside."
+          },
+          {
+            "name": "scene3d_mesh_test",
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "f0b8cd903d70a03b69aa84abb21785d9185d7100cf88b7bc16e61f04f8fb0dca",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "3b2e13fe5a801aa1dbe7f98e0940c20da2b7669bc6d713a8d72f5089b4403086",
+            "stdout": "75 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_pbr_reference_test",
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_material_render_test",
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "f0f86547e27bbcfcf8eb3b8a7d844f7b30dca3dfd661cf06d866d19c8d1bfccb",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_environment_test",
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_shadow_test",
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_area_test",
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_projection_test",
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_showcase_test",
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "name": "material_compiler_test",
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "name": "material_source_test",
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_gltf_export_test",
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "0a5855ee6d1d4f57baf46726d21dee7e34f8296add40a54f2997c90bcd4550d9",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "75802294a5ad7b867967e491d694f21bb9336129910a92cabb71b5765ac34f05",
+            "stdout": "PASS 27 standard scene export checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-03-cube-diorama.lms",
+            "sha256": "1dd3f53c62ed3db561962f3bcadb9d39e20a5bbc09ff8c88cdf9a91db4d669a0",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-03-cube-diorama-47b3d1734c35fccf5cd9f0a3b94f927063189e72975fd2052683780ff426c663.png",
+            "sha256": "47b3d1734c35fccf5cd9f0a3b94f927063189e72975fd2052683780ff426c663",
+            "bytes": 17903,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-03-cube-diorama.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 1.41,
+          "user_s": 1.36,
+          "sys_s": 0.32,
+          "max_rss_kib": 303292,
+          "cold_job_wall_s": 1.422218191990396,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 2.258599,
+            "prepare": 0.014496,
+            "render": 272.03432,
+            "setup": 0.056443,
+            "write_media": 54.490719
+          },
+          "max_render_ms": 272.03432,
+          "max_frame_ms": 0,
+          "budget_seconds": 5,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 272.03432,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 54.490719,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-03-cube-diorama.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3463, \"instructions\": 200, \"wall_ms\": 328, \"phase_ms\": {\"post\":2.258599,\"prepare\":0.014496,\"render\":272.034320,\"setup\":0.056443,\"write_media\":54.490719}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 272.034320, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "budget_note": "Cold job plus separately recorded WebM packaging; whole-job cache hits excluded."
+      }
+    },
+    {
+      "id": "B04",
+      "tier": 1,
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
+        "script_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "aabf8675d323b2e77381ca120567d1f944784929",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+        "required_features": [
+          "Perlin",
+          "Worley",
+          "brick",
+          "checker",
+          "radial",
+          "albedo/ORM/normal channels",
+          "trilinear sampling",
+          "five .lmmat packs"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-04-tiled-pbr-swatches.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "fca743126b8ecd50c0af02dd337554e1c16bd0836f05a25d6b717463d0633f98",
+            "features": [
+              "Perlin",
+              "Worley",
+              "brick",
+              "checker",
+              "radial",
+              "albedo/ORM/normal channels",
+              "trilinear sampling",
+              "five .lmmat packs"
+            ],
+            "scope": "Actual scene construction and authored assertions; independent native shader/geometry oracles listed alongside."
+          },
+          {
+            "name": "scene3d_mesh_test",
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "f0b8cd903d70a03b69aa84abb21785d9185d7100cf88b7bc16e61f04f8fb0dca",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "3b2e13fe5a801aa1dbe7f98e0940c20da2b7669bc6d713a8d72f5089b4403086",
+            "stdout": "75 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_pbr_reference_test",
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_material_render_test",
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "f0f86547e27bbcfcf8eb3b8a7d844f7b30dca3dfd661cf06d866d19c8d1bfccb",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_environment_test",
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_shadow_test",
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_area_test",
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_projection_test",
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_showcase_test",
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "name": "material_compiler_test",
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "name": "material_source_test",
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_gltf_export_test",
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "0a5855ee6d1d4f57baf46726d21dee7e34f8296add40a54f2997c90bcd4550d9",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "75802294a5ad7b867967e491d694f21bb9336129910a92cabb71b5765ac34f05",
+            "stdout": "PASS 27 standard scene export checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
+            "sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-04-tiled-pbr-swatches-63fcb2c66fc292c5f6d898adcb22b77d97ea473dd08c658ba7994230d813e7c0.png",
+            "sha256": "63fcb2c66fc292c5f6d898adcb22b77d97ea473dd08c658ba7994230d813e7c0",
+            "bytes": 59643,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-04-tiled-pbr-swatches.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": [
+              17,
+              29
+            ]
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 1.43,
+          "user_s": 1.49,
+          "sys_s": 0.21,
+          "max_rss_kib": 302864,
+          "cold_job_wall_s": 1.4334039500099607,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 2.932469,
+            "prepare": 152.185318,
+            "render": 412.3632,
+            "setup": 0.590766,
+            "write_media": 60.206247
+          },
+          "max_render_ms": 211.084188,
+          "max_frame_ms": 0,
+          "budget_seconds": 30,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 412.3632,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 60.206247,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"Five cold-baked packs reproduce byte-identical warm-loaded materials.\"], \"file\": \"build/bench-04-tiled-pbr-swatches.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6586, \"instructions\": 390, \"wall_ms\": 628, \"phase_ms\": {\"post\":2.932469,\"prepare\":152.185318,\"render\":412.363200,\"setup\":0.590766,\"write_media\":60.206247}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 211.084188, \"render_calls\": 2}}\n\n",
+        "generated_asset_hashes": [
+          {
+            "path": "build/bench-04-brick.lmmat/manifest.json",
+            "sha256": "d82debeb09871c1a078fbdeba474433656fc3772d71ddf1a40191438393d81f2",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/material.json",
+            "sha256": "eba500d8f09d6b1dd6c65467d66df9c5259e10384e4cf2a27c2961af23acf326",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-0.png",
+            "sha256": "5348d242fa817a1cb9e4db5c5e6fa3f4d0faef1c490099dfe93c3c4a0522bd50",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-1.png",
+            "sha256": "9f55b032a9d96c6fedaa8da8e069b511a17aa58a69f410ba80e6cc423b128638",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-2.png",
+            "sha256": "5b257ec5f2c46376543fc31c71022f2e04562c5ec543971ef8c3ae8d2e11c2c6",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-3.png",
+            "sha256": "d1b32cad6b0dadf906a9ed82a68582e433d68435a62bb191da4f0b979f8e452d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-4.png",
+            "sha256": "847d7a93a86aad99acc3fa9da5db89289cb34d533b3acadf1d5dee569060f704",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-5.png",
+            "sha256": "027e0338a3dce579778dc1e11d5775761cac7804efabd229aac09e4c3d322227",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-6.png",
+            "sha256": "5389ee563392abe9caa0c3748b5b1bff25e1cd53672623252e7133bb8d27144c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/albedo-7.png",
+            "sha256": "e7adbd89e7bc22986dd3c57b884d469d6c9aeabb93af79fe6407369416a8da4a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-0.png",
+            "sha256": "3f5fcb7e262a0656e9ffa1f59eb92bcd4e16a7e3bab93be0082128bbfbdb1ec8",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-1.png",
+            "sha256": "82b0d4f736e279756eaca25343f9b09811ea3233ea1debdc33e410770e7c8203",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-2.png",
+            "sha256": "625fc4b02a6ca596ddefdc09e850b036fc38c869bff6b7a0e21d600436e19b42",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-3.png",
+            "sha256": "75523f469e4ecd0ea2405cd8d4f1b0e4fb1d12fc92bfbc9d3519a14994bdaa5f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-4.png",
+            "sha256": "260d92ad3f6197805ea327afa7496001a2b60655a0715fd76164a7de729d0a82",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-5.png",
+            "sha256": "4cc564f1934a340fa468d2643f997c33debab7da418db11aa2b7453b89113e0f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-6.png",
+            "sha256": "352571dfad151fd60ad6c853b51cf9cff120edaf9ac69d1a5dbc4158e01a20e0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/normal-7.png",
+            "sha256": "485391b3778398a61081fd6a51ef5c18b7d092577ffb50e0c8e1788d763be925",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-0.png",
+            "sha256": "fa438c6107819f23dd2f1b91756583f89adb7403493db6d62f138e954e7ad81d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-1.png",
+            "sha256": "4b5365628214168b838e4d932e261cceda83ee70cf2d1051fc5a034eb0431c2e",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-2.png",
+            "sha256": "bd6f35d74d1b6fff5d75d0814cda5a2f9502a456312324a2a0b84d685422c711",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-3.png",
+            "sha256": "590ce8f9f9f35655806cd3614ba4ae410bd55e6ed4901bc6ccfc5f66a02d2423",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-4.png",
+            "sha256": "27ba3beeae43b52e92da730d79336d47a15333eb7558272784d64e36ec9f143f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-5.png",
+            "sha256": "9e4abe9e6ddc502701f9d8bd6ba57d2d9a67b9df07d103013afbdc8a8efd87d9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-6.png",
+            "sha256": "c03c56dd901323d8b3ff57cc1a4483d55ebd559e4ecc38349445834aca1469b0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-brick.lmmat/textures/orm-7.png",
+            "sha256": "6d88ecb29e46334777795767d0e97e0893eb8406e74988e6e317bd71e226500c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/manifest.json",
+            "sha256": "876368a2e5f120595afb7164edc4f42a4c25c36a2aa581246f8428459bf4277c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/material.json",
+            "sha256": "67a8211d5e3bb2722887a1d2d7b28e38b99c48c8d9e66800113a8c0b613ae5bf",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-0.png",
+            "sha256": "db35b253ebf32221fc71301d91c96483e136228a338cc4cdcfffae6f95098767",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-1.png",
+            "sha256": "4978c8f891438ee73dddace6affcaa33775a258d6e457eb76292d08e0478125a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-2.png",
+            "sha256": "6f0980554d78325bd52042691bf069599af8360156d86b1d6a8d635899170c83",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-3.png",
+            "sha256": "f1949729a565c4d7c633af245bfffd2e6325ee58f87e1995d8950532c44c661a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-4.png",
+            "sha256": "ad6f17138310618b7100010a0210622e52ac7e851a9580fcb8fbeef591bbaad3",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-5.png",
+            "sha256": "a44a4c19ba9650e42410e394f40d401aa893231ea0c622f6c5a97ca2561c564c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-6.png",
+            "sha256": "63fae7af850d78207c513c378119dbbd19da5395ca0ada294a1ca374b56aafb9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/albedo-7.png",
+            "sha256": "1f1d7f1a1804bd14b5db1ba061e8fa614f85f2642b7701bc9d3fb92e7fc78e6a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-0.png",
+            "sha256": "3f5fcb7e262a0656e9ffa1f59eb92bcd4e16a7e3bab93be0082128bbfbdb1ec8",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-1.png",
+            "sha256": "82b0d4f736e279756eaca25343f9b09811ea3233ea1debdc33e410770e7c8203",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-2.png",
+            "sha256": "625fc4b02a6ca596ddefdc09e850b036fc38c869bff6b7a0e21d600436e19b42",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-3.png",
+            "sha256": "75523f469e4ecd0ea2405cd8d4f1b0e4fb1d12fc92bfbc9d3519a14994bdaa5f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-4.png",
+            "sha256": "260d92ad3f6197805ea327afa7496001a2b60655a0715fd76164a7de729d0a82",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-5.png",
+            "sha256": "4cc564f1934a340fa468d2643f997c33debab7da418db11aa2b7453b89113e0f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-6.png",
+            "sha256": "352571dfad151fd60ad6c853b51cf9cff120edaf9ac69d1a5dbc4158e01a20e0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/normal-7.png",
+            "sha256": "485391b3778398a61081fd6a51ef5c18b7d092577ffb50e0c8e1788d763be925",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-0.png",
+            "sha256": "fa438c6107819f23dd2f1b91756583f89adb7403493db6d62f138e954e7ad81d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-1.png",
+            "sha256": "4b5365628214168b838e4d932e261cceda83ee70cf2d1051fc5a034eb0431c2e",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-2.png",
+            "sha256": "bd6f35d74d1b6fff5d75d0814cda5a2f9502a456312324a2a0b84d685422c711",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-3.png",
+            "sha256": "590ce8f9f9f35655806cd3614ba4ae410bd55e6ed4901bc6ccfc5f66a02d2423",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-4.png",
+            "sha256": "27ba3beeae43b52e92da730d79336d47a15333eb7558272784d64e36ec9f143f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-5.png",
+            "sha256": "9e4abe9e6ddc502701f9d8bd6ba57d2d9a67b9df07d103013afbdc8a8efd87d9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-6.png",
+            "sha256": "c03c56dd901323d8b3ff57cc1a4483d55ebd559e4ecc38349445834aca1469b0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-checker.lmmat/textures/orm-7.png",
+            "sha256": "6d88ecb29e46334777795767d0e97e0893eb8406e74988e6e317bd71e226500c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/manifest.json",
+            "sha256": "c5d7b30106545e76df678bf8a0fe435d06b803eae21d1ce117bf96ef74a52d8e",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/material.json",
+            "sha256": "cd7b748635afa1732f856964ed02306e853da15ebe3d44168e4cc064d1307ce1",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-0.png",
+            "sha256": "66ee6e6b92b67a78977653c301454ac85712fece1cbfc8b1b2879b25816e437f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-1.png",
+            "sha256": "c4142fe442e6328d0a14b07fb0e942836d670d9e1caf5aa6900d2e6b9fe767aa",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-2.png",
+            "sha256": "6efb10da63b1ece7e778ac601b6bdc4a60a825c086d50935de927fde17cacdd3",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-3.png",
+            "sha256": "88227bd6dc65da09cdb5a4d94f4b1fa3d66f3710e73068ddeba00f7980f00dff",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-4.png",
+            "sha256": "eee20d750f4aa7ddc00372e3e699cd2bdce4a16b3acd939ed19ab950dfe6ea98",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-5.png",
+            "sha256": "ad3a9aa9e5bd40857323645b55f5e556f0288224de009ee342f7e578f124c587",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-6.png",
+            "sha256": "4c6981fb04ecf98ef0ef6f81b1e60b7b9c8b8c059cb219613d67cda6628d81e9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/albedo-7.png",
+            "sha256": "c892a529b74ea0e0d1709f32b54db17667e518168fe95d9cd7e7f7f605d9e21a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-0.png",
+            "sha256": "3f5fcb7e262a0656e9ffa1f59eb92bcd4e16a7e3bab93be0082128bbfbdb1ec8",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-1.png",
+            "sha256": "82b0d4f736e279756eaca25343f9b09811ea3233ea1debdc33e410770e7c8203",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-2.png",
+            "sha256": "625fc4b02a6ca596ddefdc09e850b036fc38c869bff6b7a0e21d600436e19b42",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-3.png",
+            "sha256": "75523f469e4ecd0ea2405cd8d4f1b0e4fb1d12fc92bfbc9d3519a14994bdaa5f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-4.png",
+            "sha256": "260d92ad3f6197805ea327afa7496001a2b60655a0715fd76164a7de729d0a82",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-5.png",
+            "sha256": "4cc564f1934a340fa468d2643f997c33debab7da418db11aa2b7453b89113e0f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-6.png",
+            "sha256": "352571dfad151fd60ad6c853b51cf9cff120edaf9ac69d1a5dbc4158e01a20e0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/normal-7.png",
+            "sha256": "485391b3778398a61081fd6a51ef5c18b7d092577ffb50e0c8e1788d763be925",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-0.png",
+            "sha256": "fa438c6107819f23dd2f1b91756583f89adb7403493db6d62f138e954e7ad81d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-1.png",
+            "sha256": "4b5365628214168b838e4d932e261cceda83ee70cf2d1051fc5a034eb0431c2e",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-2.png",
+            "sha256": "bd6f35d74d1b6fff5d75d0814cda5a2f9502a456312324a2a0b84d685422c711",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-3.png",
+            "sha256": "590ce8f9f9f35655806cd3614ba4ae410bd55e6ed4901bc6ccfc5f66a02d2423",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-4.png",
+            "sha256": "27ba3beeae43b52e92da730d79336d47a15333eb7558272784d64e36ec9f143f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-5.png",
+            "sha256": "9e4abe9e6ddc502701f9d8bd6ba57d2d9a67b9df07d103013afbdc8a8efd87d9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-6.png",
+            "sha256": "c03c56dd901323d8b3ff57cc1a4483d55ebd559e4ecc38349445834aca1469b0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-perlin.lmmat/textures/orm-7.png",
+            "sha256": "6d88ecb29e46334777795767d0e97e0893eb8406e74988e6e317bd71e226500c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/manifest.json",
+            "sha256": "eeeaaceee7c4fdaf9f9d94ff15f59bd88882eb18b64b2afde8e13a4e51121823",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/material.json",
+            "sha256": "7cd4383131426c383de28b50e49c5da860fdc8cc022f4ee8914b1e3e1fc9d6e3",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-0.png",
+            "sha256": "f6200359f7a94a56b22a00b5164a513438839bb4964eafe7e903ed1a7fb9efd6",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-1.png",
+            "sha256": "3b90e6b2873753e47afb7fc48833d0733235d09194dc6e46f4484332fe6845fe",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-2.png",
+            "sha256": "a12e6cfc6899fea6bfa8c956cfc0cc2673680b267d8877ba566a65ded79490b5",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-3.png",
+            "sha256": "bf925a96c47d1a6d75a76222c66d90ad290d1f612287d8e83f219c4681538131",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-4.png",
+            "sha256": "a067f9121b0996fd5865bbb69f2e98c7cdbfd010077696a75dc3782b3db1e471",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-5.png",
+            "sha256": "67cf4c5857e6e6172e1888611d179fda96ead0ea78affcd9d96c30172cd77e77",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-6.png",
+            "sha256": "5876d7a3a3ede1f907be898f98c6e88b5f28f904f8fef16d0b9f7f576f7b0c0b",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/albedo-7.png",
+            "sha256": "e4efdc16ee7494ba66d0840a144b13755a40917910fe95f576db33bbde9f9577",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-0.png",
+            "sha256": "3f5fcb7e262a0656e9ffa1f59eb92bcd4e16a7e3bab93be0082128bbfbdb1ec8",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-1.png",
+            "sha256": "82b0d4f736e279756eaca25343f9b09811ea3233ea1debdc33e410770e7c8203",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-2.png",
+            "sha256": "625fc4b02a6ca596ddefdc09e850b036fc38c869bff6b7a0e21d600436e19b42",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-3.png",
+            "sha256": "75523f469e4ecd0ea2405cd8d4f1b0e4fb1d12fc92bfbc9d3519a14994bdaa5f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-4.png",
+            "sha256": "260d92ad3f6197805ea327afa7496001a2b60655a0715fd76164a7de729d0a82",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-5.png",
+            "sha256": "4cc564f1934a340fa468d2643f997c33debab7da418db11aa2b7453b89113e0f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-6.png",
+            "sha256": "352571dfad151fd60ad6c853b51cf9cff120edaf9ac69d1a5dbc4158e01a20e0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/normal-7.png",
+            "sha256": "485391b3778398a61081fd6a51ef5c18b7d092577ffb50e0c8e1788d763be925",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-0.png",
+            "sha256": "fa438c6107819f23dd2f1b91756583f89adb7403493db6d62f138e954e7ad81d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-1.png",
+            "sha256": "4b5365628214168b838e4d932e261cceda83ee70cf2d1051fc5a034eb0431c2e",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-2.png",
+            "sha256": "bd6f35d74d1b6fff5d75d0814cda5a2f9502a456312324a2a0b84d685422c711",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-3.png",
+            "sha256": "590ce8f9f9f35655806cd3614ba4ae410bd55e6ed4901bc6ccfc5f66a02d2423",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-4.png",
+            "sha256": "27ba3beeae43b52e92da730d79336d47a15333eb7558272784d64e36ec9f143f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-5.png",
+            "sha256": "9e4abe9e6ddc502701f9d8bd6ba57d2d9a67b9df07d103013afbdc8a8efd87d9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-6.png",
+            "sha256": "c03c56dd901323d8b3ff57cc1a4483d55ebd559e4ecc38349445834aca1469b0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-radial.lmmat/textures/orm-7.png",
+            "sha256": "6d88ecb29e46334777795767d0e97e0893eb8406e74988e6e317bd71e226500c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/manifest.json",
+            "sha256": "d845e33d84d8ab14fbccffabab2ad05cf84013947b1f1f253ce1e262fa0f96eb",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/material.json",
+            "sha256": "834069b74402858d2c5dcd9285c6bc358c44dcedb4ab865022c0270ba75a915d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-0.png",
+            "sha256": "369a2de5301b88727216157fe4b3a21474554e649894da0e4d257571457dee81",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-1.png",
+            "sha256": "ac12b3d5c8a70e0d38e128b09e7196596c70d8b5fb9d3011124d563ce494eb61",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-2.png",
+            "sha256": "b509adec1bbc3169052dc33b3103f8776990b7e9a6cb85e304f97bf52b54b3e3",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-3.png",
+            "sha256": "8b6f8124c0635f5a3fb387d6645e37ba2a2fb196a70435abd6f51c247ed05f5d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-4.png",
+            "sha256": "02923ed48f073e921a2389c94b759955c1d3a14d42a196abea1f7084e7a6cd46",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-5.png",
+            "sha256": "41d0183370a12526466057870836bdb6374e884b40a24b1f102525c768572059",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-6.png",
+            "sha256": "ccc50adb8e04d469de8812a8341c0551092a0aefebe729ddb5c45509dc736290",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/albedo-7.png",
+            "sha256": "670547b93b887a6ebd80ec889cc3c1ab49673cc29e4048b6cca8245aab9d25f4",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-0.png",
+            "sha256": "3f5fcb7e262a0656e9ffa1f59eb92bcd4e16a7e3bab93be0082128bbfbdb1ec8",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-1.png",
+            "sha256": "82b0d4f736e279756eaca25343f9b09811ea3233ea1debdc33e410770e7c8203",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-2.png",
+            "sha256": "625fc4b02a6ca596ddefdc09e850b036fc38c869bff6b7a0e21d600436e19b42",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-3.png",
+            "sha256": "75523f469e4ecd0ea2405cd8d4f1b0e4fb1d12fc92bfbc9d3519a14994bdaa5f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-4.png",
+            "sha256": "260d92ad3f6197805ea327afa7496001a2b60655a0715fd76164a7de729d0a82",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-5.png",
+            "sha256": "4cc564f1934a340fa468d2643f997c33debab7da418db11aa2b7453b89113e0f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-6.png",
+            "sha256": "352571dfad151fd60ad6c853b51cf9cff120edaf9ac69d1a5dbc4158e01a20e0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/normal-7.png",
+            "sha256": "485391b3778398a61081fd6a51ef5c18b7d092577ffb50e0c8e1788d763be925",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-0.png",
+            "sha256": "fa438c6107819f23dd2f1b91756583f89adb7403493db6d62f138e954e7ad81d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-1.png",
+            "sha256": "4b5365628214168b838e4d932e261cceda83ee70cf2d1051fc5a034eb0431c2e",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-2.png",
+            "sha256": "bd6f35d74d1b6fff5d75d0814cda5a2f9502a456312324a2a0b84d685422c711",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-3.png",
+            "sha256": "590ce8f9f9f35655806cd3614ba4ae410bd55e6ed4901bc6ccfc5f66a02d2423",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-4.png",
+            "sha256": "27ba3beeae43b52e92da730d79336d47a15333eb7558272784d64e36ec9f143f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-5.png",
+            "sha256": "9e4abe9e6ddc502701f9d8bd6ba57d2d9a67b9df07d103013afbdc8a8efd87d9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-6.png",
+            "sha256": "c03c56dd901323d8b3ff57cc1a4483d55ebd559e4ecc38349445834aca1469b0",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          },
+          {
+            "path": "build/bench-04-worley.lmmat/textures/orm-7.png",
+            "sha256": "6d88ecb29e46334777795767d0e97e0893eb8406e74988e6e317bd71e226500c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "dfcb36c836c8a509afa93aae94300d9f33b6106c7c3149c6f2ad2f33b90f9535"
+          }
+        ],
+        "budget_note": "Cold job plus separately recorded WebM packaging; whole-job cache hits excluded.",
+        "material_pack_count": 5
+      }
+    },
+    {
+      "id": "B05",
+      "tier": 1,
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-05-tangent-relief-medallion.lms",
+        "script_sha256": "240e33a1b4ddf9ec1e4e79dd3813625ff40d711385587cee04b9b48c3c508c64",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "aabf8675d323b2e77381ca120567d1f944784929",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+        "required_features": [
+          "Analytic cylinder-cap UV frame",
+          "height-to-normal conversion",
+          "grazing point light on both sides",
+          "flat/normal-mapped images differ"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-05-tangent-relief-medallion.lms",
+            "source_sha256": "240e33a1b4ddf9ec1e4e79dd3813625ff40d711385587cee04b9b48c3c508c64",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-05-tangent-relief-medallion.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "53706435d031df3d33b9e76334fd544ab235d359bb6cc616e46f46415e0c9519",
+            "features": [
+              "Analytic cylinder-cap UV frame",
+              "height-to-normal conversion",
+              "grazing point light on both sides",
+              "flat/normal-mapped images differ"
+            ],
+            "scope": "Actual scene construction and authored assertions; independent native shader/geometry oracles listed alongside."
+          },
+          {
+            "name": "scene3d_mesh_test",
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "f0b8cd903d70a03b69aa84abb21785d9185d7100cf88b7bc16e61f04f8fb0dca",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "3b2e13fe5a801aa1dbe7f98e0940c20da2b7669bc6d713a8d72f5089b4403086",
+            "stdout": "75 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_pbr_reference_test",
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_material_render_test",
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "f0f86547e27bbcfcf8eb3b8a7d844f7b30dca3dfd661cf06d866d19c8d1bfccb",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_environment_test",
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_shadow_test",
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_area_test",
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_projection_test",
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_showcase_test",
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "name": "material_compiler_test",
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "name": "material_source_test",
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          },
+          {
+            "name": "scene3d_gltf_export_test",
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "0a5855ee6d1d4f57baf46726d21dee7e34f8296add40a54f2997c90bcd4550d9",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "75802294a5ad7b867967e491d694f21bb9336129910a92cabb71b5765ac34f05",
+            "stdout": "PASS 27 standard scene export checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-05-tangent-relief-medallion.lms",
+            "sha256": "240e33a1b4ddf9ec1e4e79dd3813625ff40d711385587cee04b9b48c3c508c64",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-05-tangent-relief-medallion-c19ce1fd9cc88c1f363ae7bcdd0976413f4d7d5bf6f3bafd498bec443a004a43.png",
+            "sha256": "c19ce1fd9cc88c1f363ae7bcdd0976413f4d7d5bf6f3bafd498bec443a004a43",
+            "bytes": 199352,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-05-tangent-relief-medallion.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "0e3f555d62cb709dc021a5768ae248a926aa6000",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 1.55,
+          "user_s": 2.24,
+          "sys_s": 0.17,
+          "max_rss_kib": 301536,
+          "cold_job_wall_s": 1.5563048250041902,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 3.317282,
+            "prepare": 20.88152,
+            "render": 700.814914,
+            "setup": 0.065396,
+            "write_media": 78.855692
+          },
+          "max_render_ms": 249.721577,
+          "max_frame_ms": 0,
+          "budget_seconds": 8,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 700.814914,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 78.855692,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"Moving the grazing point light changes relief while flat/perturbed normals differ.\"], \"file\": \"build/bench-05-tangent-relief-medallion.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3359, \"instructions\": 171, \"wall_ms\": 804, \"phase_ms\": {\"post\":3.317282,\"prepare\":20.881520,\"render\":700.814914,\"setup\":0.065396,\"write_media\":78.855692}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 249.721577, \"render_calls\": 3}}\n\n",
+        "generated_asset_hashes": [],
+        "budget_note": "Cold job plus separately recorded WebM packaging; whole-job cache hits excluded."
+      }
+    },
+    {
+      "id": "B06",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B07",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B08",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B09",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B10",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B11",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B12",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B13",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B14",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B15",
+      "tier": 1,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B16",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B17",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B18",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B19",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B20",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B21",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B22",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B23",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B24",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B25",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B26",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B27",
+      "tier": 2,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B28",
+      "tier": 3,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B29",
+      "tier": 3,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B30",
+      "tier": 3,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B31",
+      "tier": 3,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    },
+    {
+      "id": "B32",
+      "tier": 3,
+      "status": "PLANNED",
+      "reason": "Awaiting target-specific executed acceptance evidence."
+    }
+  ],
+  "tiers": {
+    "1": {
+      "verified": 5,
+      "total": 15
+    },
+    "2": {
+      "verified": 0,
+      "total": 12
+    },
+    "3": {
+      "verified": 0,
+      "total": 5
+    }
+  },
+  "reviews": [
+    "Luna: source, features, rights and raw run/profile/output comparisons",
+    "Astra: independent feature and acceptance-record review"
+  ]
+}

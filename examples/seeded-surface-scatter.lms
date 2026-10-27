@@ -1,0 +1,18 @@
+# G.1 witness: deterministic surface scatter keeps one shared source mesh.
+mkdir("build");
+program = _lmcode_ cli="lmvideo";
+let scene = scene3d().threads(4).background("#15202b").ambient(0.18);
+scene.camera(camera3d().look_at(5.0,4.0,7.0,0.0,0.0,0.0).perspective(42.0,0.1,40.0));
+let ground = mesh_plane(5.0,5.0);
+let markers = scene.add_instances(mesh_box(0.12,0.12,0.12),"#e0a14c");
+markers.scatter_on_mesh(ground,64,4242,true,0.18);
+image_assert_true(markers.size()==64);
+scene.directional_light(1.0,3.0,4.0,"#ffffff",1.4);
+let image = scene.render_image(640,480,2);
+image_assert_true(image.stddev(0)>0.01);
+image.save("build/seeded-surface-scatter.png");
+scene.export_gltf("build/seeded-surface-scatter.glb",true);
+end _lmcode_
+savedsl(program,"build/seeded-surface-scatter.dslb");
+r=system(concat(dsl_cli(program),["--dsl","build/seeded-surface-scatter.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);
+println(r.stdout);
