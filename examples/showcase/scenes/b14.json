@@ -3,6 +3,17 @@
   "title": "Four-View CAD Engineering Quad & Uncapped Section View",
   "script": "examples/showcase/bench-14-cad-four-view-section.lms",
   "reference_url": "https://github.com/lmctl-ai/lmcad",
+  "external_tools": [
+    {
+      "name": "lmcad",
+      "install": "github:lmctl-ai/lmcad@v0.1.72",
+      "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.72",
+      "asset": "lmcad-linux-x64",
+      "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
+      "purpose": "External CAD producer for the authored STL; not bundled with lmvideo.",
+      "licence_notice": "The generated STL is authored procedural output under the example licence; lmcad and OCCT retain their own release licences."
+    }
+  ],
   "visual_specification": "900x560 still; real pinned lmcad B-Rep housing exported in millimetres, consumed at 0.001 m/mm in one scene across three orthographic views and one perspective uncapped clip-plane section, with dimensions.",
   "required_feature_witnesses": [
     "lmcad housing STL",
@@ -30,7 +41,7 @@
       "kind": "original-script-and-procedural-data",
       "license": "MIT",
       "source": "examples/showcase/bench-14-cad-four-view-section.lms",
-      "sha256": "6a02970f9f2cd738d971155bd36d1850ed1d8b6381fd15bfb160942db63f5ad4"
+      "sha256": "cf2a154949f5bc5ae2f8d38c0384513efe0e72e30f23fa36948e7db4daa6b1b2"
     }
   ]
 }
