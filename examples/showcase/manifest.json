@@ -3215,8 +3215,8 @@
       "title": "Cornell Box Transmission and IOR",
       "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
       "script_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
-      "source_commit": "a35236c",
-      "status": "PLANNED",
+      "source_commit": "3410d618f56d603faeb2f7d5e484856c73d2f65e",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b16.json",
@@ -3234,8 +3234,10 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-16-cornell-transmission-ior.lms",
+          "sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
           "license": "MIT",
-          "license_file": "LICENSE-examples"
+          "license_file": "LICENSE-examples",
+          "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
         }
       ],
       "expected_outputs": [
@@ -3243,13 +3245,115 @@
           "store_file": "bench-16-cornell-transmission-ior-3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb.png",
           "sha256": "3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb",
           "bytes": 152984,
-          "dimensions": [900, 560],
+          "dimensions": [
+            900,
+            560
+          ],
           "file": "build/bench-16-cornell-transmission-ior.png",
           "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
-      "rights_note": "Original procedural scene; no borrowed model or reference render."
+      "rights_note": "Original procedural scene; no borrowed model or reference render.",
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "5101c7248f2f6d77d97650cda679182cf0f221a36e32edaf5927cb7b35f9a45c",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "c3ba4a6b5bcd72db6b8923ff8973537b0d879f60ed817e9663614ded603a2064",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "cb1c55a295e3300aeb7cf50aad9f142200cf7ad148efd67cdb6f2aa6d17a03dc",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 64,
+          "bounces": 6,
+          "seed": 20261027,
+          "denoise": "OIDN"
+        },
+        "samples_per_axis": 64,
+        "denoise": "OIDN",
+        "seed": 20261027,
+        "cycles_module_sha256": "c3ba4a6b5bcd72db6b8923ff8973537b0d879f60ed817e9663614ded603a2064",
+        "build": {
+          "implementation_cpp_tree": "3a9732bb1d153306f055a1bfe7cddf625709d82b",
+          "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+          "sdk_config_sha256": "aa43e7c54b3bea5224893e00cd1fcde0d930fc3f4aae3b089b1b2dd41a6ada70",
+          "scope": "Existing pinned CPU SDK; current source host and module rebuilt together; x86_64 local gate only."
+        }
+      },
+      "timing": {
+        "wall_s": 63.16,
+        "user_s": 135.55,
+        "sys_s": 1.08,
+        "max_rss_kib": 607496,
+        "cold_job_wall_s": 60.68820791898179,
+        "packaging_webm_s": 0,
+        "phase_ms": {
+          "post": 8.785728,
+          "prepare": 0.199766,
+          "render": 58812.998623,
+          "setup": 0.092601,
+          "write_media": 46.285929
+        },
+        "max_render_ms": 23751.506844,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 63.16,
+          "user_s": 135.55,
+          "sys_s": 1.08,
+          "max_rss_kib": 607496,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 607496,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 90,
+        "cache_hit": false,
+        "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals are retained separately"
+      },
+      "repeat_verified": true,
+      "captured_stdout": [
+        "{\"ok\": true, \"result\": {\"output\": [\"B16 Cornell CPU Cycles | 64 spp | 6 bounces | seed 20261027 | OIDN | GI PSNR one-bounce=33.8245771227825 | redPatch=0.0352941176470588,0.011764705882353 | greenPatch=0.0313725490196078,0.0196078431372549\"], \"file\": \"build/bench-16-cornell-transmission-ior.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 5693, \"instructions\": 378, \"wall_ms\": 58868, \"phase_ms\": {\"post\":8.785728,\"prepare\":0.199766,\"render\":58812.998623,\"setup\":0.092601,\"write_media\":46.285929}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 23751.506844, \"render_calls\": 3}}",
+        ""
+      ],
+      "visual_specification": "900x560 CPU Cycles still: authored red and green Cornell walls, one rectangular ceiling area light, rotated tall and short blocks, native closed glass sphere (transmission 1, IOR 1.52), mirror sphere, fixed 64 spp/6 bounce/OIDN profile.",
+      "cpu_budget_seconds": 90,
+      "featured": false,
+      "reference": {
+        "url": "https://www.graphics.cornell.edu/online/box/",
+        "written_specification_sha256": "d0d244c4de4b27225a6fc9e47e5322c1f647617305ba11c6b2b305c1b77d1f6a",
+        "art_included": false,
+        "catalogue_revision": "Original project-authored Cornell scene; written target in document10"
+      }
     }
   ],
   "groups": [
@@ -3613,6 +3717,34 @@
           ]
         }
       ]
+    },
+    {
+      "id": "cycles-global-illumination",
+      "title": "Built-in CPU Cycles",
+      "chapters": [
+        {
+          "id": "B16",
+          "title": "Cornell Box Transmission and IOR",
+          "featured": false,
+          "blocks": [
+            {
+              "type": "text",
+              "text": "900x560 CPU Cycles still: authored red and green Cornell walls, one rectangular ceiling area light, rotated tall and short blocks, native closed glass sphere (transmission 1, IOR 1.52), mirror sphere, fixed 64 spp/6 bounce/OIDN profile."
+            },
+            {
+              "type": "code",
+              "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
+              "script_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5"
+            },
+            {
+              "type": "image",
+              "local_store_file": "bench-16-cornell-transmission-ior-3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb.png",
+              "sha256": "3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb",
+              "caption": "Original Cornell scene: ceiling rectangle, diffuse colour bleed, mirror and solid-glass spheres."
+            }
+          ]
+        }
+      ]
     }
   ],
   "additional_candidates": [
@@ -3668,14 +3800,14 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "8f31f66cc0fc2a109e31f59ecc07d4489f76e42130b372994b64f71256968a4c",
+    "sha256": "d738f4cec4132ac1d52d891a5b253611e96ddc96d96b30633a6d739e44aaec5e",
     "tiers": {
       "1": {
         "verified": 15,
         "total": 15
       },
       "2": {
-        "verified": 0,
+        "verified": 1,
         "total": 12
       },
       "3": {
