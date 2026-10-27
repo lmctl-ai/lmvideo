@@ -3790,6 +3790,13 @@
       "metadata": "examples/showcase/scenes/g13-jpeg-material.json",
       "status": "LOCALLY_VERIFIED_UNRELEASED_API",
       "description": "Original measured geometry/material acceptance witness; no binary release or website publication."
+    },
+    {
+      "slug": "closed-lathe-goblets",
+      "script": "examples/closed-lathe-goblets.lms",
+      "metadata": "examples/showcase/scenes/g2-closed-lathe.json",
+      "status": "CANDIDATE",
+      "description": "Original closed outer/inner profiles and solid geometry witness; B17 still requires independent optical acceptance."
     }
   ],
   "implementation_repository": "lmctlhq/lmvideo",
