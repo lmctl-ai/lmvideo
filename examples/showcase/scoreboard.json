@@ -6348,7 +6348,7 @@
     {
       "id": "B16",
       "tier": 2,
-      "status": "VERIFIED",
+      "status": "PLANNED",
       "evidence": {
         "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
         "script_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
@@ -6568,8 +6568,10 @@
             "Retain the visible glass and mirror witnesses while preserving the measured patch oracle"
           ],
           "reasoning": "The revised render is a centered Cornell room with clearly visible red/green walls, rotated blocks, mirror and glass spheres, and an actual ceiling area light. The composition satisfies the written visual specification at the review threshold."
-        }
-      }
+        },
+        "capture_status": "INVALID_CLOSED_TRANSPORT_EXIT_INTERFACE"
+      },
+      "reason": "Default closed-glass exit boundary was culled; requires a corrected renderer and fresh acceptance capture."
     },
     {
       "id": "B17",
@@ -6674,7 +6676,7 @@
       "total": 15
     },
     "2": {
-      "verified": 1,
+      "verified": 0,
       "total": 12
     },
     "3": {

@@ -3216,7 +3216,7 @@
       "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
       "script_sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
       "source_commit": "3410d618f56d603faeb2f7d5e484856c73d2f65e",
-      "status": "VERIFIED",
+      "status": "PLANNED",
       "publication_status": "UNPUBLISHED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b16.json",
@@ -3353,7 +3353,8 @@
         "written_specification_sha256": "d0d244c4de4b27225a6fc9e47e5322c1f647617305ba11c6b2b305c1b77d1f6a",
         "art_included": false,
         "catalogue_revision": "Original project-authored Cornell scene; written target in document10"
-      }
+      },
+      "verification_note": "Default closed-glass exit boundary was culled; requires a corrected renderer and fresh acceptance capture."
     }
   ],
   "groups": [
@@ -3800,14 +3801,14 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "d738f4cec4132ac1d52d891a5b253611e96ddc96d96b30633a6d739e44aaec5e",
+    "sha256": "f73bd60acf957c61228b166be8b4e14566089d606f82e4bad5077f5da2aafa60",
     "tiers": {
       "1": {
         "verified": 15,
         "total": 15
       },
       "2": {
-        "verified": 1,
+        "verified": 0,
         "total": 12
       },
       "3": {
