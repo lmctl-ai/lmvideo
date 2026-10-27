@@ -1,0 +1,8 @@
+# B13 / G.8: colour, depth, normal and post-processing witnesses in a 2x2 sheet.
+mkdir("build"); program=_lmcode_ cli="lmvideo";
+let scene=scene3d().background("#ecf2f7").ambient(0.2); scene.camera(camera3d().look_at(3.0,2.0,5.0,0.0,0.0,0.0).perspective(45.0,0.1,12.0)); scene.add(mesh_torus(1.2,0.3,24,40),"#de7656"); scene.add(mesh_sphere(0.45,16,24),"#359b9a"); scene.directional_light(2.0,3.0,4.0,"#ffffff",0.9);
+let colour=scene.render_image(420,260,2); let depth=scene.render_depth_image(420,260); let normal=scene.render_normal_image(420,260); image_assert_true(depth.max(0)>0.1&&normal.max(2)>0.5);
+let hald=image_hald(4).hsl(10.0,1.12,1.0); let graded=colour.copy().clut(hald).tilt_shift(0.08,0.13,0.48).vignette(0.28,0.82); let sobel=colour.copy().edges(1.0).grayscale();
+let top=layout_sheet().add(colour).add(graded); let bottom=layout_sheet().add(depth).add(normal); let sheet=layout_sheet().add(top.render(2,8,0.92,0.94,0.97,1.0)).add(bottom.render(2,8,0.92,0.94,0.97,1.0)); sheet.render(2,12,0.88,0.92,0.96,1.0).resize(900,560).save("build/bench-13-aov-post-processing.png"); image_assert_true(sobel.stddev(0)>0.01);
+end _lmcode_
+savedsl(program,"build/bench-13-aov-post-processing.dslb"); r=system(concat(dsl_cli(program),["--dsl","build/bench-13-aov-post-processing.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);
