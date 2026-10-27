@@ -1,0 +1,19 @@
+# G.2: one closed solid with a through-hole; caps and walls share sweep edges.
+mkdir("build");
+program=_lmcode_ cli="lmvideo";
+let solid=mesh_extrude("-2,0,-2,2,0,-2,2,0,2,-2,0,2;-0.8,0,-0.8,-0.8,0,0.8,0.8,0,0.8,0.8,0,-0.8",0.8);
+image_assert_close(solid.bound(0),-2.0,0.000001);
+image_assert_close(solid.bound(1),-0.4,0.000001);
+image_assert_close(solid.bound(4),0.4,0.000001);
+let scene=scene3d().threads(4).background("#edf3f8").ambient(0.12);
+scene.camera(camera3d().look_at(4.5,5.5,7.0,0.0,0.0,0.0).perspective(38.0,0.1,50.0));
+scene.add(solid,material("#359b9a",0.25,0.32));
+scene.directional_light(-2.0,4.0,3.0,"#fff1d4",1.8);
+let image=scene.render_image(900,560,2);
+image_assert_true(image.stddev(0)>0.03);
+image.save("build/holed-extrusion-oracle.png");
+scene.export_gltf("build/holed-extrusion-oracle.glb",true);
+end _lmcode_
+savedsl(program,"build/holed-extrusion-oracle.dslb");
+r=system(concat(dsl_cli(program),["--dsl","build/holed-extrusion-oracle.dslb"]),600000);
+assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

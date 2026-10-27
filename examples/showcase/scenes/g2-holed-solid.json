@@ -1,0 +1,161 @@
+{
+  "id": "G2-holed-solid",
+  "title": "Watertight holed polygon extrusion",
+  "script": "examples/holed-extrusion-oracle.lms",
+  "script_sha256": "7ce9beba9ac8b38b359359fc91b20844adb1d9746f39c3f0344da6154e3cda74",
+  "required_feature_witnesses": [
+    "one through-hole with explicit depth",
+    "aligned cap/wall edge subdivisions",
+    "closed oriented welded edges and analytic volume in native oracle",
+    "bounded geometry allocation before emission"
+  ],
+  "visual_specification": "900x560 original teal slab with a visible through-hole, showing the closed wall/cap shape from an elevated camera.",
+  "cpu_budget_seconds": 15,
+  "backend": "raster",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "LOCAL_PASS",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project; authors in Git history",
+      "source": "examples/holed-extrusion-oracle.lms",
+      "sha256": "7ce9beba9ac8b38b359359fc91b20844adb1d9746f39c3f0344da6154e3cda74",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "publication_status": "UNPUBLISHED",
+  "local_execution": {
+    "generated_asset_hashes": [
+      {
+        "path": "build/holed-extrusion-oracle.glb",
+        "sha256": "939f8413bce33b79476d24ff330bd401d1cfc8ab80d0e7c089940479668a0d86",
+        "license": "MIT; project-authored procedural asset",
+        "source_sha256": "7ce9beba9ac8b38b359359fc91b20844adb1d9746f39c3f0344da6154e3cda74"
+      }
+    ],
+    "id": "G2-holed-solid",
+    "status": "PASS",
+    "timing": {
+      "wall_s": 0.84,
+      "user_s": 0.74,
+      "sys_s": 0.18,
+      "max_rss_kib": 301896,
+      "cold_job_wall_s": 0.8421142569859512,
+      "packaging_webm_s": 0,
+      "phase_ms": {
+        "post": 2.298117,
+        "prepare": 0.044611,
+        "render": 140.185443,
+        "setup": 0.236376,
+        "write_media": 14.020961
+      },
+      "max_render_ms": 140.185443,
+      "max_frame_ms": 0
+    },
+    "outputs": {
+      "image": {
+        "path": "build/holed-extrusion-oracle.png",
+        "store_file": "holed-extrusion-oracle-7281c3da4d22a7b5d0d1b11b51b0b14e0add34de2a5ca7a456882955dce3e4ef.png",
+        "sha256": "7281c3da4d22a7b5d0d1b11b51b0b14e0add34de2a5ca7a456882955dce3e4ef",
+        "bytes": 8629,
+        "dimensions": [
+          900,
+          560
+        ]
+      }
+    },
+    "stdout": "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/holed-extrusion-oracle.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2123, \"instructions\": 81, \"wall_ms\": 156, \"phase_ms\": {\"post\":2.298117,\"prepare\":0.044611,\"render\":140.185443,\"setup\":0.236376,\"write_media\":14.020961}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 140.185443, \"render_calls\": 1}}\n\n",
+    "font_notices": [
+      {
+        "schema": "lmvideo-fonts/v1",
+        "payload_sha256": "7281c3da4d22a7b5d0d1b11b51b0b14e0add34de2a5ca7a456882955dce3e4ef",
+        "fonts": []
+      }
+    ],
+    "budget_seconds": 15,
+    "cache_hit": false,
+    "repeat_verified": true,
+    "container_repeat_sha256_equal": {},
+    "identity": {
+      "harness_sha256": "b48d9af38ce1dd826447fb57139469f11211478d2e7111e595cc310e76228c58",
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+        "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+        "denoise": false,
+        "seed": "authored in each script"
+      },
+      "script": "7ce9beba9ac8b38b359359fc91b20844adb1d9746f39c3f0344da6154e3cda74",
+      "metadata": "f3295e1013cf4c6f768734e4e74e4fd3f69f572bdb82b21e1200259b5dc71e7c"
+    },
+    "cache_key": "752ff8140ba860699635a5b9e77707d6f2391ea22057e9aa6aace99c22717bdc",
+    "profile": {
+      "cpu": "Intel(R) Core(TM) i9-14900HX",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "architecture": "x86_64",
+      "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+      "render_threads": 4,
+      "memory_limit_bytes": 2147483648,
+      "binary_hashes": {
+        "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+        "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+        "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+        "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+        "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+        "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+      },
+      "compiler_version": "lmscript 0.2.426",
+      "host_version": "lmvideo 0.1.0",
+      "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+      "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+      "denoise": false,
+      "seed": "authored in each script"
+    },
+    "wall_seconds": 0.8421142569859512,
+    "max_rss_kib": 301896
+  },
+  "expected_outputs": [
+    {
+      "path": "build/holed-extrusion-oracle.png",
+      "store_file": "holed-extrusion-oracle-7281c3da4d22a7b5d0d1b11b51b0b14e0add34de2a5ca7a456882955dce3e4ef.png",
+      "sha256": "7281c3da4d22a7b5d0d1b11b51b0b14e0add34de2a5ca7a456882955dce3e4ef",
+      "bytes": 8629,
+      "dimensions": [
+        900,
+        560
+      ]
+    }
+  ]
+}

@@ -1511,7 +1511,7 @@
       "script": "examples/showcase/bench-06-helmet-ibl.lms",
       "script_sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -1555,8 +1555,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-06-helmet-ibl.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -1581,42 +1581,79 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": [
+            1717
+          ]
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 1.28,
-        "user_s": 1.32,
-        "sys_s": 0.17,
-        "max_rss_kib": 301752,
-        "cold_job_wall_s": 1.2908506950188894,
+        "wall_s": 1.09,
+        "user_s": 1.19,
+        "sys_s": 0.2,
+        "max_rss_kib": 302232,
+        "cold_job_wall_s": 1.0917027380201034,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 1.87315,
-          "prepare": 9.75461,
-          "render": 600.370851,
-          "setup": 42.481391,
-          "write_media": 38.842732
+          "post": 1.77944,
+          "prepare": 8.025454,
+          "render": 484.173141,
+          "setup": 35.056095,
+          "write_media": 36.382056
         },
-        "max_render_ms": 600.370851,
-        "max_frame_ms": 0
+        "max_render_ms": 484.173141,
+        "max_frame_ms": 0,
+        "budget_seconds": 15,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 15,
       "repeat_verified": true,
       "container_repeat_sha256_equal": {},
-      "cycles_parity_status": "PENDING_PHASE_6"
+      "cycles_parity_status": "PENDING_PHASE_6",
+      "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+      "font_notices": [
+        {
+          "schema": "lmvideo-fonts/v1",
+          "payload_sha256": "e34381b23ad50afc570517bb2a6f1ce26a81ae24d971d01edb82cda6128c7513",
+          "fonts": []
+        }
+      ],
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B06"
+      }
     },
     {
       "id": "B07",
@@ -1625,7 +1662,7 @@
       "script": "examples/showcase/bench-07-bevel-typography.lms",
       "script_sha256": "0e7a5146ac9593e05863b77c9fe138bb6496a6dea1518f5fc540986814cbe32f",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -1667,15 +1704,15 @@
       "generated_asset_hashes": [],
       "expected_outputs": [
         {
-          "store_file": "bench-07-bevel-typography-5b47f013cc078fa093948d55706639b85d4e1828c4262e034942c1b5d6b87762.png",
-          "sha256": "5b47f013cc078fa093948d55706639b85d4e1828c4262e034942c1b5d6b87762",
-          "bytes": 40974,
+          "store_file": "bench-07-bevel-typography-ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07.png",
+          "sha256": "ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07",
+          "bytes": 37777,
           "dimensions": [
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-07-bevel-typography.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -1700,41 +1737,84 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.84,
-        "user_s": 0.86,
-        "sys_s": 0.16,
-        "max_rss_kib": 302516,
-        "cold_job_wall_s": 0.8467115230159834,
+        "wall_s": 0.85,
+        "user_s": 0.9,
+        "sys_s": 0.22,
+        "max_rss_kib": 301036,
+        "cold_job_wall_s": 0.8540799780166708,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 1.841201,
-          "prepare": 15.056111,
-          "render": 224.573219,
-          "setup": 0.241097,
-          "write_media": 15.329015
+          "post": 1.928507,
+          "prepare": 122.685217,
+          "render": 197.607398,
+          "setup": 0.593575,
+          "write_media": 18.300188
         },
-        "max_render_ms": 224.573219,
-        "max_frame_ms": 0
+        "max_render_ms": 197.607398,
+        "max_frame_ms": 0,
+        "budget_seconds": 30,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 30,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+      "font_notices": [
+        {
+          "schema": "lmvideo-fonts/v1",
+          "payload_sha256": "ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07",
+          "fonts": [
+            {
+              "family": "DejaVu Sans",
+              "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+              "license": "Bitstream-Vera",
+              "source": "bundled:DejaVuSans",
+              "version": "bundled-2.37"
+            }
+          ]
+        }
+      ],
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B07"
+      }
     },
     {
       "id": "B08",
@@ -1743,7 +1823,7 @@
       "script": "examples/showcase/bench-08-lathe-closed-knot.lms",
       "script_sha256": "cd757039982f7478310f39abe8564f4140e4bf2a626631906a864e8fe7890ee2",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -1780,8 +1860,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-08-lathe-closed-knot.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -1806,40 +1886,75 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.73,
-        "user_s": 0.67,
-        "sys_s": 0.17,
-        "max_rss_kib": 302168,
-        "cold_job_wall_s": 0.7403156319924165,
+        "wall_s": 0.6,
+        "user_s": 0.64,
+        "sys_s": 0.15,
+        "max_rss_kib": 301932,
+        "cold_job_wall_s": 0.6026844619773328,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "prepare": 0.081792,
-          "render": 109.394445,
-          "setup": 0.031193,
-          "write_media": 13.378258
+          "prepare": 0.071709,
+          "render": 96.017909,
+          "setup": 0.035803,
+          "write_media": 14.232434
         },
-        "max_render_ms": 109.394445,
-        "max_frame_ms": 0
+        "max_render_ms": 96.017909,
+        "max_frame_ms": 0,
+        "budget_seconds": 10,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 10,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+      "font_notices": [
+        {
+          "schema": "lmvideo-fonts/v1",
+          "payload_sha256": "15e1fcace84ff7fa71583326bc1220329493649d88fd0fd16a497ae950f7e3fb",
+          "fonts": []
+        }
+      ],
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B08"
+      }
     },
     {
       "id": "B09",
@@ -1848,7 +1963,7 @@
       "script": "examples/showcase/bench-09-terrain-contours.lms",
       "script_sha256": "0c5437e36044a555825a6392d7427f79cf8e3fb568a6872df86d72866be649c4",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -1896,8 +2011,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-09-terrain-contours.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -1922,42 +2037,90 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": [
+            14159,
+            2718,
+            31415,
+            16180
+          ]
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 1.05,
+        "wall_s": 0.91,
         "user_s": 1.02,
-        "sys_s": 0.21,
-        "max_rss_kib": 302228,
-        "cold_job_wall_s": 1.0533856279798783,
+        "sys_s": 0.17,
+        "max_rss_kib": 301804,
+        "cold_job_wall_s": 0.9209208310057875,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "compose": 5.117913,
-          "encode": 24.059973,
-          "post": 9.306111,
-          "prepare": 6.891879,
-          "render": 88.312994,
-          "setup": 5.168665
+          "compose": 4.64644,
+          "encode": 23.094481,
+          "post": 8.330341,
+          "prepare": 6.44039,
+          "render": 76.492891,
+          "setup": 4.385267
         },
-        "max_render_ms": 88.312994,
-        "max_frame_ms": 29.961935
+        "max_render_ms": 76.492891,
+        "max_frame_ms": 28.45752,
+        "budget_seconds": 15,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 15,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+      "font_notices": [
+        {
+          "schema": "lmvideo-fonts/v1",
+          "payload_sha256": "a414c7e33156ad54555c4ef57fb796e93027cab51cce6bef6edca445acf59ce5",
+          "fonts": [
+            {
+              "family": "DejaVu Sans",
+              "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+              "license": "Bitstream-Vera",
+              "source": "bundled:DejaVuSans",
+              "version": "bundled-2.37"
+            }
+          ]
+        }
+      ],
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B09"
+      }
     },
     {
       "id": "B10",
@@ -1966,7 +2129,7 @@
       "script": "examples/showcase/bench-10-fem-callout-dashboard.lms",
       "script_sha256": "4fdc9d2d6614db5a559900b5c3bda470637b412755e5f6c82ad59f0613748262",
       "source_commit": "a0d4553843aedb00d9e2bb6791eeb53acb846285",
-      "status": "LOCAL_PASS",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "raster",
@@ -2016,8 +2179,8 @@
             900,
             560
           ],
-          "kind": "image",
           "file": "build/bench-10-fem-callout-dashboard.png",
+          "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
@@ -2042,42 +2205,85 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "9546924e7c7ffd60fa1ee3fb0f9afa31a7c172db6e84f1ef6443f82b444e00a8",
+          "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "125b66f998bb6a0b591d057b9037527c5808eb13b97ab0a1cbf98e622a54c5c4",
+        "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
         "samples_per_axis": "per-scene/per-pass as authored in the locked script",
         "denoise": false,
         "seed": "authored in each script",
-        "samples": {
-          "color": 2,
-          "depth_normal": 1
+        "device": "CPU",
+        "backend": "raster",
+        "settings": {
+          "samples_per_axis": {
+            "color": 2,
+            "depth_normal": 1
+          },
+          "denoise": false,
+          "procedural_seeds": []
+        },
+        "build": {
+          "profile": "lean CPU raster, Cycles disabled",
+          "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+          "compiler_target": "x86_64-linux-gnu",
+          "cxx_flags": [
+            "-std=c++17",
+            "-O2",
+            "-Wall",
+            "-Wextra",
+            "-Werror"
+          ],
+          "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+          "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
         }
       },
       "timing": {
-        "wall_s": 0.67,
-        "user_s": 0.63,
-        "sys_s": 0.19,
-        "max_rss_kib": 302036,
-        "cold_job_wall_s": 0.6801415169902612,
+        "wall_s": 0.58,
+        "user_s": 0.68,
+        "sys_s": 0.1,
+        "max_rss_kib": 302184,
+        "cold_job_wall_s": 0.5888319039950147,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "compose": 3.96571,
-          "encode": 16.036966,
-          "post": 0.078739,
-          "prepare": 0.109037,
-          "render": 60.810422,
-          "setup": 2.096077
+          "compose": 3.915263,
+          "encode": 22.774841,
+          "post": 0.092476,
+          "prepare": 0.113159,
+          "render": 53.102133,
+          "setup": 1.918335
         },
-        "max_render_ms": 60.810422,
-        "max_frame_ms": 20.237985
+        "max_render_ms": 53.102133,
+        "max_frame_ms": 26.943096,
+        "budget_seconds": 15,
+        "cache_hit": false
       },
       "cpu_budget_seconds": 15,
       "repeat_verified": true,
-      "container_repeat_sha256_equal": {}
+      "container_repeat_sha256_equal": {},
+      "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+      "font_notices": [
+        {
+          "schema": "lmvideo-fonts/v1",
+          "payload_sha256": "b3ef0a6d75362df15dea7b7c798cfeed10c250ba1c0ea5cf59a9b2230eaef43d",
+          "fonts": [
+            {
+              "family": "DejaVu Sans",
+              "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+              "license": "Bitstream-Vera",
+              "source": "bundled:DejaVuSans",
+              "version": "bundled-2.37"
+            }
+          ]
+        }
+      ],
+      "verification": {
+        "metadata": "examples/showcase/scoreboard.json",
+        "target": "B10"
+      }
     },
     {
       "id": "B11",
@@ -2932,8 +3138,8 @@
             },
             {
               "type": "image",
-              "local_store_file": "bench-07-bevel-typography-5b47f013cc078fa093948d55706639b85d4e1828c4262e034942c1b5d6b87762.png",
-              "sha256": "5b47f013cc078fa093948d55706639b85d4e1828c4262e034942c1b5d6b87762",
+              "local_store_file": "bench-07-bevel-typography-ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07.png",
+              "sha256": "ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07",
               "caption": "3D Extruded Bevel Typography & Logo Stage"
             }
           ]
@@ -3169,6 +3375,20 @@
       "metadata": "examples/showcase/scenes/g2-lathe-profile.json",
       "status": "LOCALLY_VERIFIED_UNRELEASED_API",
       "description": "Measured original geometry acceptance witness; separate from benchmark promotion."
+    },
+    {
+      "slug": "holed-extrusion-oracle",
+      "script": "examples/holed-extrusion-oracle.lms",
+      "metadata": "examples/showcase/scenes/g2-holed-solid.json",
+      "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+      "description": "Original measured geometry/material acceptance witness; no binary release or website publication."
+    },
+    {
+      "slug": "jpeg-material-roundtrip",
+      "script": "examples/jpeg-material-roundtrip.lms",
+      "metadata": "examples/showcase/scenes/g13-jpeg-material.json",
+      "status": "LOCALLY_VERIFIED_UNRELEASED_API",
+      "description": "Original measured geometry/material acceptance witness; no binary release or website publication."
     }
   ],
   "implementation_repository": "lmctlhq/lmvideo",
@@ -3180,10 +3400,10 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "40a9d1d70df03d8b1e87f379ea4ccffba8d1937d300883fb8a90664645dd0c51",
+    "sha256": "75d06cbc17e353832a6dfaee0c62b70af4fdc00d4a31bd3fe78c722d01e8a6a0",
     "tiers": {
       "1": {
-        "verified": 5,
+        "verified": 10,
         "total": 15
       },
       "2": {

@@ -154,7 +154,13 @@
       "denoise": false,
       "seed": "authored in each script"
     },
-    "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141"
+    "implementation_commit": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+    "max_rss_kib": 301132,
+    "wall_seconds": 1.3632518200029153,
+    "host_sha256": "c9ad658bb2052624a32dbfbd0ab9d39c052a02efb573d9e3615dc3880196d0bd",
+    "source_revision": "7ce97c510f0e5a7a6f3d779491de7a577d8bf141",
+    "compiler_version": "lmscript 0.2.426",
+    "platform": "Linux x86_64"
   },
   "dimensions": {
     "still": [

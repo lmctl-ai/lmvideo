@@ -2294,32 +2294,1764 @@
     {
       "id": "B06",
       "tier": 1,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-06-helmet-ibl.lms",
+        "script_sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "1a7f915d258cf78d750d6842183bac5deba777ba",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+        "required_features": [
+          "Original dome/visor/rim/ear meshes",
+          "Actual GLB import of albedo/ORM/normal/emissive textures",
+          "Generated linear HDR >1 studio IBL and background"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-06-helmet-ibl.lms",
+            "source_sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-06-helmet-ibl.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "4e7c8ad215bdfcf68899d1351e669133e74c15470fcbd304166c0241fdc94107",
+            "features": [
+              "Original dome/visor/rim/ear meshes",
+              "Actual GLB import of albedo/ORM/normal/emissive textures",
+              "Generated linear HDR >1 studio IBL and background"
+            ],
+            "scope": "Executed construction/assertions plus independent native geometry, colour and importer checks."
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "ab654187288d0278358b80c37576ab7bcdd67e535b165fa78620a6a6c62d6ced",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "33b49af25dd43bc13f92193d473cee786c9359c0a41ec9dde5cdab68a5863f8c",
+            "stdout": "80 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "source": "tests/font_scene_test.cpp",
+            "source_sha256": "f899432a5687b43bd5c1f1bf11f64393624497355fa7ea882071bdb4b6530a42",
+            "command": [
+              "build/font_scene_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "af16d8122000575c2d5b95e77c0becb8318d7b23b7bd082ecf4028bede7ee9e5",
+            "stdout": "PASS 3D font outlines preserve the O counter; 3736 text triangles\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_import_test.cpp",
+            "source_sha256": "cebdd02bdc2288ca12db3e64533f18f20e1b90f7e32574590090e21bfa07dd18",
+            "command": [
+              "build/scene3d_gltf_import_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "8f5fc948f47c6c59240379d7b45d309f13d72b35eb8d0679925ee59adea2f171",
+            "stdout": "PASS glTF import scene/material/hierarchy/error checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "a3f6081fede1568a43573979585101fc127713c33f62cab565178f1e375c75ed",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ce60bb9f1d1791e61d3ff8d875c9651e295a0db03791e297ca4ba264dd2f745d",
+            "stdout": "PASS 31 standard scene export checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "75f7e981e03bf2b046a63a69bb016625aebf8219c4b6ab6c72d3e47273bc98e5",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_overlays_test.cpp",
+            "source_sha256": "14890fa71c820a01a7e76adc9ce4b78de3944d8a33f2b5bbec04b9572aa620ad",
+            "command": [
+              "build/scene3d_overlays_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout": "",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_anchor_test.cpp",
+            "source_sha256": "fc7254af433e9580d22ff775bbeb961b99c3b88004cc03bf2a053d4c0b031002",
+            "command": [
+              "build/scene3d_projection_anchor_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eec43efd2602b23c0315f7c6cc957f6eed89f12587744a60b2c8a32c5ab2e897",
+            "stdout": "PASS scene3d projection anchor checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-06-helmet-ibl.lms",
+            "sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-06-helmet-ibl-e34381b23ad50afc570517bb2a6f1ce26a81ae24d971d01edb82cda6128c7513.png",
+            "sha256": "e34381b23ad50afc570517bb2a6f1ce26a81ae24d971d01edb82cda6128c7513",
+            "bytes": 148154,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-06-helmet-ibl.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": [
+              1717
+            ]
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 1.09,
+          "user_s": 1.19,
+          "sys_s": 0.2,
+          "max_rss_kib": 302232,
+          "cold_job_wall_s": 1.0917027380201034,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 1.77944,
+            "prepare": 8.025454,
+            "render": 484.173141,
+            "setup": 35.056095,
+            "write_media": 36.382056
+          },
+          "max_render_ms": 484.173141,
+          "max_frame_ms": 0,
+          "budget_seconds": 15,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 484.173141,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 36.382056,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"original helmet dome visor rim ears; GLB with albedo ORM normal emissive; generated studio environment\"], \"file\": \"build/bench-06-helmet-ibl.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6782, \"instructions\": 35163, \"wall_ms\": 567, \"phase_ms\": {\"post\":1.779440,\"prepare\":8.025454,\"render\":484.173141,\"setup\":35.056095,\"write_media\":36.382056}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 484.173141, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [
+          {
+            "path": "build/original-helmet-analogue.glb",
+            "sha256": "9277718852fcc429209ae5dfade7e67c78ddb7aa5b173fdc8a7f7bd706d7c844",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "83ee3a4044053e7b52c4214b65aa727153182765e28d7ed069ae0fdd4ff3b723"
+          }
+        ],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "e34381b23ad50afc570517bb2a6f1ce26a81ae24d971d01edb82cda6128c7513",
+            "fonts": []
+          }
+        ],
+        "budget_note": "Fresh job; whole-job cache hits excluded."
+      }
     },
     {
       "id": "B07",
       "tier": 1,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-07-bevel-typography.lms",
+        "script_sha256": "0e7a5146ac9593e05863b77c9fe138bb6496a6dea1518f5fc540986814cbe32f",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "1a7f915d258cf78d750d6842183bac5deba777ba",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+        "required_features": [
+          "Bundled font license notice",
+          "Skia glyph outline and winding/hole preservation",
+          "3D extrusion depth and bevel chamfer witness",
+          "metallic material and directional shadows"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-07-bevel-typography.lms",
+            "source_sha256": "0e7a5146ac9593e05863b77c9fe138bb6496a6dea1518f5fc540986814cbe32f",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-07-bevel-typography.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "139cdfc0566b3df3c5939d789022c9c9472f1aa2c45eed71787cc9cdcf7d3373",
+            "features": [
+              "Bundled font license notice",
+              "Skia glyph outline and winding/hole preservation",
+              "3D extrusion depth and bevel chamfer witness",
+              "metallic material and directional shadows"
+            ],
+            "scope": "Executed construction/assertions plus independent native geometry, colour and importer checks."
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "ab654187288d0278358b80c37576ab7bcdd67e535b165fa78620a6a6c62d6ced",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "33b49af25dd43bc13f92193d473cee786c9359c0a41ec9dde5cdab68a5863f8c",
+            "stdout": "80 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "source": "tests/font_scene_test.cpp",
+            "source_sha256": "f899432a5687b43bd5c1f1bf11f64393624497355fa7ea882071bdb4b6530a42",
+            "command": [
+              "build/font_scene_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "af16d8122000575c2d5b95e77c0becb8318d7b23b7bd082ecf4028bede7ee9e5",
+            "stdout": "PASS 3D font outlines preserve the O counter; 3736 text triangles\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_import_test.cpp",
+            "source_sha256": "cebdd02bdc2288ca12db3e64533f18f20e1b90f7e32574590090e21bfa07dd18",
+            "command": [
+              "build/scene3d_gltf_import_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "8f5fc948f47c6c59240379d7b45d309f13d72b35eb8d0679925ee59adea2f171",
+            "stdout": "PASS glTF import scene/material/hierarchy/error checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "a3f6081fede1568a43573979585101fc127713c33f62cab565178f1e375c75ed",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ce60bb9f1d1791e61d3ff8d875c9651e295a0db03791e297ca4ba264dd2f745d",
+            "stdout": "PASS 31 standard scene export checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "75f7e981e03bf2b046a63a69bb016625aebf8219c4b6ab6c72d3e47273bc98e5",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_overlays_test.cpp",
+            "source_sha256": "14890fa71c820a01a7e76adc9ce4b78de3944d8a33f2b5bbec04b9572aa620ad",
+            "command": [
+              "build/scene3d_overlays_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout": "",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_anchor_test.cpp",
+            "source_sha256": "fc7254af433e9580d22ff775bbeb961b99c3b88004cc03bf2a053d4c0b031002",
+            "command": [
+              "build/scene3d_projection_anchor_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eec43efd2602b23c0315f7c6cc957f6eed89f12587744a60b2c8a32c5ab2e897",
+            "stdout": "PASS scene3d projection anchor checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-07-bevel-typography.lms",
+            "sha256": "0e7a5146ac9593e05863b77c9fe138bb6496a6dea1518f5fc540986814cbe32f",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          },
+          {
+            "kind": "font",
+            "creator": "Bitstream, Inc.; DejaVu contributors (full attribution in licence file)",
+            "source": "bundled:DejaVuSans",
+            "family": "DejaVu Sans",
+            "version": "bundled-2.37",
+            "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+            "license": "Bitstream-Vera",
+            "license_file": "docs/third-party-licenses/assets/fonts/LICENSE-DejaVu.txt",
+            "license_sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-07-bevel-typography-ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07.png",
+            "sha256": "ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07",
+            "bytes": 37777,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-07-bevel-typography.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 0.85,
+          "user_s": 0.9,
+          "sys_s": 0.22,
+          "max_rss_kib": 301036,
+          "cold_job_wall_s": 0.8540799780166708,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 1.928507,
+            "prepare": 122.685217,
+            "render": 197.607398,
+            "setup": 0.593575,
+            "write_media": 18.300188
+          },
+          "max_render_ms": 197.607398,
+          "max_frame_ms": 0,
+          "budget_seconds": 30,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 197.607398,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 18.300188,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"A B O 8 & open counters, true inset-contour chamfer, gold PBR with studio IBL and bundled font notices\"], \"file\": \"build/bench-07-bevel-typography.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3713, \"instructions\": 155, \"wall_ms\": 341, \"phase_ms\": {\"post\":1.928507,\"prepare\":122.685217,\"render\":197.607398,\"setup\":0.593575,\"write_media\":18.300188}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 197.607398, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          }
+        ],
+        "budget_note": "Fresh job; whole-job cache hits excluded.",
+        "visual_check": {
+          "score": 95,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [],
+          "suggestions": [],
+          "reasoning": "The regenerated gold typography preserves the composition, readable A/B/O/8/& forms, open counters and grounded shadows. Bevel shading remains coherent; solid closure is verified independently by the geometric edge tests."
+        },
+        "solid_oracle": "Closed oriented welded edges and positive volume, including exact authored reference scaling."
+      }
     },
     {
       "id": "B08",
       "tier": 1,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-08-lathe-closed-knot.lms",
+        "script_sha256": "cd757039982f7478310f39abe8564f4140e4bf2a626631906a864e8fe7890ee2",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "1a7f915d258cf78d750d6842183bac5deba777ba",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+        "required_features": [
+          "mesh_lathe revolution surface",
+          "mesh_tube_spline closed knot",
+          "opaque ceramic materials"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-08-lathe-closed-knot.lms",
+            "source_sha256": "cd757039982f7478310f39abe8564f4140e4bf2a626631906a864e8fe7890ee2",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-08-lathe-closed-knot.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "68345fc44e5f9c291f3abfdd2b7e53590cc009d7ae9ad3d0299bbad04ee50d75",
+            "features": [
+              "mesh_lathe revolution surface",
+              "mesh_tube_spline closed knot",
+              "opaque ceramic materials"
+            ],
+            "scope": "Executed construction/assertions plus independent native geometry, colour and importer checks."
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "ab654187288d0278358b80c37576ab7bcdd67e535b165fa78620a6a6c62d6ced",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "33b49af25dd43bc13f92193d473cee786c9359c0a41ec9dde5cdab68a5863f8c",
+            "stdout": "80 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "source": "tests/font_scene_test.cpp",
+            "source_sha256": "f899432a5687b43bd5c1f1bf11f64393624497355fa7ea882071bdb4b6530a42",
+            "command": [
+              "build/font_scene_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "af16d8122000575c2d5b95e77c0becb8318d7b23b7bd082ecf4028bede7ee9e5",
+            "stdout": "PASS 3D font outlines preserve the O counter; 3736 text triangles\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_import_test.cpp",
+            "source_sha256": "cebdd02bdc2288ca12db3e64533f18f20e1b90f7e32574590090e21bfa07dd18",
+            "command": [
+              "build/scene3d_gltf_import_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "8f5fc948f47c6c59240379d7b45d309f13d72b35eb8d0679925ee59adea2f171",
+            "stdout": "PASS glTF import scene/material/hierarchy/error checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "a3f6081fede1568a43573979585101fc127713c33f62cab565178f1e375c75ed",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ce60bb9f1d1791e61d3ff8d875c9651e295a0db03791e297ca4ba264dd2f745d",
+            "stdout": "PASS 31 standard scene export checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "75f7e981e03bf2b046a63a69bb016625aebf8219c4b6ab6c72d3e47273bc98e5",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_overlays_test.cpp",
+            "source_sha256": "14890fa71c820a01a7e76adc9ce4b78de3944d8a33f2b5bbec04b9572aa620ad",
+            "command": [
+              "build/scene3d_overlays_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout": "",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_anchor_test.cpp",
+            "source_sha256": "fc7254af433e9580d22ff775bbeb961b99c3b88004cc03bf2a053d4c0b031002",
+            "command": [
+              "build/scene3d_projection_anchor_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eec43efd2602b23c0315f7c6cc957f6eed89f12587744a60b2c8a32c5ab2e897",
+            "stdout": "PASS scene3d projection anchor checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-08-lathe-closed-knot.lms",
+            "sha256": "cd757039982f7478310f39abe8564f4140e4bf2a626631906a864e8fe7890ee2",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-08-lathe-closed-knot-15e1fcace84ff7fa71583326bc1220329493649d88fd0fd16a497ae950f7e3fb.png",
+            "sha256": "15e1fcace84ff7fa71583326bc1220329493649d88fd0fd16a497ae950f7e3fb",
+            "bytes": 29118,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-08-lathe-closed-knot.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 0.6,
+          "user_s": 0.64,
+          "sys_s": 0.15,
+          "max_rss_kib": 301932,
+          "cold_job_wall_s": 0.6026844619773328,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "prepare": 0.071709,
+            "render": 96.017909,
+            "setup": 0.035803,
+            "write_media": 14.232434
+          },
+          "max_render_ms": 96.017909,
+          "max_frame_ms": 0,
+          "budget_seconds": 10,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 96.017909,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 14.232434,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [], \"file\": \"build/bench-08-lathe-closed-knot.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 2337, \"instructions\": 101, \"wall_ms\": 110, \"phase_ms\": {\"prepare\":0.071709,\"render\":96.017909,\"setup\":0.035803,\"write_media\":14.232434}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 96.017909, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "15e1fcace84ff7fa71583326bc1220329493649d88fd0fd16a497ae950f7e3fb",
+            "fonts": []
+          }
+        ],
+        "budget_note": "Fresh job; whole-job cache hits excluded."
+      }
     },
     {
       "id": "B09",
       "tier": 1,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-09-terrain-contours.lms",
+        "script_sha256": "0c5437e36044a555825a6392d7427f79cf8e3fb568a6872df86d72866be649c4",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "1a7f915d258cf78d750d6842183bac5deba777ba",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+        "required_features": [
+          "128x128 four-octave seeded Perlin FBM",
+          "elevation/slope vertex viridis",
+          "same source samples drive marching-squares contours"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-09-terrain-contours.lms",
+            "source_sha256": "0c5437e36044a555825a6392d7427f79cf8e3fb568a6872df86d72866be649c4",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-09-terrain-contours.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d66d99b0b27ce558cc996cb9cd518dc7634249829b618a6810859948c1d173cc",
+            "features": [
+              "128x128 four-octave seeded Perlin FBM",
+              "elevation/slope vertex viridis",
+              "same source samples drive marching-squares contours"
+            ],
+            "scope": "Executed construction/assertions plus independent native geometry, colour and importer checks."
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "ab654187288d0278358b80c37576ab7bcdd67e535b165fa78620a6a6c62d6ced",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "33b49af25dd43bc13f92193d473cee786c9359c0a41ec9dde5cdab68a5863f8c",
+            "stdout": "80 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "source": "tests/font_scene_test.cpp",
+            "source_sha256": "f899432a5687b43bd5c1f1bf11f64393624497355fa7ea882071bdb4b6530a42",
+            "command": [
+              "build/font_scene_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "af16d8122000575c2d5b95e77c0becb8318d7b23b7bd082ecf4028bede7ee9e5",
+            "stdout": "PASS 3D font outlines preserve the O counter; 3736 text triangles\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_import_test.cpp",
+            "source_sha256": "cebdd02bdc2288ca12db3e64533f18f20e1b90f7e32574590090e21bfa07dd18",
+            "command": [
+              "build/scene3d_gltf_import_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "8f5fc948f47c6c59240379d7b45d309f13d72b35eb8d0679925ee59adea2f171",
+            "stdout": "PASS glTF import scene/material/hierarchy/error checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "a3f6081fede1568a43573979585101fc127713c33f62cab565178f1e375c75ed",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ce60bb9f1d1791e61d3ff8d875c9651e295a0db03791e297ca4ba264dd2f745d",
+            "stdout": "PASS 31 standard scene export checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "75f7e981e03bf2b046a63a69bb016625aebf8219c4b6ab6c72d3e47273bc98e5",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_overlays_test.cpp",
+            "source_sha256": "14890fa71c820a01a7e76adc9ce4b78de3944d8a33f2b5bbec04b9572aa620ad",
+            "command": [
+              "build/scene3d_overlays_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout": "",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_anchor_test.cpp",
+            "source_sha256": "fc7254af433e9580d22ff775bbeb961b99c3b88004cc03bf2a053d4c0b031002",
+            "command": [
+              "build/scene3d_projection_anchor_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eec43efd2602b23c0315f7c6cc957f6eed89f12587744a60b2c8a32c5ab2e897",
+            "stdout": "PASS scene3d projection anchor checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-09-terrain-contours.lms",
+            "sha256": "0c5437e36044a555825a6392d7427f79cf8e3fb568a6872df86d72866be649c4",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          },
+          {
+            "kind": "font",
+            "creator": "Bitstream, Inc.; DejaVu contributors (full attribution in licence file)",
+            "source": "bundled:DejaVuSans",
+            "family": "DejaVu Sans",
+            "version": "bundled-2.37",
+            "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+            "license": "Bitstream-Vera",
+            "license_file": "docs/third-party-licenses/assets/fonts/LICENSE-DejaVu.txt",
+            "license_sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-09-terrain-contours-a414c7e33156ad54555c4ef57fb796e93027cab51cce6bef6edca445acf59ce5.png",
+            "sha256": "a414c7e33156ad54555c4ef57fb796e93027cab51cce6bef6edca445acf59ce5",
+            "bytes": 114411,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-09-terrain-contours.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": [
+              14159,
+              2718,
+              31415,
+              16180
+            ]
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 0.91,
+          "user_s": 1.02,
+          "sys_s": 0.17,
+          "max_rss_kib": 301804,
+          "cold_job_wall_s": 0.9209208310057875,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "compose": 4.64644,
+            "encode": 23.094481,
+            "post": 8.330341,
+            "prepare": 6.44039,
+            "render": 76.492891,
+            "setup": 4.385267
+          },
+          "max_render_ms": 76.492891,
+          "max_frame_ms": 28.45752,
+          "budget_seconds": 15,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 76.492891,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 23.094481,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"16384 vertices; 32258 triangles; four pinned Perlin seeds; identical contour source.\"], \"file\": \"build/bench-09-terrain-contours.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6542, \"instructions\": 1648343, \"wall_ms\": 414, \"phase_ms\": {\"compose\":4.646440,\"encode\":23.094481,\"post\":8.330341,\"prepare\":6.440390,\"render\":76.492891,\"setup\":4.385267}, \"max_frame_ms\": 28.457520, \"max_render_ms\": 76.492891, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "a414c7e33156ad54555c4ef57fb796e93027cab51cce6bef6edca445acf59ce5",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          }
+        ],
+        "budget_note": "Fresh job; whole-job cache hits excluded."
+      }
     },
     {
       "id": "B10",
       "tier": 1,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-10-fem-callout-dashboard.lms",
+        "script_sha256": "4fdc9d2d6614db5a559900b5c3bda470637b412755e5f6c82ad59f0613748262",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "1a7f915d258cf78d750d6842183bac5deba777ba",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "c67651df22143d4ad9d3f50c0a65d75e656ce01b",
+        "required_features": [
+          "Analytic cantilever moment/distance stress proxy",
+          "viridis vertex colours and wireframe",
+          "camera-projected callout arrows",
+          "actual viridis colourbar",
+          "second-order FRF plot"
+        ],
+        "feature_checks": [
+          {
+            "kind": "authored-scene-witness",
+            "source": "examples/showcase/bench-10-fem-callout-dashboard.lms",
+            "source_sha256": "4fdc9d2d6614db5a559900b5c3bda470637b412755e5f6c82ad59f0613748262",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-10-fem-callout-dashboard.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "434babda8cdb33d7f2080e2492a6f51625dad0c187374e1f8a62c9609d6bc501",
+            "features": [
+              "Analytic cantilever moment/distance stress proxy",
+              "viridis vertex colours and wireframe",
+              "camera-projected callout arrows",
+              "actual viridis colourbar",
+              "second-order FRF plot"
+            ],
+            "scope": "Executed construction/assertions plus independent native geometry, colour and importer checks."
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "ab654187288d0278358b80c37576ab7bcdd67e535b165fa78620a6a6c62d6ced",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "33b49af25dd43bc13f92193d473cee786c9359c0a41ec9dde5cdab68a5863f8c",
+            "stdout": "80 checks, 0 failures\n",
+            "features": []
+          },
+          {
+            "source": "tests/font_scene_test.cpp",
+            "source_sha256": "f899432a5687b43bd5c1f1bf11f64393624497355fa7ea882071bdb4b6530a42",
+            "command": [
+              "build/font_scene_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "af16d8122000575c2d5b95e77c0becb8318d7b23b7bd082ecf4028bede7ee9e5",
+            "stdout": "PASS 3D font outlines preserve the O counter; 3736 text triangles\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_import_test.cpp",
+            "source_sha256": "cebdd02bdc2288ca12db3e64533f18f20e1b90f7e32574590090e21bfa07dd18",
+            "command": [
+              "build/scene3d_gltf_import_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "8f5fc948f47c6c59240379d7b45d309f13d72b35eb8d0679925ee59adea2f171",
+            "stdout": "PASS glTF import scene/material/hierarchy/error checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_gltf_export_test.cpp",
+            "source_sha256": "a3f6081fede1568a43573979585101fc127713c33f62cab565178f1e375c75ed",
+            "command": [
+              "build/scene3d_gltf_export_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ce60bb9f1d1791e61d3ff8d875c9651e295a0db03791e297ca4ba264dd2f745d",
+            "stdout": "PASS 31 standard scene export checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_material_render_test.cpp",
+            "source_sha256": "75f7e981e03bf2b046a63a69bb016625aebf8219c4b6ab6c72d3e47273bc98e5",
+            "command": [
+              "build/scene3d_material_render_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "128ea7bcf23db550d65ac328a85fe928e824696a12796760de7f8596a9bc40aa",
+            "stdout": "PASS independent material render checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_pbr_reference_test.cpp",
+            "source_sha256": "9773bdcf7b6a3093d8d65dd603854b9e5cdc9390da50b30890e204885faf7be4",
+            "command": [
+              "build/scene3d_pbr_reference_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "d03993428d0ea4247f60ef874bcf8350b7a3012a9dbe5d565d5d3c3ee08adf4e",
+            "stdout": "PASS independent PBR/texture reference checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_environment_test.cpp",
+            "source_sha256": "dddc8110144197a2a3814153af8762231df41adeab4eed7607e66119f1b80f89",
+            "command": [
+              "build/scene3d_environment_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "dc55a44af2b5b0cb3664a4af4f77f727ca8db53a3ec36e155f4297bef0198beb",
+            "stdout": "scene3d_environment_test: 32 checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_overlays_test.cpp",
+            "source_sha256": "14890fa71c820a01a7e76adc9ce4b78de3944d8a33f2b5bbec04b9572aa620ad",
+            "command": [
+              "build/scene3d_overlays_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout": "",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_test.cpp",
+            "source_sha256": "64baa030e7938466c4d1c53e5e73716f2cb825c957db9878f78553e2c9000549",
+            "command": [
+              "build/scene3d_projection_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b685207901821d1998f95b71ddbe9f827222990e16cebbe8d3e0d2d51d18e77",
+            "stdout": "PASS independent scene3d projection/lighting checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_projection_anchor_test.cpp",
+            "source_sha256": "fc7254af433e9580d22ff775bbeb961b99c3b88004cc03bf2a053d4c0b031002",
+            "command": [
+              "build/scene3d_projection_anchor_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eec43efd2602b23c0315f7c6cc957f6eed89f12587744a60b2c8a32c5ab2e897",
+            "stdout": "PASS scene3d projection anchor checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_showcase_test.cpp",
+            "source_sha256": "6c33c7b5e10743fad67f2cad833e1856b9b4c8b20f5cc39ee82fa45a544070fc",
+            "command": [
+              "build/scene3d_showcase_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "eedc08b6f6852b148fd86b8b191cfa8a9521dd51b01dd7c7e46bfa617f828b69",
+            "stdout": "PASS chamfer bounds/normals and deterministic four-thread color/AOV/shadow passes\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_shadow_test.cpp",
+            "source_sha256": "d983dae492d8414820c3cfdc67173d3868f224a07bf68653188b860a129efc16",
+            "command": [
+              "build/scene3d_shadow_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "e84285dbe465ea39df5c2cab4b07f9be8ed633bbac5134f7af7aa0f4f877790e",
+            "stdout": "PASS scene3d shadow checks\n",
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_compiler_test.cpp",
+            "source_sha256": "385d9ce31e6b4b7c6a6f77dfcab703b3a33d3fb876d4afdb335e43789b205bb6",
+            "command": [
+              "build/material_compiler_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "f1652c8d93a82665a85e5f2537c276ad4d0d691f5ad5b608c7e9b0d063c4864d",
+            "stdout": "PASS material pack parse/save/load, sampler state, deterministic bytes and render equivalence\n",
+            "features": []
+          },
+          {
+            "source": "tests/material_source_test.cpp",
+            "source_sha256": "fdac00844c1b12451221c02b402b1ff707e1a521cfe07a09d4b24a44a7f0af44",
+            "command": [
+              "build/material_source_test"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "0b2c928bf95855db4a871f94ee743d9e695bebfe1d5418569e06c8b8f6a96192",
+            "stdout": "PASS 27 source/cache/pack/graph checks\n",
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project; authors recorded in the pinned source commit",
+            "source": "examples/showcase/bench-10-fem-callout-dashboard.lms",
+            "sha256": "4fdc9d2d6614db5a559900b5c3bda470637b412755e5f6c82ad59f0613748262",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          },
+          {
+            "kind": "font",
+            "creator": "Bitstream, Inc.; DejaVu contributors (full attribution in licence file)",
+            "source": "bundled:DejaVuSans",
+            "family": "DejaVu Sans",
+            "version": "bundled-2.37",
+            "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+            "license": "Bitstream-Vera",
+            "license_file": "docs/third-party-licenses/assets/fonts/LICENSE-DejaVu.txt",
+            "license_sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-10-fem-callout-dashboard-b3ef0a6d75362df15dea7b7c798cfeed10c250ba1c0ea5cf59a9b2230eaef43d.png",
+            "sha256": "b3ef0a6d75362df15dea7b7c798cfeed10c250ba1c0ea5cf59a9b2230eaef43d",
+            "bytes": 73839,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-10-fem-callout-dashboard.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "d8366f880080bbf18e3dae9cfd3dff2e5d41c37b2d7c66ff9a3250a58bf36783",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "abafba5435c380c4476353a66999e67445d25d69b50fae52faa10c56d8f49861",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "device": "CPU",
+          "backend": "raster",
+          "settings": {
+            "samples_per_axis": {
+              "color": 2,
+              "depth_normal": 1
+            },
+            "denoise": false,
+            "procedural_seeds": []
+          },
+          "build": {
+            "profile": "lean CPU raster, Cycles disabled",
+            "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+            "compiler_target": "x86_64-linux-gnu",
+            "cxx_flags": [
+              "-std=c++17",
+              "-O2",
+              "-Wall",
+              "-Wextra",
+              "-Werror"
+            ],
+            "isa": "Compiler baseline x86_64; no -march=native; pinned Skia pack has its own CPU dispatch",
+            "implementation_cpp_tree": "a4d2be6007d1287b3fadcfb1263e172b65237949",
+            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8"
+          }
+        },
+        "timing": {
+          "wall_s": 0.58,
+          "user_s": 0.68,
+          "sys_s": 0.1,
+          "max_rss_kib": 302184,
+          "cold_job_wall_s": 0.5888319039950147,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "compose": 3.915263,
+            "encode": 22.774841,
+            "post": 0.092476,
+            "prepare": 0.113159,
+            "render": 53.102133,
+            "setup": 1.918335
+          },
+          "max_render_ms": 53.102133,
+          "max_frame_ms": 26.943096,
+          "budget_seconds": 15,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare span; no separate measurement."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 53.102133,
+            "scope": "Native render and render-cache call spans."
+          },
+          "denoise": {
+            "status": "NOT_APPLICABLE",
+            "ms": null,
+            "reason": "Raster backend does not request denoising."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 22.774841,
+            "scope": "Native encode and image-write call spans."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"Analytic sigma proportional to moment*distance; anchors projected from same camera; actual viridis colourbar; second-order FRF.\"], \"file\": \"build/bench-10-fem-callout-dashboard.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6865, \"instructions\": 10312, \"wall_ms\": 82, \"phase_ms\": {\"compose\":3.915263,\"encode\":22.774841,\"post\":0.092476,\"prepare\":0.113159,\"render\":53.102133,\"setup\":1.918335}, \"max_frame_ms\": 26.943096, \"max_render_ms\": 53.102133, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "b3ef0a6d75362df15dea7b7c798cfeed10c250ba1c0ea5cf59a9b2230eaef43d",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          }
+        ],
+        "budget_note": "Fresh job; whole-job cache hits excluded."
+      }
     },
     {
       "id": "B11",
@@ -2456,7 +4188,7 @@
   ],
   "tiers": {
     "1": {
-      "verified": 5,
+      "verified": 10,
       "total": 15
     },
     "2": {
@@ -2470,6 +4202,7 @@
   },
   "reviews": [
     "Luna: source, features, rights and raw run/profile/output comparisons",
-    "Astra: independent feature and acceptance-record review"
+    "Astra: independent feature and acceptance-record review",
+    "Milestone2: Luna and Astra independently approved B06\u2013B10 scripts, witnesses, grants, paired output and CPU/RSS budgets."
   ]
 }
