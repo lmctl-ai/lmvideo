@@ -1,19 +1,32 @@
 # B26 / G.2-G.9-G.10: original cozy tabletop still life.
-# Every object and texture is procedural; no Blender Splash or CC-BY-SA asset is used.
+# Every object, grain texture, flame and light is procedural; no external asset is used.
 mkdir("build"); program=_lmcode_ cli="lmvideo";
-let scene=scene3d().threads(4).background("#10131a").ambient(0.02).tonemap("aces",0.25);
-let camera=camera3d().look_at(4.8,3.4,7.2,0.0,0.75,0.0).perspective(42.0,0.1,30.0).lens(50.0,36.0).dof(2.8,6.0,6);scene.camera(camera);
-scene.area_light(-3.5,6.0,3.0,0.15,-0.9,-0.25,3.5,2.0,"#fff0d6",18.0,30.0);
-scene.area_light(3.0,3.5,1.5,-0.35,-0.4,-0.8,1.6,1.6,"#b9d8ff",8.0,30.0);
-let wood=material("#7a4329",0.0,0.55);let ceramic=material("#d6bca2",0.0,0.18);let dark=material("#1b2028",0.72,0.24);let glass=material("#d5e7ef",0.0,0.08).transmission(0.88,1.45);
-scene.add(mesh_box(5.2,0.18,3.7),wood).position(0.0,-0.1,0.0);
-let mug=mesh_lathe_closed("0,0,0,0.55,0,0,0.62,0.12,0,0.58,0.75,0,0.5,1.0,0,0,1.0,0",48);scene.add(mug,ceramic).position(-1.35,0.0,0.25);
-let bowl=mesh_lathe_closed("0,0,0,0.9,0,0,1.05,0.15,0,1.0,0.45,0,0.85,0.68,0,0.55,0.72,0,0.0,0.72,0",48);scene.add(bowl,ceramic).position(1.25,0.0,-0.15);
-let decanter=mesh_lathe_closed("0,0,0,0.72,0,0,0.82,0.18,0,0.68,0.8,0,0.38,1.25,0,0.2,1.55,0,0.0,1.55,0",48);scene.add(decanter,glass).position(0.15,0.0,0.65);
-scene.add(mesh_beveled_box(0.9,0.55,0.9,0.08),dark).position(2.0,0.35,0.85);
-let candle=scene.add(mesh_cylinder(0.17,0.6,32),ceramic);candle.position(-0.2,0.3,-0.75);scene.area_light(-0.2,1.3,-0.75,0.0,-1.0,0.0,0.4,0.4,"#ffd28a",5.0,12.0);
+let scene=scene3d().threads(4).ambient(0.0).background("#0a0d14").tonemap("aces",0.18);
+let camera=camera3d().look_at(0.7,0.35,0.9,0.0,0.10,0.0).perspective(42.0,0.1,3.0).lens(85.0,36.0).dof(1.4,1.1,6);scene.camera(camera);
+scene.area_light(-0.5,1.8,0.8,0.2,-0.85,-0.3,1.1,0.8,"#fff0d6",10.0,6.0);
+scene.area_light(1.2,0.9,0.4,-0.4,-0.5,-0.7,0.6,0.5,"#b9d8ff",2.0,4.0);
+let grain=texture_noise("perlin",2601,28).mix(texture_noise("worley",2602,44),0.22).bake(128,128,"srgb").filter("trilinear");
+let wood=material("#704027",0.0,0.58).albedo(grain);let ceramic=material("#d6bca2",0.0,0.18);let dark=material("#1b2028",0.72,0.24);
+let glass=material("#d5e7ef",0.0,0.08).transmission(0.88).ior(1.45);
+scene.add(mesh_box(0.54,0.018,0.42),wood).position(0.0,0.0,0.0);
+for (i in range(0,8)) { for (j in range(0,8)) {
+  let tile=material("#d3a777",0.0,0.72);if ((i+j)%2!=0) { tile=material("#321b16",0.0,0.72); }
+  scene.add(mesh_box(0.066,0.004,0.051),tile).position(-0.231+float(i)*0.066,0.012,-0.1785+float(j)*0.051);
+}}
+let mug_profile="0,0,0,0.075,0,0,0.085,0.008,0,0.085,0.15,0,0.075,0.19,0,0.060,0.19,0,0.060,0.17,0,0.065,0.15,0,0.065,0.02,0,0,0.02,0,0,0,0";
+let mug=scene.add(mesh_lathe_closed(mug_profile,40),ceramic);mug.position(-0.12,0.018,0.10);
+let handle=mesh_tube_spline("-0.035,0.11,0.10,-0.07,0.14,0.10,-0.10,0.11,0.10,-0.07,0.07,0.10,-0.035,0.09,0.10",0.012,12,true);scene.add(handle,ceramic).position(-0.12,0.018,0.10);
+let bowl_profile="0,0,0,0.13,0,0,0.15,0.02,0,0.145,0.07,0,0.12,0.12,0,0.09,0.14,0,0.075,0.14,0,0.075,0.12,0,0.085,0.10,0,0.10,0.04,0,0.06,0.02,0,0,0.02,0,0,0,0";
+scene.add(mesh_lathe_closed(bowl_profile,48),ceramic).position(0.12,0.018,-0.06);
+let decanter_profile="0,0,0,0.095,0,0,0.11,0.025,0,0.105,0.14,0,0.075,0.22,0,0.045,0.29,0,0.028,0.31,0,0.028,0.285,0,0.040,0.27,0,0.06,0.20,0,0.075,0.12,0,0.075,0.03,0,0,0.03,0,0,0,0";
+scene.add(mesh_lathe_closed(decanter_profile,48),glass).position(0.0,0.018,0.07);
+scene.add(mesh_beveled_box(0.11,0.07,0.11,0.012),dark).position(0.17,0.049,0.12);
+let candle=scene.add(mesh_cylinder(0.018,0.07,24),ceramic);candle.position(-0.19,0.053,-0.11);
+let flame=material("#fff1bd",0.0,0.15).emissive("#fff1bd",3.0);scene.add(mesh_sphere(0.012,20,10),flame).position(-0.19,0.10,-0.11);
+scene.area_light(-0.19,0.12,-0.11,0.0,-1.0,0.0,0.08,0.08,"#ffd28a",2.5,1.0);
 let raw=scene.render_image(900,560,"cycles",128,8,20261103,true);
-let grade=raw.curves(image_curve().point(0.0,0.0).point(0.45,0.40).point(0.78,0.86).point(1.0,1.0)).vignette(390.0,0.82);
-grade.save("build/bench-26-cozy-still-life.png");
+let tone=image_curve().point(0.0,0.0).point(0.45,0.40).point(0.78,0.86).point(1.0,1.0);
+let grade=raw.curves(tone).vignette(390.0,0.82);grade.save("build/bench-26-cozy-still-life.png");
 out.print("B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette");
 end _lmcode_
+savedsl(program,"build/bench-26-cozy-still-life.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-26-cozy-still-life.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

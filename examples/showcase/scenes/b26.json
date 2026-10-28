@@ -33,17 +33,24 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-26-cozy-still-life.lms",
-      "sha256": "2d6aa018b904baf4c3627bef345e39a5e8fe8aaf095105a9d43fb071a301d80e",
+      "sha256": "f65dbd3be01e1e02a0083762cc9eee38fe6c18b65a4cfb7f74d51949944c7bba",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
-  "script_sha256": "2d6aa018b904baf4c3627bef345e39a5e8fe8aaf095105a9d43fb071a301d80e",
+  "script_sha256": "f65dbd3be01e1e02a0083762cc9eee38fe6c18b65a4cfb7f74d51949944c7bba",
   "publication_status": "UNPUBLISHED",
   "limitations": [
     "Benchmark capture and repeat witness are pending the private integrated host review.",
     "Candle glow is an authored area emitter; no external flame image is used."
-  ]
+  ],
+  "camera_profile": {
+    "focal_length_mm": 85,
+    "sensor_height_mm": 36,
+    "fstop": 1.4,
+    "focus_distance_m": 1.1,
+    "blades": 6
+  }
 }
