@@ -1,0 +1,40 @@
+# B25 / G.9-G.10: original daylit pavilion with real apertures and indirect GI.
+# All geometry, materials and lighting are procedural and MIT under LICENSE-examples.
+mkdir("build"); program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#203044").ambient(0.0).sky_hosek(35.0,180.0,2.2,0.3,1.0,true).tonemap("aces",1.0);
+scene.camera(camera3d().look_at(10.0,4.4,12.0,0.0,2.1,-2.5).perspective(42.0,0.1,80.0));
+let floor=material("#9c8061",0.0,0.78);
+let plaster=material("#d8d3c7",0.0,0.86);
+let wood=material("#65432d",0.0,0.58);
+let concrete=material("#737b82",0.0,0.92);
+scene.add(mesh_box(14.0,0.18,14.0),floor).position(0.0,-0.09,-1.0);
+# Back wall leaves a 4.8m by 3.0m glazed aperture; side/top/bottom pieces are real occluders.
+scene.add(mesh_box(4.5,6.0,0.18),plaster).position(-4.75,3.0,-7.0);
+scene.add(mesh_box(4.5,6.0,0.18),plaster).position(4.75,3.0,-7.0);
+scene.add(mesh_box(5.0,1.4,0.18),plaster).position(0.0,5.3,-7.0);
+scene.add(mesh_box(5.0,1.2,0.18),plaster).position(0.0,0.6,-7.0);
+scene.add(mesh_box(0.14,4.7,0.14),wood).position(-2.4,2.95,-6.9);
+scene.add(mesh_box(0.14,4.7,0.14),wood).position(2.4,2.95,-6.9);
+scene.add(mesh_box(4.95,0.14,0.14),wood).position(0.0,0.65,-6.9);
+scene.add(mesh_box(4.95,0.14,0.14),wood).position(0.0,5.25,-6.9);
+# Roof overhang and a pair of original furniture clusters create visible occlusion.
+scene.add(mesh_box(14.0,0.18,2.2),concrete).position(0.0,6.2,-5.9);
+scene.add(mesh_box(3.4,0.34,1.8),wood).position(-0.9,1.05,-1.2).rotation(0.0,8.0,0.0);
+scene.add(mesh_beveled_box(1.15,0.9,0.95,0.12),material("#b55b43",0.0,0.64)).position(-1.0,1.66,-1.2);
+scene.add(mesh_beveled_box(1.15,0.9,0.95,0.12),material("#b55b43",0.0,0.64)).position(0.25,1.66,-1.0);
+scene.add(mesh_cylinder(0.16,2.5,24),wood).position(2.5,1.25,-2.1);
+scene.add(mesh_cylinder(0.16,2.5,24),wood).position(3.5,1.25,-2.1);
+scene.add(mesh_box(1.9,0.14,1.2),wood).position(3.0,2.55,-2.1);
+scene.directional_light(0.45,0.82,0.35,"#fff0d5",3.6);
+scene.area_light(0.0,5.2,1.0,0.0,-1.0,0.0,4.0,1.5,"#ffe0bd",18.0,20.0);
+let direct=scene.render_image(900,560,"cycles",64,1,20261103,true);
+let gi=scene.render_image(900,560,"cycles",128,8,20261103,true);
+image_assert_true(gi.stddev(0)>0.05&&gi.mean(0)>0.02);
+image_assert_true(direct.psnr(gi)<70.0);
+let window=gi.pixel(450,180,0);let alcove=gi.pixel(230,370,0);let floor_px=gi.pixel(530,470,0);
+out.print("B25 probes window="+str(window)+" alcove="+str(alcove)+" floor="+str(floor_px));
+image_assert_true(alcove>window&&floor_px>0.015);
+gi.save("build/bench-25-archviz-daylit-room.png");
+out.print("B25 original daylit pavilion | real window occlusion | Hosek sky + explicit sun | 128 spp 8 bounces OIDN | indirect GI witness");
+end _lmcode_
+savedsl(program,"build/bench-25-archviz-daylit-room.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-25-archviz-daylit-room.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
