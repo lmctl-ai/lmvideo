@@ -3,7 +3,7 @@
   "title": "Original Cozy Tabletop Still Life",
   "script": "examples/showcase/bench-26-cozy-still-life.lms",
   "reference_url": "https://github.com/lmctl-ai/lmvideo",
-  "visual_specification": "900x560 CPU Cycles still life with procedural ceramic, wood, glass and metal props, warm window key, candle glow, physical six-blade DoF, curves grade and vignette.",
+  "visual_specification": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded metal can and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette.",
   "required_feature_witnesses": [
     "mesh_lathe_closed ceramic and glass vessels",
     "beveled metal prop",
@@ -33,14 +33,14 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-26-cozy-still-life.lms",
-      "sha256": "f65dbd3be01e1e02a0083762cc9eee38fe6c18b65a4cfb7f74d51949944c7bba",
+      "sha256": "c8a9d15d1d1d7082c3220e665d94d335a2e3bfc9acf5fa2e2dc0e7ee30a49ae9",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
-  "script_sha256": "f65dbd3be01e1e02a0083762cc9eee38fe6c18b65a4cfb7f74d51949944c7bba",
+  "script_sha256": "c8a9d15d1d1d7082c3220e665d94d335a2e3bfc9acf5fa2e2dc0e7ee30a49ae9",
   "publication_status": "UNPUBLISHED",
   "limitations": [
     "Benchmark capture and repeat witness are pending the private integrated host review.",
