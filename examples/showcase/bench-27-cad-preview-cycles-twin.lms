@@ -13,15 +13,22 @@ let scene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces"
 let node=scene.add(mesh,material("#b8c5d1",0.35,0.55));node.scale(0.001,0.001,0.001);
 scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8).directional_light(-3.0,1.0,-1.0,"#aec8e5",0.6);
 let camera=camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0);scene.camera(camera);
-let preview=scene.render_image(435,540,2);let final=scene.render_image(435,540,"cycles",64,6,20261104,true);
-image_assert_true(preview.stddev(0)>0.02&&final.stddev(0)>0.02&&preview.psnr(final)<70.0);
-let label=scene.projection(435,540).at(-0.01,0.035,0.04);let rim=scene.projection(435,540).at(0.0,0.0,0.04);image_assert_true(label.visible()&&rim.visible());
-let depth=scene.render_depth_image(435,540);image_assert_true(depth.stddev(0)>0.01);
-preview.line(label.x(),label.y(),label.x()+88.0,label.y()-42.0,0.77,0.32,0.18,1.0,2.0);preview.text(label.x()+90.0,label.y()-44.0,"through bore",15.0,0.62,0.18,0.10,1.0);
-let sheet=layout_sheet().add(preview).add(final);let composed=sheet.render(2,10,0.94,0.96,0.98,1.0);
-composed.text(24.0,32.0,"CAD preview / Cycles final · one imported mesh and matched camera",20.0,0.09,0.21,0.30,1.0);
-composed.text(24.0,548.0,"Original flanged valve · 120 × 70 × 80 mm · STL scale 0.001 m/mm",17.0,0.09,0.21,0.30,1.0);
-composed.save("build/bench-27-cad-preview-cycles-twin.png");
-out.print("B27 original CAD preview/Cycles twin | one STL mesh | matched camera | projected through-bore label | 64 spp OIDN");
+scene.save_job("build/b27-preview.lmjob",435,540,"cycles",2,1,20261104,false);scene.save_job("build/b27-final.lmjob",435,540,"cycles",64,6,20261104,true);
+let mask=scene3d().threads(4).background("#000000").ambient(0.0);mask.camera(camera);let white=material("#ffffff",0.0,1.0).emissive("#ffffff",1.0);mask.add(mesh,white).scale(0.001,0.001,0.001);
+mask.save_job("build/b27-mask-raster.lmjob",435,540,"cycles",2,1,20261104,false);mask.save_job("build/b27-mask-cycles.lmjob",435,540,"cycles",16,2,20261104,false);
 end _lmcode_
-savedsl(program,"build/b27-cad-preview-cycles-twin.dslb");r=system(concat(dsl_cli(program),["--dsl","build/b27-cad-preview-cycles-twin.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(program,"build/b27-cad-preview-cycles-twin.dslb");r=system(concat(dsl_cli(program),["--dsl","build/b27-cad-preview-cycles-twin.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);
+tp=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"preview\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-preview.lmjob","--renderer","raster","--output","build/b27-preview.png"]);assert(tp.code==0,tp.stdout+tp.stderr);println(tp.stderr);
+tf=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"final\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-final.lmjob","--renderer","cycles","--output","build/b27-final.png"]);assert(tf.code==0,tf.stdout+tf.stderr);println(tf.stderr);
+mr=system(concat(dsl_cli(program),["render-job","build/b27-mask-raster.lmjob","--renderer","raster","--output","build/b27-mask-raster.png"]));assert(mr.code==0,mr.stdout+mr.stderr);
+mc=system(concat(dsl_cli(program),["render-job","build/b27-mask-cycles.lmjob","--renderer","cycles","--output","build/b27-mask-cycles.png"]));assert(mc.code==0,mc.stdout+mc.stderr);
+post=_lmcode_ cli="lmvideo";
+let preview=image_file("build/b27-preview.png");let final=image_file("build/b27-final.png");image_assert_true(preview.stddev(0)>0.02&&final.stddev(0)>0.02);
+let postmesh=mesh_load("build/b27-flanged-valve.stl");let postscene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);postscene.add(postmesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);postscene.camera(camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0));let label=postscene.projection(435,540).at(0.0,0.0,0.047);let rim=postscene.projection(435,540).at(0.0,0.0,0.04);image_assert_true(label.visible()&&rim.visible());let depth=postscene.render_depth_image(435,540);image_assert_true(depth.stddev(0)>0.01);
+preview.line(label.x(),label.y(),label.x()+88.0,label.y()-42.0,0.77,0.32,0.18,1.0,2.0);preview.text(label.x()+90.0,label.y()-44.0,"through bore",15.0,0.62,0.18,0.10,1.0);
+let mask_r=image_file("build/b27-mask-raster.png");let mask_c=image_file("build/b27-mask-cycles.png");let inter=0;let union=0;
+for(y in range(0,540)){for(x in range(0,435)){let a=mask_r.pixel(x,y,0)>0.1;let b=mask_c.pixel(x,y,0)>0.1;if(a&&b){inter=inter+1;}if(a||b){union=union+1;}}}
+let iou=float(inter)/float(max(1,union));image_assert_true(iou>0.98);out.print("B27 mask IoU="+str(iou)+" foreground_pixels="+str(union));
+let sheet=layout_sheet().add(preview).add(final);let composed=sheet.render(2,10,0.94,0.96,0.98,1.0);composed.text(24.0,32.0,"CAD preview / Cycles final · one imported mesh and matched camera",20.0,0.09,0.21,0.30,1.0);composed.text(24.0,548.0,"Original flanged valve · 120 × 70 × 80 mm · STL scale 0.001 m/mm",17.0,0.09,0.21,0.30,1.0);composed.save("build/bench-27-cad-preview-cycles-twin.png");out.print("B27 original CAD preview/Cycles twin | one STL mesh | matched camera | projected through-bore label | 64 spp OIDN");
+end _lmcode_
+savedsl(post,"build/b27-post.dslb");r=system(concat(dsl_cli(post),["--dsl","build/b27-post.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
