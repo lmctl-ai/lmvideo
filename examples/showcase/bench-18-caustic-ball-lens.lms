@@ -3,7 +3,8 @@
 mkdir("build"); program=_lmcode_ cli="lmvideo";
 let scene=scene3d().threads(4).background("#11151d").ambient(0.0);
 scene.camera(camera3d().look_at(0.0,4.5,6.0,0.0,0.0,0.0).ortho(4.2,0.1,30.0));
-let floor=scene.add(mesh_box(5.0,0.1,5.0),material("#6c6c6c",0.0,0.72)).position(0.0,-0.05,0.0);
+let tiles=texture_checker("#9c9c9c","#bcbcbc",6).bake(256,256,"srgb");
+let floor=scene.add(mesh_box(5.0,0.1,5.0),material("#ffffff",0.0,0.72).albedo(tiles)).position(0.0,-0.05,0.0);
 let lens=scene.add(mesh_sphere(0.72,32,48),material("#ffffff",0.0,0.08).transmission(1.0).ior(1.52));
 lens.position(0.0,1.2465,0.0).cast_caustics(true); floor.receive_caustics(true);
 scene.area_light(0.0,8.0,0.0,0.0,-1.0,0.0,0.5,0.5,"#ffffff",80.0,20.0); scene.light_caustics(0,true);

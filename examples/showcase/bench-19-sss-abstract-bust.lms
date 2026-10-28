@@ -18,8 +18,16 @@ scene.add(mesh_sphere(0.64,28,40),warm).scale(1.15,0.70,0.78).position(1.25,0.44
 # Thin ear/lamina details are separate closed ellipsoids and remain backlit.
 let ear_l=scene.add(mesh_sphere(0.34,24,32),warm).scale(0.28,0.82,0.10).position(0.35,1.58,0.0);
 let ear_r=scene.add(mesh_sphere(0.34,24,32),warm).scale(0.28,0.82,0.10).position(2.15,1.58,0.0);
-scene.area_light(0.6,2.8,1.8,-0.1,-0.6,-1.0,1.8,1.0,"#fff0dc",5.0,20.0);
-scene.area_light(0.0,1.3,-2.0,0.0,0.0,1.0,1.2,1.0,"#ffb07d",3.0,20.0);
+scene.area_light(0.6,2.8,1.8,-0.1,-0.6,-1.0,1.8,1.0,"#fff0dc",30.0,20.0);
+scene.area_light(0.0,1.3,-2.0,0.0,0.0,1.0,1.2,1.0,"#ffb07d",12.0,20.0);
+# Original closed facial details keep the abstract sculptures readable.
+let eye=material("#162028",0.0,0.45);
+scene.add(mesh_sphere(0.13,20,24),jade).scale(0.8,1.6,1.0).position(-1.25,1.44,0.79);
+scene.add(mesh_sphere(0.13,20,24),warm).scale(0.8,1.6,1.0).position(1.25,1.44,0.79);
+scene.add(mesh_sphere(0.065,16,24),eye).scale(1.2,0.55,0.5).position(-1.51,1.74,0.76);
+scene.add(mesh_sphere(0.065,16,24),eye).scale(1.2,0.55,0.5).position(-0.99,1.74,0.76);
+scene.add(mesh_sphere(0.065,16,24),eye).scale(1.2,0.55,0.5).position(0.99,1.74,0.76);
+scene.add(mesh_sphere(0.065,16,24),eye).scale(1.2,0.55,0.5).position(1.51,1.74,0.76);
 scene.save_job("build/sss-target.lmjob",900,560,"cycles",96,8,20261030,true);
 let image=scene.render_image(900,560,"cycles",96,8,20261030,true);
 image_assert_true(image.width()==900&&image.height()==560&&image.stddev(0)>0.03&&image.mean(0)>0.02);

@@ -27,14 +27,14 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-      "sha256": "82d3e79bd6696308be62baa346033e741905c5283f5d93917357fcccc48a59b9",
+      "sha256": "fccde770d9baf53feae5f0cd7b0787b0bc1e23cfaa0f6f76ed1405672434803d",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "publication_note": "Candidate only; no borrowed car model or external art. Runtime evidence is pending the integrated material-quality host.",
-  "script_sha256": "82d3e79bd6696308be62baa346033e741905c5283f5d93917357fcccc48a59b9",
+  "script_sha256": "fccde770d9baf53feae5f0cd7b0787b0bc1e23cfaa0f6f76ed1405672434803d",
   "cycles_profile": {
     "threads": 4,
     "samples": 64,

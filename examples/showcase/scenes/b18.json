@@ -3,7 +3,7 @@
   "title": "Analytic Area Light Caustic Ball Lens",
   "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
   "reference_url": "https://developer.blender.org/docs/features/cycles/",
-  "visual_specification": "900x560 CPU Cycles still: original clear ball lens above a matte receiver floor, one rectangular analytic area emitter, explicit MNEE caster/receiver roles and focused floor caustic.",
+  "visual_specification": "900x560 CPU Cycles still: original clear ball lens above a original neutral checker receiver floor, one rectangular analytic area emitter, explicit MNEE caster/receiver roles and focused floor caustic.",
   "required_feature_witnesses": [
     "closed transmissive ball lens",
     "analytic rectangular area light",
@@ -33,7 +33,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-18-caustic-ball-lens.lms",
-      "sha256": "9e0e9263753b58a97bf60f8f77235f68a95cb5a42dc6eb2cffd5ca7b9291705c",
+      "sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -41,5 +41,5 @@
   ],
   "rights_note": "Original procedural lens, floor, materials and analytic light; no borrowed model or reference render is copied.",
   "publication_status": "UNPUBLISHED",
-  "script_sha256": "9e0e9263753b58a97bf60f8f77235f68a95cb5a42dc6eb2cffd5ca7b9291705c"
+  "script_sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3"
 }
