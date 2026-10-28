@@ -8854,8 +8854,8 @@
     {
       "id": "B26",
       "tier": 2,
-      "status": "VERIFIED",
-      "reason": "Awaiting target-specific executed acceptance evidence.",
+      "status": "PLANNED",
+      "reason": "Reopened after fresh-main B26 render repeats exceeded the accepted one-code CPU Cycles tolerance; see durable-memory/68-luna-b24-b28-review.md.",
       "evidence": {
         "script": "examples/showcase/bench-26-cozy-still-life.lms",
         "script_sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
@@ -9572,7 +9572,9 @@
             "stdout_sha256": "cc279b77248d7692eebe64290a0cf9afab5a58ac2dc058c96be641a07eccaa8c",
             "stdout": "{\n  \"status\": \"PASS\",\n  \"record\": \"build/b28-framed.json\",\n  \"workdirs\": [\n    \"/home/mma/staging/lmvideo-gap-queue/build/b28-framed-runs/b28-4bbs2_go\",\n    \"/home/mma/staging/lmvideo-gap-queue/build/b28-framed-runs/b28-_vl8rq5u\"\n  ],\n  \"instances\": 10200,\n  \"clump_vertices\": 126,\n  \"clump_triangles\": 42,\n  \"terrain_vertices\": 625,\n  \"minimum_distance_m\": 0.04,\n  \"raster_wall_upper_bound_s\": 18.83092456898885,\n  \"png_sha256\": \"208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3\",\n  \"preview_sha256\": \"6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571\",\n  \"preview_repeat\": \"exact\",\n  \"run_sha256\": \"29d851bb9de9370724f9f2372314a211a34712979455c6ed172a45c503a75861\",\n  \"target\": \"B28\"\n}\n",
             "features": [],
-            "scope": "Independent actual binary geometry, transform and paired output inspection."
+            "scope": "Independent actual binary geometry, transform and paired output inspection.",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "3d53a56c637ecfe5194426d399dc24a4779c6af3"
           }
         ],
         "assets": [
@@ -9846,7 +9848,9 @@
             "stdout_sha256": "cfb8aac9f7950b39b2e60f5351cafe1bf8ac743bed4346793e04c6b6be3cc0bd",
             "stdout": "{\n  \"status\": \"PASS\",\n  \"record\": \"build/b29-menger-final.json\",\n  \"workdirs\": [\n    \"/home/mma/staging/lmvideo-gap-queue/build/b29-menger-final-runs/b29-q53_nttv\",\n    \"/home/mma/staging/lmvideo-gap-queue/build/b29-menger-final-runs/b29-kg09prgx\"\n  ],\n  \"instances\": 8000,\n  \"shared_cube_geometry\": \"cc2b70a276ff0c119a389f384cd897ed5a638f31bd56198501ae62b74d641900\",\n  \"cube_bounds\": [\n    [\n      -0.125,\n      -0.125,\n      -0.125\n    ],\n    [\n      0.125,\n      0.125,\n      0.125\n    ]\n  ],\n  \"scene_bounds\": [\n    [\n      -3.375,\n      -3.375,\n      -3.375\n    ],\n    [\n      3.375,\n      3.375,\n      3.375\n    ]\n  ],\n  \"occupied_voxel_volume\": 125.0,\n  \"primary_png_sha256\": \"2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede\",\n  \"preview_png_sha256\": \"af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c\",\n  \"preview_repeat\": \"exact\",\n  \"run_sha256\": \"b9308a88a3aa47eb04c0b30db360cc4282a3f4e64aebd034761c7dccf6be609c\",\n  \"target\": \"B29\"\n}\n",
             "features": [],
-            "scope": "Independent actual binary geometry, transform and paired output inspection."
+            "scope": "Independent actual binary geometry, transform and paired output inspection.",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "3d53a56c637ecfe5194426d399dc24a4779c6af3"
           }
         ],
         "assets": [
@@ -10089,20 +10093,1038 @@
     {
       "id": "B30",
       "tier": 3,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "reason": "Awaiting target-specific executed acceptance evidence.",
+      "evidence": {
+        "script": "examples/showcase/bench-30-prescribed-fracture.lms",
+        "script_sha256": "b97f0b90261bcc283417d6cacf1b64e45f34fa9d60e39b3fed52b60e7b275779",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad",
+        "required_features": [
+          "90 exact raster frames",
+          "authored bounded elastic deformation",
+          "updated geometry identity",
+          "deterministic frame sequence",
+          "no rigid/soft-body physics solver claim"
+        ],
+        "feature_checks": [
+          {
+            "kind": "executed-original-scene",
+            "source_repository": "lmctl-ai/lmvideo",
+            "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+            "source": "examples/showcase/bench-30-prescribed-fracture.lms",
+            "source_sha256": "b97f0b90261bcc283417d6cacf1b64e45f34fa9d60e39b3fed52b60e7b275779",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-30-prescribed-fracture.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "382446a1fc5fb358c41a1f1a7bf78d3f9b151b05e5023d33b49027c8957e8718",
+            "features": [
+              "90 exact raster frames",
+              "authored bounded elastic deformation",
+              "updated geometry identity",
+              "deterministic frame sequence",
+              "no rigid/soft-body physics solver claim"
+            ],
+            "scope": "Exact public candidate source twice under four-worker/2GiB native profile."
+          },
+          {
+            "kind": "independent-generated-artifacts",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "7b3c27026a695d3264c6f70f0de0f2a6190013c4",
+            "source": "scripts/showcase/check-video-witnesses.py",
+            "source_sha256": "ba42f09b7149d3e4542144062c73dc020a58601dd50c6025764e4e384d574b54",
+            "command": [
+              "python3",
+              "scripts/showcase/check-video-witnesses.py",
+              "build/b30-public-clean.json",
+              "--content",
+              "PUBLIC_CANDIDATE_CHECKOUT"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "cf647f200e959c4a31b78d6248003ace20413a42ab8863f5981c36a38b6eb677",
+            "stdout": "{\n  \"status\": \"PASS\",\n  \"target\": \"B30\",\n  \"run_sha256\": \"a64fdee502451d7d6d52b9c8d4be8a55a719d02f5844624a7a48b796fb88703c\",\n  \"frames\": 90,\n  \"frame_hashes_sha256\": \"a845d542ff86e1610f2510c3838e15e855545b1d1439e1168e0ba2ed58521127\",\n  \"frame_repeat\": \"exact\",\n  \"video_profile\": {\n    \"frames\": 90,\n    \"fps\": 30,\n    \"width\": 1280,\n    \"height\": 720,\n    \"pixel_format\": \"yuv420p\",\n    \"duration_s\": 3.0,\n    \"codecs\": [\n      \"h264\",\n      \"vp9\"\n    ]\n  },\n  \"codecs\": [\n    \"h264\",\n    \"vp9\"\n  ]\n}\n",
+            "features": [],
+            "scope": "Actual complete paired frames/codecs/hero or all spatial samples and exact material/job data."
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-30-prescribed-fracture.lms",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
+            "sha256": "b97f0b90261bcc283417d6cacf1b64e45f34fa9d60e39b3fed52b60e7b275779"
+          },
+          {
+            "kind": "font",
+            "creator": "DejaVu project",
+            "source": "bundled:DejaVuSans",
+            "source_uri": "https://dejavu-fonts.github.io/",
+            "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+            "license": "Bitstream-Vera",
+            "license_file": "docs/third-party-licenses/assets/fonts/LICENSE-DejaVu.txt",
+            "license_sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+            "version": "bundled-2.37"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-30-prescribed-fracture-8a9a6a34bc4c6daa33b494458fdb4ffe7dd301ca3cc36437f8b7b8b608e4d5bb.png",
+            "sha256": "8a9a6a34bc4c6daa33b494458fdb4ffe7dd301ca3cc36437f8b7b8b608e4d5bb",
+            "bytes": 59335,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-30-prescribed-fracture.png"
+          },
+          {
+            "store_file": "bench-30-prescribed-fracture-32faf2a4c72ae6c21527ebfdd06aefbea8581c05fcfb2b4c17528ecc291c30b4.mp4",
+            "sha256": "32faf2a4c72ae6c21527ebfdd06aefbea8581c05fcfb2b4c17528ecc291c30b4",
+            "bytes": 38809,
+            "codec": "h264",
+            "pixel_format": "yuv420p",
+            "dimensions": [
+              1280,
+              720
+            ],
+            "frames": 90,
+            "fps": 30.0,
+            "duration_s": 3.0,
+            "file": "build/bench-30-prescribed-fracture.mp4"
+          },
+          {
+            "store_file": "bench-30-prescribed-fracture-poster-9a44544e9b17ccbf99f10dba41cc752bc9c6e036309cd1a7a0c9f58cb8dcab31.png",
+            "sha256": "9a44544e9b17ccbf99f10dba41cc752bc9c6e036309cd1a7a0c9f58cb8dcab31",
+            "bytes": 55684,
+            "dimensions": [
+              1280,
+              720
+            ],
+            "file": "build/bench-30-prescribed-fracture-poster.png"
+          },
+          {
+            "store_file": "bench-30-prescribed-fracture-88f911ac2a1b5c41b897df74d9011be23816ae9733b300626e170acd9f1fb0d1.webm",
+            "sha256": "88f911ac2a1b5c41b897df74d9011be23816ae9733b300626e170acd9f1fb0d1",
+            "bytes": 21897,
+            "codec": "vp9",
+            "pixel_format": "yuv420p",
+            "dimensions": [
+              1280,
+              720
+            ],
+            "frames": 90,
+            "fps": 30.0,
+            "duration_s": 3.0,
+            "file": "build/bench-30-prescribed-fracture.webm"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "6954ea536892b89cb220b82a4f061703038b023829213dba9a8330ee15d6379e",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "backend": "raster+img",
+          "device": "CPU"
+        },
+        "timing": {
+          "wall_s": 73.01,
+          "user_s": 69.16,
+          "sys_s": 0.89,
+          "max_rss_kib": 406644,
+          "cold_job_wall_s": 73.01545084398822,
+          "packaging_webm_s": 2.1882506079855375,
+          "phase_ms": {
+            "compose": 571.206119,
+            "encode": 1027.40454,
+            "post": 307.338843,
+            "prepare": 18.483445,
+            "render": 66267.201726,
+            "setup": 3588.743024,
+            "write_media": 76.529971
+          },
+          "max_render_ms": 998.941031,
+          "max_frame_ms": 1827.236388,
+          "native_process": {
+            "wall_s": 73.01,
+            "user_s": 69.16,
+            "sys_s": 0.89,
+            "max_rss_kib": 406644,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "wall_s": 2.18,
+            "user_s": 1.77,
+            "sys_s": 0.07,
+            "max_rss_kib": 218644,
+            "scope": "single ffmpeg packaging process",
+            "memory_limit_bytes": 2147483648
+          },
+          "peak_rss_kib": 406644,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "budget_seconds": 300,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 66267.201726,
+            "scope": "Native render calls; Cycles includes tracing/OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 1103.934511,
+            "scope": "Native PNG/H264 encoding; separately measured WebM packaging is in end-to-end budget."
+          }
+        },
+        "repeat_verified": true,
+        "repeat_check": {
+          "policy": "exact",
+          "max_channel_error": 0,
+          "changed_channels": 0
+        },
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B30 prescribed elastic deformation clip | 90 frames | authored damped 8-key mesh states | no physics solver claim\"], \"file\": \"build/bench-30-prescribed-fracture.mp4\", \"width\": 1280, \"height\": 720, \"frames\": 90, \"fps\": 30, \"bytecode_bytes\": 6014, \"instructions\": 43236, \"wall_ms\": 71867, \"phase_ms\": {\"compose\":571.206119,\"encode\":1027.404540,\"post\":307.338843,\"prepare\":18.483445,\"render\":66267.201726,\"setup\":3588.743024,\"write_media\":76.529971}, \"max_frame_ms\": 1827.236388, \"max_render_ms\": 998.941031, \"render_calls\": 90}}\n\n",
+        "generated_asset_hashes": [],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "9a44544e9b17ccbf99f10dba41cc752bc9c6e036309cd1a7a0c9f58cb8dcab31",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          },
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "8a9a6a34bc4c6daa33b494458fdb4ffe7dd301ca3cc36437f8b7b8b608e4d5bb",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          }
+        ],
+        "generated_witness": {
+          "status": "PASS",
+          "target": "B30",
+          "run_sha256": "a64fdee502451d7d6d52b9c8d4be8a55a719d02f5844624a7a48b796fb88703c",
+          "frames": 90,
+          "frame_hashes_sha256": "a845d542ff86e1610f2510c3838e15e855545b1d1439e1168e0ba2ed58521127",
+          "frame_repeat": "exact",
+          "video_profile": {
+            "frames": 90,
+            "fps": 30,
+            "width": 1280,
+            "height": 720,
+            "pixel_format": "yuv420p",
+            "duration_s": 3.0,
+            "codecs": [
+              "h264",
+              "vp9"
+            ]
+          },
+          "codecs": [
+            "h264",
+            "vp9"
+          ]
+        },
+        "visual_check": {
+          "score": 91,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [],
+          "suggestions": [],
+          "reasoning": "The closed deforming form is clearly framed, truthful captions explain the prescribed damped states, and the precision/bias diagnostic removes the self-shadow bands while retaining the grounded shadow."
+        },
+        "limitations": [
+          "All mesh states, lighting and composition are authored procedural content; this clip does not claim a physics or fracture solver."
+        ],
+        "video_profile": {
+          "frames": 90,
+          "fps": 30,
+          "width": 1280,
+          "height": 720,
+          "pixel_format": "yuv420p",
+          "duration_s": 3.0,
+          "codecs": [
+            "h264",
+            "vp9"
+          ]
+        },
+        "frame_hashes_sha256": "a845d542ff86e1610f2510c3838e15e855545b1d1439e1168e0ba2ed58521127"
+      }
     },
     {
       "id": "B31",
       "tier": 3,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "reason": "Awaiting target-specific executed acceptance evidence.",
+      "evidence": {
+        "script": "examples/showcase/bench-31-heterogeneous-plume.lms",
+        "script_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "2fc55465bad758e6bae1ec80abe183ef89fecab8",
+        "required_features": [
+          "32768 bounded spatial density samples",
+          "actual3D nearest-feature-point WorleyF1 modulation",
+          "normalized mesh-local trilinear CPU Cycles density",
+          "internal emissive fire geometry and external sun",
+          "density retained in exact v2 scene job",
+          "96spp CPU OIDN and paired full-size output"
+        ],
+        "feature_checks": [
+          {
+            "kind": "executed-original-scene",
+            "source_repository": "lmctl-ai/lmvideo",
+            "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+            "source": "examples/showcase/bench-31-heterogeneous-plume.lms",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-31-heterogeneous-plume.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "7ba58ab7c932c24fdc8370fc8a03ca2ef438560dc21031844e334adc4d4d7ba0",
+            "features": [
+              "32768 bounded spatial density samples",
+              "actual3D nearest-feature-point WorleyF1 modulation",
+              "normalized mesh-local trilinear CPU Cycles density",
+              "internal emissive fire geometry and external sun",
+              "density retained in exact v2 scene job",
+              "96spp CPU OIDN and paired full-size output"
+            ],
+            "scope": "Exact public candidate source twice under four-worker/2GiB native profile."
+          },
+          {
+            "kind": "independent-generated-artifacts",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "7b3c27026a695d3264c6f70f0de0f2a6190013c4",
+            "source": "scripts/showcase/check-stretch-geometry.py",
+            "source_sha256": "7bd8e61866f82004709448ea1a2629d9a3c63c44f9e2e04940a64559989934b8",
+            "command": [
+              "python3",
+              "scripts/showcase/check-stretch-geometry.py",
+              "build/b31-worley-final.json"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "681915d3d9aef143d78aecb81b83ed905c1e24e9789c250504be4240441521d6",
+            "stdout": "{\n  \"status\": \"PASS\",\n  \"record\": \"build/b31-worley-final.json\",\n  \"workdirs\": [\n    \"/home/mma/staging/lmvideo-gap-queue/build/b31-worley-final-runs/b31-zta3w9rl\",\n    \"/home/mma/staging/lmvideo-gap-queue/build/b31-worley-runs/b31-0igxlakr\"\n  ],\n  \"grid_values\": 32768,\n  \"max_formula_error\": 2.9703898118960126e-08,\n  \"grid_edges_zero\": true,\n  \"grid_xyz_variation\": true,\n  \"volume_geometry_vertices\": 24,\n  \"volume_triangles\": 12,\n  \"lights\": \"directional+area\",\n  \"fire_emission\": \"present\",\n  \"material_package_repeat\": \"exact\",\n  \"png_sha256\": \"c0f5c8137a09ce8f86f736926636768c2896ed5c93522f6b4f86d4f6918fb273\",\n  \"run_sha256\": \"f15a9683db73852c40650e298f58df9c9eb9ca293ac31be5e71677895f4ba0fa\",\n  \"target\": \"B31\"\n}\n",
+            "features": [],
+            "scope": "Actual complete paired frames/codecs/hero or all spatial samples and exact material/job data."
+          },
+          {
+            "kind": "native-analytic-transport",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "537d9274300b58e1190b47807b4e579c22b663ac",
+            "source": "tests/scene3d_cycles_test.cpp",
+            "source_sha256": "6f9b37a7b03c4213be0a640fabf467d4cbaa6f261c2e556c27fc2ccde9be79b4",
+            "command": [
+              "bash",
+              "-c",
+              "CYCLES=1 ./test.sh"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "4181d479302b9c3f40d7d3d4b1dc9ee1eae2556e1d7de34a8610477d4670e320",
+            "stdout": "[OpenColorIO Info]: Color management disabled. (Specify the $OCIO environment variable to enable.)\nchecker MSE=21.9022\nhair widths root 16 expected 13.8613 tip 4 expected 3.08587 constant 10,10\nhair uniform-environment radiance low/high melanin 0.316236,0.0581913\nhair angular narrow 2.02351e-07,0.0115701,8.03335e-05 broad 0.00287044,0.00295947,0.00267438\nhair floor shadow 0.0856906 baseline 0.618117\nanisotropy iso peak=133 clipped=0\nanisotropy horizontal peak=55 clipped=0\nanisotropy vertical peak=55 clipped=0\nanisotropy covariance plus=-68.8243 minus=68.8492\nMNEE floor ROI lens=36.8907 no-lens=44.2975 peaks=0.152926/0.0544803 high=0.155926 at=31,33\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\ndensity grid channel 0 zero=0.99896 one=0.499315 zhalf=0.706641 expected=0.707107\ndensity grid channel 1 zero=0.99896 one=0.249124 zhalf=0.499298 expected=0.5\ndensity grid channel 2 zero=0.99896 one=0.7989 zhalf=0.894 expected=0.894427\ndensity offaxis channel 0 X=0.944174,0.64332 expected=0.94397,0.65599 Y=0.642768,0.943993\ndensity offaxis channel 1 X=0.892893,0.450337 expected=0.89326,0.47016 Y=0.449982,0.89248\ndensity offaxis channel 2 X=0.981361,0.860528 expected=0.98135,0.86542 Y=0.860054,0.98127\ndensity nonuniform translation max-channel=2\ndensity translation max-channel=0\ndensity scaled channel 0 ratio=1.41389 expected=1.41421\ndensity scaled channel 1 ratio=2.0098 expected=2\ndensity scaled channel 2 ratio=1.11819 expected=1.11803\nscatter thickness 1.55395 expected 1.5576 HG 12.696 expected 12.7037 values 0.28152,0.181164,0.0221739\nscatter+absorption thickness 1.38793 expected 1.39316\nscatter beam blocked 0 lit 0.28152\nSSS scale channel 0 direct=0.962374 scaled=0.962374\nSSS scale channel 1 direct=0.52497 scaled=0.52497\nSSS scale channel 2 direct=0.52497 scaled=0.52497\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nclearcoat linear max base=0.00913406 sharp=0.584078 broad=0.012983 clipped=0/0/0\nclearcoat core base=0.994939 sharp=6.61101 broad=1.72243 ring base=2.58338 sharp=2.56784 broad=3.99084\nsky 2 view 20 azimuth 0 RGB 67,62,52\nsky 2 view 20 azimuth 90 RGB 67,62,52\nsky 2 view 20 azimuth -75 RGB 67,62,52\nsky 2 view 60 azimuth 0 RGB 25,28,31\nsky 2 view 60 azimuth 90 RGB 25,28,31\nsky 2 view 60 azimuth -75 RGB 25,28,31\nsky 45 view 20 azimuth 0 RGB 90,110,133\nsky 45 view 20 azimuth 90 RGB 90,110,133\nsky 45 view 20 azimuth -75 RGB 90,110,133\nsky 45 view 60 azimuth 0 RGB 64,77,99\nsky 45 view 60 azimuth 90 RGB 64,77,99\nsky 45 view 60 azimuth -75 RGB 64,77,99\nsky shadow 2 predicted 28.8863 measured 28.75\nsky shadow 45 predicted 1.25 measured 1.15\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "features": [],
+            "scope": "Fresh guarded native build: analyticXYZ Beer-Lambert, scaled/translated nonuniform field, atlas allocation refusal. Retained log combines stdout/stderr; capture uses its separately locked2fc5546 runtime."
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-31-heterogeneous-plume.lms",
+            "sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-31-heterogeneous-plume-c0f5c8137a09ce8f86f736926636768c2896ed5c93522f6b4f86d4f6918fb273.png",
+            "sha256": "c0f5c8137a09ce8f86f736926636768c2896ed5c93522f6b4f86d4f6918fb273",
+            "bytes": 103968,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-31-heterogeneous-plume.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "b355d1614448c4449cc3ba73fb5e52ae3e3fb956b90c9f6e132bd2375af07330",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "556606892f46ac601813075cfd2b4c7bed749da76b01dd548a8969abb6f81680",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "8ca24195a6032d42a7816d86ee25c71a53b42266074aa12801afefaf1f7a3584",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 96,
+            "bounces": 8,
+            "seed": 20261105,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 96,
+          "denoise": "OIDN",
+          "seed": 20261105,
+          "cycles_module_sha256": "556606892f46ac601813075cfd2b4c7bed749da76b01dd548a8969abb6f81680"
+        },
+        "timing": {
+          "wall_s": 44.35,
+          "user_s": 93.51,
+          "sys_s": 1.53,
+          "max_rss_kib": 574316,
+          "cold_job_wall_s": 44.356727057980606,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "prepare": 2.969168,
+            "render": 39848.579429,
+            "setup": 27.122093,
+            "write_media": 76.706721
+          },
+          "max_render_ms": 39848.579429,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 44.35,
+            "user_s": 93.51,
+            "sys_s": 1.53,
+            "max_rss_kib": 574316,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 574316,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "budget_seconds": 900,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 39848.579429,
+            "scope": "Native render calls; Cycles includes tracing/OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 76.706721,
+            "scope": "Native PNG/H264 encoding; separately measured WebM packaging is in end-to-end budget."
+          }
+        },
+        "repeat_verified": true,
+        "repeat_check": {
+          "policy": "exact",
+          "max_channel_error": 0,
+          "changed_channels": 0
+        },
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B31: original24-point3D WorleyF1 density;32x32x32 spatial samples; grounded internal fire and external sun;96sppOIDN; authored field, no fluid solver\"], \"file\": \"build/bench-31-heterogeneous-plume.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6140, \"instructions\": 52302112, \"wall_ms\": 43131, \"phase_ms\": {\"prepare\":2.969168,\"render\":39848.579429,\"setup\":27.122093,\"write_media\":76.706721}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 39848.579429, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/1c19d076006cbb2ff4da9bd3abc134be950b8ba81ce25a37dd6620fb61f2115a.lmmat/manifest.json",
+            "sha256": "1c19d076006cbb2ff4da9bd3abc134be950b8ba81ce25a37dd6620fb61f2115a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/1c19d076006cbb2ff4da9bd3abc134be950b8ba81ce25a37dd6620fb61f2115a.lmmat/material.json",
+            "sha256": "6d6aa2ae56fb431297985e28b28d135cb294a043456f3fa06699f94c4b38e2e4",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/592ca523644b78efef21522114cef365839f7eecf2a8eddb5bec0a0e67d83e62.lmmat/manifest.json",
+            "sha256": "592ca523644b78efef21522114cef365839f7eecf2a8eddb5bec0a0e67d83e62",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/592ca523644b78efef21522114cef365839f7eecf2a8eddb5bec0a0e67d83e62.lmmat/material.json",
+            "sha256": "2b7397fed95f2021863b1609ab6b3c6e2b2705b2b96a1e95617fed744b8c1bea",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/7bfc5c2533607336531a2c443289311e72ca84fd07212c5e2e7f173523f99411.lmmat/manifest.json",
+            "sha256": "7bfc5c2533607336531a2c443289311e72ca84fd07212c5e2e7f173523f99411",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/7bfc5c2533607336531a2c443289311e72ca84fd07212c5e2e7f173523f99411.lmmat/material.json",
+            "sha256": "d311d4b9c1325d3fff158a6e751818c9ee506132ac395efa82652220407691b1",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/7e8888c4f7f5095bb6a8bda47ea9cdb4838e7d2b0e97aacc63c332507006a3e6.lmmat/manifest.json",
+            "sha256": "7e8888c4f7f5095bb6a8bda47ea9cdb4838e7d2b0e97aacc63c332507006a3e6",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/materials/7e8888c4f7f5095bb6a8bda47ea9cdb4838e7d2b0e97aacc63c332507006a3e6.lmmat/material.json",
+            "sha256": "6442bb3b0218f79bfdfc1ff4fdbb11e826b833b9033b08af99f63855d77a2a8d",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          },
+          {
+            "path": "build/bench-31-heterogeneous-plume.lmjob/scene.glb",
+            "sha256": "16ab9e77ee359466016d0d73a3d7805de029bd59e9a83d9303574d89ccc9ee6a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484"
+          }
+        ],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "c0f5c8137a09ce8f86f736926636768c2896ed5c93522f6b4f86d4f6918fb273",
+            "fonts": []
+          }
+        ],
+        "generated_witness": {
+          "status": "PASS",
+          "record": "build/b31-worley-final.json",
+          "workdirs": [
+            "/home/mma/staging/lmvideo-gap-queue/build/b31-worley-final-runs/b31-zta3w9rl",
+            "/home/mma/staging/lmvideo-gap-queue/build/b31-worley-runs/b31-0igxlakr"
+          ],
+          "grid_values": 32768,
+          "max_formula_error": 2.9703898118960126e-08,
+          "grid_edges_zero": true,
+          "grid_xyz_variation": true,
+          "volume_geometry_vertices": 24,
+          "volume_triangles": 12,
+          "lights": "directional+area",
+          "fire_emission": "present",
+          "material_package_repeat": "exact",
+          "png_sha256": "c0f5c8137a09ce8f86f736926636768c2896ed5c93522f6b4f86d4f6918fb273",
+          "run_sha256": "f15a9683db73852c40650e298f58df9c9eb9ca293ac31be5e71677895f4ba0fa",
+          "target": "B31"
+        },
+        "visual_check": {
+          "score": 91,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [],
+          "suggestions": [],
+          "reasoning": "A clearly bounded curling white plume rises from grounded warm emitters, with visible volume gradients, side lighting and ground interaction. Actual nearest-feature-point3D density is retained; this is an authored static field, not a smoke simulation."
+        },
+        "limitations": [
+          "Authored static3D field; no fluid/combustion simulation or VDB importer.",
+          "Image depicts volumetric radiance, not a scientific measured smoke distribution."
+        ]
+      }
     },
     {
       "id": "B32",
       "tier": 3,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "reason": "Awaiting target-specific executed acceptance evidence.",
+      "evidence": {
+        "script": "examples/showcase/bench-32-multidomain-orbit-video.lms",
+        "script_sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad",
+        "required_features": [
+          "150 exact raster/post frames",
+          "original Scene3D orbital and accretion scene",
+          "actual current-frame blur bloom and3D Hald LUT",
+          "projected telemetry HUD",
+          "live Plot and VectorField in the same per-frame Layout",
+          "separate64spp/OIDN Cycles hero with exact repeat and bounded render time"
+        ],
+        "feature_checks": [
+          {
+            "kind": "executed-original-scene",
+            "source_repository": "lmctl-ai/lmvideo",
+            "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+            "source": "examples/showcase/bench-32-multidomain-orbit-video.lms",
+            "source_sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-32-multidomain-orbit-video.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "87058657a263a1320097c2cab95909992f82dc46d8afd3a5b00a55cde0c28682",
+            "features": [
+              "150 exact raster/post frames",
+              "original Scene3D orbital and accretion scene",
+              "actual current-frame blur bloom and3D Hald LUT",
+              "projected telemetry HUD",
+              "live Plot and VectorField in the same per-frame Layout",
+              "separate64spp/OIDN Cycles hero with exact repeat and bounded render time"
+            ],
+            "scope": "Exact public candidate source twice under four-worker/2GiB native profile."
+          },
+          {
+            "kind": "independent-generated-artifacts",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "7b3c27026a695d3264c6f70f0de0f2a6190013c4",
+            "source": "scripts/showcase/check-video-witnesses.py",
+            "source_sha256": "ba42f09b7149d3e4542144062c73dc020a58601dd50c6025764e4e384d574b54",
+            "command": [
+              "python3",
+              "scripts/showcase/check-video-witnesses.py",
+              "build/b32-public-final.json",
+              "--content",
+              "PUBLIC_CANDIDATE_CHECKOUT",
+              "--runtime-provenance",
+              "build/tier2-final-cycles/provenance.json"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "5b61e2413b2c29b50a70c5b54e31bd3ebb861c55e5b08a1e53a5821ccb0d02cd",
+            "stdout": "{\n  \"status\": \"PASS\",\n  \"target\": \"B32\",\n  \"run_sha256\": \"58f4e036ff1c00c83c9dcd9b3f43e14388e68dcc4c2899d22c2bf5bf0957ee84\",\n  \"frames\": 150,\n  \"frame_hashes_sha256\": \"208aa8dadaa832f16463948054c051e4d92e0eaf81fd3a38470147eb415e418c\",\n  \"frame_repeat\": \"exact\",\n  \"video_profile\": {\n    \"frames\": 150,\n    \"fps\": 30,\n    \"width\": 1280,\n    \"height\": 720,\n    \"pixel_format\": \"yuv420p\",\n    \"duration_s\": 5.0,\n    \"codecs\": [\n      \"h264\",\n      \"vp9\"\n    ]\n  },\n  \"codecs\": [\n    \"h264\",\n    \"vp9\"\n  ],\n  \"module_provenance\": {\n    \"method\": \"supplemental frozen host/module bundle cross-check; raw hybrid profiler omitted module hash\",\n    \"provenance_sha256\": \"bc467236d07f9eafbdf78d537f782dbc6a73a7528f039ace8a66eb1949b7ca29\",\n    \"implementation_commit\": \"b7304a5f74a275191f4a0a912aae4044d4442bad\"\n  },\n  \"cycles_hero\": {\n    \"profile\": {\n      \"renderer\": \"cycles\",\n      \"samples\": 64,\n      \"bounces\": 6,\n      \"seed\": 20261105,\n      \"denoise\": \"OIDN\",\n      \"threads\": 4,\n      \"dimensions\": [\n        900,\n        560\n      ]\n    },\n    \"module_sha256\": \"bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c\",\n    \"sha256\": \"32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417\",\n    \"repeat_sha256\": \"32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417\",\n    \"path\": \"/home/mma/staging/lmvideo-gap-queue/build/b32-public-final-runs/b32-x936u_lz/build/bench-32-cycles-hero.png\",\n    \"repeat_verified\": true,\n    \"repeat_check\": {\n      \"policy\": \"exact\",\n      \"max_channel_error\": 0,\n      \"changed_channels\": 0\n    },\n    \"render_upper_bound_s\": 7.620918713,\n    \"budget_seconds\": 180,\n    \"timing_scope\": \"conservative maximum of all native render calls\",\n    \"render_calls\": 151\n  }\n}\n",
+            "features": [],
+            "scope": "Actual complete paired frames/codecs/hero or all spatial samples and exact material/job data."
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-32-multidomain-orbit-video.lms",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
+            "sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af"
+          },
+          {
+            "kind": "font",
+            "creator": "DejaVu project",
+            "source": "bundled:DejaVuSans",
+            "source_uri": "https://dejavu-fonts.github.io/",
+            "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+            "license": "Bitstream-Vera",
+            "license_file": "docs/third-party-licenses/assets/fonts/LICENSE-DejaVu.txt",
+            "license_sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+            "version": "bundled-2.37"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-32-multidomain-orbit-video-920b2430f3cb533b6b91932e0c817fdec2c26bfd462bd350c47634cbd56e16a9.png",
+            "sha256": "920b2430f3cb533b6b91932e0c817fdec2c26bfd462bd350c47634cbd56e16a9",
+            "bytes": 85815,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-32-multidomain-orbit-video.png"
+          },
+          {
+            "store_file": "bench-32-multidomain-orbit-video-29458079747a5e4bbe31541b90fdb2ed559569bd4503008071e0ce337a9c4605.mp4",
+            "sha256": "29458079747a5e4bbe31541b90fdb2ed559569bd4503008071e0ce337a9c4605",
+            "bytes": 86688,
+            "codec": "h264",
+            "pixel_format": "yuv420p",
+            "dimensions": [
+              1280,
+              720
+            ],
+            "frames": 150,
+            "fps": 30.0,
+            "duration_s": 5.0,
+            "file": "build/bench-32-multidomain-orbit-video.mp4"
+          },
+          {
+            "store_file": "bench-32-multidomain-orbit-video-poster-d9015a75a40d2b28002faebe52acb8ec15edcf3315936384631798e8fdc8fab2.png",
+            "sha256": "d9015a75a40d2b28002faebe52acb8ec15edcf3315936384631798e8fdc8fab2",
+            "bytes": 93397,
+            "dimensions": [
+              1280,
+              720
+            ],
+            "file": "build/bench-32-multidomain-orbit-video-poster.png"
+          },
+          {
+            "store_file": "bench-32-multidomain-orbit-video-c1c73bedcdb17cc90f856cfa24a8b0a50bcaee6c2f4bd0a1ccc610ddb0d723d2.webm",
+            "sha256": "c1c73bedcdb17cc90f856cfa24a8b0a50bcaee6c2f4bd0a1ccc610ddb0d723d2",
+            "bytes": 104676,
+            "codec": "vp9",
+            "pixel_format": "yuv420p",
+            "dimensions": [
+              1280,
+              720
+            ],
+            "frames": 150,
+            "fps": 30.0,
+            "duration_s": 5.0,
+            "file": "build/bench-32-multidomain-orbit-video.webm"
+          },
+          {
+            "store_file": "bench-32-cycles-hero-32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417.png",
+            "sha256": "32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417",
+            "bytes": 18183,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-32-cycles-hero.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "6954ea536892b89cb220b82a4f061703038b023829213dba9a8330ee15d6379e",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
+            "cycles_module": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+          "samples_per_axis": "per-scene/per-pass as authored in the locked script",
+          "denoise": false,
+          "seed": "authored in each script",
+          "backend": "raster+img",
+          "device": "CPU"
+        },
+        "timing": {
+          "wall_s": 247.84,
+          "user_s": 204.93,
+          "sys_s": 1.47,
+          "max_rss_kib": 601708,
+          "cold_job_wall_s": 247.85186599800363,
+          "packaging_webm_s": 3.545352831017226,
+          "phase_ms": {
+            "compose": 56509.978386,
+            "encode": 1227.814017,
+            "post": 171968.756297,
+            "prepare": 27.016565,
+            "render": 11227.691312,
+            "setup": 5377.320431,
+            "write_media": 99.139834
+          },
+          "max_render_ms": 7620.918713,
+          "max_frame_ms": 3183.176174,
+          "native_process": {
+            "wall_s": 247.84,
+            "user_s": 204.93,
+            "sys_s": 1.47,
+            "max_rss_kib": 601708,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "wall_s": 3.54,
+            "user_s": 3.25,
+            "sys_s": 0.08,
+            "max_rss_kib": 218688,
+            "scope": "single ffmpeg packaging process",
+            "memory_limit_bytes": 2147483648
+          },
+          "peak_rss_kib": 601708,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "budget_seconds": 300,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately measured span."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 11227.691312,
+            "scope": "Native render calls; Cycles includes tracing/OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 1326.953851,
+            "scope": "Native PNG/H264 encoding; separately measured WebM packaging is in end-to-end budget."
+          }
+        },
+        "repeat_verified": true,
+        "repeat_check": {
+          "policy": "exact",
+          "max_channel_error": 0,
+          "changed_channels": 0
+        },
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B32 original multi-domain 3D+Image+HUD+Plot/VectorField | 150 frames | separate Cycles hero still\"], \"file\": \"build/bench-32-multidomain-orbit-video.mp4\", \"width\": 1280, \"height\": 720, \"frames\": 150, \"fps\": 30, \"bytecode_bytes\": 10860, \"instructions\": 56891, \"wall_ms\": 246458, \"phase_ms\": {\"compose\":56509.978386,\"encode\":1227.814017,\"post\":171968.756297,\"prepare\":27.016565,\"render\":11227.691312,\"setup\":5377.320431,\"write_media\":99.139834}, \"max_frame_ms\": 3183.176174, \"max_render_ms\": 7620.918713, \"render_calls\": 151}}\n\n",
+        "generated_asset_hashes": [],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "d9015a75a40d2b28002faebe52acb8ec15edcf3315936384631798e8fdc8fab2",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          },
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "920b2430f3cb533b6b91932e0c817fdec2c26bfd462bd350c47634cbd56e16a9",
+            "fonts": [
+              {
+                "family": "DejaVu Sans",
+                "sha256": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+                "license": "Bitstream-Vera",
+                "source": "bundled:DejaVuSans",
+                "version": "bundled-2.37"
+              }
+            ]
+          }
+        ],
+        "generated_witness": {
+          "status": "PASS",
+          "target": "B32",
+          "run_sha256": "58f4e036ff1c00c83c9dcd9b3f43e14388e68dcc4c2899d22c2bf5bf0957ee84",
+          "frames": 150,
+          "frame_hashes_sha256": "208aa8dadaa832f16463948054c051e4d92e0eaf81fd3a38470147eb415e418c",
+          "frame_repeat": "exact",
+          "video_profile": {
+            "frames": 150,
+            "fps": 30,
+            "width": 1280,
+            "height": 720,
+            "pixel_format": "yuv420p",
+            "duration_s": 5.0,
+            "codecs": [
+              "h264",
+              "vp9"
+            ]
+          },
+          "codecs": [
+            "h264",
+            "vp9"
+          ],
+          "module_provenance": {
+            "method": "supplemental frozen host/module bundle cross-check; raw hybrid profiler omitted module hash",
+            "provenance_sha256": "bc467236d07f9eafbdf78d537f782dbc6a73a7528f039ace8a66eb1949b7ca29",
+            "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad"
+          },
+          "cycles_hero": {
+            "profile": {
+              "renderer": "cycles",
+              "samples": 64,
+              "bounces": 6,
+              "seed": 20261105,
+              "denoise": "OIDN",
+              "threads": 4,
+              "dimensions": [
+                900,
+                560
+              ]
+            },
+            "module_sha256": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
+            "sha256": "32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417",
+            "repeat_sha256": "32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417",
+            "path": "/home/mma/staging/lmvideo-gap-queue/build/b32-public-final-runs/b32-x936u_lz/build/bench-32-cycles-hero.png",
+            "repeat_verified": true,
+            "repeat_check": {
+              "policy": "exact",
+              "max_channel_error": 0,
+              "changed_channels": 0
+            },
+            "render_upper_bound_s": 7.620918713,
+            "budget_seconds": 180,
+            "timing_scope": "conservative maximum of all native render calls",
+            "render_calls": 151
+          }
+        },
+        "visual_check": {
+          "score": 92,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [],
+          "suggestions": [],
+          "reasoning": "The orbital/accretion scene, projected planet label and live phase-space/vector panel are readable in one composition; actual per-frame blur/Hald processing and a separate Cycles still are supported by the locked source and full150-frame repeated outputs."
+        },
+        "limitations": [
+          "All geometry, post-processing, HUD and telemetry are authored procedural content; no external assets are included."
+        ],
+        "video_profile": {
+          "frames": 150,
+          "fps": 30,
+          "width": 1280,
+          "height": 720,
+          "pixel_format": "yuv420p",
+          "duration_s": 5.0,
+          "codecs": [
+            "h264",
+            "vp9"
+          ]
+        },
+        "frame_hashes_sha256": "208aa8dadaa832f16463948054c051e4d92e0eaf81fd3a38470147eb415e418c",
+        "cycles_hero": {
+          "profile": {
+            "renderer": "cycles",
+            "samples": 64,
+            "bounces": 6,
+            "seed": 20261105,
+            "denoise": "OIDN",
+            "threads": 4,
+            "dimensions": [
+              900,
+              560
+            ]
+          },
+          "module_sha256": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
+          "repeat_verified": true,
+          "repeat_check": {
+            "policy": "exact",
+            "max_channel_error": 0,
+            "changed_channels": 0
+          },
+          "render_upper_bound_s": 7.620918713,
+          "budget_seconds": 180,
+          "timing_scope": "conservative maximum of all native render calls",
+          "render_calls": 151,
+          "output": {
+            "store_file": "bench-32-cycles-hero-32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417.png",
+            "sha256": "32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417",
+            "bytes": 18183,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-32-cycles-hero.png"
+          },
+          "conservative_total_upper_bound_s": 14.538544699003609,
+          "total_bound_scope": "Render maximum plus all setup/prepare/PNG writes, unattributed native and outer startup/load wall; excludes video-only post/composition/encode."
+        },
+        "module_provenance": {
+          "method": "supplemental frozen host/module bundle cross-check; raw hybrid profiler omitted module hash",
+          "provenance_sha256": "bc467236d07f9eafbdf78d537f782dbc6a73a7528f039ace8a66eb1949b7ca29",
+          "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad"
+        }
+      }
     }
   ],
   "tiers": {
@@ -10111,11 +11133,11 @@
       "total": 15
     },
     "2": {
-      "verified": 12,
+      "verified": 11,
       "total": 12
     },
     "3": {
-      "verified": 2,
+      "verified": 5,
       "total": 5
     }
   },
@@ -10140,6 +11162,15 @@
         "root runtime and visual review"
       ],
       "summary": "Actual paired bounded outputs and independent geometry/spacing/occupancy witnesses. B28 raster time is conservatively bounded by the18.83s entire source execution. No wind solver, CSG union, or public publication claim."
+    },
+    {
+      "scope": "B30-B32",
+      "status": "PASS",
+      "reviewers": [
+        "independent native-agent reviews",
+        "root exact-source/full-suite/visual and artifact review"
+      ],
+      "summary": "Complete90/150-frame source pairs, exact hero and Worley material/job repeats, analyticXYZ transport, original rights and measuredCPU/RSS. Prescribed deformation/static fields do not claim simulation."
     }
   ]
 }
