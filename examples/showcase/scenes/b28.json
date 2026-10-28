@@ -1,0 +1,58 @@
+{
+  "id": "B28",
+  "title": "Original Poisson Botanical Meadow",
+  "script": "examples/showcase/bench-28-botanical-meadow.lms",
+  "script_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+  "visual_specification": "Original8m undulating terrain with10200 surface-normal-aligned shared clumps, each containing3 baked-bend grass blades, a closed octahedral pebble and a five-petal flower.",
+  "required_feature_witnesses": [
+    "10200 bounded shared botanical-clump instances",
+    "positive .04m global cross-batch Poisson spacing",
+    "surface-normal alignment on undulating terrain",
+    "one shared colored clump mesh",
+    "three static baked bend phases, no solver claim",
+    "actual raster preview and CPU Cycles final"
+  ],
+  "cpu_budget_seconds": 600,
+  "raster_budget_seconds": 30,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 8,
+    "seed": 20261106,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "publication_status": "UNPUBLISHED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-28-botanical-meadow.lms",
+      "sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "instance_profile": {
+    "clumps": 10200,
+    "blades_per_clump": 3,
+    "flowers_per_clump": 1,
+    "pebbles_per_clump": 1,
+    "minimum_distance_m": 0.04,
+    "clump_triangles": 42,
+    "clump_vertices": 126
+  },
+  "limitations": [
+    "Baked static blade phases; no continuous wind or physics simulation.",
+    "Count refers to clump instances, not independent mesh handles for each plant part."
+  ]
+}
