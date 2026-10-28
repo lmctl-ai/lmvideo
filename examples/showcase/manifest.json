@@ -5093,6 +5093,314 @@
           "scope": "Source checks its geometric AOV; no Cycles depth-AOV parity is claimed."
         }
       }
+    },
+    {
+      "id": "B28",
+      "slug": "bench-28-botanical-meadow",
+      "title": "Original Poisson Botanical Meadow",
+      "script": "examples/showcase/bench-28-botanical-meadow.lms",
+      "script_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+      "source_commit": "84d2a7bf4ecf52b4c1760898eb8bd4c994b4c1e2",
+      "status": "VERIFIED",
+      "publication_status": "UNPUBLISHED",
+      "featured": false,
+      "backend": "cycles",
+      "visual_specification": "Original8m undulating terrain with10200 surface-normal-aligned shared clumps, each containing3 baked-bend grass blades, a closed octahedral pebble and a five-petal flower.",
+      "required_feature_witnesses": [
+        "10200 bounded shared botanical-clump instances",
+        "positive .04m global cross-batch Poisson spacing",
+        "surface-normal alignment on undulating terrain",
+        "one shared colored clump mesh",
+        "three static baked bend phases, no solver claim",
+        "actual raster preview and CPU Cycles final"
+      ],
+      "assets": [
+        {
+          "kind": "original-procedural-source",
+          "creator": "lmvideo project",
+          "source": "examples/showcase/bench-28-botanical-meadow.lms",
+          "sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+          "license": "MIT",
+          "license_file": "LICENSE-examples",
+          "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+        }
+      ],
+      "cpu_budget_seconds": 600,
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "d724f1a358eabdf17c16dc8e0d735c7364359f64961d404c4e6ee1d41e8e9710",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "acaf679c2d706acad451ddeaa31b4f36a03ad322e72d522106cd1dc70887eb67",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 64,
+          "bounces": 8,
+          "seed": 20261106,
+          "denoise": "OIDN"
+        },
+        "samples_per_axis": 64,
+        "denoise": "OIDN",
+        "seed": 20261106,
+        "cycles_module_sha256": "acaf679c2d706acad451ddeaa31b4f36a03ad322e72d522106cd1dc70887eb67"
+      },
+      "timing": {
+        "wall_s": 18.82,
+        "user_s": 38.92,
+        "sys_s": 0.74,
+        "max_rss_kib": 617232,
+        "cold_job_wall_s": 18.83092456898885,
+        "packaging_webm_s": 0,
+        "phase_ms": {
+          "prepare": 0.517344,
+          "render": 17007.669956,
+          "setup": 872.039398,
+          "write_media": 73.494356
+        },
+        "max_render_ms": 16232.539391,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 18.82,
+          "user_s": 38.92,
+          "sys_s": 0.74,
+          "max_rss_kib": 617232,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 617232,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 600,
+        "cache_hit": false
+      },
+      "repeat_verified": true,
+      "repeat_check": {
+        "policy": "exact",
+        "max_channel_error": 0,
+        "changed_channels": 0
+      },
+      "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B28: 10200 shared clumps; each has3 bent blades,1 closed pebble and1 five-petal flower; .04m cross-batch Poisson spacing and normal alignment;3 static baked bend phases, no wind solver\"], \"file\": \"build/bench-28-botanical-meadow.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 9093, \"instructions\": 141, \"wall_ms\": 17953, \"phase_ms\": {\"prepare\":0.517344,\"render\":17007.669956,\"setup\":872.039398,\"write_media\":73.494356}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 16232.539391, \"render_calls\": 2}}\n\n",
+      "expected_outputs": [
+        {
+          "store_file": "bench-28-botanical-meadow-208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3.png",
+          "sha256": "208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3",
+          "bytes": 330846,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/bench-28-botanical-meadow.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        },
+        {
+          "store_file": "bench-28-botanical-meadow-raster-6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571.png",
+          "sha256": "6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571",
+          "bytes": 316343,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/b28-preview.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        }
+      ],
+      "implementation_commit": "142d7cd78e4d3532fbb53c92aa009e3a3fb11882",
+      "limitations": [
+        "Baked static blade phases; no continuous wind or physics simulation.",
+        "Count refers to clump instances, not independent mesh handles for each plant part."
+      ],
+      "reference": {
+        "url": "https://github.com/lmctl-ai/lmvideo",
+        "art_included": false,
+        "written_specification_sha256": "fdc585b97a792c6e183b56b227dc4eba2d4c2f0dbfc0733113ea2999bed90c17",
+        "catalogue_revision": "Original project-authored procedural mathematical/botanical scene"
+      }
+    },
+    {
+      "id": "B29",
+      "slug": "bench-29-recursive-menger",
+      "title": "Original Recursive Menger Sculpture",
+      "script": "examples/showcase/bench-29-recursive-menger.lms",
+      "script_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+      "source_commit": "84d2a7bf4ecf52b4c1760898eb8bd4c994b4c1e2",
+      "status": "VERIFIED",
+      "publication_status": "UNPUBLISHED",
+      "featured": false,
+      "backend": "cycles",
+      "visual_specification": "900x560 level-three original Menger sculpture with 8000 shared bronze cubes, true hierarchical tunnels, native self-shadowing, a separate raster preview and CPU Cycles final.",
+      "required_feature_witnesses": [
+        "three base3-level Menger occupancy predicate",
+        "8000 instances of one shared cube mesh",
+        "6.75m bounds and 125 cubic metres occupied voxels",
+        "actual raster preview and CPU Cycles final",
+        "native self-shadowing",
+        "original procedural scene, no CSG or simulation claim"
+      ],
+      "assets": [
+        {
+          "kind": "original-procedural-source",
+          "creator": "lmvideo project",
+          "source": "examples/showcase/bench-29-recursive-menger.lms",
+          "sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+          "license": "MIT",
+          "license_file": "LICENSE-examples",
+          "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+        }
+      ],
+      "cpu_budget_seconds": 600,
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "6954ea536892b89cb220b82a4f061703038b023829213dba9a8330ee15d6379e",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 64,
+          "bounces": 8,
+          "seed": 20261105,
+          "denoise": "OIDN"
+        },
+        "samples_per_axis": 64,
+        "denoise": "OIDN",
+        "seed": 20261105,
+        "cycles_module_sha256": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c"
+      },
+      "timing": {
+        "wall_s": 18.46,
+        "user_s": 56.18,
+        "sys_s": 0.74,
+        "max_rss_kib": 581120,
+        "cold_job_wall_s": 18.467717379011447,
+        "packaging_webm_s": 0,
+        "phase_ms": {
+          "prepare": 0.266717,
+          "render": 16771.832106,
+          "setup": 544.510527,
+          "write_media": 159.118545
+        },
+        "max_render_ms": 13313.105343,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 18.46,
+          "user_s": 56.18,
+          "sys_s": 0.74,
+          "max_rss_kib": 581120,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 581120,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "budget_seconds": 600,
+        "cache_hit": false
+      },
+      "repeat_verified": true,
+      "repeat_check": {
+        "policy": "exact",
+        "max_channel_error": 0,
+        "changed_channels": 0
+      },
+      "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B29: level3 original Menger predicate; 20^3 = 8000 shared cube instances, 6.75m bounds and 125m^3 occupied voxel volume; no boolean union or solver claim\"], \"file\": \"build/bench-29-recursive-menger.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 4426, \"instructions\": 3131487, \"wall_ms\": 17541, \"phase_ms\": {\"prepare\":0.266717,\"render\":16771.832106,\"setup\":544.510527,\"write_media\":159.118545}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 13313.105343, \"render_calls\": 2}}\n\n",
+      "expected_outputs": [
+        {
+          "store_file": "bench-29-recursive-menger-2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede.png",
+          "sha256": "2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede",
+          "bytes": 208803,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/bench-29-recursive-menger.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        },
+        {
+          "store_file": "bench-29-recursive-menger-raster-af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c.png",
+          "sha256": "af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c",
+          "bytes": 67166,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/b29-preview.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        }
+      ],
+      "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad",
+      "limitations": [
+        "Recursive shared-mesh instancing; no Manifold/CSG boolean union is claimed.",
+        "Touching voxels retain separate opaque surface boundaries."
+      ],
+      "reference": {
+        "url": "https://github.com/lmctl-ai/lmvideo",
+        "art_included": false,
+        "written_specification_sha256": "1c08911b178fcdc4d2fbeaee90b2e10e49a905930b08e54756047253306103d6",
+        "catalogue_revision": "Original project-authored procedural mathematical/botanical scene"
+      }
     }
   ],
   "groups": [
@@ -5726,6 +6034,56 @@
           ]
         }
       ]
+    },
+    {
+      "id": "stretch-geometry",
+      "title": "Bounded procedural scale",
+      "chapters": [
+        {
+          "id": "B28",
+          "title": "Original Poisson Botanical Meadow",
+          "featured": false,
+          "blocks": [
+            {
+              "type": "text",
+              "text": "Original8m undulating terrain with10200 surface-normal-aligned shared clumps, each containing3 baked-bend grass blades, a closed octahedral pebble and a five-petal flower. Baked static blade phases; no continuous wind or physics simulation. Count refers to clump instances, not independent mesh handles for each plant part."
+            },
+            {
+              "type": "code",
+              "script": "examples/showcase/bench-28-botanical-meadow.lms",
+              "script_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4"
+            },
+            {
+              "type": "image",
+              "local_store_file": "bench-28-botanical-meadow-208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3.png",
+              "sha256": "208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3",
+              "caption": "Original Poisson Botanical Meadow"
+            }
+          ]
+        },
+        {
+          "id": "B29",
+          "title": "Original Recursive Menger Sculpture",
+          "featured": false,
+          "blocks": [
+            {
+              "type": "text",
+              "text": "900x560 level-three original Menger sculpture with 8000 shared bronze cubes, true hierarchical tunnels, native self-shadowing, a separate raster preview and CPU Cycles final. Recursive shared-mesh instancing; no Manifold/CSG boolean union is claimed. Touching voxels retain separate opaque surface boundaries."
+            },
+            {
+              "type": "code",
+              "script": "examples/showcase/bench-29-recursive-menger.lms",
+              "script_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2"
+            },
+            {
+              "type": "image",
+              "local_store_file": "bench-29-recursive-menger-2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede.png",
+              "sha256": "2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede",
+              "caption": "Original Recursive Menger Sculpture"
+            }
+          ]
+        }
+      ]
     }
   ],
   "additional_candidates": [
@@ -5795,7 +6153,7 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "ab083a9e0980dbe6ad0b5b764a2d3ab0fb290feda2e57f8d780824a544d974d7",
+    "sha256": "31b0ec14ac714e1f33f7d7ab254f63e2264fca7ceecdf6d6486d9d007bb48766",
     "tiers": {
       "1": {
         "verified": 15,
@@ -5806,11 +6164,11 @@
         "total": 12
       },
       "3": {
-        "verified": 0,
+        "verified": 2,
         "total": 5
       }
     },
     "scope": "Local acceptance only; PLANNED targets have no benchmark pass."
   },
-  "profile_scope": "Per-example locked CPU profiles; allTier1 andTier2 accepted locally, stretch targets remainPLANNED."
+  "profile_scope": "Per-example locked CPU profiles; Tier1 andTier2 complete; stretch2/5 accepted locally."
 }

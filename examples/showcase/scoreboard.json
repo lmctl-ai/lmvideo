@@ -9520,14 +9520,571 @@
     {
       "id": "B28",
       "tier": 3,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "reason": "Awaiting target-specific executed acceptance evidence.",
+      "evidence": {
+        "script": "examples/showcase/bench-28-botanical-meadow.lms",
+        "script_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "84d2a7bf4ecf52b4c1760898eb8bd4c994b4c1e2",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "142d7cd78e4d3532fbb53c92aa009e3a3fb11882",
+        "required_features": [
+          "10200 bounded shared botanical-clump instances",
+          "positive .04m global cross-batch Poisson spacing",
+          "surface-normal alignment on undulating terrain",
+          "one shared colored clump mesh",
+          "three static baked bend phases, no solver claim",
+          "actual raster preview and CPU Cycles final"
+        ],
+        "feature_checks": [
+          {
+            "kind": "executed-original-scene",
+            "source": "examples/showcase/bench-28-botanical-meadow.lms",
+            "source_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-28-botanical-meadow.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "ac8a510d98ad3054e7c9e7e6e7654ca76f14d56f83eb36fea566dd3c50d09120",
+            "features": [
+              "10200 bounded shared botanical-clump instances",
+              "positive .04m global cross-batch Poisson spacing",
+              "surface-normal alignment on undulating terrain",
+              "one shared colored clump mesh",
+              "three static baked bend phases, no solver claim",
+              "actual raster preview and CPU Cycles final"
+            ],
+            "scope": "Exact original public source executed twice under bounded native profile."
+          },
+          {
+            "kind": "decoded-geometry-and-repeat",
+            "source": "scripts/showcase/check-stretch-geometry.py",
+            "source_sha256": "efea37bbf1b52d3075edbb9bccb2ee4d10d37cf254f437eef628888dd04630a6",
+            "command": [
+              "python3",
+              "scripts/showcase/check-stretch-geometry.py",
+              "build/b28-framed.json"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "cc279b77248d7692eebe64290a0cf9afab5a58ac2dc058c96be641a07eccaa8c",
+            "stdout": "{\n  \"status\": \"PASS\",\n  \"record\": \"build/b28-framed.json\",\n  \"workdirs\": [\n    \"/home/mma/staging/lmvideo-gap-queue/build/b28-framed-runs/b28-4bbs2_go\",\n    \"/home/mma/staging/lmvideo-gap-queue/build/b28-framed-runs/b28-_vl8rq5u\"\n  ],\n  \"instances\": 10200,\n  \"clump_vertices\": 126,\n  \"clump_triangles\": 42,\n  \"terrain_vertices\": 625,\n  \"minimum_distance_m\": 0.04,\n  \"raster_wall_upper_bound_s\": 18.83092456898885,\n  \"png_sha256\": \"208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3\",\n  \"preview_sha256\": \"6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571\",\n  \"preview_repeat\": \"exact\",\n  \"run_sha256\": \"29d851bb9de9370724f9f2372314a211a34712979455c6ed172a45c503a75861\",\n  \"target\": \"B28\"\n}\n",
+            "features": [],
+            "scope": "Independent actual binary geometry, transform and paired output inspection."
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-28-botanical-meadow.lms",
+            "sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-28-botanical-meadow-208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3.png",
+            "sha256": "208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3",
+            "bytes": 330846,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-28-botanical-meadow.png"
+          },
+          {
+            "store_file": "bench-28-botanical-meadow-raster-6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571.png",
+            "sha256": "6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571",
+            "bytes": 316343,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/b28-preview.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "d724f1a358eabdf17c16dc8e0d735c7364359f64961d404c4e6ee1d41e8e9710",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "acaf679c2d706acad451ddeaa31b4f36a03ad322e72d522106cd1dc70887eb67",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 64,
+            "bounces": 8,
+            "seed": 20261106,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 64,
+          "denoise": "OIDN",
+          "seed": 20261106,
+          "cycles_module_sha256": "acaf679c2d706acad451ddeaa31b4f36a03ad322e72d522106cd1dc70887eb67"
+        },
+        "timing": {
+          "wall_s": 18.82,
+          "user_s": 38.92,
+          "sys_s": 0.74,
+          "max_rss_kib": 617232,
+          "cold_job_wall_s": 18.83092456898885,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "prepare": 0.517344,
+            "render": 17007.669956,
+            "setup": 872.039398,
+            "write_media": 73.494356
+          },
+          "max_render_ms": 16232.539391,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 18.82,
+            "user_s": 38.92,
+            "sys_s": 0.74,
+            "max_rss_kib": 617232,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 617232,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "budget_seconds": 600,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately instrumented span."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately instrumented span."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately instrumented span."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 17007.669956,
+            "scope": "Both raster and CPU Cycles direct-render calls, including OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 73.494356,
+            "scope": "PNG encoding span"
+          }
+        },
+        "repeat_verified": true,
+        "repeat_check": {
+          "policy": "exact",
+          "max_channel_error": 0,
+          "changed_channels": 0
+        },
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B28: 10200 shared clumps; each has3 bent blades,1 closed pebble and1 five-petal flower; .04m cross-batch Poisson spacing and normal alignment;3 static baked bend phases, no wind solver\"], \"file\": \"build/bench-28-botanical-meadow.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 9093, \"instructions\": 141, \"wall_ms\": 17953, \"phase_ms\": {\"prepare\":0.517344,\"render\":17007.669956,\"setup\":872.039398,\"write_media\":73.494356}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 16232.539391, \"render_calls\": 2}}\n\n",
+        "generated_asset_hashes": [
+          {
+            "path": "build/bench-28-botanical-meadow.lmjob/materials/65ecf65a79f8fcccc8d5c3c3da735fa2fd674c973b2d73822261c6d300c4dd17.lmmat/manifest.json",
+            "sha256": "65ecf65a79f8fcccc8d5c3c3da735fa2fd674c973b2d73822261c6d300c4dd17",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4"
+          },
+          {
+            "path": "build/bench-28-botanical-meadow.lmjob/materials/65ecf65a79f8fcccc8d5c3c3da735fa2fd674c973b2d73822261c6d300c4dd17.lmmat/material.json",
+            "sha256": "79dee22b19d8917cb346934e0c3245c2219fe1810a1ab52261f209ebcdbd4701",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4"
+          },
+          {
+            "path": "build/bench-28-botanical-meadow.lmjob/materials/9a27f0c2dc9eac914cbe15e09d8d8acc5733db07e21d5663f1f7aba4b9283ee6.lmmat/manifest.json",
+            "sha256": "9a27f0c2dc9eac914cbe15e09d8d8acc5733db07e21d5663f1f7aba4b9283ee6",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4"
+          },
+          {
+            "path": "build/bench-28-botanical-meadow.lmjob/materials/9a27f0c2dc9eac914cbe15e09d8d8acc5733db07e21d5663f1f7aba4b9283ee6.lmmat/material.json",
+            "sha256": "518e4ff95e3d5497601f02dc2de47d8820b4052334f961a56fd957712fb07806",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4"
+          },
+          {
+            "path": "build/bench-28-botanical-meadow.lmjob/scene.glb",
+            "sha256": "3d381569dae96274383e72af9d58b9279db514908fa73bf0568d75ea474490c9",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4"
+          }
+        ],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3",
+            "fonts": []
+          }
+        ],
+        "visual_check": {
+          "score": 91,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [],
+          "suggestions": [],
+          "reasoning": "The complete undulating terrain is framed with a clear silhouette and dense normal-aligned flora; pink flowers, green blade tips and pebble geometry read in the original meadow. This is a scale witness with static baked bends, not animated wind."
+        },
+        "generated_witness": {
+          "status": "PASS",
+          "record": "build/b28-framed.json",
+          "workdirs": [
+            "/home/mma/staging/lmvideo-gap-queue/build/b28-framed-runs/b28-4bbs2_go",
+            "/home/mma/staging/lmvideo-gap-queue/build/b28-framed-runs/b28-_vl8rq5u"
+          ],
+          "instances": 10200,
+          "clump_vertices": 126,
+          "clump_triangles": 42,
+          "terrain_vertices": 625,
+          "minimum_distance_m": 0.04,
+          "raster_wall_upper_bound_s": 18.83092456898885,
+          "png_sha256": "208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3",
+          "preview_sha256": "6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571",
+          "preview_repeat": "exact",
+          "run_sha256": "29d851bb9de9370724f9f2372314a211a34712979455c6ed172a45c503a75861",
+          "target": "B28"
+        },
+        "limitations": [
+          "Baked static blade phases; no continuous wind or physics simulation.",
+          "Count refers to clump instances, not independent mesh handles for each plant part."
+        ]
+      }
     },
     {
       "id": "B29",
       "tier": 3,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "reason": "Awaiting target-specific executed acceptance evidence.",
+      "evidence": {
+        "script": "examples/showcase/bench-29-recursive-menger.lms",
+        "script_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "84d2a7bf4ecf52b4c1760898eb8bd4c994b4c1e2",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad",
+        "required_features": [
+          "three base3-level Menger occupancy predicate",
+          "8000 instances of one shared cube mesh",
+          "6.75m bounds and 125 cubic metres occupied voxels",
+          "actual raster preview and CPU Cycles final",
+          "native self-shadowing",
+          "original procedural scene, no CSG or simulation claim"
+        ],
+        "feature_checks": [
+          {
+            "kind": "executed-original-scene",
+            "source": "examples/showcase/bench-29-recursive-menger.lms",
+            "source_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-29-recursive-menger.lms"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "cdf9859c49589bc265a3328e00e9ca9beeb22b6101531c94842db7176b428e85",
+            "features": [
+              "three base3-level Menger occupancy predicate",
+              "8000 instances of one shared cube mesh",
+              "6.75m bounds and 125 cubic metres occupied voxels",
+              "actual raster preview and CPU Cycles final",
+              "native self-shadowing",
+              "original procedural scene, no CSG or simulation claim"
+            ],
+            "scope": "Exact original public source executed twice under bounded native profile."
+          },
+          {
+            "kind": "decoded-geometry-and-repeat",
+            "source": "scripts/showcase/check-stretch-geometry.py",
+            "source_sha256": "efea37bbf1b52d3075edbb9bccb2ee4d10d37cf254f437eef628888dd04630a6",
+            "command": [
+              "python3",
+              "scripts/showcase/check-stretch-geometry.py",
+              "build/b29-menger-final.json"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "cfb8aac9f7950b39b2e60f5351cafe1bf8ac743bed4346793e04c6b6be3cc0bd",
+            "stdout": "{\n  \"status\": \"PASS\",\n  \"record\": \"build/b29-menger-final.json\",\n  \"workdirs\": [\n    \"/home/mma/staging/lmvideo-gap-queue/build/b29-menger-final-runs/b29-q53_nttv\",\n    \"/home/mma/staging/lmvideo-gap-queue/build/b29-menger-final-runs/b29-kg09prgx\"\n  ],\n  \"instances\": 8000,\n  \"shared_cube_geometry\": \"cc2b70a276ff0c119a389f384cd897ed5a638f31bd56198501ae62b74d641900\",\n  \"cube_bounds\": [\n    [\n      -0.125,\n      -0.125,\n      -0.125\n    ],\n    [\n      0.125,\n      0.125,\n      0.125\n    ]\n  ],\n  \"scene_bounds\": [\n    [\n      -3.375,\n      -3.375,\n      -3.375\n    ],\n    [\n      3.375,\n      3.375,\n      3.375\n    ]\n  ],\n  \"occupied_voxel_volume\": 125.0,\n  \"primary_png_sha256\": \"2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede\",\n  \"preview_png_sha256\": \"af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c\",\n  \"preview_repeat\": \"exact\",\n  \"run_sha256\": \"b9308a88a3aa47eb04c0b30db360cc4282a3f4e64aebd034761c7dccf6be609c\",\n  \"target\": \"B29\"\n}\n",
+            "features": [],
+            "scope": "Independent actual binary geometry, transform and paired output inspection."
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-29-recursive-menger.lms",
+            "sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-29-recursive-menger-2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede.png",
+            "sha256": "2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede",
+            "bytes": 208803,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-29-recursive-menger.png"
+          },
+          {
+            "store_file": "bench-29-recursive-menger-raster-af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c.png",
+            "sha256": "af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c",
+            "bytes": 67166,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/b29-preview.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "6954ea536892b89cb220b82a4f061703038b023829213dba9a8330ee15d6379e",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 64,
+            "bounces": 8,
+            "seed": 20261105,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 64,
+          "denoise": "OIDN",
+          "seed": 20261105,
+          "cycles_module_sha256": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c"
+        },
+        "timing": {
+          "wall_s": 18.46,
+          "user_s": 56.18,
+          "sys_s": 0.74,
+          "max_rss_kib": 581120,
+          "cold_job_wall_s": 18.467717379011447,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "prepare": 0.266717,
+            "render": 16771.832106,
+            "setup": 544.510527,
+            "write_media": 159.118545
+          },
+          "max_render_ms": 13313.105343,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 18.46,
+            "user_s": 56.18,
+            "sys_s": 0.74,
+            "max_rss_kib": 581120,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 581120,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "budget_seconds": 600,
+          "cache_hit": false
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately instrumented span."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately instrumented span."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in end-to-end wall; no separately instrumented span."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 16771.832106,
+            "scope": "Both raster and CPU Cycles direct-render calls, including OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 159.118545,
+            "scope": "PNG encoding span"
+          }
+        },
+        "repeat_verified": true,
+        "repeat_check": {
+          "policy": "exact",
+          "max_channel_error": 0,
+          "changed_channels": 0
+        },
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B29: level3 original Menger predicate; 20^3 = 8000 shared cube instances, 6.75m bounds and 125m^3 occupied voxel volume; no boolean union or solver claim\"], \"file\": \"build/bench-29-recursive-menger.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 4426, \"instructions\": 3131487, \"wall_ms\": 17541, \"phase_ms\": {\"prepare\":0.266717,\"render\":16771.832106,\"setup\":544.510527,\"write_media\":159.118545}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 13313.105343, \"render_calls\": 2}}\n\n",
+        "generated_asset_hashes": [
+          {
+            "path": "build/bench-29-recursive-menger.lmjob/materials/f11ba0958c9dce9c42855a2aaf8393991868f6587c307cfaec316bbb578ceda3.lmmat/manifest.json",
+            "sha256": "f11ba0958c9dce9c42855a2aaf8393991868f6587c307cfaec316bbb578ceda3",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2"
+          },
+          {
+            "path": "build/bench-29-recursive-menger.lmjob/materials/f11ba0958c9dce9c42855a2aaf8393991868f6587c307cfaec316bbb578ceda3.lmmat/material.json",
+            "sha256": "220d248a7431994a66586f8869f065802c812099fa1980ab54dda08b8f7df712",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2"
+          },
+          {
+            "path": "build/bench-29-recursive-menger.lmjob/materials/f54adc7d31624cbc0b2af15988a210b27d39af0a82a88d659900a0272367f89b.lmmat/manifest.json",
+            "sha256": "f54adc7d31624cbc0b2af15988a210b27d39af0a82a88d659900a0272367f89b",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2"
+          },
+          {
+            "path": "build/bench-29-recursive-menger.lmjob/materials/f54adc7d31624cbc0b2af15988a210b27d39af0a82a88d659900a0272367f89b.lmmat/material.json",
+            "sha256": "9ecbba55eb1ba7463a86f4664841215cacbbe1b6d4d286108a6d814709620c06",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2"
+          },
+          {
+            "path": "build/bench-29-recursive-menger.lmjob/scene.glb",
+            "sha256": "208f0514f5b9869a31662cdcce821f3f4278c216b7b0146330836916bce27888",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2"
+          }
+        ],
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede",
+            "fonts": []
+          }
+        ],
+        "visual_check": {
+          "score": 94,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [],
+          "suggestions": [],
+          "reasoning": "Nested tunnels, consistent bronze faces and self-shadowed cavities make the recursive three-level sculpture legible; the mathematical silhouette is unclipped. Touching voxel instances are explicitly not a boolean union."
+        },
+        "generated_witness": {
+          "status": "PASS",
+          "record": "build/b29-menger-final.json",
+          "workdirs": [
+            "/home/mma/staging/lmvideo-gap-queue/build/b29-menger-final-runs/b29-q53_nttv",
+            "/home/mma/staging/lmvideo-gap-queue/build/b29-menger-final-runs/b29-kg09prgx"
+          ],
+          "instances": 8000,
+          "shared_cube_geometry": "cc2b70a276ff0c119a389f384cd897ed5a638f31bd56198501ae62b74d641900",
+          "cube_bounds": [
+            [
+              -0.125,
+              -0.125,
+              -0.125
+            ],
+            [
+              0.125,
+              0.125,
+              0.125
+            ]
+          ],
+          "scene_bounds": [
+            [
+              -3.375,
+              -3.375,
+              -3.375
+            ],
+            [
+              3.375,
+              3.375,
+              3.375
+            ]
+          ],
+          "occupied_voxel_volume": 125.0,
+          "primary_png_sha256": "2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede",
+          "preview_png_sha256": "af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c",
+          "preview_repeat": "exact",
+          "run_sha256": "b9308a88a3aa47eb04c0b30db360cc4282a3f4e64aebd034761c7dccf6be609c",
+          "target": "B29"
+        },
+        "limitations": [
+          "Recursive shared-mesh instancing; no Manifold/CSG boolean union is claimed.",
+          "Touching voxels retain separate opaque surface boundaries."
+        ]
+      }
     },
     {
       "id": "B30",
@@ -9558,7 +10115,7 @@
       "total": 12
     },
     "3": {
-      "verified": 0,
+      "verified": 2,
       "total": 5
     }
   },
@@ -9574,6 +10131,15 @@
         "independent native-agent luna_reproduce"
       ],
       "summary": "Exact final public sources, calibrated native controls, rights, paired images, CPU/RSS budgets and generated artifacts independently reviewed. Local acceptance only; Phase7 remains unstarted."
+    },
+    {
+      "scope": "B28-B29",
+      "status": "PASS",
+      "reviewers": [
+        "independent native-agent decoded geometry inspection",
+        "root runtime and visual review"
+      ],
+      "summary": "Actual paired bounded outputs and independent geometry/spacing/occupancy witnesses. B28 raster time is conservatively bounded by the18.83s entire source execution. No wind solver, CSG union, or public publication claim."
     }
   ]
 }
