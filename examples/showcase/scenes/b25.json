@@ -1,17 +1,46 @@
 {
-  "id":"B25",
-  "title":"Archviz Daylit Pavilion",
-  "script":"examples/showcase/bench-25-archviz-daylit-room.lms",
-  "visual_specification":"900x560 original room with true window aperture, roof overhang, authored plaster/concrete/wood and furniture, Hosek daylight plus explicit sun and area fill; direct-vs-eight-bounce GI witness.",
-  "required_feature_witnesses":["original room/pavilion geometry","real window aperture and occlusion","procedural wood/concrete/plaster","Hosek physical sky","explicit directional sun","area fill light","multi-bounce indirect GI control"],
-  "cpu_budget_seconds":600,
-  "backend":"cycles",
-  "renderer":"cycles",
-  "cycles_profile":{"threads":4,"samples":128,"bounces":8,"seed":20261103,"denoise":"OIDN"},
-  "dimensions":{"still":[900,560]},
-  "status":"CANDIDATE",
-  "assets":[{"kind":"original-procedural-source","creator":"lmvideo project","source":"examples/showcase/bench-25-archviz-daylit-room.lms","license":"MIT","license_file":"LICENSE-examples","license_sha256":"949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"}],
-  "script_sha256":"4f12999628a669bebb8d8398c90c03ce45b6ad4276c0ca24ac5c859896d65487",
-  "rights_note":"All room, furniture, materials and lighting are authored procedurally; no external model, HDRI or reference render is copied.",
-  "publication_status":"UNPUBLISHED"
+  "id": "B25",
+  "title": "Archviz Daylit Pavilion",
+  "script": "examples/showcase/bench-25-archviz-daylit-room.lms",
+  "visual_specification": "900x560 original room with true window aperture, roof overhang, authored plaster/concrete/wood and furniture, Hosek daylight plus explicit sun and area fill; direct-vs-eight-bounce GI witness.",
+  "required_feature_witnesses": [
+    "original room/pavilion geometry",
+    "real window aperture and occlusion",
+    "procedural wood/concrete/plaster",
+    "Hosek physical sky",
+    "explicit directional sun",
+    "area fill light",
+    "multi-bounce indirect GI control"
+  ],
+  "cpu_budget_seconds": 600,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 128,
+    "bounces": 8,
+    "seed": 20261103,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-25-archviz-daylit-room.lms",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
+      "sha256": "4f12999628a669bebb8d8398c90c03ce45b6ad4276c0ca24ac5c859896d65487"
+    }
+  ],
+  "script_sha256": "4f12999628a669bebb8d8398c90c03ce45b6ad4276c0ca24ac5c859896d65487",
+  "rights_note": "All room, furniture, materials and lighting are authored procedurally; no external model, HDRI or reference render is copied.",
+  "publication_status": "UNPUBLISHED"
 }

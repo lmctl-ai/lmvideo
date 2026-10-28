@@ -13,9 +13,9 @@ let scene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces"
 let node=scene.add(mesh,material("#b8c5d1",0.35,0.55));node.scale(0.001,0.001,0.001);
 scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8).directional_light(-3.0,1.0,-1.0,"#aec8e5",0.6);
 let camera=camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0);scene.camera(camera);
-scene.save_job("build/b27-preview.lmjob",435,540,"cycles",2,1,20261104,false);scene.save_job("build/b27-final.lmjob",435,540,"cycles",64,6,20261104,true);
+scene.save_job("build/b27-preview.lmjob",435,540,2);scene.save_job("build/b27-final.lmjob",435,540,"cycles",64,6,20261104,true);
 let mask=scene3d().threads(4).background("#000000").ambient(0.0);mask.camera(camera);let white=material("#ffffff",0.0,1.0).emissive("#ffffff",1.0);mask.add(mesh,white).scale(0.001,0.001,0.001);
-mask.save_job("build/b27-mask-raster.lmjob",435,540,"cycles",2,1,20261104,false);mask.save_job("build/b27-mask-cycles.lmjob",435,540,"cycles",16,2,20261104,false);
+mask.save_job("build/b27-mask-raster.lmjob",435,540,2);mask.save_job("build/b27-mask-cycles.lmjob",435,540,"cycles",16,2,20261104,false);
 end _lmcode_
 savedsl(program,"build/b27-cad-preview-cycles-twin.dslb");r=system(concat(dsl_cli(program),["--dsl","build/b27-cad-preview-cycles-twin.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);
 tp=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"preview\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-preview.lmjob","--renderer","raster","--output","build/b27-preview.png"]);assert(tp.code==0,tp.stdout+tp.stderr);println(tp.stderr);
