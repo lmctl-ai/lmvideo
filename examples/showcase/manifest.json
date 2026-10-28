@@ -3643,7 +3643,8 @@
         "art_included": false,
         "written_specification_sha256": "6746d4ada85b49cb41042515002ad0b63118fc09943a8ea1ec17e8b4fca7fa2f",
         "catalogue_revision": "Original project-authored procedural scene; written benchmark specification"
-      }
+      },
+      "implementation_commit": "9f283fe3c4d433a0de5063cd497a3cec038393ba"
     },
     {
       "id": "B19",
@@ -3788,7 +3789,8 @@
         "art_included": false,
         "written_specification_sha256": "6f359f0c018245080468dfd4b464e7b03cf5f58f6299b8ff9d5272c38218b105",
         "catalogue_revision": "Original project-authored procedural scene; written benchmark specification"
-      }
+      },
+      "implementation_commit": "9f283fe3c4d433a0de5063cd497a3cec038393ba"
     },
     {
       "id": "B20",
@@ -3931,7 +3933,8 @@
           "kind": "image",
           "availability": "LOCAL_STORE_ONLY"
         }
-      ]
+      ],
+      "implementation_commit": "9f283fe3c4d433a0de5063cd497a3cec038393ba"
     }
   ],
   "groups": [
@@ -4474,7 +4477,7 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "bd9b33d1db15611ef3e25349ee07d7680790888462653f3e37640b3ef6c486e6",
+    "sha256": "ac917329a7617a3b40a8d420bec685d41d056e1771d3c0cc3fb7feea6b3f57fb",
     "tiers": {
       "1": {
         "verified": 15,

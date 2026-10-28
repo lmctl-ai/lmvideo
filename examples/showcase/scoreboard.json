@@ -6826,7 +6826,7 @@
         "source_repository": "lmctl-ai/lmvideo",
         "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "49db1fd7cebbd81ff94154983893c3b44e52c141",
+        "implementation_commit": "9f283fe3c4d433a0de5063cd497a3cec038393ba",
         "required_features": [
           "closed transmissive ball lens",
           "analytic rectangular area light",
@@ -7129,7 +7129,7 @@
         "source_repository": "lmctl-ai/lmvideo",
         "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "49db1fd7cebbd81ff94154983893c3b44e52c141",
+        "implementation_commit": "9f283fe3c4d433a0de5063cd497a3cec038393ba",
         "required_features": [
           "original closed-part abstract bust assembly",
           "warm skin subsurface radii in metres",
@@ -7368,7 +7368,7 @@
         "source_repository": "lmctl-ai/lmvideo",
         "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "49db1fd7cebbd81ff94154983893c3b44e52c141",
+        "implementation_commit": "9f283fe3c4d433a0de5063cd497a3cec038393ba",
         "required_features": [
           "original curved speed-form hood/fender",
           "procedural flake albedo",
