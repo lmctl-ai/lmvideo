@@ -21,7 +21,7 @@
       560
     ]
   },
-  "status": "PLANNED",
+  "status": "VERIFIED",
   "assets": [
     {
       "kind": "original-procedural-source",
@@ -46,5 +46,6 @@
   "limitations": [
     "Flecks are original albedo modulation over a metallic undercoat; no per-flake geometry BSDF is claimed.",
     "Rotor uses scalar tangent-frame brushing, not a directional anisotropy texture."
-  ]
+  ],
+  "publication_status": "UNPUBLISHED"
 }

@@ -3508,8 +3508,8 @@
       "title": "Analytic Area Light Caustic Ball Lens",
       "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
       "script_sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3",
-      "source_commit": "CANDIDATE",
-      "status": "PLANNED",
+      "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b18.json",
@@ -3531,7 +3531,119 @@
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
         }
       ],
-      "rights_note": "Original procedural lens, floor, materials and analytic light; no borrowed model or reference render is copied."
+      "rights_note": "Original procedural lens, floor, materials and analytic light; no borrowed model or reference render is copied.",
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "6b2a4848c022c71c883a48343d2186318d65dca5aed2548fb5570a21f33783e5",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 512,
+          "bounces": 8,
+          "seed": 991,
+          "denoise": "OIDN"
+        },
+        "samples_per_axis": 512,
+        "denoise": "OIDN",
+        "seed": 991,
+        "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+        "build": {
+          "implementation_cpp_tree": "2c7cb365a4f6dd37135c9efe5abed2e341d4f844",
+          "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+          "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+        }
+      },
+      "timing": {
+        "wall_s": 18.71,
+        "user_s": 62.4,
+        "sys_s": 0.55,
+        "max_rss_kib": 536316,
+        "cold_job_wall_s": 15.921237307979027,
+        "packaging_webm_s": 0,
+        "phase_ms": {
+          "post": 1.702286,
+          "prepare": 5.904158,
+          "render": 15320.850013,
+          "setup": 0.054727,
+          "write_media": 23.440824
+        },
+        "max_render_ms": 15320.850013,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 18.71,
+          "user_s": 62.4,
+          "sys_s": 0.55,
+          "max_rss_kib": 536316,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 536316,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "cache_hit": false,
+        "budget_seconds": 600,
+        "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+      },
+      "repeat_verified": true,
+      "captured_stdout": [
+        "{\"ok\": true, \"result\": {\"output\": [\"B18 analytic-area CPU MNEE lens | 512 spp | 8 bounces | seed 991 | OIDN | floor ROI/normal-mask proof in native gate\"], \"file\": \"build/bench-18-caustic-ball-lens.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3185, \"instructions\": 132, \"wall_ms\": 15351, \"phase_ms\": {\"post\":1.702286,\"prepare\":5.904158,\"render\":15320.850013,\"setup\":0.054727,\"write_media\":23.440824}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 15320.850013, \"render_calls\": 1}}",
+        ""
+      ],
+      "featured": false,
+      "expected_outputs": [
+        {
+          "store_file": "bench-18-caustic-ball-lens-4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3.png",
+          "sha256": "4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3",
+          "bytes": 78411,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/bench-18-caustic-ball-lens.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        }
+      ],
+      "visual_specification": "900x560 CPU Cycles still: original clear ball lens above a original neutral checker receiver floor, one rectangular analytic area emitter, explicit MNEE caster/receiver roles and focused floor caustic.",
+      "cpu_budget_seconds": 600,
+      "reference": {
+        "url": "https://developer.blender.org/docs/features/cycles/",
+        "art_included": false,
+        "written_specification_sha256": "6746d4ada85b49cb41042515002ad0b63118fc09943a8ea1ec17e8b4fca7fa2f",
+        "catalogue_revision": "Original project-authored procedural scene; written benchmark specification"
+      }
     },
     {
       "id": "B19",
@@ -3539,8 +3651,8 @@
       "title": "Abstract Busts with Random-Walk Subsurface",
       "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
       "script_sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860",
-      "source_commit": "4499eb6",
-      "status": "PLANNED",
+      "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b19.json",
@@ -3553,7 +3665,20 @@
         "fixed 96 spp, 8 bounces, seed and OIDN",
         "closed manifold transport boundaries"
       ],
-      "expected_outputs": [],
+      "expected_outputs": [
+        {
+          "store_file": "bench-19-sss-abstract-bust-63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2.png",
+          "sha256": "63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2",
+          "bytes": 120045,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/bench-19-sss-abstract-bust.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        }
+      ],
       "rights_note": "Original procedural scene; no borrowed model or render.",
       "assets": [
         {
@@ -3565,7 +3690,105 @@
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
         }
-      ]
+      ],
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "6b2a4848c022c71c883a48343d2186318d65dca5aed2548fb5570a21f33783e5",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 96,
+          "bounces": 8,
+          "seed": 20261030,
+          "denoise": "OIDN"
+        },
+        "samples_per_axis": 96,
+        "denoise": "OIDN",
+        "seed": 20261030,
+        "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+        "build": {
+          "implementation_cpp_tree": "2c7cb365a4f6dd37135c9efe5abed2e341d4f844",
+          "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+          "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+        }
+      },
+      "timing": {
+        "wall_s": 14.9,
+        "user_s": 48.92,
+        "sys_s": 0.49,
+        "max_rss_kib": 535584,
+        "cold_job_wall_s": 12.193302327999845,
+        "packaging_webm_s": 0,
+        "phase_ms": {
+          "post": 3.765512,
+          "prepare": 2.170066,
+          "render": 11508.106363,
+          "setup": 24.212031,
+          "write_media": 29.276582
+        },
+        "max_render_ms": 11508.106363,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 14.9,
+          "user_s": 48.92,
+          "sys_s": 0.49,
+          "max_rss_kib": 535584,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 535584,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "cache_hit": false,
+        "budget_seconds": 180,
+        "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+      },
+      "repeat_verified": true,
+      "captured_stdout": [
+        "{\"ok\": true, \"result\": {\"output\": [\"B19 original abstract jade and warm-skin busts | raw metre SSS radii | thin backlit ear laminas | random-walk OIDN\"], \"file\": \"build/bench-19-sss-abstract-bust.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6774, \"instructions\": 35258, \"wall_ms\": 11570, \"phase_ms\": {\"post\":3.765512,\"prepare\":2.170066,\"render\":11508.106363,\"setup\":24.212031,\"write_media\":29.276582}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 11508.106363, \"render_calls\": 1}}",
+        ""
+      ],
+      "featured": false,
+      "visual_specification": "900x560 CPU Cycles still showing original jade and warm-skin abstract bust assemblies, closed primitive parts, raw metre channel radii, thin backlit ear laminas, and visible backlight transmission.",
+      "cpu_budget_seconds": 180,
+      "reference": {
+        "url": "https://threejs.org/examples/#webgl_materials_subsurface_scattering",
+        "art_included": false,
+        "written_specification_sha256": "6f359f0c018245080468dfd4b464e7b03cf5f58f6299b8ff9d5272c38218b105",
+        "catalogue_revision": "Original project-authored procedural scene; written benchmark specification"
+      }
     },
     {
       "id": "B20",
@@ -3573,22 +3796,26 @@
       "title": "Automotive Clearcoat, Metallic Flake & Anisotropy",
       "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
       "script_sha256": "d58122c03f81451506e8b0131780271c1503a8ddef0e6b066602fd1009a93d05",
-      "source_commit": "CANDIDATE",
-      "status": "PLANNED",
+      "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "cycles",
       "reference": {
         "url": "https://github.com/lmctl-ai/lmvideo",
-        "art_included": false
+        "art_included": false,
+        "written_specification_sha256": "5796fdfb16a4d80fff2e55cc4243452b3a00722ad490bd663f7307e5e1de65ab",
+        "catalogue_revision": "Original project-authored procedural scene; written benchmark specification"
       },
-      "visual_specification": "900x560 original speed-form hood/fender with procedural metallic flake, dual-lobe clearcoat and a separate brushed anisotropic rotor under CPU area emitters.",
+      "visual_specification": "900x560 original speed-form hood/fender with visible procedural metallic flake, dual-lobe clearcoat and a separate brushed anisotropic rotor under two CPU area emitters.",
       "required_feature_witnesses": [
-        "original speed-form",
-        "procedural flake",
-        "clearcoat",
-        "anisotropic rotor",
-        "area emitters"
+        "original curved speed-form hood/fender",
+        "procedural flake albedo",
+        "clearcoat=1.0 clearcoat_roughness=0.03",
+        "metallic undercoat",
+        "anisotropy=0.8 brushed rotor",
+        "two area emitters",
+        "tangent-space highlight rotation"
       ],
       "assets": [
         {
@@ -3601,7 +3828,110 @@
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
         }
       ],
-      "cpu_budget_seconds": 180
+      "cpu_budget_seconds": 180,
+      "profile": {
+        "cpu": "Intel(R) Core(TM) i9-14900HX",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "architecture": "x86_64",
+        "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+        "render_threads": 4,
+        "memory_limit_bytes": 2147483648,
+        "binary_hashes": {
+          "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+          "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+          "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+          "host": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+          "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+          "cycles_module": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+        },
+        "compiler_version": "lmscript 0.2.426",
+        "host_version": "lmvideo 0.1.0",
+        "schema_sha256": "6b2a4848c022c71c883a48343d2186318d65dca5aed2548fb5570a21f33783e5",
+        "backend": "cycles",
+        "renderer": "cycles",
+        "device": "CPU",
+        "cycles_profile": {
+          "threads": 4,
+          "samples": 64,
+          "bounces": 8,
+          "seed": 20261031,
+          "denoise": "OIDN"
+        },
+        "samples_per_axis": 64,
+        "denoise": "OIDN",
+        "seed": 20261031,
+        "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+        "build": {
+          "implementation_cpp_tree": "2c7cb365a4f6dd37135c9efe5abed2e341d4f844",
+          "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+          "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+        }
+      },
+      "timing": {
+        "wall_s": 7.47,
+        "user_s": 15.9,
+        "sys_s": 0.42,
+        "max_rss_kib": 537728,
+        "cold_job_wall_s": 4.725898407021305,
+        "packaging_webm_s": 0,
+        "phase_ms": {
+          "post": 0.000827,
+          "prepare": 24.164497,
+          "render": 4067.645217,
+          "setup": 0.070771,
+          "write_media": 22.910564
+        },
+        "max_render_ms": 4067.645217,
+        "max_frame_ms": 0,
+        "native_process": {
+          "wall_s": 7.47,
+          "user_s": 15.9,
+          "sys_s": 0.42,
+          "max_rss_kib": 537728,
+          "scope": "lmctl autorun process tree (time max RSS)",
+          "memory_limit_bytes": 2147483648,
+          "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+        },
+        "packaging_process": {
+          "applicable": false,
+          "scope": "no video packaging process",
+          "wall_s": null,
+          "user_s": null,
+          "sys_s": null,
+          "max_rss_kib": null,
+          "memory_limit_bytes": null
+        },
+        "peak_rss_kib": 537728,
+        "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+        "cache_hit": false,
+        "budget_seconds": 180,
+        "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+      },
+      "repeat_verified": true,
+      "captured_stdout": [
+        "{\"ok\": true, \"result\": {\"output\": [\"B20 CPU Cycles 64 spp/OIDN: original speed-form dual-lobe paint + brushed anisotropic rotor\"], \"file\": \"build/bench-20-car-paint-anisotropy.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 5470, \"instructions\": 48388, \"wall_ms\": 4117, \"phase_ms\": {\"post\":0.000827,\"prepare\":24.164497,\"render\":4067.645217,\"setup\":0.070771,\"write_media\":22.910564}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 4067.645217, \"render_calls\": 1}}",
+        ""
+      ],
+      "expected_outputs": [
+        {
+          "store_file": "bench-20-car-paint-anisotropy-a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935.png",
+          "sha256": "a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935",
+          "bytes": 81981,
+          "dimensions": [
+            900,
+            560
+          ],
+          "file": "build/bench-20-car-paint-anisotropy.png",
+          "kind": "image",
+          "availability": "LOCAL_STORE_ONLY"
+        }
+      ]
     }
   ],
   "groups": [
@@ -4026,7 +4356,51 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
-              "script_sha256": "d36b2d5ed15a654d2b67f6a22670a48804d931d9942cfc82fb248cb67f149581"
+              "script_sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3"
+            }
+          ]
+        },
+        {
+          "id": "B19",
+          "title": "Abstract Busts with Random-Walk Subsurface",
+          "featured": false,
+          "blocks": [
+            {
+              "type": "text",
+              "text": "900x560 CPU Cycles still showing original jade and warm-skin abstract bust assemblies, closed primitive parts, raw metre channel radii, thin backlit ear laminas, and visible backlight transmission."
+            },
+            {
+              "type": "code",
+              "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
+              "script_sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860"
+            },
+            {
+              "type": "image",
+              "local_store_file": "bench-19-sss-abstract-bust-63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2.png",
+              "sha256": "63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2",
+              "caption": "Abstract Busts with Random-Walk Subsurface"
+            }
+          ]
+        },
+        {
+          "id": "B20",
+          "title": "Automotive Clearcoat, Metallic Flake & Anisotropy",
+          "featured": false,
+          "blocks": [
+            {
+              "type": "text",
+              "text": "900x560 original speed-form hood/fender with visible procedural metallic flake, dual-lobe clearcoat and a separate brushed anisotropic rotor under two CPU area emitters."
+            },
+            {
+              "type": "code",
+              "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
+              "script_sha256": "d58122c03f81451506e8b0131780271c1503a8ddef0e6b066602fd1009a93d05"
+            },
+            {
+              "type": "image",
+              "local_store_file": "bench-20-car-paint-anisotropy-a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935.png",
+              "sha256": "a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935",
+              "caption": "Automotive Clearcoat, Metallic Flake & Anisotropy"
             }
           ]
         }
@@ -4100,14 +4474,14 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "94157b96065dace808df3942faea9a587a17a99c4f9d6ea2200f6f4952d3f480",
+    "sha256": "bd9b33d1db15611ef3e25349ee07d7680790888462653f3e37640b3ef6c486e6",
     "tiers": {
       "1": {
         "verified": 15,
         "total": 15
       },
       "2": {
-        "verified": 2,
+        "verified": 5,
         "total": 12
       },
       "3": {

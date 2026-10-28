@@ -27,7 +27,7 @@
       560
     ]
   },
-  "status": "PLANNED",
+  "status": "VERIFIED",
   "assets": [
     {
       "kind": "original-procedural-source",
@@ -40,5 +40,7 @@
     }
   ],
   "rights_note": "No human scan, borrowed model, or third-party render; all bust parts and lighting are authored procedural geometry.",
-  "script_sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860"
+  "script_sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860",
+  "reference_url": "https://threejs.org/examples/#webgl_materials_subsurface_scattering",
+  "publication_status": "UNPUBLISHED"
 }

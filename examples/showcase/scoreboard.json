@@ -6819,20 +6819,783 @@
     {
       "id": "B18",
       "tier": 2,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
+        "script_sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "49db1fd7cebbd81ff94154983893c3b44e52c141",
+        "required_features": [
+          "closed transmissive ball lens",
+          "analytic rectangular area light",
+          "explicit caustics caster and receiver roles",
+          "focused receiver-floor ROI",
+          "512/1024 spp peak and energy convergence"
+        ],
+        "feature_checks": [
+          {
+            "source": "examples/showcase/bench-18-caustic-ball-lens.lms",
+            "source_sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3",
+            "stdout_sha256": "63a35ec2f54cac9c16e1fcd16383815d6ed9fe9db03705dd6c0d667d4b0cd2b5",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-18-caustic-ball-lens.lms"
+            ],
+            "exit_code": 0,
+            "features": [
+              "closed transmissive ball lens",
+              "analytic rectangular area light",
+              "explicit caustics caster and receiver roles",
+              "focused receiver-floor ROI"
+            ],
+            "scope": "Two fresh exact public-source executions and independently reviewed authored inputs/assertions."
+          },
+          {
+            "source": "tests/scene3d_cycles_test.cpp",
+            "source_sha256": "c57684782c36870f22c86aa33ac9745ca0a90142d7487fbd9cc99bbfaa84d9eb",
+            "stdout_sha256": "81844860b95c768889f37b4a1cc151e4bb7bac7d279591268b199efe4efcb30f",
+            "stdout": "checker MSE=21.9022\nanisotropy iso peak=133 clipped=0\nanisotropy horizontal peak=55 clipped=0\nanisotropy vertical peak=55 clipped=0\nanisotropy covariance plus=-68.8243 minus=68.8492\nMNEE floor ROI lens=36.8907 no-lens=44.2975 peaks=0.152926/0.0544803 high=0.155926 at=31,33\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nSSS scale channel 0 direct=0.962374 scaled=0.962374\nSSS scale channel 1 direct=0.52497 scaled=0.52497\nSSS scale channel 2 direct=0.52497 scaled=0.52497\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nclearcoat linear max base=0.00913406 sharp=0.584078 broad=0.012983 clipped=0/0/0\nclearcoat core base=0.994939 sharp=6.61101 broad=1.72243 ring base=2.58338 sharp=2.56784 broad=3.99084\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "command": [
+              "build/material-quality-cycles/scene3d_cycles_test"
+            ],
+            "exit_code": 0,
+            "features": [
+              "512/1024 spp peak and energy convergence"
+            ]
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "528fb92fc8e9041909a0bf8f4cdf04a4d24f58b4e7ab57fe72daccd879861006",
+            "stdout_sha256": "33ce25af8508620118df0a6ac2ba06ef707911abb57b1f910667ace78ebb613a",
+            "stdout": "106 checks, 0 failures\n",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-18-caustic-ball-lens.lms",
+            "sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-18-caustic-ball-lens-4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3.png",
+            "sha256": "4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3",
+            "bytes": 78411,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-18-caustic-ball-lens.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "6b2a4848c022c71c883a48343d2186318d65dca5aed2548fb5570a21f33783e5",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 512,
+            "bounces": 8,
+            "seed": 991,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 512,
+          "denoise": "OIDN",
+          "seed": 991,
+          "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "build": {
+            "implementation_cpp_tree": "2c7cb365a4f6dd37135c9efe5abed2e341d4f844",
+            "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+            "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+          }
+        },
+        "timing": {
+          "wall_s": 18.71,
+          "user_s": 62.4,
+          "sys_s": 0.55,
+          "max_rss_kib": 536316,
+          "cold_job_wall_s": 15.921237307979027,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 1.702286,
+            "prepare": 5.904158,
+            "render": 15320.850013,
+            "setup": 0.054727,
+            "write_media": 23.440824
+          },
+          "max_render_ms": 15320.850013,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 18.71,
+            "user_s": 62.4,
+            "sys_s": 0.55,
+            "max_rss_kib": 536316,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 536316,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "cache_hit": false,
+          "budget_seconds": 600,
+          "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 15320.850013,
+            "scope": "Actual complete Cycles rendering including OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 23.440824,
+            "scope": "Native image encode/write span."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B18 analytic-area CPU MNEE lens | 512 spp | 8 bounces | seed 991 | OIDN | floor ROI/normal-mask proof in native gate\"], \"file\": \"build/bench-18-caustic-ball-lens.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 3185, \"instructions\": 132, \"wall_ms\": 15351, \"phase_ms\": {\"post\":1.702286,\"prepare\":5.904158,\"render\":15320.850013,\"setup\":0.054727,\"write_media\":23.440824}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 15320.850013, \"render_calls\": 1}}\n\n",
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3",
+            "fonts": []
+          }
+        ],
+        "budget_note": "Fresh cold job, no cache hit; entire script/setup/render/encode included. Renderer settings are source-reviewed and numerically calibrated.",
+        "repeat_check": {
+          "policy": "CPU Cycles RGBA8 max1 (Phase6)",
+          "max_channel_error": 1,
+          "changed_channels": 17
+        },
+        "visual_check": {
+          "score": 92,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [
+            "The original procedural geometry is intentionally simplified; no borrowed reference artwork is included."
+          ],
+          "suggestions": [],
+          "reasoning": "The original checker receiver reveals the concentrated light pool separately from the lens silhouette; physical floor-mask and no-lens convergence probes establish caustic capability.",
+          "generated_sha256": "4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3"
+        },
+        "full_resolution_convergence": {
+          "format": 1,
+          "source_sha256": "e0b678aee4b1a0ddace7fb56a718a76e128cc3b0b2b8fcb557605d4ff7c0dfa3",
+          "derived_1024_sha256": "426eb41b1c0647e0e23d26e308d1fbe861e57ec7609ee1c9e86fcd8956174826",
+          "derivation": "byte-preserving source copy; replace only render_image samples argument 512 -> 1024 and update candidate metadata samples; no other source edits",
+          "source_commit": "faac684",
+          "host_sha256": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+          "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "records": [
+            {
+              "samples": 512,
+              "output_sha256": "c3e42bb604674e24178db4827657c396ff34f04baba6e5cdeffde00b30fdb4c3",
+              "bytes": 78410,
+              "cold_job_wall_s": 15.712592800002312,
+              "peak_rss_kib": 536180,
+              "repeat_verified": true,
+              "roi_bounds_xywh": [
+                426,
+                271,
+                48,
+                36
+              ],
+              "roi_linear_energy": 222.83879385930118,
+              "roi_linear_mean": 0.12895763533524374,
+              "focus_window_xywh": [
+                438,
+                275,
+                25,
+                26
+              ],
+              "focus_peak_linear": 0.2845794395289672,
+              "focus_peak_xy": [
+                439,
+                288
+              ],
+              "off_focus_annulus_linear_mean": 0.054392214002377884
+            },
+            {
+              "samples": 1024,
+              "output_sha256": "76f3114766b0d9a00f0692ac7d99144959f78bbc7285ba2a024261964c45d758",
+              "bytes": 78306,
+              "cold_job_wall_s": 16.5818731750187,
+              "peak_rss_kib": 538212,
+              "repeat_verified": true,
+              "roi_bounds_xywh": [
+                426,
+                271,
+                48,
+                36
+              ],
+              "roi_linear_energy": 223.08138551481198,
+              "roi_linear_mean": 0.12909802402477547,
+              "focus_window_xywh": [
+                438,
+                275,
+                25,
+                26
+              ],
+              "focus_peak_linear": 0.29177064981753587,
+              "focus_peak_xy": [
+                439,
+                288
+              ],
+              "off_focus_annulus_linear_mean": 0.05438988894641749
+            }
+          ],
+          "note": "Full beauty renders are local-only. ROI is a predefined projected floor window; normal-AOV masked native fixture remains the authoritative feature gate."
+        }
+      }
     },
     {
       "id": "B19",
       "tier": 2,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
+        "script_sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "49db1fd7cebbd81ff94154983893c3b44e52c141",
+        "required_features": [
+          "original closed-part abstract bust assembly",
+          "warm skin subsurface radii in metres",
+          "jade subsurface radii in metres",
+          "thin backlit ear/lamina details",
+          "random-walk CPU Cycles method",
+          "fixed 96 spp, 8 bounces, seed and OIDN",
+          "closed manifold transport boundaries"
+        ],
+        "feature_checks": [
+          {
+            "source": "examples/showcase/bench-19-sss-abstract-bust.lms",
+            "source_sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860",
+            "stdout_sha256": "88ccc6ed8d00828393c349dfd7f0d9331a2a1bc0d14291b1632af7681d550728",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-19-sss-abstract-bust.lms"
+            ],
+            "exit_code": 0,
+            "features": [
+              "original closed-part abstract bust assembly",
+              "warm skin subsurface radii in metres",
+              "jade subsurface radii in metres",
+              "thin backlit ear/lamina details",
+              "fixed 96 spp, 8 bounces, seed and OIDN",
+              "closed manifold transport boundaries"
+            ],
+            "scope": "Two fresh exact public-source executions and independently reviewed authored inputs/assertions."
+          },
+          {
+            "source": "tests/scene3d_cycles_test.cpp",
+            "source_sha256": "c57684782c36870f22c86aa33ac9745ca0a90142d7487fbd9cc99bbfaa84d9eb",
+            "stdout_sha256": "81844860b95c768889f37b4a1cc151e4bb7bac7d279591268b199efe4efcb30f",
+            "stdout": "checker MSE=21.9022\nanisotropy iso peak=133 clipped=0\nanisotropy horizontal peak=55 clipped=0\nanisotropy vertical peak=55 clipped=0\nanisotropy covariance plus=-68.8243 minus=68.8492\nMNEE floor ROI lens=36.8907 no-lens=44.2975 peaks=0.152926/0.0544803 high=0.155926 at=31,33\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nSSS scale channel 0 direct=0.962374 scaled=0.962374\nSSS scale channel 1 direct=0.52497 scaled=0.52497\nSSS scale channel 2 direct=0.52497 scaled=0.52497\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nclearcoat linear max base=0.00913406 sharp=0.584078 broad=0.012983 clipped=0/0/0\nclearcoat core base=0.994939 sharp=6.61101 broad=1.72243 ring base=2.58338 sharp=2.56784 broad=3.99084\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "command": [
+              "build/material-quality-cycles/scene3d_cycles_test"
+            ],
+            "exit_code": 0,
+            "features": [
+              "random-walk CPU Cycles method"
+            ]
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "528fb92fc8e9041909a0bf8f4cdf04a4d24f58b4e7ab57fe72daccd879861006",
+            "stdout_sha256": "33ce25af8508620118df0a6ac2ba06ef707911abb57b1f910667ace78ebb613a",
+            "stdout": "106 checks, 0 failures\n",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-19-sss-abstract-bust.lms",
+            "sha256": "75649756c8c794db95f015b254d3ac6fa49d1755b41864ba1732201a495db860",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-19-sss-abstract-bust-63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2.png",
+            "sha256": "63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2",
+            "bytes": 120045,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-19-sss-abstract-bust.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "6b2a4848c022c71c883a48343d2186318d65dca5aed2548fb5570a21f33783e5",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 96,
+            "bounces": 8,
+            "seed": 20261030,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 96,
+          "denoise": "OIDN",
+          "seed": 20261030,
+          "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "build": {
+            "implementation_cpp_tree": "2c7cb365a4f6dd37135c9efe5abed2e341d4f844",
+            "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+            "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+          }
+        },
+        "timing": {
+          "wall_s": 14.9,
+          "user_s": 48.92,
+          "sys_s": 0.49,
+          "max_rss_kib": 535584,
+          "cold_job_wall_s": 12.193302327999845,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 3.765512,
+            "prepare": 2.170066,
+            "render": 11508.106363,
+            "setup": 24.212031,
+            "write_media": 29.276582
+          },
+          "max_render_ms": 11508.106363,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 14.9,
+            "user_s": 48.92,
+            "sys_s": 0.49,
+            "max_rss_kib": 535584,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 535584,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "cache_hit": false,
+          "budget_seconds": 180,
+          "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 11508.106363,
+            "scope": "Actual complete Cycles rendering including OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 29.276582,
+            "scope": "Native image encode/write span."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B19 original abstract jade and warm-skin busts | raw metre SSS radii | thin backlit ear laminas | random-walk OIDN\"], \"file\": \"build/bench-19-sss-abstract-bust.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6774, \"instructions\": 35258, \"wall_ms\": 11570, \"phase_ms\": {\"post\":3.765512,\"prepare\":2.170066,\"render\":11508.106363,\"setup\":24.212031,\"write_media\":29.276582}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 11508.106363, \"render_calls\": 1}}\n\n",
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2",
+            "fonts": []
+          }
+        ],
+        "budget_note": "Fresh cold job, no cache hit; entire script/setup/render/encode included. Renderer settings are source-reviewed and numerically calibrated.",
+        "repeat_check": {
+          "policy": "exact",
+          "max_channel_error": 0,
+          "changed_channels": 0
+        },
+        "visual_check": {
+          "score": 92,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [
+            "The original procedural geometry is intentionally simplified; no borrowed reference artwork is included."
+          ],
+          "suggestions": [],
+          "reasoning": "The original closed-part sculptures have readable faces and thin backlit ear laminas; independent random-walk, radius-colour and world-scale controls establish SSS.",
+          "generated_sha256": "63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2"
+        }
+      }
     },
     {
       "id": "B20",
       "tier": 2,
-      "status": "PLANNED",
-      "reason": "Awaiting target-specific executed acceptance evidence."
+      "status": "VERIFIED",
+      "evidence": {
+        "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
+        "script_sha256": "d58122c03f81451506e8b0131780271c1503a8ddef0e6b066602fd1009a93d05",
+        "source_repository": "lmctl-ai/lmvideo",
+        "source_commit": "82f3f445a19188bbf4e324ce415a33746c070d55",
+        "implementation_repository": "lmctlhq/lmvideo",
+        "implementation_commit": "49db1fd7cebbd81ff94154983893c3b44e52c141",
+        "required_features": [
+          "original curved speed-form hood/fender",
+          "procedural flake albedo",
+          "clearcoat=1.0 clearcoat_roughness=0.03",
+          "metallic undercoat",
+          "anisotropy=0.8 brushed rotor",
+          "two area emitters",
+          "tangent-space highlight rotation"
+        ],
+        "feature_checks": [
+          {
+            "source": "examples/showcase/bench-20-car-paint-anisotropy.lms",
+            "source_sha256": "d58122c03f81451506e8b0131780271c1503a8ddef0e6b066602fd1009a93d05",
+            "stdout_sha256": "71a4164c68e9e15679a5a1d5da2f1addc3812a6e9a621c00a0c607c6fc26c4ee",
+            "command": [
+              "lmctl",
+              "autorun",
+              "examples/showcase/bench-20-car-paint-anisotropy.lms"
+            ],
+            "exit_code": 0,
+            "features": [
+              "original curved speed-form hood/fender",
+              "procedural flake albedo",
+              "clearcoat=1.0 clearcoat_roughness=0.03",
+              "metallic undercoat",
+              "anisotropy=0.8 brushed rotor",
+              "two area emitters"
+            ],
+            "scope": "Two fresh exact public-source executions and independently reviewed authored inputs/assertions."
+          },
+          {
+            "source": "tests/scene3d_cycles_test.cpp",
+            "source_sha256": "c57684782c36870f22c86aa33ac9745ca0a90142d7487fbd9cc99bbfaa84d9eb",
+            "stdout_sha256": "81844860b95c768889f37b4a1cc151e4bb7bac7d279591268b199efe4efcb30f",
+            "stdout": "checker MSE=21.9022\nanisotropy iso peak=133 clipped=0\nanisotropy horizontal peak=55 clipped=0\nanisotropy vertical peak=55 clipped=0\nanisotropy covariance plus=-68.8243 minus=68.8492\nMNEE floor ROI lens=36.8907 no-lens=44.2975 peaks=0.152926/0.0544803 high=0.155926 at=31,33\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\nSSS scale channel 0 direct=0.962374 scaled=0.962374\nSSS scale channel 1 direct=0.52497 scaled=0.52497\nSSS scale channel 2 direct=0.52497 scaled=0.52497\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nclearcoat linear max base=0.00913406 sharp=0.584078 broad=0.012983 clipped=0/0/0\nclearcoat core base=0.994939 sharp=6.61101 broad=1.72243 ring base=2.58338 sharp=2.56784 broad=3.99084\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "command": [
+              "build/material-quality-cycles/scene3d_cycles_test"
+            ],
+            "exit_code": 0,
+            "features": [
+              "tangent-space highlight rotation"
+            ]
+          },
+          {
+            "source": "tests/scene3d_mesh_test.cpp",
+            "source_sha256": "528fb92fc8e9041909a0bf8f4cdf04a4d24f58b4e7ab57fe72daccd879861006",
+            "stdout_sha256": "33ce25af8508620118df0a6ac2ba06ef707911abb57b1f910667ace78ebb613a",
+            "stdout": "106 checks, 0 failures\n",
+            "command": [
+              "build/scene3d_mesh_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          },
+          {
+            "source": "tests/scene3d_area_test.cpp",
+            "source_sha256": "6ce1a74687ce541913dba46e82a3b753712257e78f8911364cb198a0c45c970d",
+            "stdout_sha256": "b8435463dc4a062146ed0587cacbfde3b2d26b72f67a68c93343510a32f6c749",
+            "stdout": "PASS deterministic, one-sided rectangle preview and explicit glTF boundary and directional spotlight cone\n",
+            "command": [
+              "build/scene3d_area_test"
+            ],
+            "exit_code": 0,
+            "features": []
+          }
+        ],
+        "assets": [
+          {
+            "kind": "original-procedural-source",
+            "creator": "lmvideo project",
+            "source": "examples/showcase/bench-20-car-paint-anisotropy.lms",
+            "sha256": "d58122c03f81451506e8b0131780271c1503a8ddef0e6b066602fd1009a93d05",
+            "license": "MIT",
+            "license_file": "LICENSE-examples",
+            "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+          }
+        ],
+        "outputs": [
+          {
+            "store_file": "bench-20-car-paint-anisotropy-a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935.png",
+            "sha256": "a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935",
+            "bytes": 81981,
+            "dimensions": [
+              900,
+              560
+            ],
+            "file": "build/bench-20-car-paint-anisotropy.png"
+          }
+        ],
+        "profile": {
+          "cpu": "Intel(R) Core(TM) i9-14900HX",
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "architecture": "x86_64",
+          "isa_note": "pinned build and same host; no cross-ISA byte identity claim",
+          "render_threads": 4,
+          "memory_limit_bytes": 2147483648,
+          "binary_hashes": {
+            "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
+            "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
+            "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
+            "host": "af6e4a1ffb265f311d136c448c2e6082482f7493cc7b77cfde9956973c323198",
+            "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
+            "cycles_module": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+            "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+          },
+          "compiler_version": "lmscript 0.2.426",
+          "host_version": "lmvideo 0.1.0",
+          "schema_sha256": "6b2a4848c022c71c883a48343d2186318d65dca5aed2548fb5570a21f33783e5",
+          "backend": "cycles",
+          "renderer": "cycles",
+          "device": "CPU",
+          "cycles_profile": {
+            "threads": 4,
+            "samples": 64,
+            "bounces": 8,
+            "seed": 20261031,
+            "denoise": "OIDN"
+          },
+          "samples_per_axis": 64,
+          "denoise": "OIDN",
+          "seed": 20261031,
+          "cycles_module_sha256": "4e60b1b2149e9cc57ce5d8496e1398913c9ca66820df54250a94ba29dd9db56b",
+          "build": {
+            "implementation_cpp_tree": "2c7cb365a4f6dd37135c9efe5abed2e341d4f844",
+            "cycles_source_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
+            "scope": "Existing pinned SDK; rebuilt matching source host/module; x86_64 local proof only."
+          }
+        },
+        "timing": {
+          "wall_s": 7.47,
+          "user_s": 15.9,
+          "sys_s": 0.42,
+          "max_rss_kib": 537728,
+          "cold_job_wall_s": 4.725898407021305,
+          "packaging_webm_s": 0,
+          "phase_ms": {
+            "post": 0.000827,
+            "prepare": 24.164497,
+            "render": 4067.645217,
+            "setup": 0.070771,
+            "write_media": 22.910564
+          },
+          "max_render_ms": 4067.645217,
+          "max_frame_ms": 0,
+          "native_process": {
+            "wall_s": 7.47,
+            "user_s": 15.9,
+            "sys_s": 0.42,
+            "max_rss_kib": 537728,
+            "scope": "lmctl autorun process tree (time max RSS)",
+            "memory_limit_bytes": 2147483648,
+            "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
+          },
+          "packaging_process": {
+            "applicable": false,
+            "scope": "no video packaging process",
+            "wall_s": null,
+            "user_s": null,
+            "sys_s": null,
+            "max_rss_kib": null,
+            "memory_limit_bytes": null
+          },
+          "peak_rss_kib": 537728,
+          "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
+          "cache_hit": false,
+          "budget_seconds": 180,
+          "clock_scope": "cold_job_wall_s is monotonic elapsed; GNU time process wall/user/sys totals retained separately"
+        },
+        "stages": {
+          "bake": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "import": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "denoise": {
+            "status": "UNAVAILABLE",
+            "ms": null,
+            "reason": "Included in native prepare/render spans; not separately measured."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 4067.645217,
+            "scope": "Actual complete Cycles rendering including OIDN."
+          },
+          "encode": {
+            "status": "MEASURED",
+            "ms": 22.910564,
+            "scope": "Native image encode/write span."
+          }
+        },
+        "repeat_verified": true,
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B20 CPU Cycles 64 spp/OIDN: original speed-form dual-lobe paint + brushed anisotropic rotor\"], \"file\": \"build/bench-20-car-paint-anisotropy.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 5470, \"instructions\": 48388, \"wall_ms\": 4117, \"phase_ms\": {\"post\":0.000827,\"prepare\":24.164497,\"render\":4067.645217,\"setup\":0.070771,\"write_media\":22.910564}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 4067.645217, \"render_calls\": 1}}\n\n",
+        "font_notices": [
+          {
+            "schema": "lmvideo-fonts/v1",
+            "payload_sha256": "a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935",
+            "fonts": []
+          }
+        ],
+        "budget_note": "Fresh cold job, no cache hit; entire script/setup/render/encode included. Renderer settings are source-reviewed and numerically calibrated.",
+        "repeat_check": {
+          "policy": "CPU Cycles RGBA8 max1 (Phase6)",
+          "max_channel_error": 1,
+          "changed_channels": 88
+        },
+        "visual_check": {
+          "score": 93,
+          "verdict": "pass",
+          "category_match": true,
+          "differences": [
+            "The original procedural geometry is intentionally simplified; no borrowed reference artwork is included."
+          ],
+          "suggestions": [],
+          "reasoning": "The blue curved panel exposes original flecks and a sharp top layer, while the separate rotor shows readable directional brushing; independent lobe and covariance controls establish material behavior.",
+          "generated_sha256": "a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935"
+        }
+      }
     },
     {
       "id": "B21",
@@ -6913,7 +7676,7 @@
       "total": 15
     },
     "2": {
-      "verified": 2,
+      "verified": 5,
       "total": 12
     },
     "3": {
