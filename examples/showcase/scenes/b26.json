@@ -33,18 +33,19 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-26-cozy-still-life.lms",
-      "sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
+      "sha256": "f4ec57bec92a9d5044c0981d946b0286a918f2545cc20af15e0f505643f90b45",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
-  "script_sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
+  "script_sha256": "f4ec57bec92a9d5044c0981d946b0286a918f2545cc20af15e0f505643f90b45",
   "publication_status": "UNPUBLISHED",
   "limitations": [
-    "Benchmark capture and repeat witness are pending the private integrated host review.",
-    "Candle glow is an authored area emitter; no external flame image is used."
+    "Authored original scene; no spectral or measured-physical-material claim.",
+    "Candle glow is an authored area emitter; no external flame image is used.",
+    "A0.5mm decanter/table clearance avoids ambiguous coplanar dielectric contact."
   ],
   "camera_profile": {
     "focal_length_mm": 85,
@@ -82,5 +83,11 @@
     "verified_on_all_256_inputs": true,
     "vignette_radius": 390,
     "vignette_sigma": 0.45
+  },
+  "geometry_policy": {
+    "decanter_base_y_m": 0.0095,
+    "tabletop_top_y_m": 0.009,
+    "clearance_m": 0.0005,
+    "reason": "A distinct air interface avoids coincident glass and wood faces."
   }
 }
