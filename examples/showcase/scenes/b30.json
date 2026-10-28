@@ -1,0 +1,48 @@
+{
+  "id": "B30",
+  "title": "Prescribed Elastic Deformation Clip",
+  "script": "examples/showcase/bench-30-prescribed-fracture.lms",
+  "script_sha256": "b97f0b90261bcc283417d6cacf1b64e45f34fa9d60e39b3fed52b60e7b275779",
+  "visual_specification": "1280x720 30fps 90-frame original prescribed elastic mesh-state deformation clip with deterministic bounded geometry changes, floor shadow and explicit no-physics-solver wording.",
+  "required_feature_witnesses": [
+    "90 exact raster frames",
+    "authored bounded elastic deformation",
+    "updated geometry identity",
+    "deterministic frame sequence",
+    "no rigid/soft-body physics solver claim"
+  ],
+  "cpu_budget_seconds": 300,
+  "video_profile": {
+    "frames": 90,
+    "fps": 30,
+    "width": 1280,
+    "height": 720,
+    "pixel_format": "yuv420p",
+    "duration_s": 3.0,
+    "codecs": [
+      "h264",
+      "vp9"
+    ]
+  },
+  "backend": "raster+img",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-30-prescribed-fracture.lms",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
+      "sha256": "b97f0b90261bcc283417d6cacf1b64e45f34fa9d60e39b3fed52b60e7b275779"
+    }
+  ],
+  "rights_note": "All mesh states, lighting and composition are authored procedural content; this clip does not claim a physics or fracture solver.",
+  "publication_status": "UNPUBLISHED"
+}
