@@ -1,0 +1,27 @@
+# B21 candidate: original window chamber, homogeneous HG medium, CPU Cycles.
+mkdir("build");program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#05070b").ambient(0.0).tonemap("aces",1.0);
+scene.camera(camera3d().look_at(2.0,1.8,7.0,-0.4,1.6,-0.6).perspective(50.0,0.05,50.0));
+let plaster=material("#82776b",0.0,0.9);let floor=material("#62594c",0.0,0.85);
+scene.add(mesh_box(6.2,0.2,7.2),floor).position(0.0,-0.1,0.0);
+scene.add(mesh_box(6.2,4.2,0.2),plaster).position(0.0,2.0,-3.6);
+scene.add(mesh_box(0.2,4.2,7.2),plaster).position(3.2,2.0,0.0);
+scene.add(mesh_box(6.2,0.2,7.2),plaster).position(0.0,4.1,0.0);
+# The left wall has an actual 4m x 2m opening, divided by three opaque mullions.
+scene.add(mesh_box(0.2,1.0,7.2),plaster).position(-3.2,0.5,0.0);
+scene.add(mesh_box(0.2,1.2,7.2),plaster).position(-3.2,3.6,0.0);
+scene.add(mesh_box(0.2,2.0,1.6),plaster).position(-3.2,2.0,-2.8);
+scene.add(mesh_box(0.2,2.0,1.6),plaster).position(-3.2,2.0,2.8);
+for(i in range(0,3)){scene.add(mesh_box(0.25,2.0,0.12),plaster).position(-3.2,2.0,float(i-1)*1.2);}
+let fog=material().volume_scattering(0.12,0.6,"#ffffff");
+scene.add(mesh_box(6.2,4.0,7.0),fog).position(0.0,2.0,0.0);
+scene.directional_light(-1.0,0.65,-0.6,"#fff4df",8.0);
+let stone=material("#334651",0.0,0.65);
+scene.add(mesh_beveled_box(0.75,0.8,0.75,0.04),stone).position(-0.7,0.4,-1.0);
+scene.add(mesh_sphere(0.5,24,40),stone).position(-0.7,1.3,-1.0);
+let image=scene.render_image(900,560,"cycles",128,8,20261101,true);
+image_assert_true(image.width()==900&&image.height()==560);
+image.save("build/bench-21-window-god-rays.png");
+out.print("B21: original opaque window mullions, homogeneous 0.12/m HG g=0.6, 128spp CPU OIDN, ACES curve");
+end _lmcode_
+savedsl(program,"build/volume-god-rays.dslb");r=system(concat(dsl_cli(program),["--dsl","build/volume-god-rays.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
