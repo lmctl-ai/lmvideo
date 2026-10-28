@@ -3,7 +3,7 @@
   "title":"CAD Preview and Cycles Final Twin",
   "script":"examples/showcase/bench-27-cad-preview-cycles-twin.lms",
   "visual_specification":"900x560 composition showing one imported original flanged-valve STL through a matched raster preview and CPU Cycles camera, with projected through-bore label and metre-scale conversion.",
-  "script_sha256":"f1d57e907b0ec036a9ab68ad881630d96b5daebcb6b0e9a85c1c0319c2b722c0",
+  "script_sha256":"8cbeebbfa71da20e0741e8ec4810fe090ea113bc097668ec85bf51ddcbf9fd62",
   "required_feature_witnesses":["pinned lmcad v0.1.72 external producer","original flanged valve STL","single shared imported mesh","matched raster/Cycles camera","preview/final silhouette and depth consistency","projected through-bore label","0.001 m/mm scale"],
   "cpu_budget_seconds":360,
   "backend":"cad+raster+cycles",
