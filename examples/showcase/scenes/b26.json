@@ -33,14 +33,14 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-26-cozy-still-life.lms",
-      "sha256": "c8a9d15d1d1d7082c3220e665d94d335a2e3bfc9acf5fa2e2dc0e7ee30a49ae9",
+      "sha256": "0f65525f1b6fb6a81f6aedd68d5c36ea7d8bdf176c778447504407a1c297d426",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
-  "script_sha256": "c8a9d15d1d1d7082c3220e665d94d335a2e3bfc9acf5fa2e2dc0e7ee30a49ae9",
+  "script_sha256": "0f65525f1b6fb6a81f6aedd68d5c36ea7d8bdf176c778447504407a1c297d426",
   "publication_status": "UNPUBLISHED",
   "limitations": [
     "Benchmark capture and repeat witness are pending the private integrated host review.",
@@ -52,5 +52,10 @@
     "fstop": 1.4,
     "focus_distance_m": 1.1,
     "blades": 6
+  },
+  "denoise_worker_policy": {
+    "render_threads": 4,
+    "oidn_threads": 1,
+    "scope": "Source child process sets the pinned OIDN_NUM_THREADS device override; ray tracing retains four workers."
   }
 }
