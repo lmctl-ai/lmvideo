@@ -3,7 +3,7 @@
   "product": "lmvideo",
   "status": "LOCAL_CANDIDATE",
   "publication_status": "UNPUBLISHED",
-  "source_commit": "254cad4f0994e4845e6dc95c96b8120dd6c2aca2",
+  "source_commit": "2e00f92c72ff70d9b85824f9fa76856d1319f1e7",
   "implementation_commit": "537d9274300b58e1190b47807b4e579c22b663ac",
   "requires_schema_sha256": "8ca24195a6032d42a7816d86ee25c71a53b42266074aa12801afefaf1f7a3584",
   "profile": {
@@ -4722,9 +4722,9 @@
       "slug": "bench-26-cozy-still-life",
       "title": "Original Cozy Tabletop Still Life",
       "script": "examples/showcase/bench-26-cozy-still-life.lms",
-      "script_sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
-      "source_commit": "25096436e7e0559c5527b5ce9a2d32400b68422e",
-      "status": "PLANNED",
+      "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
+      "source_commit": "2e00f92c72ff70d9b85824f9fa76856d1319f1e7",
+      "status": "VERIFIED",
       "publication_status": "UNPUBLISHED",
       "featured": false,
       "backend": "cycles",
@@ -4734,7 +4734,7 @@
         "written_specification_sha256": "40bc8d7f572749b35be58aa721457f8eb04e48ace80ad3c5c24b7b738a60e520",
         "catalogue_revision": "Original project-authored scene; technical benchmark specification"
       },
-      "visual_specification": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded metal can and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette.",
+      "visual_specification": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded beveled metal tin and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette.",
       "required_feature_witnesses": [
         "mesh_lathe_closed ceramic and glass vessels",
         "beveled metal prop",
@@ -4747,7 +4747,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-26-cozy-still-life.lms",
-          "sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
+          "sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -4770,14 +4770,14 @@
           "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
           "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
           "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-          "host": "6954ea536892b89cb220b82a4f061703038b023829213dba9a8330ee15d6379e",
+          "host": "9da011b7e6bf8abb3ad8d522f96d3907b4c9c09defe6afa3faad9025c53889f1",
           "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
-          "cycles_module": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
+          "cycles_module": "39a6b2ad56fbb2aacd5cabcb543102dd045248b325019101805e14953824b49a",
           "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
         },
         "compiler_version": "lmscript 0.2.426",
         "host_version": "lmvideo 0.1.0",
-        "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+        "schema_sha256": "8ca24195a6032d42a7816d86ee25c71a53b42266074aa12801afefaf1f7a3584",
         "backend": "cycles",
         "renderer": "cycles",
         "device": "CPU",
@@ -4791,49 +4791,39 @@
         "samples_per_axis": 128,
         "denoise": "OIDN",
         "seed": 20261103,
-        "cycles_module_sha256": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
-        "build": {
-          "profile": "Linux x64 CPU Cycles native-only development SDK",
-          "implementation_cpp_tree": "bf3a78b00d4a75f6c326c5bf6f9af37fe3460ad5",
-          "sdk_config_sha256": "aa43e7c54b3bea5224893e00cd1fcde0d930fc3f4aae3b089b1b2dd41a6ada70",
-          "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8",
-          "cxx": "g++ Ubuntu11.4; pinned module clang19",
-          "cxx_flags": [
-            "-std=c++17",
-            "-O2",
-            "-Wall",
-            "-Wextra",
-            "-Werror"
-          ],
-          "isa": "Compiler baseline x86_64; pinned SDK/Skia dispatch; no cross-ISA byte claim"
-        },
+        "cycles_module_sha256": "39a6b2ad56fbb2aacd5cabcb543102dd045248b325019101805e14953824b49a",
         "denoise_worker_policy": {
           "render_threads": 4,
           "oidn_threads": 1,
           "scope": "Source child process sets the pinned OIDN_NUM_THREADS device override; ray tracing retains four workers."
+        },
+        "build": {
+          "profile": "Fresh CYCLES=1 test build, Linux x64 CPU-only guarded bundle",
+          "implementation_cpp_tree": "7debd0e847dc45f037b95692f322239ffa2571ca",
+          "runtime_bundle_provenance_sha256": "2eaa95cd79fcb5c2c3b4afbbe282ca9802f71b49cc655a82d1d6196a1b5dea34"
         }
       },
       "timing": {
-        "wall_s": 41.7,
-        "user_s": 120.18,
-        "sys_s": 3.23,
-        "max_rss_kib": 533064,
-        "cold_job_wall_s": 41.70910152999568,
+        "wall_s": 63.6,
+        "user_s": 108.24,
+        "sys_s": 0.35,
+        "max_rss_kib": 534416,
+        "cold_job_wall_s": 62.51321408399963,
         "packaging_webm_s": 0,
         "phase_ms": {
-          "post": 16.189945,
-          "prepare": 3.826408,
-          "render": 40759.30198,
-          "setup": 1.640687,
-          "write_media": 139.548946
+          "post": 24.66136,
+          "prepare": 3.550677,
+          "render": 61421.862064,
+          "setup": 52.793525,
+          "write_media": 381.554541
         },
-        "max_render_ms": 40759.30198,
+        "max_render_ms": 61421.862064,
         "max_frame_ms": 0,
         "native_process": {
-          "wall_s": 41.7,
-          "user_s": 120.18,
-          "sys_s": 3.23,
-          "max_rss_kib": 533064,
+          "wall_s": 63.6,
+          "user_s": 108.24,
+          "sys_s": 0.35,
+          "max_rss_kib": 534416,
           "scope": "lmctl autorun process tree (time max RSS)",
           "memory_limit_bytes": 2147483648,
           "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
@@ -4847,7 +4837,7 @@
           "max_rss_kib": null,
           "memory_limit_bytes": null
         },
-        "peak_rss_kib": 533064,
+        "peak_rss_kib": 534416,
         "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
         "budget_seconds": 600,
         "cache_hit": false
@@ -4856,14 +4846,14 @@
       "repeat_check": {
         "policy": "CPU Cycles RGBA8 max1 (Phase6)",
         "max_channel_error": 1,
-        "changed_channels": 1697
+        "changed_channels": 35
       },
-      "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette\"], \"file\": \"build/bench-26-cozy-still-life.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6492, \"instructions\": 321, \"wall_ms\": 40920, \"phase_ms\": {\"post\":16.189945,\"prepare\":3.826408,\"render\":40759.301980,\"setup\":1.640687,\"write_media\":139.548946}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 40759.301980, \"render_calls\": 1}}\n\n",
+      "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette\"], \"file\": \"build/bench-26-cozy-still-life.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6788, \"instructions\": 333, \"wall_ms\": 61884, \"phase_ms\": {\"post\":24.661360,\"prepare\":3.550677,\"render\":61421.862064,\"setup\":52.793525,\"write_media\":381.554541}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 61421.862064, \"render_calls\": 1}}\n\n",
       "expected_outputs": [
         {
-          "store_file": "bench-26-cozy-still-life-2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3.png",
-          "sha256": "2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3",
-          "bytes": 240380,
+          "store_file": "bench-26-cozy-still-life-14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a.png",
+          "sha256": "14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a",
+          "bytes": 249931,
           "dimensions": [
             900,
             560
@@ -4873,7 +4863,21 @@
           "availability": "LOCAL_STORE_ONLY"
         }
       ],
-      "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad"
+      "implementation_commit": "537d9274300b58e1190b47807b4e579c22b663ac",
+      "geometry_policy": {
+        "decanter_base_y_m": 0.0095,
+        "tabletop_top_y_m": 0.009,
+        "clearance_m": 0.0005,
+        "reason": "A distinct air interface avoids coincident glass and wood faces.",
+        "metal_body_table_clearance_m": 0.0005,
+        "metal_lid_body_clearance_m": 0.0002
+      },
+      "limitations": [
+        "Authored original scene; no spectral or measured-physical-material claim.",
+        "Candle glow is an authored area emitter; no external flame image is used.",
+        "A0.5mm decanter/table clearance avoids ambiguous coplanar dielectric contact."
+      ],
+      "repeat_scope": "Global envelope over all six distinct current-source captures, stronger than one pair."
     },
     {
       "id": "B27",
@@ -6596,17 +6600,17 @@
           "blocks": [
             {
               "type": "text",
-              "text": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded metal can and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette."
+              "text": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded beveled metal tin and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette. The distinct glass/wood air interface avoids ambiguous coplanar contact; six current-build captures satisfy the existing one-code limit."
             },
             {
               "type": "code",
               "script": "examples/showcase/bench-26-cozy-still-life.lms",
-              "script_sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04"
+              "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
             },
             {
               "type": "image",
-              "local_store_file": "bench-26-cozy-still-life-2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3.png",
-              "sha256": "2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3",
+              "local_store_file": "bench-26-cozy-still-life-14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a.png",
+              "sha256": "14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a",
               "caption": "Original Cozy Tabletop Still Life"
             }
           ]
@@ -6855,14 +6859,14 @@
   },
   "scoreboard": {
     "metadata": "examples/showcase/scoreboard.json",
-    "sha256": "f2f0b48e65f9f8768adfaa0ea4693db751e49ea4693910e1726feff009d761a6",
+    "sha256": "4f67690b9f31673dd8b2ac720e00c36b1d83934d9f6aa36c77ba9aef0c4a3932",
     "tiers": {
       "1": {
         "verified": 15,
         "total": 15
       },
       "2": {
-        "verified": 11,
+        "verified": 12,
         "total": 12
       },
       "3": {
@@ -6870,7 +6874,7 @@
         "total": 5
       }
     },
-    "scope": "Local acceptance31/32; currentB26 repeat qualification pending; no publication."
+    "scope": "All32 local benchmark gates verified; no release or website publication."
   },
-  "profile_scope": "Per-example locked profiles; Tier3 complete locally, current-mainB26 repeat reopened; all content remains unpublished."
+  "profile_scope": "Per-example locked CPU profiles; all32targets locally verified, including fresh current-buildB26. Content and media remain unpublished."
 }

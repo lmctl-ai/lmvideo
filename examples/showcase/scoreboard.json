@@ -8854,15 +8854,14 @@
     {
       "id": "B26",
       "tier": 2,
-      "status": "PLANNED",
-      "reason": "Reopened after fresh-main B26 render repeats exceeded the accepted one-code CPU Cycles tolerance; see durable-memory/68-luna-b24-b28-review.md.",
+      "status": "VERIFIED",
       "evidence": {
         "script": "examples/showcase/bench-26-cozy-still-life.lms",
-        "script_sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
+        "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
         "source_repository": "lmctl-ai/lmvideo",
-        "source_commit": "25096436e7e0559c5527b5ce9a2d32400b68422e",
+        "source_commit": "2e00f92c72ff70d9b85824f9fa76856d1319f1e7",
         "implementation_repository": "lmctlhq/lmvideo",
-        "implementation_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad",
+        "implementation_commit": "537d9274300b58e1190b47807b4e579c22b663ac",
         "required_features": [
           "mesh_lathe_closed ceramic and glass vessels",
           "beveled metal prop",
@@ -8873,15 +8872,17 @@
         "feature_checks": [
           {
             "kind": "executed-original-scene",
+            "source_repository": "lmctl-ai/lmvideo",
+            "source_commit": "2e00f92c72ff70d9b85824f9fa76856d1319f1e7",
             "source": "examples/showcase/bench-26-cozy-still-life.lms",
-            "source_sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
             "command": [
               "lmctl",
               "autorun",
               "examples/showcase/bench-26-cozy-still-life.lms"
             ],
             "exit_code": 0,
-            "stdout_sha256": "2314c647bf37ccfa4d5584539df1aec6812f840737b868525fd371b8fd34a9ee",
+            "stdout_sha256": "abb60e8fa75d485c8b5977b18fa43ad012fad384905bdbd6967e7f4319d91a52",
             "features": [
               "mesh_lathe_closed ceramic and glass vessels",
               "beveled metal prop",
@@ -8889,22 +8890,47 @@
               "Camera3D lens/focal/sensor plus six-blade DoF",
               "Image.curves and vignette post-processing"
             ],
-            "scope": "Exact public source executed twice; construction and located assertions plus independent native calibration and visual/artifact review."
+            "scope": "Exact final source executed six times independently; unchanged128spp, workers, OIDN, curves/vignette and precision gate."
           },
           {
-            "kind": "native-physical-calibration",
-            "source": "tests/scene3d-dof.py",
-            "source_sha256": "f281129163ba8b98ed0a7f42446cc354d8e0b92767f941b5a967df4fb37392d2",
+            "kind": "decoded-interface-and-global-repeat",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "3f2b84d0b1e60b015e0a51d9fd069da5695022d7",
+            "source": "scripts/showcase/check-still-life-repeat.py",
+            "source_sha256": "8948305a1b76515cdaac10548b1d0ce9af5a413ef9684eeedbdb758f990c6e2d",
             "command": [
               "python3",
-              "tests/scene3d-dof.py"
+              "scripts/showcase/check-still-life-repeat.py",
+              "REPORT_ROOT",
+              "REPORT_LUNA",
+              "REPORT_ASTRA",
+              "--content",
+              "PUBLIC_CANDIDATE_CHECKOUT",
+              "--runtime-provenance",
+              "build/density-bounded-cycles/provenance.json"
             ],
             "exit_code": 0,
-            "source_commit": "b7304a5f74a275191f4a0a912aae4044d4442bad",
-            "stdout_sha256": "ff7a5e116ec600306560a8c550dc0048e8c83a832ba1231c94fca20c69724927",
-            "stdout": "point CoC predicted= 15.62881562881563 hex_r90= 13 circle_r90= 14 focus_r90= 2 half_r90= 7 hex_harmonic= 0.024877498240022687 circle_harmonic= 0.0016045850205689295\nPASS physical DoF binding, raster refusal, GLTF refusal, job roundtrip and hex-blade witness\n",
+            "stdout_sha256": "c3cc93b573d3681c122cbb1a9e6e683e937e1c5e2e75c3d083d396ed071a104a",
+            "stdout": "{\n  \"status\": \"PASS\",\n  \"target\": \"B26\",\n  \"captures\": 6,\n  \"source_sha256\": \"7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c\",\n  \"implementation_commit\": \"537d9274300b58e1190b47807b4e579c22b663ac\",\n  \"host_sha256\": \"9da011b7e6bf8abb3ad8d522f96d3907b4c9c09defe6afa3faad9025c53889f1\",\n  \"module_sha256\": \"39a6b2ad56fbb2aacd5cabcb543102dd045248b325019101805e14953824b49a\",\n  \"runtime_provenance_sha256\": \"2eaa95cd79fcb5c2c3b4afbbe282ca9802f71b49cc655a82d1d6196a1b5dea34\",\n  \"decanter_table_clearance_m\": 0.0005000000000000004,\n  \"metal_body_and_lid_bevel_faces\": true,\n  \"metal_table_clearance_m\": 0.0005,\n  \"metal_lid_clearance_m\": 0.0002,\n  \"pre_grade_denoised_envelope\": {\n    \"max_channel_error\": 1,\n    \"changed_channels\": 41\n  },\n  \"graded_envelope\": {\n    \"max_channel_error\": 1,\n    \"changed_channels\": 35\n  },\n  \"raw_sha256\": [\n    \"25da95816fa2aeeb737b4d0ff55a827f9e5ef4818f03b60824e364a7674b574e\",\n    \"cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4\",\n    \"521cb3419fe7964ccb0cc12b252680ccdddcb2687eb70f39e42adf8b066aeb2e\",\n    \"cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4\",\n    \"cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4\",\n    \"cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4\"\n  ],\n  \"graded_sha256\": [\n    \"14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a\",\n    \"9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1\",\n    \"0f2ae949039c6a1e6b69a6603f6d41be872aa563f068cf0bf87d9b3d63bee99a\",\n    \"9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1\",\n    \"9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1\",\n    \"9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1\"\n  ],\n  \"reports\": [\n    {\n      \"report_sha256\": \"8f6e052e8e6d3d887bb12d14174acdfcd837b1578172764b5d245a8c4c99e775\",\n      \"cold_wall_s\": 62.51321408399963,\n      \"peak_rss_kib\": 534416,\n      \"pair\": {\n        \"policy\": \"CPU Cycles RGBA8 max1 (Phase6)\",\n        \"max_channel_error\": 1,\n        \"changed_channels\": 23\n      }\n    },\n    {\n      \"report_sha256\": \"0614bd25dc99faa9a5525fd49503bd66b849533576ec6ec47198049d4cb58838\",\n      \"cold_wall_s\": 88.21036433300469,\n      \"peak_rss_kib\": 533788,\n      \"pair\": {\n        \"policy\": \"CPU Cycles RGBA8 max1 (Phase6)\",\n        \"max_channel_error\": 1,\n        \"changed_channels\": 21\n      }\n    },\n    {\n      \"report_sha256\": \"fcaa32805cb33df3820bc627a0d0639c21ab322b209037ca56361d68b8546de9\",\n      \"cold_wall_s\": 88.94897634000517,\n      \"peak_rss_kib\": 534400,\n      \"pair\": {\n        \"policy\": \"exact\",\n        \"max_channel_error\": 0,\n        \"changed_channels\": 0\n      }\n    }\n  ],\n  \"policy\": \"Existing CPU Cycles RGBA8 max1; renderer, samples and grading unchanged.\"\n}\n",
             "features": [],
-            "scope": "Independent compiled/VM calibration; target construction and parameters are witnessed separately."
+            "scope": "All six images compared together; actual binary geometry proves distinct glass/wood interfaces and real metal bevel faces."
+          },
+          {
+            "kind": "native-current-physical-calibration",
+            "source_repository": "lmctlhq/lmvideo",
+            "source_commit": "537d9274300b58e1190b47807b4e579c22b663ac",
+            "source": "tests/scene3d_cycles_test.cpp",
+            "source_sha256": "6f9b37a7b03c4213be0a640fabf467d4cbaa6f261c2e556c27fc2ccde9be79b4",
+            "command": [
+              "bash",
+              "-c",
+              "CYCLES=1 ./test.sh"
+            ],
+            "exit_code": 0,
+            "stdout_sha256": "4181d479302b9c3f40d7d3d4b1dc9ee1eae2556e1d7de34a8610477d4670e320",
+            "stdout": "[OpenColorIO Info]: Color management disabled. (Specify the $OCIO environment variable to enable.)\nchecker MSE=21.9022\nhair widths root 16 expected 13.8613 tip 4 expected 3.08587 constant 10,10\nhair uniform-environment radiance low/high melanin 0.316236,0.0581913\nhair angular narrow 2.02351e-07,0.0115701,8.03335e-05 broad 0.00287044,0.00295947,0.00267438\nhair floor shadow 0.0856906 baseline 0.618117\nanisotropy iso peak=133 clipped=0\nanisotropy horizontal peak=55 clipped=0\nanisotropy vertical peak=55 clipped=0\nanisotropy covariance plus=-68.8243 minus=68.8492\nMNEE floor ROI lens=36.8907 no-lens=44.2975 peaks=0.152926/0.0544803 high=0.155926 at=31,33\nvolume channel 0 half=0.707978 expected=0.707107 full=0.502261 expected=0.5\nvolume channel 1 half=0.502238 expected=0.5 full=0.249942 expected=0.25\nvolume channel 2 half=0.895359 expected=0.894427 full=0.798676 expected=0.8\ndensity grid channel 0 zero=0.99896 one=0.499315 zhalf=0.706641 expected=0.707107\ndensity grid channel 1 zero=0.99896 one=0.249124 zhalf=0.499298 expected=0.5\ndensity grid channel 2 zero=0.99896 one=0.7989 zhalf=0.894 expected=0.894427\ndensity offaxis channel 0 X=0.944174,0.64332 expected=0.94397,0.65599 Y=0.642768,0.943993\ndensity offaxis channel 1 X=0.892893,0.450337 expected=0.89326,0.47016 Y=0.449982,0.89248\ndensity offaxis channel 2 X=0.981361,0.860528 expected=0.98135,0.86542 Y=0.860054,0.98127\ndensity nonuniform translation max-channel=2\ndensity translation max-channel=0\ndensity scaled channel 0 ratio=1.41389 expected=1.41421\ndensity scaled channel 1 ratio=2.0098 expected=2\ndensity scaled channel 2 ratio=1.11819 expected=1.11803\nscatter thickness 1.55395 expected 1.5576 HG 12.696 expected 12.7037 values 0.28152,0.181164,0.0221739\nscatter+absorption thickness 1.38793 expected 1.39316\nscatter beam blocked 0 lit 0.28152\nSSS scale channel 0 direct=0.962374 scaled=0.962374\nSSS scale channel 1 direct=0.52497 scaled=0.52497\nSSS scale channel 2 direct=0.52497 scaled=0.52497\nPASS thin-wall straight-through boundary at IOR1.1/2.2; solid shifted 24 classified samples\nTIR luma below=0.944557 above=0 counter=0.939732\nclearcoat linear max base=0.00913406 sharp=0.584078 broad=0.012983 clipped=0/0/0\nclearcoat core base=0.994939 sharp=6.61101 broad=1.72243 ring base=2.58338 sharp=2.56784 broad=3.99084\nsky 2 view 20 azimuth 0 RGB 67,62,52\nsky 2 view 20 azimuth 90 RGB 67,62,52\nsky 2 view 20 azimuth -75 RGB 67,62,52\nsky 2 view 60 azimuth 0 RGB 25,28,31\nsky 2 view 60 azimuth 90 RGB 25,28,31\nsky 2 view 60 azimuth -75 RGB 25,28,31\nsky 45 view 20 azimuth 0 RGB 90,110,133\nsky 45 view 20 azimuth 90 RGB 90,110,133\nsky 45 view 20 azimuth -75 RGB 90,110,133\nsky 45 view 60 azimuth 0 RGB 64,77,99\nsky 45 view 60 azimuth 90 RGB 64,77,99\nsky 45 view 60 azimuth -75 RGB 64,77,99\nsky shadow 2 predicted 28.8863 measured 28.75\nsky shadow 45 predicted 1.25 measured 1.15\nPASS in-process CPU Cycles/OIDN GLB still, repeat hashes, color orientation, denoise quality, orthographic/portrait camera bounds and explicit profile failures; MSE 124.058 < 611.901\n",
+            "features": [],
+            "scope": "Fresh matched guarded build; physical optics/transport and resource checks. Retained output combines stdout/stderr."
           }
         ],
         "assets": [
@@ -8912,7 +8938,7 @@
             "kind": "original-procedural-source",
             "creator": "lmvideo project",
             "source": "examples/showcase/bench-26-cozy-still-life.lms",
-            "sha256": "b73f51f421edf91e6c35006d74e47a86188ac6ded0469f4cffcb422ea576fe04",
+            "sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
             "license": "MIT",
             "license_file": "LICENSE-examples",
             "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -8920,9 +8946,9 @@
         ],
         "outputs": [
           {
-            "store_file": "bench-26-cozy-still-life-2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3.png",
-            "sha256": "2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3",
-            "bytes": 240380,
+            "store_file": "bench-26-cozy-still-life-14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a.png",
+            "sha256": "14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a",
+            "bytes": 249931,
             "dimensions": [
               900,
               560
@@ -8946,14 +8972,14 @@
             "lmctl": "b1701ef986ac52a3a5951fead6b43dc4d320c24146835911d3a4274ef1529cf3",
             "ffmpeg": "36d94a605d612e4090d1b8aec889d0c0801c6eafb1593c90f5c0dfd2e2966a45",
             "ffprobe": "d4f3ef9c12be756793cad83dd2004d89f49c1c4094053bfbbe7e28925c8fa4fd",
-            "host": "6954ea536892b89cb220b82a4f061703038b023829213dba9a8330ee15d6379e",
+            "host": "9da011b7e6bf8abb3ad8d522f96d3907b4c9c09defe6afa3faad9025c53889f1",
             "compiler": "d7205eec709fe3d39d1418a7e0a148c6dca5f9abc0bba032faa431bd9e6ebf6e",
-            "cycles_module": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
+            "cycles_module": "39a6b2ad56fbb2aacd5cabcb543102dd045248b325019101805e14953824b49a",
             "lmcad": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
           },
           "compiler_version": "lmscript 0.2.426",
           "host_version": "lmvideo 0.1.0",
-          "schema_sha256": "7a36a17cfa067af049f9d730329a6293de02a23338a015f119397d9195aa748b",
+          "schema_sha256": "8ca24195a6032d42a7816d86ee25c71a53b42266074aa12801afefaf1f7a3584",
           "backend": "cycles",
           "renderer": "cycles",
           "device": "CPU",
@@ -8967,49 +8993,39 @@
           "samples_per_axis": 128,
           "denoise": "OIDN",
           "seed": 20261103,
-          "cycles_module_sha256": "bb4bd3c52c29bf4968e2ca3db8affc938aca70daa116adc4fb70ae254e55018c",
-          "build": {
-            "profile": "Linux x64 CPU Cycles native-only development SDK",
-            "implementation_cpp_tree": "bf3a78b00d4a75f6c326c5bf6f9af37fe3460ad5",
-            "sdk_config_sha256": "aa43e7c54b3bea5224893e00cd1fcde0d930fc3f4aae3b089b1b2dd41a6ada70",
-            "skia_lock_sha256": "e7d710959a1171c25d762f914fb655349d4a86d93e282c7be878e1dc1a995ac8",
-            "cxx": "g++ Ubuntu11.4; pinned module clang19",
-            "cxx_flags": [
-              "-std=c++17",
-              "-O2",
-              "-Wall",
-              "-Wextra",
-              "-Werror"
-            ],
-            "isa": "Compiler baseline x86_64; pinned SDK/Skia dispatch; no cross-ISA byte claim"
-          },
+          "cycles_module_sha256": "39a6b2ad56fbb2aacd5cabcb543102dd045248b325019101805e14953824b49a",
           "denoise_worker_policy": {
             "render_threads": 4,
             "oidn_threads": 1,
             "scope": "Source child process sets the pinned OIDN_NUM_THREADS device override; ray tracing retains four workers."
+          },
+          "build": {
+            "profile": "Fresh CYCLES=1 test build, Linux x64 CPU-only guarded bundle",
+            "implementation_cpp_tree": "7debd0e847dc45f037b95692f322239ffa2571ca",
+            "runtime_bundle_provenance_sha256": "2eaa95cd79fcb5c2c3b4afbbe282ca9802f71b49cc655a82d1d6196a1b5dea34"
           }
         },
         "timing": {
-          "wall_s": 41.7,
-          "user_s": 120.18,
-          "sys_s": 3.23,
-          "max_rss_kib": 533064,
-          "cold_job_wall_s": 41.70910152999568,
+          "wall_s": 63.6,
+          "user_s": 108.24,
+          "sys_s": 0.35,
+          "max_rss_kib": 534416,
+          "cold_job_wall_s": 62.51321408399963,
           "packaging_webm_s": 0,
           "phase_ms": {
-            "post": 16.189945,
-            "prepare": 3.826408,
-            "render": 40759.30198,
-            "setup": 1.640687,
-            "write_media": 139.548946
+            "post": 24.66136,
+            "prepare": 3.550677,
+            "render": 61421.862064,
+            "setup": 52.793525,
+            "write_media": 381.554541
           },
-          "max_render_ms": 40759.30198,
+          "max_render_ms": 61421.862064,
           "max_frame_ms": 0,
           "native_process": {
-            "wall_s": 41.7,
-            "user_s": 120.18,
-            "sys_s": 3.23,
-            "max_rss_kib": 533064,
+            "wall_s": 63.6,
+            "user_s": 108.24,
+            "sys_s": 0.35,
+            "max_rss_kib": 534416,
             "scope": "lmctl autorun process tree (time max RSS)",
             "memory_limit_bytes": 2147483648,
             "memory_limit_scope": "native host and descendants; compiler outside this AS guard"
@@ -9023,7 +9039,7 @@
             "max_rss_kib": null,
             "memory_limit_bytes": null
           },
-          "peak_rss_kib": 533064,
+          "peak_rss_kib": 534416,
           "rss_scope": "maximum of separately measured native autorun and ffmpeg packaging processes",
           "budget_seconds": 600,
           "cache_hit": false
@@ -9032,41 +9048,175 @@
           "bake": {
             "status": "UNAVAILABLE",
             "ms": null,
-            "reason": "Included in preparation/end-to-end wall; not separately instrumented."
+            "reason": "Included in end-to-end wall; not separately measured."
           },
           "import": {
             "status": "UNAVAILABLE",
             "ms": null,
-            "reason": "Included in preparation/end-to-end wall; not separately instrumented."
-          },
-          "render": {
-            "status": "MEASURED",
-            "ms": 40759.30198,
-            "scope": "Native direct render call spans, including CPU tracing, OIDN and output transfer."
+            "reason": "Included in end-to-end wall; not separately measured."
           },
           "denoise": {
             "status": "UNAVAILABLE",
             "ms": null,
-            "reason": "Included in renderer call or CLI wall; no separate denoiser span."
+            "reason": "Included in end-to-end wall; not separately measured."
+          },
+          "render": {
+            "status": "MEASURED",
+            "ms": 61421.862064,
+            "scope": "CPU path tracing, OIDN and Image transfer inside native render call."
           },
           "encode": {
             "status": "MEASURED",
-            "ms": 139.548946,
-            "scope": "Final image PNG write call."
+            "ms": 381.554541,
+            "scope": "Raw/pre-grade and final PNG writes."
           }
         },
         "repeat_verified": true,
         "repeat_check": {
           "policy": "CPU Cycles RGBA8 max1 (Phase6)",
           "max_channel_error": 1,
-          "changed_channels": 1697
+          "changed_channels": 35
         },
-        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette\"], \"file\": \"build/bench-26-cozy-still-life.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6492, \"instructions\": 321, \"wall_ms\": 40920, \"phase_ms\": {\"post\":16.189945,\"prepare\":3.826408,\"render\":40759.301980,\"setup\":1.640687,\"write_media\":139.548946}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 40759.301980, \"render_calls\": 1}}\n\n",
-        "generated_asset_hashes": [],
+        "repeat_scope": "Global envelope over all six distinct current-source captures, stronger than one pair.",
+        "captured_stdout": "{\"ok\": true, \"result\": {\"output\": [\"B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette\"], \"file\": \"build/bench-26-cozy-still-life.png\", \"width\": 900, \"height\": 560, \"frames\": 1, \"fps\": 30, \"bytecode_bytes\": 6788, \"instructions\": 333, \"wall_ms\": 61884, \"phase_ms\": {\"post\":24.661360,\"prepare\":3.550677,\"render\":61421.862064,\"setup\":52.793525,\"write_media\":381.554541}, \"max_frame_ms\": 0.000000, \"max_render_ms\": 61421.862064, \"render_calls\": 1}}\n\n",
+        "generated_asset_hashes": [
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/0e03e01b878e65d7bd050fb7b09679af134960edf62e55e0a69937e401979785.lmmat/manifest.json",
+            "sha256": "0e03e01b878e65d7bd050fb7b09679af134960edf62e55e0a69937e401979785",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/0e03e01b878e65d7bd050fb7b09679af134960edf62e55e0a69937e401979785.lmmat/material.json",
+            "sha256": "b6f3f72a154ca7ca0c1e09f469ffae5677fe67760db9f293b7ac75d52661ce52",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/3d46717fbb4f5b19af08460bdf8326f4f270d61bb4fcec45da07c0543fd36b07.lmmat/manifest.json",
+            "sha256": "3d46717fbb4f5b19af08460bdf8326f4f270d61bb4fcec45da07c0543fd36b07",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/3d46717fbb4f5b19af08460bdf8326f4f270d61bb4fcec45da07c0543fd36b07.lmmat/material.json",
+            "sha256": "aa2d1c4ef56fbe106d7345bf1d97612567647cf50408a5ae87e19ea1993548fe",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/manifest.json",
+            "sha256": "4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/material.json",
+            "sha256": "8d9a5773786274702aa96ab51b23df59384ed10058d7cfa6cd01340abeabcd37",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-0.png",
+            "sha256": "9a15ccb0d57448594404f2c2874ca2388a2c5ae5c6ac7db07de8493bf0a6682f",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-1.png",
+            "sha256": "a190d947b0d08a679239243f967b7255b6486ff8eb86a6b82e405e2fb834544c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-2.png",
+            "sha256": "c2b9d55e844439bbb9af6c2404b5f88b5742ec3aba3f0a03298f8e5a5642a359",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-3.png",
+            "sha256": "678f8b9281d2419cf3337df9847a4b6574a3317567eaf111ad3be81718af352b",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-4.png",
+            "sha256": "531a48433088e1e16399cbf536adbb882f741c44b1eace2e1a04880db8494773",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-5.png",
+            "sha256": "20bca75b0b3adc4772640d6ffaeb0108c71f95d94d066669567f4bde2b4c3006",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-6.png",
+            "sha256": "823dd431ffc6b1a06fc1e67275d090f8d07bd32582cc65e5edfc9edb0db8904a",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-7.png",
+            "sha256": "c762c2118064f411f860c88934c5127e7974c91bc5f30de3326f5db66c595e7c",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/4158e567a58a916fd66d39baa62e724410b4d5fd93fa1b4e978f7b599726cf32.lmmat/textures/albedo-8.png",
+            "sha256": "0e98daad2c304eae16ba74d6b6cad99ebd7b1c379d0cdfb13f495635b0ab55db",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/cf4feb8bacba7baa32579e37cc548f8495908ba2ba883c15d956747316e733b4.lmmat/manifest.json",
+            "sha256": "cf4feb8bacba7baa32579e37cc548f8495908ba2ba883c15d956747316e733b4",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/cf4feb8bacba7baa32579e37cc548f8495908ba2ba883c15d956747316e733b4.lmmat/material.json",
+            "sha256": "7c07ebb0c0f0bdc994f2a8e7c817e079a1d6d91c9ffd181307de91f8957466ea",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/d07d4e3f6d9bdb12d49e2c62069a3be8e68fd3de5473a04922203e44b353f1cd.lmmat/manifest.json",
+            "sha256": "d07d4e3f6d9bdb12d49e2c62069a3be8e68fd3de5473a04922203e44b353f1cd",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/d07d4e3f6d9bdb12d49e2c62069a3be8e68fd3de5473a04922203e44b353f1cd.lmmat/material.json",
+            "sha256": "0b1ccf380a43bdd4f8a2bd551c82349d0b02393f86abfb9f59a7b3f7cf248b71",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/f16e1d342957662587e0ff3a18298831900ddd74f7ba8e94c57c67b60e0e4fcd.lmmat/manifest.json",
+            "sha256": "f16e1d342957662587e0ff3a18298831900ddd74f7ba8e94c57c67b60e0e4fcd",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/materials/f16e1d342957662587e0ff3a18298831900ddd74f7ba8e94c57c67b60e0e4fcd.lmmat/material.json",
+            "sha256": "5a65061a8f264a7b6a5b5ce4ee6b0f57e20268a7a4a030ce75f9c68d8fdabe65",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          },
+          {
+            "path": "build/bench-26-cozy-still-life.lmjob/scene.glb",
+            "sha256": "d69c8697bb9e852d25ed95b2ae6197aa51e142d92275f455c94a8c6ed8dfb9d7",
+            "license": "MIT; project-authored procedural asset",
+            "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c"
+          }
+        ],
         "font_notices": [
           {
             "schema": "lmvideo-fonts/v1",
-            "payload_sha256": "2a38eadb89fdafe43a9383adc0f273487404b5d37f92ed906cb3769bd3eb81f3",
+            "payload_sha256": "14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a",
             "fonts": []
           }
         ],
@@ -9076,10 +9226,96 @@
           "category_match": true,
           "differences": [],
           "suggestions": [],
-          "reasoning": "Separated original vessels, a visible hollow glass decanter, candle transmission, wood grain and foreground metal show a coherent warm still life with genuine physical focus."
+          "reasoning": "The shallow-focus glass vessel, separate ceramic forms, actual beveled metal tin, wood grain and warm candle remain legible. Tiny air-interface separations remove ambiguous contact without extra grading or filtering."
         },
-        "budget_note": "Fresh four-worker bounded jobs; no whole-job cache performance claim.",
-        "calibration_manifest_sha256": "9e6ac09e3eb883e2c5c33a910c516c97e2e85ef8d7b961086d54a4f4f4e46241"
+        "generated_witness": {
+          "status": "PASS",
+          "target": "B26",
+          "captures": 6,
+          "source_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
+          "implementation_commit": "537d9274300b58e1190b47807b4e579c22b663ac",
+          "host_sha256": "9da011b7e6bf8abb3ad8d522f96d3907b4c9c09defe6afa3faad9025c53889f1",
+          "module_sha256": "39a6b2ad56fbb2aacd5cabcb543102dd045248b325019101805e14953824b49a",
+          "runtime_provenance_sha256": "2eaa95cd79fcb5c2c3b4afbbe282ca9802f71b49cc655a82d1d6196a1b5dea34",
+          "decanter_table_clearance_m": 0.0005000000000000004,
+          "metal_body_and_lid_bevel_faces": true,
+          "metal_table_clearance_m": 0.0005,
+          "metal_lid_clearance_m": 0.0002,
+          "pre_grade_denoised_envelope": {
+            "max_channel_error": 1,
+            "changed_channels": 41
+          },
+          "graded_envelope": {
+            "max_channel_error": 1,
+            "changed_channels": 35
+          },
+          "raw_sha256": [
+            "25da95816fa2aeeb737b4d0ff55a827f9e5ef4818f03b60824e364a7674b574e",
+            "cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4",
+            "521cb3419fe7964ccb0cc12b252680ccdddcb2687eb70f39e42adf8b066aeb2e",
+            "cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4",
+            "cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4",
+            "cbbd08ac54b70797db04bbe4cef8bf5683d95c34a07790eaf54a8953a5a313b4"
+          ],
+          "graded_sha256": [
+            "14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a",
+            "9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1",
+            "0f2ae949039c6a1e6b69a6603f6d41be872aa563f068cf0bf87d9b3d63bee99a",
+            "9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1",
+            "9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1",
+            "9426389a75348eaf404b0eee9683c874b7a7593b4c7fc7d07fd575caf1e303f1"
+          ],
+          "reports": [
+            {
+              "report_sha256": "8f6e052e8e6d3d887bb12d14174acdfcd837b1578172764b5d245a8c4c99e775",
+              "cold_wall_s": 62.51321408399963,
+              "peak_rss_kib": 534416,
+              "pair": {
+                "policy": "CPU Cycles RGBA8 max1 (Phase6)",
+                "max_channel_error": 1,
+                "changed_channels": 23
+              }
+            },
+            {
+              "report_sha256": "0614bd25dc99faa9a5525fd49503bd66b849533576ec6ec47198049d4cb58838",
+              "cold_wall_s": 88.21036433300469,
+              "peak_rss_kib": 533788,
+              "pair": {
+                "policy": "CPU Cycles RGBA8 max1 (Phase6)",
+                "max_channel_error": 1,
+                "changed_channels": 21
+              }
+            },
+            {
+              "report_sha256": "fcaa32805cb33df3820bc627a0d0639c21ab322b209037ca56361d68b8546de9",
+              "cold_wall_s": 88.94897634000517,
+              "peak_rss_kib": 534400,
+              "pair": {
+                "policy": "exact",
+                "max_channel_error": 0,
+                "changed_channels": 0
+              }
+            }
+          ],
+          "policy": "Existing CPU Cycles RGBA8 max1; renderer, samples and grading unchanged."
+        },
+        "geometry_policy": {
+          "decanter_base_y_m": 0.0095,
+          "tabletop_top_y_m": 0.009,
+          "clearance_m": 0.0005,
+          "reason": "A distinct air interface avoids coincident glass and wood faces.",
+          "metal_body_table_clearance_m": 0.0005,
+          "metal_lid_body_clearance_m": 0.0002
+        },
+        "historical_evidence": {
+          "file": "durable-memory/baselines/b26-contact-history.json",
+          "sha256": "95108d020e88e9575b3ea932d80a878b2ff113b30b56322f74bffbea2f572c22"
+        },
+        "limitations": [
+          "Authored original scene; no spectral or measured-physical-material claim.",
+          "Candle glow is an authored area emitter; no external flame image is used.",
+          "A0.5mm decanter/table clearance avoids ambiguous coplanar dielectric contact."
+        ]
       }
     },
     {
@@ -11133,7 +11369,7 @@
       "total": 15
     },
     "2": {
-      "verified": 11,
+      "verified": 12,
       "total": 12
     },
     "3": {
@@ -11171,6 +11407,16 @@
         "root exact-source/full-suite/visual and artifact review"
       ],
       "summary": "Complete90/150-frame source pairs, exact hero and Worley material/job repeats, analyticXYZ transport, original rights and measuredCPU/RSS. Prescribed deformation/static fields do not claim simulation."
+    },
+    {
+      "scope": "B26 current-build requalification",
+      "status": "PASS",
+      "reviewers": [
+        "root",
+        "independent native-agent Luna",
+        "independent native-agent Astra"
+      ],
+      "summary": "Preserved failed coplanar controls;0.5mm glass/wood separation, actual beveled metal geometry, six-image global max1 before/after unchanged grading. Renderer/sampling/tolerance unchanged."
     }
   ]
 }
