@@ -1,0 +1,48 @@
+{
+  "id": "B31",
+  "title": "Original Heterogeneous Worley Smoke Plume",
+  "script": "examples/showcase/bench-31-heterogeneous-plume.lms",
+  "script_sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484",
+  "visual_specification": "A tall wispy authored smoke field from a32\u00b3 grid of original3D nearest-feature-point Worley noise, grounded warm internal fire, directional sun and side/back lighting; no borrowed art or fluid simulator.",
+  "required_feature_witnesses": [
+    "32768 bounded spatial density samples",
+    "actual3D nearest-feature-point WorleyF1 modulation",
+    "normalized mesh-local trilinear CPU Cycles density",
+    "internal emissive fire geometry and external sun",
+    "density retained in exact v2 scene job",
+    "96spp CPU OIDN and paired full-size output"
+  ],
+  "cpu_budget_seconds": 900,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 96,
+    "bounces": 8,
+    "seed": 20261105,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "publication_status": "UNPUBLISHED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-31-heterogeneous-plume.lms",
+      "sha256": "af42ce1e3053db4f0a0e0fa85081864eed6dff08b9339929e85fd7be03b3d484",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "limitations": [
+    "Authored static3D field; no fluid/combustion simulation or VDB importer.",
+    "Image depicts volumetric radiance, not a scientific measured smoke distribution."
+  ]
+}

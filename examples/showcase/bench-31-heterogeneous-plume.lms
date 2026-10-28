@@ -1,0 +1,39 @@
+# Original 3D Worley-density smoke still. This is an authored field, not a fluid solver.
+mkdir("build");program=_lmcode_ cli="lmvideo";
+let csv="";
+# Twenty-four original deterministic feature points define nearest-point (F1) Worley noise.
+for(z in range(0,32)){for(y in range(0,32)){for(x in range(0,32)){
+  let fx=float(x)/31.0;let fy=float(y)/31.0;let fz=float(z)/31.0;
+  let nearest=3.0;
+  for(k in range(0,24)){
+    let px=float((k*127+19)%101)/100.0;
+    let py=float((k*43+7)%103)/102.0;
+    let pz=float((k*67+31)%107)/106.0;
+    let dx=fx-px;let dy=fy-py;let dz=fz-pz;
+    nearest=min(nearest,dx*dx+dy*dy+dz*dz);
+  }
+  let cells=clamp((0.36-sqrt(nearest))/0.29,0.0,1.0);
+  let cx=0.5+0.10*sin(fy*7.0);let cz=0.5+0.09*cos(fy*9.0);
+  let width=0.075+0.21*sqrt(fy);
+  let radial=((fx-cx)*(fx-cx)+(fz-cz)*(fz-cz))/(width*width);
+  let envelope=pow(2.718281828459045,-2.0*radial)*clamp(fy*14.0,0.0,1.0)*clamp((1.0-fy)*6.0,0.0,1.0);
+  let edges=clamp(fx*12.0,0.0,1.0)*clamp((1.0-fx)*12.0,0.0,1.0)*clamp(fz*12.0,0.0,1.0)*clamp((1.0-fz)*12.0,0.0,1.0);
+  let density=clamp(envelope*edges*(0.12+0.88*cells),0.0,1.0);
+  if(csv!=""){csv=csv+",";}csv=csv+str(density);
+}}}
+let scene=scene3d().threads(4).ambient(0.0).background("#172638").tonemap("aces",0.7);
+scene.camera(camera3d().look_at(4.0,2.8,6.0,0.0,1.7,0.0).perspective(40.0,0.1,30.0));
+scene.directional_light(2.0,4.0,3.0,"#fff3df",4.0);
+scene.area_light(-3.0,3.0,-1.0,0.7,-0.1,0.4,4.0,4.0,"#d3e5ff",20.0,20.0);
+let medium=material("#ffffff",0.0,0.5).volume_absorption("#ffffff",100.0).volume_scattering(2.8,0.0,"#dce7f4").density_grid(32,32,32,csv);
+scene.add(mesh_box(2.8,3.4,2.8),medium).position(0.0,1.7,0.0);
+scene.add(mesh_plane(10.0,10.0),material("#4a535c",0.0,0.9));
+scene.add(mesh_cylinder(0.32,0.18,32),material("#242a31",0.2,0.7)).position(0.0,0.09,0.0);
+let fire=material("#ff8a28",0.0,0.3).emissive("#ff671e",6.0);
+scene.add(mesh_sphere(0.10,20,24),fire).position(0.0,0.25,0.0);
+scene.add(mesh_sphere(0.065,16,20),fire).position(0.02,0.39,0.01);
+scene.save_job("build/bench-31-heterogeneous-plume.lmjob",900,560,"cycles",96,8,20261105,true);
+scene.render_image(900,560,"cycles",96,8,20261105,true).save("build/bench-31-heterogeneous-plume.png");
+out.print("B31: original24-point3D WorleyF1 density;32x32x32 spatial samples; grounded internal fire and external sun;96sppOIDN; authored field, no fluid solver");
+end _lmcode_
+savedsl(program,"build/bench-31-heterogeneous-plume.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-31-heterogeneous-plume.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
