@@ -3,7 +3,7 @@
   "title": "Original Cozy Tabletop Still Life",
   "script": "examples/showcase/bench-26-cozy-still-life.lms",
   "reference_url": "https://github.com/lmctl-ai/lmvideo",
-  "visual_specification": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded metal can and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette.",
+  "visual_specification": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded beveled metal tin and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette.",
   "required_feature_witnesses": [
     "mesh_lathe_closed ceramic and glass vessels",
     "beveled metal prop",
@@ -33,14 +33,14 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-26-cozy-still-life.lms",
-      "sha256": "f4ec57bec92a9d5044c0981d946b0286a918f2545cc20af15e0f505643f90b45",
+      "sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
-  "script_sha256": "f4ec57bec92a9d5044c0981d946b0286a918f2545cc20af15e0f505643f90b45",
+  "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
   "publication_status": "UNPUBLISHED",
   "limitations": [
     "Authored original scene; no spectral or measured-physical-material claim.",
@@ -88,6 +88,8 @@
     "decanter_base_y_m": 0.0095,
     "tabletop_top_y_m": 0.009,
     "clearance_m": 0.0005,
-    "reason": "A distinct air interface avoids coincident glass and wood faces."
+    "reason": "A distinct air interface avoids coincident glass and wood faces.",
+    "metal_body_table_clearance_m": 0.0005,
+    "metal_lid_body_clearance_m": 0.0002
   }
 }
