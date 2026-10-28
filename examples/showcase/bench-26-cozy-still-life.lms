@@ -1,0 +1,19 @@
+# B26 / G.2-G.9-G.10: original cozy tabletop still life.
+# Every object and texture is procedural; no Blender Splash or CC-BY-SA asset is used.
+mkdir("build"); program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#10131a").ambient(0.02).tonemap("aces",0.25);
+let camera=camera3d().look_at(4.8,3.4,7.2,0.0,0.75,0.0).perspective(42.0,0.1,30.0).lens(50.0,36.0).dof(2.8,6.0,6);scene.camera(camera);
+scene.area_light(-3.5,6.0,3.0,0.15,-0.9,-0.25,3.5,2.0,"#fff0d6",18.0,30.0);
+scene.area_light(3.0,3.5,1.5,-0.35,-0.4,-0.8,1.6,1.6,"#b9d8ff",8.0,30.0);
+let wood=material("#7a4329",0.0,0.55);let ceramic=material("#d6bca2",0.0,0.18);let dark=material("#1b2028",0.72,0.24);let glass=material("#d5e7ef",0.0,0.08).transmission(0.88,1.45);
+scene.add(mesh_box(5.2,0.18,3.7),wood).position(0.0,-0.1,0.0);
+let mug=mesh_lathe_closed("0,0,0,0.55,0,0,0.62,0.12,0,0.58,0.75,0,0.5,1.0,0,0,1.0,0",48);scene.add(mug,ceramic).position(-1.35,0.0,0.25);
+let bowl=mesh_lathe_closed("0,0,0,0.9,0,0,1.05,0.15,0,1.0,0.45,0,0.85,0.68,0,0.55,0.72,0,0.0,0.72,0",48);scene.add(bowl,ceramic).position(1.25,0.0,-0.15);
+let decanter=mesh_lathe_closed("0,0,0,0.72,0,0,0.82,0.18,0,0.68,0.8,0,0.38,1.25,0,0.2,1.55,0,0.0,1.55,0",48);scene.add(decanter,glass).position(0.15,0.0,0.65);
+scene.add(mesh_beveled_box(0.9,0.55,0.9,0.08),dark).position(2.0,0.35,0.85);
+let candle=scene.add(mesh_cylinder(0.17,0.6,32),ceramic);candle.position(-0.2,0.3,-0.75);scene.area_light(-0.2,1.3,-0.75,0.0,-1.0,0.0,0.4,0.4,"#ffd28a",5.0,12.0);
+let raw=scene.render_image(900,560,"cycles",128,8,20261103,true);
+let grade=raw.curves(image_curve().point(0.0,0.0).point(0.45,0.40).point(0.78,0.86).point(1.0,1.0)).vignette(390.0,0.82);
+grade.save("build/bench-26-cozy-still-life.png");
+out.print("B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette");
+end _lmcode_
