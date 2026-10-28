@@ -27,7 +27,7 @@
     ]
   },
   "cpu_budget_seconds": 300,
-  "status": "PLANNED",
+  "status": "VERIFIED",
   "publication_status": "UNPUBLISHED",
   "assets": [
     {
