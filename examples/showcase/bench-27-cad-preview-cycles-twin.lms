@@ -1,0 +1,25 @@
+# B27 / G.9-G.13: one authored CAD STL, one camera, raster preview and Cycles twin.
+# lmcad is an external producer; the generated STL is original example content.
+mkdir("build"); cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.72";
+let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shininess(48.0);
+let body=scene.box(120.0,70.0,80.0,alloy);let bore=scene.cylinder(16.0,80.0,alloy);body.cut(bore);bore.visible(false);
+let flange=scene.cylinder(35.0,12.0,alloy).position(0.0,0.0,40.0);let flange_bore=scene.cylinder(16.0,14.0,alloy).position(0.0,0.0,40.0);flange.cut(flange_bore);flange_bore.visible(false);
+scene.export_stl("build/b27-flanged-valve.stl");
+end _lmcode_
+savedsl(cad,"build/b27-cad-geometry.dslb");r=system(concat(dsl_cli(cad),["--dsl","build/b27-cad-geometry.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);
+program=_lmcode_ cli="lmvideo";
+let mesh=mesh_load("build/b27-flanged-valve.stl");image_assert_true(mesh.triangles()>100);image_assert_close(mesh.bound(3)-mesh.bound(0),120.0,0.01);
+let scene=scene3d().threads(4).background("#dbe6ef").ambient(0.16).tonemap("aces",1.0);
+let node=scene.add(mesh,material("#b8c5d1",0.35,0.55));node.scale(0.001,0.001,0.001);
+scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8).directional_light(-3.0,1.0,-1.0,"#aec8e5",0.6);
+let camera=camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0);scene.camera(camera);
+let preview=scene.render_image(450,500,2);let final=scene.render_image(450,500,"cycles",64,6,20261104,true);
+image_assert_true(preview.stddev(0)>0.02&&final.stddev(0)>0.02&&preview.psnr(final)<70.0);
+let label=scene.projection(450,500).at(-0.01,0.035,0.04);image_assert_true(label.visible());
+let sheet=layout_sheet().add(preview).add(final);let composed=sheet.render(1,0,0.94,0.96,0.98,1.0).resize(900,560);
+composed.text(24.0,32.0,"CAD preview / Cycles final · one imported mesh and matched camera",20.0,0.09,0.21,0.30,1.0);
+composed.text(24.0,548.0,"Original flanged valve · 120 × 70 × 80 mm · STL scale 0.001 m/mm",17.0,0.09,0.21,0.30,1.0);
+composed.save("build/bench-27-cad-preview-cycles-twin.png");
+out.print("B27 original CAD preview/Cycles twin | one STL mesh | matched camera | projected through-bore label | 64 spp OIDN");
+end _lmcode_
+savedsl(program,"build/b27-cad-preview-cycles-twin.dslb");r=system(concat(dsl_cli(program),["--dsl","build/b27-cad-preview-cycles-twin.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
