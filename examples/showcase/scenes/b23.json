@@ -1,0 +1,51 @@
+{
+  "id": "B23",
+  "title": "Original Macro Chess with Physical Camera DoF",
+  "script": "examples/showcase/bench-23-macro-chess-dof.lms",
+  "visual_specification": "900x560 CPU Cycles still: procedural chessboard and pieces with a focused middle rank, near/far defocus, and six-blade aperture witness.",
+  "required_feature_witnesses": [
+    "Camera3D.dof(fstop, focus_distance, blades)",
+    "explicit focal length and sensor height",
+    "measured focus-plane sharpness versus near/far planes",
+    "six-blade bokeh comparison",
+    "render-job camera sidecar"
+  ],
+  "cpu_budget_seconds": 180,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 8,
+    "seed": 20261102,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "PLANNED",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-23-macro-chess-dof.lms",
+      "sha256": "a452b156f412849477f9e7c27c2a7ae0e133c3cb60f41967cb3765c94085934d",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "rights_note": "Original procedural board, pieces, materials and area light; no borrowed model or image.",
+  "publication_status": "UNPUBLISHED",
+  "script_sha256": "a452b156f412849477f9e7c27c2a7ae0e133c3cb60f41967cb3765c94085934d",
+  "camera_profile": {
+    "focal_length_mm": 85,
+    "sensor_height_mm": 24,
+    "fstop": 1.4,
+    "focus_distance_m": 0.72,
+    "blades": 6
+  }
+}
