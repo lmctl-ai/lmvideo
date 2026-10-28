@@ -2,14 +2,16 @@
 # lmcad is an external producer; the generated STL is original example content.
 mkdir("build"); cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.72";
 let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shininess(48.0);
-let body=scene.box(120.0,70.0,80.0,alloy);let bore=scene.cylinder(16.0,80.0,alloy);body.cut(bore);bore.visible(false);
-let flange=scene.cylinder(35.0,12.0,alloy).position(0.0,0.0,40.0);let flange_bore=scene.cylinder(16.0,14.0,alloy).position(0.0,0.0,40.0);flange.cut(flange_bore);flange_bore.visible(false);
+let body=scene.box(120.0,70.0,80.0,alloy).fillet(2.0);let bore=scene.cylinder(16.0,100.0,alloy).rotate(1.5707963267948966,0.0,0.0);body.cut(bore);bore.visible(false);
+let flange=scene.cylinder(35.0,12.0,alloy).rotate(1.5707963267948966,0.0,0.0).position(0.0,0.0,46.0);let flange_bore=scene.cylinder(16.0,16.0,alloy).rotate(1.5707963267948966,0.0,0.0).position(0.0,0.0,46.0);flange.cut(flange_bore);flange_bore.visible(false);
+for(i in range(0,4)){let angle=float(i)*1.5707963267948966;let hole=scene.cylinder(3.0,16.0,alloy).rotate(1.5707963267948966,0.0,0.0).position(26.0*cos(angle),26.0*sin(angle),46.0);flange.cut(hole);hole.visible(false);}
 scene.export_stl("build/b27-flanged-valve.stl");
 end _lmcode_
 savedsl(cad,"build/b27-cad-geometry.dslb");r=system(concat(dsl_cli(cad),["--dsl","build/b27-cad-geometry.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);
 program=_lmcode_ cli="lmvideo";
 let mesh=mesh_load("build/b27-flanged-valve.stl");image_assert_true(mesh.triangles()>100);image_assert_close(mesh.bound(3)-mesh.bound(0),120.0,0.01);
 let scene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);
+scene.environment(environment_linear(1,1,"0.08,0.10,0.13"),0.4,0.0,false);
 let node=scene.add(mesh,material("#b8c5d1",0.35,0.55));node.scale(0.001,0.001,0.001);
 scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8).directional_light(-3.0,1.0,-1.0,"#aec8e5",0.6);
 let camera=camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0);scene.camera(camera);
@@ -24,11 +26,11 @@ mr=system(concat(dsl_cli(program),["render-job","build/b27-mask-raster.lmjob","-
 mc=system(concat(dsl_cli(program),["render-job","build/b27-mask-cycles.lmjob","--renderer","cycles","--output","build/b27-mask-cycles.png"]));assert(mc.code==0,mc.stdout+mc.stderr);
 post=_lmcode_ cli="lmvideo";
 let preview=image_file("build/b27-preview.png");let final=image_file("build/b27-final.png");image_assert_true(preview.stddev(0)>0.02&&final.stddev(0)>0.02);
-let postmesh=mesh_load("build/b27-flanged-valve.stl");let postscene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);postscene.add(postmesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);postscene.camera(camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0));let label=postscene.projection(435,540).at(0.0,0.0,0.047);let rim=postscene.projection(435,540).at(0.0,0.0,0.04);image_assert_true(label.visible()&&rim.visible());let depth=postscene.render_depth_image(435,540);image_assert_true(depth.stddev(0)>0.01);
+let postmesh=mesh_load("build/b27-flanged-valve.stl");let postscene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);postscene.add(postmesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);postscene.camera(camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0));let label=postscene.projection(435,540).at(0.0,0.0,0.053);let rim=postscene.projection(435,540).at(0.0,0.0,0.04);image_assert_true(label.visible()&&rim.visible());let depth=postscene.render_depth_image(435,540);image_assert_true(depth.stddev(0)>0.01);
 preview.line(label.x(),label.y(),label.x()+88.0,label.y()-42.0,0.77,0.32,0.18,1.0,2.0);preview.text(label.x()+90.0,label.y()-44.0,"through bore",15.0,0.62,0.18,0.10,1.0);
 let mask_r=image_file("build/b27-mask-raster.png");let mask_c=image_file("build/b27-mask-cycles.png");let inter=0;let union=0;
 for(y in range(0,540)){for(x in range(0,435)){let a=mask_r.pixel(x,y,0)>0.1;let b=mask_c.pixel(x,y,0)>0.1;if(a&&b){inter=inter+1;}if(a||b){union=union+1;}}}
 let iou=float(inter)/float(max(1,union));image_assert_true(iou>0.98);out.print("B27 mask IoU="+str(iou)+" foreground_pixels="+str(union));
-let sheet=layout_sheet().add(preview).add(final);let composed=sheet.render(2,10,0.94,0.96,0.98,1.0);composed.text(24.0,32.0,"CAD preview / Cycles final · one imported mesh and matched camera",20.0,0.09,0.21,0.30,1.0);composed.text(24.0,548.0,"Original flanged valve · 120 × 70 × 80 mm · STL scale 0.001 m/mm",17.0,0.09,0.21,0.30,1.0);composed.save("build/bench-27-cad-preview-cycles-twin.png");out.print("B27 original CAD preview/Cycles twin | one STL mesh | matched camera | projected through-bore label | 64 spp OIDN");
+let sheet=layout_sheet().add(preview).add(final);let composed=sheet.render(2,10,0.94,0.96,0.98,1.0);composed.text(24.0,32.0,"CAD preview / Cycles final · one imported mesh and matched camera",20.0,0.09,0.21,0.30,1.0);composed.text(24.0,548.0,"Body 120 × 70 × 80 mm · coaxial 12 mm flange · STL scale 0.001 m/mm",17.0,0.09,0.21,0.30,1.0);composed.save("build/bench-27-cad-preview-cycles-twin.png");out.print("B27 original CAD preview/Cycles twin | one STL mesh | matched camera | projected through-bore label | 64 spp OIDN");
 end _lmcode_
 savedsl(post,"build/b27-post.dslb");r=system(concat(dsl_cli(post),["--dsl","build/b27-post.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
