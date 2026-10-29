@@ -4,9 +4,16 @@ video.size(1280,720); video.fps(30); video.frames(120); video.crf(20); video.out
 let cloud=point_cloud(); for(z in range(0,50)){for(x in range(0,50)){let px=(float(x)-24.5)*0.15; let pz=(float(z)-24.5)*0.15; let y=0.42*sin(px*1.8)*cos(pz*1.8); cloud.add(px,y,pz,0.035,"#2b9fb0",0.82,true);}}
 image_assert_true(cloud.size()==2500);
 let scene=scene3d().threads(4).background("#09111f").ambient(0.12).threads(4); scene.camera(camera3d().look_at(5.0,4.0,7.0,0.0,0.0,0.0).perspective(42.0,0.1,100.0)); scene.points(cloud);
-let hero=scene.add(mesh_sphere(0.58,20,28),material("#e9a24b",0.22,0.38)); hero.position(-1.6,0.55,0.0); scene.add(mesh_sphere(0.36,16,24),"#e76f51").position(1.45,0.45,-0.2); scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8);
+# Both hero groups retain the same unit-sphere geometry; transforms supply radii.
+let sphere=mesh_sphere(1.0,20,28);
+let gold=scene.add_instances(sphere,material("#e9a24b",0.22,0.38));
+let coral=scene.add_instances(sphere,"#e76f51");
+gold.add_instance(-1.6,0.55,0.0,0.0,0.0,0.0,0.58,0.58,0.58,"#ffffff");
+coral.add_instance(1.45,0.45,-0.2,0.0,0.0,0.0,0.36,0.36,0.36,"#e76f51");
+image_assert_true(gold.size()==1 && coral.size()==1);
+scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8);
 let destination=image_create(1280,720,"#00000000");let composed_buffer=image_create(1280,720,"#00000000");
-for(frame in range(0,video.count())) { video.frame(); let t=video.time(); for(z in range(0,50)){for(x in range(0,50)){let i=z*50+x; let px=(float(x)-24.5)*0.15; let pz=(float(z)-24.5)*0.15; cloud.set(i,px,0.42*sin(px*1.8+t*2.0)*cos(pz*1.8-t*1.1),pz,0.035,"#2b9fb0",0.82,true);}} scene.points(cloud); let image=scene.render_image(1280,720,destination); canvas.clear("#09111f"); canvas.image(image,0.0,0.0); canvas.text("2,500 depth-sorted gaussian sprites  ·  wave phase "+str(float(int(t*100.0))/100.0)+" s",34.0,52.0,font(24.0),paint().color("#e6f1ff")); let composed=canvas.snapshot(composed_buffer); composed.save("build/bench-12-frames/frame-"+str(video.index())+".png"); if(video.index()==video.count()-1){composed.save("build/bench-12-particle-wave-sprites.png"); composed.resize(900,560).save("build/bench-12-particle-wave-sprites-still.png");} }
+for(frame in range(0,video.count())) { video.frame(); let t=video.time(); gold.set_instance(0,-1.6,0.55+0.12*sin(t*2.0),0.0,0.0,0.0,0.0,0.58,0.58,0.58); coral.set_instance(0,1.45,0.45+0.10*sin(t*2.0+0.7),-0.2,0.0,0.0,0.0,0.36,0.36,0.36); for(z in range(0,50)){for(x in range(0,50)){let i=z*50+x; let px=(float(x)-24.5)*0.15; let pz=(float(z)-24.5)*0.15; cloud.set(i,px,0.42*sin(px*1.8+t*2.0)*cos(pz*1.8-t*1.1),pz,0.035,"#2b9fb0",0.82,true);}} scene.points(cloud); let image=scene.render_image(1280,720,destination); canvas.clear("#09111f"); canvas.image(image,0.0,0.0); canvas.text("2,500 depth-sorted gaussian sprites  ·  wave phase "+str(float(int(t*100.0))/100.0)+" s",34.0,52.0,font(24.0),paint().color("#e6f1ff")); let composed=canvas.snapshot(composed_buffer); composed.save("build/bench-12-frames/frame-"+str(video.index())+".png"); if(video.index()==video.count()-1){composed.save("build/bench-12-particle-wave-sprites.png"); composed.resize(900,560).save("build/bench-12-particle-wave-sprites-still.png");} }
 video.end(); out.print("B12: 2500 point sprites, 120 frames, 1280x720@30");
 end _lmcode_
 savedsl(program,"build/bench-12-particle-wave-sprites.dslb"); r=system(concat(dsl_cli(program),["--dsl","build/bench-12-particle-wave-sprites.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

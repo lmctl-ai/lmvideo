@@ -1,5 +1,5 @@
 # B14 / G.7: real lmcad housing STL (mm) consumed as metres by four cameras.
-mkdir("build"); cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.4";
+mkdir("build"); cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.72";
 let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shininess(48.0); let housing=scene.box(120.0,70.0,80.0,alloy); let bore=scene.cylinder(15.0,80.0,alloy).position(0.0,0.0,0.0); housing.cut(bore); bore.visible(false); scene.export_stl("build/b14-housing.stl");
 end _lmcode_
 savedsl(cad,"build/bench-14-cad.dslb"); r=system(concat(dsl_cli(cad),["--dsl","build/bench-14-cad.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

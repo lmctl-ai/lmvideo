@@ -1,0 +1,22 @@
+mkdir("build");
+program = _lmcode_ cli="lmvideo";
+video.size(960, 540); video.fps(24); video.frames(48);
+video.output("build/turntable.mp4"); video.begin();
+let scene = scene3d().background("#09111f");
+scene.camera(camera3d().look_at(4.5, 2.5, 5.5, 0.0, 0.0, 0.0)
+  .perspective(45.0, 0.1, 100.0));
+scene.directional_light(2.0, 3.0, 4.0, "#ffffff", 2.0);
+let body = scene.add(mesh_box(1.4, 1.0, 0.6),
+                     material("#e76f51", 0.25, 0.45));
+for (frame in range(0, video.count())) {
+  video.frame();
+  body.rotation(0.0, 360.0 * video.t(), 0.0);
+  scene.time(video.time());
+  let image = scene.render_image(
+    video.width(), video.height(), "cycles", 16, 4, 42, true);
+  canvas.clear("#09111f");
+  canvas.image(image, 0.0, 0.0);
+}
+video.end();
+end _lmcode_
+savedsl(program, "build/turntable.dslb");

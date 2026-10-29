@@ -1,0 +1,48 @@
+{
+  "id": "B21",
+  "title": "Volumetric Fog & Window God-Rays",
+  "script": "examples/showcase/bench-21-window-god-rays.lms",
+  "script_sha256": "7e7933776ceff0f094e93bc4b3ab5fd1d5a6b54f4ddc97907825b4261cfd92b9",
+  "visual_specification": "900x560 original enclosed chamber with a real left-wall opening, three opaque mullions, diagonal sunlight and a procedural stone sculpture.",
+  "required_feature_witnesses": [
+    "homogeneous participating scatter, not absorption alone",
+    "HG g=0.6",
+    "opaque window/slat occlusion",
+    "native phase and thickness laws",
+    "combined scatter and absorption",
+    "CPU OIDN"
+  ],
+  "backend": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 128,
+    "bounces": 8,
+    "seed": 20261101,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "cpu_budget_seconds": 300,
+  "status": "CONTENT_ONLY",
+  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-21-window-god-rays.lms",
+      "sha256": "7e7933776ceff0f094e93bc4b3ab5fd1d5a6b54f4ddc97907825b4261cfd92b9",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "limitations": [
+    "ACES rational filmic curve; no claim of Blender Filmic or AgX colour management.",
+    "No Lone Monk reference file or borrowed artwork is shipped."
+  ],
+  "publication_note": "Original source candidate; native medium controls and a byte-identical private feature pass are recorded separately. Full public-source target ledger review remains pending."
+}

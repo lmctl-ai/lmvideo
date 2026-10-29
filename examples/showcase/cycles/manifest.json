@@ -5,16 +5,7 @@
     "max_channel_error": "RGBA",
     "changed_channels": "RGBA"
   },
-  "host_sha256": "055336b8feab93692e064fc0fc14b5ca723f1514413e895ab35209a01372a3c2",
-  "module_sha256": "2f247c20caf7c393f2fe77ed9e6890544e31bbe61921c263aa4e9890f7f77464",
   "render_threads": 4,
-  "affinity": [
-    0,
-    1,
-    2,
-    3
-  ],
-  "memory_limit_bytes": 2147483648,
   "predeclared_acceptance": {
     "matte_probe_ssim_min": 0.85,
     "mask_outside_one_pixel_max": 0.005,
@@ -32,33 +23,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 4.47,
-        "max_rss_kib": 539708
-      },
-      "repeat_timing": {
-        "elapsed_s": 4.88,
-        "max_rss_kib": 539764
-      },
       "raster_timing": {
         "elapsed_s": 0.82,
         "max_rss_kib": 304776
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-01-pbr-metallic-roughness.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-01-pbr-metallic-roughness.png",
           "reference_path": "build/bench-01-pbr-metallic-roughness.png",
           "ssim_global": 0.9744278575071508,
           "max_channel_error": 230,
@@ -85,13 +55,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b01-cycles-54e645d45a450dda290faec094669536e5ddd45dd9c5a1a30add6a280dd80b70.png",
-          "sha256": "54e645d45a450dda290faec094669536e5ddd45dd9c5a1a30add6a280dd80b70",
-          "bytes": 210358
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -105,33 +68,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 4.92,
-        "max_rss_kib": 529400
-      },
-      "repeat_timing": {
-        "elapsed_s": 4.27,
-        "max_rss_kib": 529436
-      },
       "raster_timing": {
         "elapsed_s": 0.87,
         "max_rss_kib": 304208
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-02-pcf-soft-shadow-pedestal.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-02-pcf-soft-shadow-pedestal.png",
           "reference_path": "build/bench-02-pcf-soft-shadow-pedestal.png",
           "ssim_global": 0.6458430635157104,
           "max_channel_error": 229,
@@ -158,13 +100,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b02-cycles-f47070746878a9228621c8c33281ebfe602c3bf966e8f5fab02fc957aaa9985e.png",
-          "sha256": "f47070746878a9228621c8c33281ebfe602c3bf966e8f5fab02fc957aaa9985e",
-          "bytes": 61474
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -178,33 +113,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 9.59,
-        "max_rss_kib": 529172
-      },
-      "repeat_timing": {
-        "elapsed_s": 12.01,
-        "max_rss_kib": 528960
-      },
       "raster_timing": {
         "elapsed_s": 1.51,
         "max_rss_kib": 300184
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-03-cube-diorama.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-03-cube-diorama.png",
           "reference_path": "build/bench-03-cube-diorama.png",
           "ssim_global": 0.8878365724981546,
           "max_channel_error": 130,
@@ -231,13 +145,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b03-cycles-18d797528660644aae6e20201d04e68392b7a334b985403ad25540d70190c54a.png",
-          "sha256": "18d797528660644aae6e20201d04e68392b7a334b985403ad25540d70190c54a",
-          "bytes": 121914
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -251,43 +158,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 7.88,
-        "max_rss_kib": 560012
-      },
-      "repeat_timing": {
-        "elapsed_s": 14.82,
-        "max_rss_kib": 560232
-      },
       "raster_timing": {
         "elapsed_s": 1.58,
         "max_rss_kib": 302728
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-04-tiled-pbr-swatches-warm.png",
-          "ssim_global": 0.9999999059579674,
-          "max_channel_error": 1,
-          "changed_channels": 40,
-          "dimensions": [
-            900,
-            560
-          ]
-        },
-        {
-          "path": "build/bench-04-tiled-pbr-swatches.png",
-          "ssim_global": 0.9999999905957866,
-          "max_channel_error": 1,
-          "changed_channels": 4,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-04-tiled-pbr-swatches.png",
           "reference_path": "build/bench-04-tiled-pbr-swatches.png",
           "ssim_global": 0.91858641917661,
           "max_channel_error": 250,
@@ -314,18 +190,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b04-cycles-16dfefd8c9dbfe2b6c4d58f2c62e61c14f7a0f6445a4f70392a948b5ba0d4e9d.png",
-          "sha256": "16dfefd8c9dbfe2b6c4d58f2c62e61c14f7a0f6445a4f70392a948b5ba0d4e9d",
-          "bytes": 61825
-        },
-        {
-          "store_file": "b04-cycles-6a22fb293f57c414f0b9a9939b84ff800c347c6b5e41de713ead31ce211b0551.png",
-          "sha256": "6a22fb293f57c414f0b9a9939b84ff800c347c6b5e41de713ead31ce211b0551",
-          "bytes": 61838
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -339,33 +203,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 29.64,
-        "max_rss_kib": 611396
-      },
-      "repeat_timing": {
-        "elapsed_s": 30.07,
-        "max_rss_kib": 605504
-      },
       "raster_timing": {
         "elapsed_s": 2.01,
         "max_rss_kib": 308360
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-05-tangent-relief-medallion.png",
-          "ssim_global": 0.9999999942860178,
-          "max_channel_error": 1,
-          "changed_channels": 78,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-05-tangent-relief-medallion.png",
           "reference_path": "build/bench-05-tangent-relief-medallion.png",
           "ssim_global": 0.8824976560951311,
           "max_channel_error": 159,
@@ -392,13 +235,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b05-cycles-5b8a73deab8550cd8ab3bd6a6e91c1caf368202d8cf891873e0c11d8085f4d75.png",
-          "sha256": "5b8a73deab8550cd8ab3bd6a6e91c1caf368202d8cf891873e0c11d8085f4d75",
-          "bytes": 176183
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -412,33 +248,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 9.53,
-        "max_rss_kib": 542792
-      },
-      "repeat_timing": {
-        "elapsed_s": 5.23,
-        "max_rss_kib": 543504
-      },
       "raster_timing": {
         "elapsed_s": 1.2,
         "max_rss_kib": 307904
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-06-helmet-ibl.png",
-          "ssim_global": 0.9999999967604146,
-          "max_channel_error": 1,
-          "changed_channels": 18,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-06-helmet-ibl.png",
           "reference_path": "build/bench-06-helmet-ibl.png",
           "ssim_global": 0.9893850671247915,
           "max_channel_error": 188,
@@ -465,13 +280,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b06-cycles-bf590b20c6a8ba22eafb123b15c3d916d073803ec3a5273dd4a1cd2312e09edc.png",
-          "sha256": "bf590b20c6a8ba22eafb123b15c3d916d073803ec3a5273dd4a1cd2312e09edc",
-          "bytes": 162674
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -485,33 +293,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 3.92,
-        "max_rss_kib": 537436
-      },
-      "repeat_timing": {
-        "elapsed_s": 3.8,
-        "max_rss_kib": 536984
-      },
       "raster_timing": {
         "elapsed_s": 0.79,
         "max_rss_kib": 302440
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-07-bevel-typography.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-07-bevel-typography.png",
           "reference_path": "build/bench-07-bevel-typography.png",
           "ssim_global": 0.8388308194879918,
           "max_channel_error": 226,
@@ -538,13 +325,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b07-cycles-5ed253c15489e5585ae1e428c45c45f493273dbcd59447b13f1b98006731c341.png",
-          "sha256": "5ed253c15489e5585ae1e428c45c45f493273dbcd59447b13f1b98006731c341",
-          "bytes": 111619
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -558,33 +338,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 3.22,
-        "max_rss_kib": 529292
-      },
-      "repeat_timing": {
-        "elapsed_s": 5.57,
-        "max_rss_kib": 528948
-      },
       "raster_timing": {
         "elapsed_s": 0.7,
         "max_rss_kib": 299636
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-08-lathe-closed-knot.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-08-lathe-closed-knot.png",
           "reference_path": "build/bench-08-lathe-closed-knot.png",
           "ssim_global": 0.8897505982985418,
           "max_channel_error": 153,
@@ -611,13 +370,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b08-cycles-3549bf46fe6157ca4aab53e5ec6e7a6bebd8cf1e87f928d2562cc3026cd8200c.png",
-          "sha256": "3549bf46fe6157ca4aab53e5ec6e7a6bebd8cf1e87f928d2562cc3026cd8200c",
-          "bytes": 48428
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -631,33 +383,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 2.62,
-        "max_rss_kib": 342980
-      },
-      "repeat_timing": {
-        "elapsed_s": 2.61,
-        "max_rss_kib": 342976
-      },
       "raster_timing": {
         "elapsed_s": 1.01,
         "max_rss_kib": 303908
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-09-terrain-contours.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-09-terrain-contours.png",
           "reference_path": "build/bench-09-terrain-contours.png",
           "ssim_global": 0.9786254201404471,
           "max_channel_error": 119,
@@ -684,13 +415,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b09-cycles-95f6ffbfb4a6c23db61b9c47b5f0adfd4f0af91c88584d9e029e50f57198136c.png",
-          "sha256": "95f6ffbfb4a6c23db61b9c47b5f0adfd4f0af91c88584d9e029e50f57198136c",
-          "bytes": 122937
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -704,33 +428,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 1.85,
-        "max_rss_kib": 315844
-      },
-      "repeat_timing": {
-        "elapsed_s": 1.86,
-        "max_rss_kib": 316072
-      },
       "raster_timing": {
         "elapsed_s": 0.63,
         "max_rss_kib": 302612
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-10-fem-callout-dashboard.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-10-fem-callout-dashboard.png",
           "reference_path": "build/bench-10-fem-callout-dashboard.png",
           "ssim_global": 0.9756253288636425,
           "max_channel_error": 180,
@@ -757,13 +460,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b10-cycles-8d431f128e435791051687ca43565ea7cda0b2b66a6267f23bd116a43c9f70f7.png",
-          "sha256": "8d431f128e435791051687ca43565ea7cda0b2b66a6267f23bd116a43c9f70f7",
-          "bytes": 83364
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -777,33 +473,12 @@
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 3.62,
-        "max_rss_kib": 530360
-      },
-      "repeat_timing": {
-        "elapsed_s": 5.42,
-        "max_rss_kib": 530376
-      },
       "raster_timing": {
         "elapsed_s": 0.72,
         "max_rss_kib": 303740
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-11-dynamic-matrix-instancing.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-11-dynamic-matrix-instancing.png",
           "reference_path": "build/bench-11-dynamic-matrix-instancing.png",
           "ssim_global": 0.9782254698555041,
           "max_channel_error": 120,
@@ -830,13 +505,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b11-cycles-0bca7ffc9985f25d7a63204baa6bbf3059b931095cb0c1ea70a9e8655ef0694f.png",
-          "sha256": "0bca7ffc9985f25d7a63204baa6bbf3059b931095cb0c1ea70a9e8655ef0694f",
-          "bytes": 216203
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -856,33 +524,12 @@
       "seed": 42,
       "denoise": true,
       "note": "Beauty is Cycles; depth/normal panels explicitly remain canonical raster diagnostic passes.",
-      "timing": {
-        "elapsed_s": 1.36,
-        "max_rss_kib": 299856
-      },
-      "repeat_timing": {
-        "elapsed_s": 1.37,
-        "max_rss_kib": 303048
-      },
       "raster_timing": {
         "elapsed_s": 0.73,
         "max_rss_kib": 301476
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-13-aov-post-processing.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-13-aov-post-processing.png",
           "reference_path": "build/bench-13-aov-post-processing.png",
           "ssim_global": 0.9966623623878152,
           "max_channel_error": 149,
@@ -909,13 +556,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b13-cycles-e767bcfe3c5f93ef931413d442952ee93042a215f99049520c882d066ae4e5b4.png",
-          "sha256": "e767bcfe3c5f93ef931413d442952ee93042a215f99049520c882d066ae4e5b4",
-          "bytes": 113658
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -924,38 +564,17 @@
       "base_source": "examples/showcase/bench-14-cad-four-view-section.lms",
       "base_sha256": "6a02970f9f2cd738d971155bd36d1850ed1d8b6381fd15bfb160942db63f5ad4",
       "script": "examples/showcase/cycles/bench-14-cad-four-view-section.lms",
-      "script_sha256": "297ae7aaf6658737474d5816212b547f24b5564f276d2ebc772dea72c89da97d",
+      "script_sha256": "ae4c81ec660713999d5254e0ed7b25c4335349728d849b9a3a0b5ba38787bbb8",
       "samples": 32,
       "bounces": 4,
       "seed": 42,
       "denoise": true,
-      "timing": {
-        "elapsed_s": 3.62,
-        "max_rss_kib": 340776
-      },
-      "repeat_timing": {
-        "elapsed_s": 3.57,
-        "max_rss_kib": 340256
-      },
       "raster_timing": {
         "elapsed_s": 0.65,
         "max_rss_kib": 303536
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-14-cad-four-view-section.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-14-cad-four-view-section.png",
           "reference_path": "build/bench-14-cad-four-view-section.png",
           "ssim_global": 0.5995429638572046,
           "max_channel_error": 145,
@@ -982,13 +601,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b14-cycles-a7d1cd257aa4153d5212c0d19c0d21629b3f8f8a94e375c0811b90aa8d55e861.png",
-          "sha256": "a7d1cd257aa4153d5212c0d19c0d21629b3f8f8a94e375c0811b90aa8d55e861",
-          "bytes": 60434
-        }
-      ],
       "status": "LOCAL_PASS"
     },
     {
@@ -1003,43 +615,12 @@
       "seed": 42,
       "denoise": true,
       "note": "Twelve resolved frames over the same four-second orbit; original 120-frame raster cache benchmark remains unchanged.",
-      "timing": {
-        "elapsed_s": 29.34,
-        "max_rss_kib": 821000
-      },
-      "repeat_timing": {
-        "elapsed_s": 28.89,
-        "max_rss_kib": 728928
-      },
       "raster_timing": {
         "elapsed_s": 15.95,
         "max_rss_kib": 302108
       },
-      "repeat_metrics": [
-        {
-          "path": "build/bench-15-molecular-trajectory-still.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            900,
-            560
-          ]
-        },
-        {
-          "path": "build/bench-15-molecular-trajectory.png",
-          "ssim_global": 1.0,
-          "max_channel_error": 0,
-          "changed_channels": 0,
-          "dimensions": [
-            1280,
-            720
-          ]
-        }
-      ],
       "beauty_comparison": [
         {
-          "path": "build/bench-15-molecular-trajectory.png",
           "reference_path": "build/bench-15-frames/frame-110.png",
           "ssim_global": 0.9860605342334352,
           "max_channel_error": 174,
@@ -1066,23 +647,6 @@
         ],
         "outside_one_pixel_fraction": 0.0
       },
-      "outputs": [
-        {
-          "store_file": "b15-cycles-21136cae4f7bdfb9aab71deeda119828c080cce8135b1493698de65279142350.png",
-          "sha256": "21136cae4f7bdfb9aab71deeda119828c080cce8135b1493698de65279142350",
-          "bytes": 57566
-        },
-        {
-          "store_file": "b15-cycles-ef72ac15dc95687a99b1ab49f83f95c5f4e1f1c667b34d6f1fe78adf47464bf4.png",
-          "sha256": "ef72ac15dc95687a99b1ab49f83f95c5f4e1f1c667b34d6f1fe78adf47464bf4",
-          "bytes": 67265
-        },
-        {
-          "store_file": "b15-cycles-0f3ea49f099edc9be46f5b499419033aeb5364dc8b815a07f907a353a7ef402b.mp4",
-          "sha256": "0f3ea49f099edc9be46f5b499419033aeb5364dc8b815a07f907a353a7ef402b",
-          "bytes": 38987
-        }
-      ],
       "status": "LOCAL_PASS",
       "frame_repeat_metrics": [
         {
@@ -1222,14 +786,9 @@
       }
     }
   ],
-  "status": "LOCALLY_VERIFIED_UNRELEASED_API",
-  "implementation_repository": "lmctlhq/lmvideo",
-  "implementation_commit": "6d38c85b8210204e70f874686642195b2a817ba2",
-  "implementation_cpp_tree": "9ca992dc8851a35b6b0ed8d27ab022675f72b324",
-  "implementation_visibility": "private; hashes record tested implementation provenance, not public source",
+  "status": "CONTENT_ONLY",
   "renderer": "cycles",
   "device": "CPU",
-  "build_profile": "release",
   "native_only_development": false,
   "media_publication": false,
   "phase7_started": false,

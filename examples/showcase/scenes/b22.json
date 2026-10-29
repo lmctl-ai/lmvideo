@@ -1,0 +1,49 @@
+{
+  "id": "B22",
+  "title": "Physical Sky Atmosphere \u2014 Sun Elevation Sweep",
+  "script": "examples/showcase/bench-22-physical-sky.lms",
+  "reference_url": "https://github.com/blender/cycles",
+  "visual_specification": "Original seven stone monoliths on terrain; stacked 2-degree golden-hour and 45-degree noon panels under an analytic Hosek-Wilkie sky.",
+  "required_feature_witnesses": [
+    "native analytic Hosek-Wilkie physical sky",
+    "world Y-up to sky Z-up mapping",
+    "2 and 45 degree elevation",
+    "matched sun direction and analytic shadow length",
+    "64 spp CPU OIDN",
+    "same original terrain and camera across both panels"
+  ],
+  "cpu_budget_seconds": 120,
+  "backend": "cycles",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "CONTENT_ONLY",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-22-physical-sky.lms",
+      "sha256": "a168312290b2b6a30caf2e8d91761915d551cf93660cbf06a4fa952352324c04",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "script_sha256": "a168312290b2b6a30caf2e8d91761915d551cf93660cbf06a4fa952352324c04",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 6,
+    "seed": 20261102,
+    "denoise": "OIDN"
+  },
+  "renderer": "cycles",
+  "limitations": [
+    "Hosek dome excludes solar disc; separate directional sunlight energy and colour are artistic inputs.",
+    "No Nishita weather, clouds, or automatic solar-radiance solution claimed."
+  ],
+  "publication_status": "PENDING_RUNTIME_RELEASE"
+}

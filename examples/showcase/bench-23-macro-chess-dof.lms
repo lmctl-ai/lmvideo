@@ -1,0 +1,26 @@
+# B23 / G.10: original macro chess depth-of-field witness.
+# The board, pawns, bulbs and materials are procedural; no external asset is used.
+mkdir("build"); program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).ambient(0.0).background("#03050a");
+let camera=camera3d().look_at(0.0,0.18,0.75,0.0,0.06,0.0).perspective(42.0,0.1,2.0).lens(85.0,24.0).dof(1.4,0.72,6);scene.camera(camera);
+scene.area_light(-0.25,0.35,0.45,0.0,-0.2,-1.0,0.25,0.25,"#fff0d0",4.0,2.0);
+scene.area_light(0.28,0.28,0.12,0.0,-0.15,-1.0,0.18,0.18,"#b9d8ff",3.0,2.0);
+let boardmat=material("#4d2a1e",0.0,0.58);scene.add(mesh_box(0.54,0.018,0.42),boardmat).position(0.0,0.0,0.0);
+for (i in range(0,8)) { for (j in range(0,8)) {
+  let tilemat=material("#d3a777",0.0,0.72);if ((i+j)%2!=0) { tilemat=material("#321b16",0.0,0.72); }
+  scene.add(mesh_box(0.066,0.004,0.051),tilemat).position(-0.231+float(i)*0.066,0.012,-0.1785+float(j)*0.051);
+}}
+let ivory=material("#e8dfcf",0.0,0.25);let ebony=material("#161a22",0.0,0.22);
+let pawn="0,0,0,0.026,0,0,0.032,0.004,0,0.031,0.012,0,0.025,0.021,0,0.021,0.045,0,0.015,0.060,0,0.018,0.068,0,0,0.072,0";
+let p0=scene.add(mesh_lathe_closed(pawn,32),ivory);p0.position(-0.12,0.018,0.18);
+let p1=scene.add(mesh_lathe_closed(pawn,32),ebony);p1.position(-0.04,0.018,0.05);
+let p2=scene.add(mesh_lathe_closed(pawn,32),ivory);p2.position(0.04,0.018,-0.04);
+let p3=scene.add(mesh_lathe_closed(pawn,32),ebony);p3.position(0.12,0.018,-0.12);
+let glow=material("#fff1bd",0.0,0.18).emissive("#fff1bd",0.5);
+scene.add(mesh_sphere(0.008,24,12),glow).position(-0.25,0.16,-0.60);
+scene.add(mesh_sphere(0.008,24,12),glow).position(0.0,0.20,-0.60);
+scene.add(mesh_sphere(0.008,24,12),glow).position(0.25,0.14,-0.60);
+let image=scene.render_image(900,560,"cycles",64,8,20261102,true);image.save("build/bench-23-macro-chess-dof.png");
+out.print("B23 original macro chess CPU Cycles six-blade depth of field");
+end _lmcode_
+savedsl(program,"build/bench-23-macro-chess-dof.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-23-macro-chess-dof.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

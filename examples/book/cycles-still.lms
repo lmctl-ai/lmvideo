@@ -1,0 +1,17 @@
+mkdir("build");
+program = _lmcode_ cli="lmvideo";
+
+let scene = scene3d().background("#111923");
+scene.camera(camera3d()
+  .look_at(4.0, 2.8, 6.0, 0.0, 0.6, 0.0)
+  .perspective(42.0, 0.1, 100.0));
+scene.directional_light(2.0, 3.0, 4.0, "#ffffff", 2.0);
+scene.add(mesh_sphere(1.0, 32, 48),
+          material("#d9a441", 0.25, 0.45));
+
+let beauty = scene.render_image(
+  960, 540, "cycles", 32, 4, 42, true);
+beauty.save("build/sphere-cycles.png");
+
+end _lmcode_
+savedsl(program, "build/sphere-cycles.dslb");

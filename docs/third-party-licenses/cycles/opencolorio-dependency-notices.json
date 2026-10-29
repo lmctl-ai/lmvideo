@@ -1,0 +1,36 @@
+{
+  "format": 1,
+  "purpose": "OpenColorIO 2.5.0 static dependency notices selected by the pinned CPU closure",
+  "components": [
+    {
+      "component": "yaml-cpp",
+      "version": "0.8.0",
+      "license": "MIT",
+      "source": "https://github.com/jbeder/yaml-cpp/tree/0.8.0",
+      "file": "cycles/yaml-cpp-LICENSE",
+      "sha256": "aa6fcc27be034e41e21dd832f9175bfe694a48491d9e14ff0fa278e19ad14f1b"
+    },
+    {
+      "component": "pystring",
+      "version": "1.2.0",
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/imageworks/pystring/tree/v1.2.0",
+      "file": "cycles/pystring-LICENSE",
+      "sha256": "f7f060301402ea0b5c507b865b1a9de037d4d7b24f37422a93b70fe9c7a9b78a"
+    },
+    {
+      "component": "minizip-ng",
+      "version": "4.2.2",
+      "license": "zlib",
+      "source": "https://github.com/zlib-ng/minizip-ng/tree/4.2.2",
+      "file": "cycles/minizip-ng-LICENSE",
+      "sha256": "675181c03fc1302a1c8554c00f7be9bb420c5dbc9dcc2013433cec144413de03"
+    },
+    {
+      "component": "Embree bundled OIDN notice",
+      "source": "pinned Embree CPU source third-party program notice",
+      "file": "cycles/Embree-OIDN-third-party-programs.txt",
+      "sha256": "6c82a835b37b99f779cd9a76896cee02d64dcf1eb36e704e5d925bb9daf40a1e"
+    }
+  ]
+}

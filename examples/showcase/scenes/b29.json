@@ -1,0 +1,59 @@
+{
+  "id": "B29",
+  "title": "Original Recursive Menger Sculpture",
+  "script": "examples/showcase/bench-29-recursive-menger.lms",
+  "script_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+  "visual_specification": "900x560 level-three original Menger sculpture with 8000 shared bronze cubes, true hierarchical tunnels, native self-shadowing, a separate raster preview and CPU Cycles final.",
+  "required_feature_witnesses": [
+    "three base3-level Menger occupancy predicate",
+    "8000 instances of one shared cube mesh",
+    "6.75m bounds and 125 cubic metres occupied voxels",
+    "actual raster preview and CPU Cycles final",
+    "native self-shadowing",
+    "original procedural scene, no CSG or simulation claim"
+  ],
+  "cpu_budget_seconds": 600,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 8,
+    "seed": 20261105,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "CONTENT_ONLY",
+  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-29-recursive-menger.lms",
+      "sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "geometry_profile": {
+    "levels": 3,
+    "base": 3,
+    "instances": 8000,
+    "cube_edge_m": 0.25,
+    "bounds_m": [
+      -3.375,
+      3.375
+    ],
+    "occupied_volume_m3": 125
+  },
+  "limitations": [
+    "Recursive shared-mesh instancing; no Manifold/CSG boolean union is claimed.",
+    "Touching voxels retain separate opaque surface boundaries."
+  ]
+}

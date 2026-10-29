@@ -1,60 +1,62 @@
 # Third-party notices
 
-Project-owned lmvideo source is licensed under the MIT License in [LICENSE](LICENSE). The notices below cover material that lmvideo includes or uses at build and runtime. lmvideo does not claim ownership of these components.
+The public README, docs, pictures and `.lms` examples are MIT-licensed under `LICENSE-examples`. Binary releases are licensed under `LICENSE`. Third-party components retain their own terms; neither project license changes an upstream grant.
+
+This notice identifies third-party material included in the distributed host and its rendering backends. Exact license texts and notices are shipped in the adjacent `docs/third-party-licenses/` bundle and in public documentation under `docs/third-party-licenses/`.
 
 ## DejaVu Sans
 
-The repository includes `assets/fonts/DejaVuSans.ttf`, embedded into the lmvideo binary. It is DejaVu Sans, based on Bitstream Vera. Its license and attribution are preserved verbatim in [assets/fonts/LICENSE-DejaVu.txt](assets/fonts/LICENSE-DejaVu.txt).
+The host embeds DejaVu Sans, based on Bitstream Vera. Its complete license and attribution are in [`docs/third-party-licenses/DejaVuSans-LICENSE.txt`](docs/third-party-licenses/DejaVuSans-LICENSE.txt). Upstream: <https://dejavu-fonts.github.io/>.
 
-Upstream: <https://dejavu-fonts.github.io/>. The DejaVu project identifies DejaVu changes as public domain and preserves the Bitstream Vera copyright and permission terms. Redistribution must retain the notices and must follow the font renaming condition for modified fonts. The tracked font SHA-256 is `690243adfefe0ce154519b547db6205794bd30ac4277275179517a90994f4980648` and matches the system DejaVu Sans 2.37 file used for provenance checking.
+## lmscript runtime header
 
-## Skia and the JetBrains skia-pack
+The host includes the unmodified lmcode-cpp runtime header under MIT. Its license text is in [`docs/third-party-licenses/lmcode-cpp-MIT.txt`](docs/third-party-licenses/lmcode-cpp-MIT.txt). The lmscript compiler is a separate build-time tool and is not bundled.
 
-The build downloads, but this repository does not vendor, the pinned x86-64 Linux release `m144-e2e6623374-4` from JetBrains skia-pack. The exact URL, SHA-256, and byte count are recorded in [scripts/skia.lock](scripts/skia.lock). The archive is unpacked into the ignored `third_party/skia` directory by [scripts/fetch-skia.sh](scripts/fetch-skia.sh).
+## Skia and its codecs
 
-Upstream archive: <https://github.com/JetBrains/skia-pack/releases/tag/m144-e2e6623374-4>. The pinned JetBrains Skia fork's inspected license text is <https://raw.githubusercontent.com/JetBrains/skia/e2e66233743d048dc880203b6598fd34d94d9765/LICENSE> and is reproduced below. The release archive itself is not tracked here; any redistributed Skia binary or static library must carry this license and the applicable dependency notices.
+The host uses the JetBrains skia-pack `m144-e2e6623374-4` release for Canvas raster/vector operations, SVG parsing, fonts and image codecs. The bundled CPU profile carries these exact license texts and notices: Skia BSD-3-Clause (`docs/third-party-licenses/Skia.txt`); ICU (`docs/third-party-licenses/ICU.txt`); Expat (`docs/third-party-licenses/Expat.txt`); libjpeg-turbo/IJG (`docs/third-party-licenses/libjpeg-turbo.md`, `docs/third-party-licenses/README.ijg`); libpng (`docs/third-party-licenses/libpng-LICENSE`); zlib (`docs/third-party-licenses/zlib-LICENSE`); HarfBuzz (`docs/third-party-licenses/HarfBuzz-COPYING`); WebP (`docs/third-party-licenses/libwebp-COPYING`, `docs/third-party-licenses/libwebp-PATENTS`); FreeType (`docs/third-party-licenses/FreeType-FTL.TXT`); and DejaVu Sans. ANGLE, SwiftShader and Vulkan GPU components are not used by the CPU profile.
 
-The exact upstream BSD-3-Clause text is retained in [licenses/Skia.txt](licenses/Skia.txt), including the 2011 Google Inc. copyright.
+## CPU Cycles and image I/O
 
-The extracted pinned pack was inspected. Its actual license files are `third_party/externals/angle2/LICENSE`, `libwebp/COPYING`, `harfbuzz/COPYING`, `swiftshader/LICENSE.txt`, `libpng/LICENSE`, `zlib/LICENSE`, and `include/third_party/vulkan/LICENSE`. The release also contains or links static libraries named `libexpat.a`, `libfreetype2.a`, `libharfbuzz.a`, `libicu.a`, `libjpeg*.a`, `libpng.a`, `libwebp*.a`, and `libzlib.a`. The pack does not expose a separate license file for every one of those libraries in the extracted tree. This repository therefore records provenance for source preparation only; binary redistribution requires collecting and shipping the missing upstream notices before publication.
+The Cycles-enabled CPU profile uses standalone Cycles, Embree, Open Image Denoise and its separately licensed weights, OpenImageIO, and selected image/colour/threading dependencies. [`docs/third-party-licenses/cycles/manifest.json`](docs/third-party-licenses/cycles/manifest.json) records each component's pinned version or commit, upstream source, license identifier, release role, exact license-text path and SHA-256. All matching texts are included in `docs/third-party-licenses/cycles/`.
 
-The verified license families for the linked libraries are:
-
-| Component | License family | Primary upstream license or notice |
+| Component | Version | License / included notice |
 | --- | --- | --- |
-| ANGLE (`angle2`) | BSD 3-Clause | <https://github.com/google/angle/blob/main/LICENSE> |
-| libpng | libpng license | <https://github.com/pnggroup/libpng/blob/libpng16/LICENSE> |
-| libjpeg-turbo | IJG / BSD-style | <https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/LICENSE.md> |
-| libwebp | BSD 3-Clause | <https://github.com/webmproject/libwebp/blob/main/COPYING> |
-| zlib | zlib License | <https://github.com/madler/zlib/blob/master/LICENSE> |
-| FreeType | FreeType License / GPLv2 alternative | <https://gitlab.freedesktop.org/freetype/freetype/-/blob/master/docs/FTL.TXT> |
-| HarfBuzz | MIT | <https://github.com/harfbuzz/harfbuzz/blob/main/COPYING> |
-| Expat | MIT | <https://github.com/libexpat/libexpat/blob/master/expat/COPYING> |
-| ICU | ICU License | <https://github.com/unicode-org/icu/blob/main/icu4c/LICENSE> |
-| SwiftShader | Apache 2.0 | <https://github.com/google/swiftshader/blob/main/LICENSE.txt> |
-| Vulkan headers | Apache 2.0 | <https://github.com/KhronosGroup/Vulkan-Headers/blob/main/LICENSE.txt> |
+| Cycles | 5.3.0 | Apache-2.0 (`Cycles-LICENSE`) |
+| Embree | 4.4.1 | Apache-2.0 (`Embree-LICENSE.txt`) |
+| Open Image Denoise | 2.5.0 | Apache-2.0 (`OIDN-LICENSE.txt`) |
+| OIDN weights | pinned model commit | Apache-2.0 (`OIDN-weights-LICENSE.txt`) |
+| OpenImageIO / LibTIFF | 3.1.16.0 / 4.7.0 | Apache-2.0 / LibTIFF license |
+| oneTBB | 2022.3.0 | Apache-2.0 and its bundled program notices |
+| OpenColorIO / OpenEXR / Imath | 2.5.0 / 3.4.10 / 3.2.2 | BSD-3-Clause; OpenEXR patent notice included |
+| fmt / pugixml / robin-map | pinned versions | MIT |
+| zlib / libpng / libjpeg-turbo | pinned versions | zlib / libpng / IJG, BSD-3-Clause and zlib terms |
+| OpenJPEG / OpenJPH | 2.5.3 / 0.25.2 | BSD-2-Clause |
+| WebP / Zstandard / Brotli | pinned versions | BSD-3-Clause plus WebM patent grant / BSD-3-Clause option / MIT |
+| ARM64 SSE2NEON | pinned commit | MIT |
+| Cycles sky models | pinned Cycles source | File-level BSD-3-Clause, MIT and Apache-2.0 credits in `cycles/sky/ATTRIBUTIONS.md` |
 
-The table identifies licensing families for compatibility review; it does not replace the exact upstream notices required for binary redistribution.
+The OpenImageIO profile excludes HEIF, FFmpeg, RAW, ImageMagick, OpenVDB and JXL codecs. OIDN uses the CPU source build and the separately licensed Apache-2.0 weights; no Intel prebuilt OIDN binary agreement is used. The pinned CPU profile excludes GPU/GUI components and unrelated packages in the Blender dependency archive.
 
-### Binary redistribution
+FFmpeg and ffprobe are separate executables selected by the user and are not bundled; their distribution terms depend on that build. Operating-system runtime components retain their own licenses.
 
-Release binaries link the Skia pack's static libraries, so each release carries the exact license texts next to the executable
-(`scripts/stage-release-notices.sh`): `licenses/Skia.txt`, `ICU.txt` (Unicode License v3), `Expat.txt`, `libjpeg-turbo.md` and `README.ijg`
-(IJG + BSD-3-Clause + zlib terms) from this repository, `libpng-LICENSE`, `zlib-LICENSE`, `HarfBuzz-COPYING`, `libwebp-COPYING` and
-`FreeType-FTL.TXT` (FreeType used under its FTL) copied from the unpacked pack, and the DejaVu font license. ANGLE, SwiftShader and the Vulkan
-headers are in the pack but not linked into the CPU-raster build.
+## Supplemental dependency notices
 
-## FFmpeg
+The bundle includes the complete upstream OIDN, Embree and OpenImageIO third-party
+program lists. These lists may also describe optional upstream components that
+the selected CPU profile does not enable; the component manifest identifies the
+selected runtime dependencies. OpenColorIO's selected yaml-cpp, pystring and
+minizip-ng notices are pinned in
+[`opencolorio-dependency-notices.json`](docs/third-party-licenses/cycles/opencolorio-dependency-notices.json).
 
-lmvideo does not link FFmpeg or redistribute an FFmpeg binary. It starts the user-selected `ffmpeg` executable as a separate process and uses `ffprobe` for inspection. The user's FFmpeg build determines its license and codec obligations. FFmpeg's official legal page is <https://ffmpeg.org/legal.html>; the project explains that builds may be LGPL or GPL depending on enabled components, including GPL codecs such as libx264.
+This software is based in part on the work of the Independent JPEG Group.
+The FreeType Project (www.freetype.org) supplies the font engine under its
+FreeType License; its copyright and terms are included in the bundle.
 
-## Repository-generated test assets
+### Bundled GNU C++ runtime
 
-`tests/golden/scene.svg` is authored in this repository and has no external image or font file reference. `tests/golden/scene.png` is a generated test fixture produced from that SVG by the repository's Skia renderer; its text uses the bundled DejaVu Sans font covered above. These files do not add a separate third-party asset or attribution requirement.
-
-## lmscript and the DSL runtime
-
-The lmvideo host consumes lmscript compiler output and vendors the C++ DSL runtime header `cpp/dslvm.hpp` from
-[lmcode-cpp](https://github.com/lmctl-ai/lmcode-cpp) (MIT License, Copyright (c) 2026 Lattice Systems LLC, the same terms as lmvideo itself),
-pinned by [sdk.lock](sdk.lock) and synchronized by [scripts/sync-sdk.sh](scripts/sync-sdk.sh). The header is unmodified. lmscript itself is a
-separate build-time dependency and is not included in this repository.
+Linux runtime bundles include libstdc++ and libgcc under GPL with the GCC Runtime Library Exception. Exact distributor copyright and exception texts, and GPL-3.0,
+are included under `licenses/platform-runtime/`. The system's glibc and dynamic
+loader are not redistributed. These upstream terms remain separate from the
+project's binary license. Corresponding GCC sources are available through the
+distributor/source references preserved in those copyright files.

@@ -15,7 +15,6 @@
       "image": "docs/images/org-chart-grid.png",
       "image_sha256": "e3f87eca2ba1acb188f1e53a6b7a58111051c4099c2bba549e33ce8aa2a76a7c",
       "alt": "Organization chart rendered by lmvideo",
-      "stdout": "wrote build/org-chart-grid.dslb (images/org-chart-grid.png)",
       "licence": "MIT"
     },
     {
@@ -27,7 +26,6 @@
       "image": "docs/images/confusion-matrix.png",
       "image_sha256": "133921b9650e9328609cc5ae1f369cad2999a7c336ae2efeabca4a0a36fc3767",
       "alt": "Confusion matrix rendered by lmvideo",
-      "stdout": "(no stdout)",
       "licence": "MIT"
     },
     {
@@ -39,7 +37,6 @@
       "image": "docs/images/symlog-outlier.png",
       "image_sha256": "a2548a3791171d55cfb50a6d0ce7ce9819a7f65284799ca10baad1872bd5b83b",
       "alt": "Symmetric-log outlier rendered by lmvideo",
-      "stdout": "(no stdout)",
       "licence": "MIT"
     }
   ]

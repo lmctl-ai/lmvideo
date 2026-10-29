@@ -7,9 +7,11 @@ if [[ ! -d examples ]]; then
   exit 0
 fi
 
-host_bin="${LMCTL_HOST_BIN_DIR:-${RUNNER_TEMP:-/tmp}/lmctl-example-hosts}"
-mkdir -p "$host_bin"
-skip_file="${RUNNER_TEMP:-/tmp}/lmctl-unavailable-examples.tsv"
+host_cache="${XDG_CACHE_HOME:-${HOME:-.}/.cache}/lmctl"
+runner_scratch="${RUNNER_TEMP:-${TMPDIR:-$host_cache/tmp}}"
+host_bin="${LMCTL_HOST_BIN_DIR:-$host_cache/hosts}"
+mkdir -p "$host_bin" "$runner_scratch"
+skip_file="$runner_scratch/lmctl-unavailable-examples.tsv"
 : > "$skip_file"
 
 declare -A tags_by_repo=()
@@ -103,7 +105,7 @@ for full_repo in "${!tags_by_repo[@]}"; do
     continue
   fi
 
-  tmp="$(mktemp -d "${RUNNER_TEMP:-/tmp}/lmctl-host-download.XXXXXX")"
+  tmp="$(mktemp -d "$runner_scratch/lmctl-host-download.XXXXXX")"
   if ! gh release download "$tag" -R "$full_repo" --pattern "$repo-linux-x64" --dir "$tmp"; then
     rm -rf "$tmp"
     echo "install-hosts: release exists but $repo-linux-x64 could not be downloaded from $full_repo@$tag" >&2

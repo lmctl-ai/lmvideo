@@ -1,0 +1,55 @@
+{
+  "id": "B16",
+  "title": "Cornell Box Transmission and IOR",
+  "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
+  "reference_url": "https://www.graphics.cornell.edu/online/box/",
+  "visual_specification": "900x560 CPU Cycles still: authored red and green Cornell walls, one rectangular ceiling area light, rotated tall and short blocks, native closed glass sphere (transmission 1, IOR 1.52), mirror sphere, fixed 64 spp/6 bounce/OIDN profile.",
+  "required_feature_witnesses": [
+    "Cornell red and green wall colour bleed",
+    "one actual rectangular ceiling area light",
+    "rotated tall and short blocks",
+    "solid transmission 1.0 and IOR 1.52 sphere",
+    "mirror sphere",
+    "fixed CPU Cycles 64 spp, 6 bounces, seed and OIDN",
+    "quantitative one-bounce versus six-bounce GI witness"
+  ],
+  "cpu_budget_seconds": 90,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 6,
+    "seed": 20261027,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "CONTENT_ONLY",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-16-cornell-transmission-ior.lms",
+      "sha256": "8a6845b5206e0665c46e8b64b7e911cde3c33c319434398e49bc885de547b9f5",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "rights_note": "All geometry, colours, light and text are original procedural content; no third-party model or reference render is copied. Cornell URL is attribution only.",
+  "candidate_output": {
+    "sha256": "3f9c970bcf222f4d3cea16c2f4916f648bf99f1abf2d3f92ebf4cfffaf5ed3fb",
+    "bytes": 152984,
+    "dimensions": [
+      900,
+      560
+    ],
+    "availability": "LOCAL_STORE_ONLY"
+  },
+  "publication_status": "PENDING_RUNTIME_RELEASE"
+}

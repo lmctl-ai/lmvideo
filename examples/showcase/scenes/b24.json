@@ -1,0 +1,48 @@
+{
+  "id": "B24",
+  "title": "Native guide/child-strand copper groom",
+  "script": "examples/showcase/bench-24-native-hair.lms",
+  "visual_specification": "Original 512-guide spherical groom with eight children per guide, six tapered keys per child, copper pigment, warm key and blue rim over an original scalp/floor.",
+  "required_feature_witnesses": [
+    "native ccl::Hair traversal, no swept mesh",
+    "512 procedural guides and 4096 child strands",
+    "24576 keys with root-to-tip taper",
+    "explicit Chiang pigment parametrization",
+    "melanin absorption and longitudinal roughness controls",
+    "actual rim and cast shadow"
+  ],
+  "backend": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 64,
+    "bounces": 8,
+    "seed": 20261103,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "cpu_budget_seconds": 600,
+  "status": "CONTENT_ONLY",
+  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-24-native-hair.lms",
+      "sha256": "cdde772baa63f4219fe2db84c318fd40d89e41ad923dfeaaead624e84954c1a9",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "limits": [
+    "deterministic typed CSV only",
+    "no swept-mesh fallback",
+    "no animated strands in this profile"
+  ],
+  "script_sha256": "cdde772baa63f4219fe2db84c318fd40d89e41ad923dfeaaead624e84954c1a9"
+}

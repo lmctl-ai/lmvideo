@@ -1,6 +1,6 @@
 # Phase 6.5: actual lmcad B-rep -> STL millimetres -> canonical lmvideo metres.
 # Development APIs require the matching implementation in the content manifest.
-mkdir("build");cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.4";
+mkdir("build");cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.72";
 let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shininess(48.0);
 let housing=scene.box(120.0,70.0,80.0,alloy);let bore=scene.cylinder(15.0,80.0,alloy);
 housing.cut(bore);bore.visible(false);scene.export_stl("build/cad-final-housing.stl");

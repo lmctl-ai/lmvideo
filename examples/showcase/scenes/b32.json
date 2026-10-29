@@ -1,0 +1,59 @@
+{
+  "id": "B32",
+  "title": "Multi-Domain Orbital Story",
+  "script": "examples/showcase/bench-32-multidomain-orbit-video.lms",
+  "script_sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af",
+  "visual_specification": "1280x720 30fps150-frame original orbital/accretion scene with actual per-frame Image blur bloom and3D Hald LUT, projectedHUD, and live Plot/VectorField in one reusable Layout. Separate64spp/OIDN Cycles hero.",
+  "required_feature_witnesses": [
+    "150 exact raster/post frames",
+    "original Scene3D orbital and accretion scene",
+    "actual current-frame blur bloom and3D Hald LUT",
+    "projected telemetry HUD",
+    "live Plot and VectorField in the same per-frame Layout",
+    "separate64spp/OIDN Cycles hero with exact repeat and bounded render time"
+  ],
+  "cpu_budget_seconds": 300,
+  "video_profile": {
+    "frames": 150,
+    "fps": 30,
+    "width": 1280,
+    "height": 720,
+    "pixel_format": "yuv420p",
+    "duration_s": 5.0,
+    "codecs": [
+      "h264",
+      "vp9"
+    ]
+  },
+  "hero_profile": {
+    "width": 900,
+    "height": 560,
+    "renderer": "cycles",
+    "samples": 64,
+    "bounces": 6,
+    "seed": 20261105,
+    "denoise": "OIDN",
+    "cpu_budget_seconds": 180
+  },
+  "backend": "raster+img",
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "CONTENT_ONLY",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-32-multidomain-orbit-video.lms",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
+      "sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af"
+    }
+  ],
+  "rights_note": "All geometry, post-processing, HUD and telemetry are authored procedural content; no external assets are included.",
+  "publication_status": "PENDING_RUNTIME_RELEASE"
+}

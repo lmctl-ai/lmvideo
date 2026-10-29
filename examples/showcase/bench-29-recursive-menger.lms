@@ -1,0 +1,28 @@
+# B29: original level-three Menger set using one shared cube mesh, not CSG.
+mkdir("build");program=_lmcode_ cli="lmvideo";
+let scene=scene3d().threads(4).background("#182330").ambient(0.0).tonemap("aces",0.9);
+scene.camera(camera3d().look_at(10.0,7.8,12.0,0.0,-0.2,0.0).perspective(43.0,0.1,100.0));
+scene.environment(environment_linear(1,1,"0.16,0.20,0.28"),0.75,0.0,false);
+let bronze=material("#b88759",0.55,0.32);
+let sponge=scene.add_instances(mesh_box(0.25,0.25,0.25),bronze);
+for(x in range(0,27)){for(y in range(0,27)){for(z in range(0,27)){
+  let keep=true;
+  for(level in range(0,3)){
+    let divisor=pow(3.0,float(level));let middle=0;
+    if(int(float(x)/divisor)%3==1){middle=middle+1;}
+    if(int(float(y)/divisor)%3==1){middle=middle+1;}
+    if(int(float(z)/divisor)%3==1){middle=middle+1;}
+    if(middle>=2){keep=false;}
+  }
+  if(keep){sponge.add_instance((float(x)-13.0)*0.25,(float(y)-13.0)*0.25,(float(z)-13.0)*0.25,0.0,0.0,0.0,1.0,1.0,1.0,"#ffffff");}
+}}}
+image_assert_true(sponge.size()==8000);
+scene.add(mesh_box(16.0,0.15,16.0),material("#485763",0.0,0.8)).position(0.0,-3.45,0.0);
+scene.directional_light(-1.0,2.0,3.0,"#fff1db",2.0).directional_light(3.0,1.0,-2.0,"#9fc7ef",0.5);
+scene.shadows(1024,0.001,0.002,2).shadow_light(0);
+scene.save_job("build/bench-29-recursive-menger.lmjob",900,560,"cycles",64,8,20261105,true);
+scene.render_image(900,560,2).save("build/b29-preview.png");
+scene.render_image(900,560,"cycles",64,8,20261105,true).save("build/bench-29-recursive-menger.png");
+out.print("B29: level3 original Menger predicate; 20^3 = 8000 shared cube instances, 6.75m bounds and 125m^3 occupied voxel volume; no boolean union or solver claim");
+end _lmcode_
+savedsl(program,"build/bench-29-recursive-menger.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-29-recursive-menger.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

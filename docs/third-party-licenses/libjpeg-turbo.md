@@ -14,7 +14,7 @@ libjpeg-turbo is covered by two compatible BSD-style open source licenses:
 
   This license applies to the TurboJPEG API library and associated programs,
   [libspng](https://libspng.org) (which is used by cjpeg and djpeg), and the
-  private implementation detail system.
+  build/test system.
 
   * The TurboJPEG API library wraps the libjpeg API library, so in the context
     of the overall TurboJPEG API library, both the terms of the IJG License and

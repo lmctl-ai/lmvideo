@@ -1,0 +1,95 @@
+{
+  "id": "B26",
+  "title": "Original Cozy Tabletop Still Life",
+  "script": "examples/showcase/bench-26-cozy-still-life.lms",
+  "reference_url": "https://github.com/lmctl-ai/lmvideo",
+  "visual_specification": "Original separated ceramic mug and hollow bowl, clear closed-shell decanter, lidded beveled metal tin and emitting candle over an original wood-grain tabletop, with physical shallow focus and Image curves/vignette.",
+  "required_feature_witnesses": [
+    "mesh_lathe_closed ceramic and glass vessels",
+    "beveled metal prop",
+    "warm area key and candle-area fill",
+    "Camera3D lens/focal/sensor plus six-blade DoF",
+    "Image.curves and vignette post-processing"
+  ],
+  "cpu_budget_seconds": 600,
+  "backend": "cycles",
+  "renderer": "cycles",
+  "cycles_profile": {
+    "threads": 4,
+    "samples": 128,
+    "bounces": 8,
+    "seed": 20261103,
+    "denoise": "OIDN"
+  },
+  "dimensions": {
+    "still": [
+      900,
+      560
+    ]
+  },
+  "status": "CONTENT_ONLY",
+  "assets": [
+    {
+      "kind": "original-procedural-source",
+      "creator": "lmvideo project",
+      "source": "examples/showcase/bench-26-cozy-still-life.lms",
+      "sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
+      "license": "MIT",
+      "license_file": "LICENSE-examples",
+      "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
+    }
+  ],
+  "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
+  "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
+  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "limitations": [
+    "Authored original scene; no spectral or measured-physical-material claim.",
+    "Candle glow is an authored area emitter; no external flame image is used.",
+    "A0.5mm decanter/table clearance avoids ambiguous coplanar dielectric contact."
+  ],
+  "camera_profile": {
+    "focal_length_mm": 85,
+    "sensor_height_mm": 36,
+    "fstop": 1.4,
+    "focus_distance_m": 1.1,
+    "blades": 6
+  },
+  "denoise_worker_policy": {
+    "render_threads": 4,
+    "oidn_threads": 1,
+    "scope": "Source child process sets the pinned OIDN_NUM_THREADS device override; ray tracing retains four workers."
+  },
+  "grading_profile": {
+    "points": [
+      [
+        0,
+        0
+      ],
+      [
+        0.45,
+        0.4
+      ],
+      [
+        0.78,
+        0.67
+      ],
+      [
+        1,
+        0.85
+      ]
+    ],
+    "purpose": "Monotone highlight roll-off without amplification of the native RGBA8 precision.",
+    "byte_lut_adjacent_delta_max": 1,
+    "verified_on_all_256_inputs": true,
+    "vignette_radius": 390,
+    "vignette_sigma": 0.45
+  },
+  "geometry_policy": {
+    "decanter_base_y_m": 0.0095,
+    "tabletop_top_y_m": 0.009,
+    "clearance_m": 0.0005,
+    "reason": "A distinct air interface avoids coincident glass and wood faces.",
+    "metal_body_table_clearance_m": 0.0005,
+    "metal_lid_body_clearance_m": 0.0002
+  }
+}

@@ -1,7 +1,6 @@
 {
   "format": 1,
-  "status": "DEVELOPMENT_API_UNRELEASED",
-  "implementation_repository": "lmctlhq/lmvideo",
+  "status": "CONTENT_ONLY",
   "targets": [
     {
       "id": "B01",
@@ -157,13 +156,18 @@
       "id": "B14",
       "eligible": true,
       "base_source": "examples/showcase/bench-14-cad-four-view-section.lms",
-      "base_sha256": "6a02970f9f2cd738d971155bd36d1850ed1d8b6381fd15bfb160942db63f5ad4",
+      "base_sha256": "cf2a154949f5bc5ae2f8d38c0384513efe0e72e30f23fa36948e7db4daa6b1b2",
       "script": "examples/showcase/cycles/bench-14-cad-four-view-section.lms",
-      "script_sha256": "297ae7aaf6658737474d5816212b547f24b5564f276d2ebc772dea72c89da97d",
+      "script_sha256": "ae4c81ec660713999d5254e0ed7b25c4335349728d849b9a3a0b5ba38787bbb8",
       "samples": 32,
       "bounces": 4,
       "seed": 42,
-      "denoise": true
+      "denoise": true,
+      "current_source_status": "CANDIDATE_NOT_RERENDERED",
+      "historical_evidence": {
+        "manifest": "examples/showcase/cycles/manifest.json",
+        "note": "Existing Phase 6 LOCAL_PASS records retain their original source hashes; the current pin-only derivative has not been rerendered with Cycles."
+      }
     },
     {
       "id": "B15",
