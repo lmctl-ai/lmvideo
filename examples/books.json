@@ -39,8 +39,8 @@
             {
               "kind": "image",
               "media": "media-e3f87eca2ba1acb188f1e53a6b7a58111051c4099c2bba549e33ce8aa2a76a7c",
-              "alt": "Organization chart rendered by lmvideo",
-              "caption": "Draw a hierarchy with a grid, anchored boxes and elbow connectors."
+              "alt": "Labeled boxes connected by elbow lines in an organization chart.",
+              "caption": "Anchored connectors follow the hierarchy of boxes."
             }
           ]
         }
@@ -74,8 +74,8 @@
             {
               "kind": "image",
               "media": "media-e3f87eca2ba1acb188f1e53a6b7a58111051c4099c2bba549e33ce8aa2a76a7c",
-              "alt": "Organization chart rendered by lmvideo",
-              "caption": "Draw a hierarchy with a grid, anchored boxes and elbow connectors."
+              "alt": "Labeled boxes connected by elbow lines in an organization chart.",
+              "caption": "Anchored connectors follow the hierarchy of boxes."
             }
           ]
         },
@@ -102,8 +102,8 @@
             {
               "kind": "image",
               "media": "media-133921b9650e9328609cc5ae1f369cad2999a7c336ae2efeabca4a0a36fc3767",
-              "alt": "Confusion matrix rendered by lmvideo",
-              "caption": "Draw a labeled three-class matrix with contrast-aware cell labels."
+              "alt": "A three-by-three classification matrix with shaded cells and count labels.",
+              "caption": "Compare correct classifications on the diagonal with mistakes in the other cells."
             }
           ]
         },
@@ -130,8 +130,8 @@
             {
               "kind": "image",
               "media": "media-a2548a3791171d55cfb50a6d0ce7ce9819a7f65284799ca10baad1872bd5b83b",
-              "alt": "Symmetric-log outlier rendered by lmvideo",
-              "caption": "Compare ordinary monthly values with a large outlier on a symmetric-log axis."
+              "alt": "Monthly values and a large outlier plotted on a symmetric-log axis.",
+              "caption": "The symmetric-log scale keeps small values legible beside the outlier."
             }
           ]
         }
@@ -140,7 +140,7 @@
     {
       "id": "showcase",
       "title": "Showcase book",
-      "summary": "Thirty-two locally verified targets spanning CPU raster, path-traced light and authored animation. Verification does not mean these sources or binaries are published.",
+      "summary": "Thirty-two locally verified targets spanning CPU raster, path-traced light and authored animation. Sources are public and compatible with the released lmvideo 0.1.36 runtime.",
       "chapters": [
         {
           "id": "b01",
@@ -169,8 +169,8 @@
             {
               "kind": "image",
               "media": "media-556220d625ba92f9756c286243ea912bdfb4732f8447bdcc0c117af327906cd0",
-              "alt": "PBR Metallic/Roughness Sphere Matrix",
-              "caption": "PBR Metallic/Roughness Sphere Matrix"
+              "alt": "A five-by-five grid of spheres with different metallic and roughness settings.",
+              "caption": "Compare the sharpness and strength of reflections across the sphere grid."
             }
           ]
         },
@@ -201,8 +201,8 @@
             {
               "kind": "image",
               "media": "media-e245f648e1212f387966e60808acee5986244f8f1fa67f25570ee05947d7dc77",
-              "alt": "PCF Soft-Shadow Architectural Pedestal",
-              "caption": "PCF Soft-Shadow Architectural Pedestal"
+              "alt": "A box, cylinder and torus on a pedestal with soft ground shadows.",
+              "caption": "Look at the shadow edges and the blue fill light."
             }
           ]
         },
@@ -233,8 +233,8 @@
             {
               "kind": "image",
               "media": "media-47b3d1734c35fccf5cd9f0a3b94f927063189e72975fd2052683780ff426c663",
-              "alt": "Cube Diorama Low-Poly Isometric Cutaway",
-              "caption": "Cube Diorama Low-Poly Isometric Cutaway"
+              "alt": "An isometric cutaway room containing a table and vase.",
+              "caption": "Orthographic projection keeps parallel room edges parallel."
             }
           ]
         },
@@ -265,8 +265,8 @@
             {
               "kind": "image",
               "media": "media-63fcb2c66fc292c5f6d898adcb22b77d97ea473dd08c658ba7994230d813e7c0",
-              "alt": "Procedural Tiled PBR Material Swatches",
-              "caption": "Procedural Tiled PBR Material Swatches"
+              "alt": "Five material swatches showing noise, brick, checker and radial patterns.",
+              "caption": "Compare the color and surface relief of the different patterns."
             }
           ]
         },
@@ -297,8 +297,8 @@
             {
               "kind": "image",
               "media": "media-c19ce1fd9cc88c1f363ae7bcdd0976413f4d7d5bf6f3bafd498bec443a004a43",
-              "alt": "Tangent-Space Normal & Bump Mapped Relief",
-              "caption": "Tangent-Space Normal & Bump Mapped Relief"
+              "alt": "A relief medallion illuminated from the side.",
+              "caption": "Grazing light makes the raised surface detail visible."
             }
           ]
         },
@@ -329,8 +329,8 @@
             {
               "kind": "image",
               "media": "media-e34381b23ad50afc570517bb2a6f1ce26a81ae24d971d01edb82cda6128c7513",
-              "alt": "Original glTF Helmet Analogue with Studio IBL",
-              "caption": "Original glTF Helmet Analogue with Studio IBL"
+              "alt": "A helmet-shaped object with a visor, side pieces and reflective rim.",
+              "caption": "Inspect the textured surfaces and their studio reflections."
             }
           ]
         },
@@ -361,8 +361,8 @@
             {
               "kind": "image",
               "media": "media-ecd3c1d006240c37710b3e7c98bbbc1cdb055660f6a367bbcdf1e6fcac4beb07",
-              "alt": "3D Extruded Bevel Typography & Logo Stage",
-              "caption": "3D Extruded Bevel Typography & Logo Stage"
+              "alt": "Gold extruded glyphs with open counters and beveled edges.",
+              "caption": "Look for the holes inside the glyphs and the highlights along their bevels."
             }
           ]
         },
@@ -393,8 +393,8 @@
             {
               "kind": "image",
               "media": "media-15e1fcace84ff7fa71583326bc1220329493649d88fd0fd16a497ae950f7e3fb",
-              "alt": "Spline Tubes & Lathe Ceramic Vessels (Opaque)",
-              "caption": "Spline Tubes & Lathe Ceramic Vessels (Opaque)"
+              "alt": "Ceramic vessels beside a looped knot-shaped tube.",
+              "caption": "Compare the vessel profiles with the continuous curved tube."
             }
           ]
         },
@@ -425,8 +425,8 @@
             {
               "kind": "image",
               "media": "media-a414c7e33156ad54555c4ef57fb796e93027cab51cce6bef6edca445acf59ce5",
-              "alt": "Procedural Terrain Heightfield & Contour Map",
-              "caption": "Procedural Terrain Heightfield & Contour Map"
+              "alt": "Colored three-dimensional terrain beside a contour heatmap.",
+              "caption": "Compare elevation on the terrain with the contour bands."
             }
           ]
         },
@@ -457,8 +457,8 @@
             {
               "kind": "image",
               "media": "media-b3ef0a6d75362df15dea7b7c798cfeed10c250ba1c0ea5cf59a9b2230eaef43d",
-              "alt": "FEM Stress Colormap & 2D Callout Dashboard",
-              "caption": "FEM Stress Colormap & 2D Callout Dashboard"
+              "alt": "A color-coded cantilever mesh beside callouts, a colorbar and a plot.",
+              "caption": "Trace the stress colors from the mesh to the scale and annotations."
             }
           ]
         },
@@ -489,8 +489,8 @@
             {
               "kind": "image",
               "media": "media-aa6e5c89382e592584241c79cc67f8ad91f3726030f9663b2c2e2fd9d974d54a",
-              "alt": "Dynamic Matrix Instancing",
-              "caption": "Dynamic Matrix Instancing"
+              "alt": "A wave-shaped grid of colored beveled cubes.",
+              "caption": "Shared geometry appears in many positions with different colors and phases."
             }
           ]
         },
@@ -521,14 +521,14 @@
             {
               "kind": "image",
               "media": "media-1e8034ddc03006b81ff8f2f1e3f7af612a86afa61c9a7aa0d7079ae3171b3371",
-              "alt": "Animated Particle Wave & Point Sprites",
-              "caption": "Animated Particle Wave & Point Sprites"
+              "alt": "Colored point sprites arranged in an animated wave.",
+              "caption": "The wave uses point sprites rather than a connected surface."
             },
             {
               "kind": "image",
               "media": "media-5dda03ecf7277b357c85f124e0b5135788b2c54fac1ef6d964e23a9bca5911e1",
-              "alt": "Animated Particle Wave & Point Sprites",
-              "caption": "Animated Particle Wave & Point Sprites"
+              "alt": "Video frame: colored point sprites arranged in an animated wave.",
+              "caption": "This frame is used as the poster for the video below."
             },
             {
               "kind": "video",
@@ -570,8 +570,8 @@
             {
               "kind": "image",
               "media": "media-571b4c92e0e35f981e2b4fe555117c2cd8efb02e2d6a79393d47e2c9396cddbf",
-              "alt": "3D Render + 3D Hald CLUT & Post-Processing",
-              "caption": "3D Render + 3D Hald CLUT & Post-Processing"
+              "alt": "Four panels comparing a three-dimensional scene and image-processing passes.",
+              "caption": "Compare the original view with the filtered panels."
             }
           ]
         },
@@ -602,8 +602,8 @@
             {
               "kind": "image",
               "media": "media-56108058128c652c0791d3350832d28287aea6a323f2151e25dd19d228760ad9",
-              "alt": "Four-View CAD Engineering Quad & Uncapped Section View",
-              "caption": "Four-View CAD Engineering Quad & Uncapped Section View"
+              "alt": "Multiple views of an engineering component with a section cut and dimensions.",
+              "caption": "Compare the clipped section with the exterior views."
             }
           ]
         },
@@ -634,14 +634,14 @@
             {
               "kind": "image",
               "media": "media-95985131322b09141e98dfda91cb02f7db753136bd17e6144e67d6db37eb9e26",
-              "alt": "Molecular Trajectory Video with Live 2D Plot",
-              "caption": "Molecular Trajectory Video with Live 2D Plot"
+              "alt": "A ball-and-stick molecule beside a trajectory and a scientific plot.",
+              "caption": "The spatial view and plot follow the same timeline."
             },
             {
               "kind": "image",
               "media": "media-28e0da76559d11d9c015d1bb8da570fae2d9e1befb07253abbfe69f52a8384dd",
-              "alt": "Molecular Trajectory Video with Live 2D Plot",
-              "caption": "Molecular Trajectory Video with Live 2D Plot"
+              "alt": "Video frame: a ball-and-stick molecule beside a trajectory and a scientific plot.",
+              "caption": "This frame is used as the poster for the video below."
             },
             {
               "kind": "video",
@@ -683,8 +683,8 @@
             {
               "kind": "image",
               "media": "media-ad0398ceed6471fe3a38efd1ad47f0c16459dd360123a6e814e95111d01091c2",
-              "alt": "Cornell Box Transmission and IOR",
-              "caption": "Cornell Box Transmission and IOR"
+              "alt": "A red-and-green Cornell room containing blocks, a glass sphere and a mirror sphere.",
+              "caption": "Compare transmitted and reflected views of the colored walls."
             }
           ]
         },
@@ -715,8 +715,8 @@
             {
               "kind": "image",
               "media": "media-2e25fedf9d988f5c3df583d9a1b03d53d455c1cb604eedc080076839f29beb9f",
-              "alt": "Glass Goblets with Homogeneous Absorption",
-              "caption": "Glass Goblets with Homogeneous Absorption"
+              "alt": "Two clear glass goblets with visible stems, rims and hollow bowls.",
+              "caption": "Look through the curved glass and compare the effect of its thickness."
             }
           ]
         },
@@ -747,8 +747,8 @@
             {
               "kind": "image",
               "media": "media-4cf78f9ab7d52a55422e91ad26fd5779fade1ce2fefd6988c68d9da510648df3",
-              "alt": "Analytic Area Light Caustic Ball Lens",
-              "caption": "Analytic Area Light Caustic Ball Lens"
+              "alt": "A clear sphere above a checker floor with a concentrated patch of light.",
+              "caption": "The focused light on the floor is formed through the ball lens."
             }
           ]
         },
@@ -779,8 +779,8 @@
             {
               "kind": "image",
               "media": "media-63be0c34e3e728189bc8ce33f29a8018855b5de24809eadeef046b07415cd4b2",
-              "alt": "Abstract Busts with Random-Walk Subsurface",
-              "caption": "Abstract Busts with Random-Walk Subsurface"
+              "alt": "Jade-colored and warm skin-toned abstract busts with backlit ears.",
+              "caption": "Thin regions show light transmitted through the material."
             }
           ]
         },
@@ -811,8 +811,8 @@
             {
               "kind": "image",
               "media": "media-a7bdb157348796c3453e3e1aa3cd165f3d63bbd6de70d0fa1be52aa97f30b935",
-              "alt": "Automotive Clearcoat, Metallic Flake & Anisotropy",
-              "caption": "Automotive Clearcoat, Metallic Flake & Anisotropy"
+              "alt": "A metallic car-body form beside a brushed rotor.",
+              "caption": "Compare the clearcoat reflections, metallic flakes and brushed highlights."
             }
           ]
         },
@@ -843,8 +843,8 @@
             {
               "kind": "image",
               "media": "media-ae96a88cc85d08f015870e989428f5bd5f9ed3a61d1db84b7aef0d4f0ea11d90",
-              "alt": "Volumetric Fog & Window God-Rays",
-              "caption": "Volumetric Fog & Window God-Rays"
+              "alt": "A fog-filled interior crossed by beams of light from a window.",
+              "caption": "The illuminated fog makes the paths of the light beams visible."
             }
           ]
         },
@@ -875,8 +875,8 @@
             {
               "kind": "image",
               "media": "media-4ab40e5ae33914362ba8d9a704f5b0671281196635e657fc18e9e2c036c8cada",
-              "alt": "Physical Sky Atmosphere \u2014 Sun Elevation Sweep",
-              "caption": "Physical Sky Atmosphere \u2014 Sun Elevation Sweep"
+              "alt": "Stone monoliths shown under low and high sun lighting.",
+              "caption": "Compare the warm low-sun view with the higher-sun view."
             }
           ]
         },
@@ -907,8 +907,8 @@
             {
               "kind": "image",
               "media": "media-7327b10bc338db490a5c805b574728e3c7613b783c29fc98c13f894d97539dbb",
-              "alt": "Original Macro Chess with Physical Camera DoF",
-              "caption": "Original Macro Chess with Physical Camera DoF"
+              "alt": "Chess pieces with a focused middle rank and blurred near and far pieces.",
+              "caption": "The shallow focus separates the middle rank from its surroundings."
             }
           ]
         },
@@ -939,8 +939,8 @@
             {
               "kind": "image",
               "media": "media-9fc5f74fa44efda5777afe91116697f60949338ca5cfe8766325a6c0d32c09ee",
-              "alt": "Native guide/child-strand copper groom",
-              "caption": "Native guide/child-strand copper groom"
+              "alt": "Copper-colored hair strands forming a rounded groom over a scalp.",
+              "caption": "Look at the strand silhouettes, tapered ends and rim lighting."
             }
           ]
         },
@@ -971,8 +971,8 @@
             {
               "kind": "image",
               "media": "media-d27ca2eb9bbebf91dc3026c642bf83a89e5efeb3f5e37637dfcf4a4cc4fc4054",
-              "alt": "Archviz Daylit Pavilion",
-              "caption": "Archviz Daylit Pavilion"
+              "alt": "A daylight-lit room with a window, table, chairs and cabinet.",
+              "caption": "Look for light reaching the alcove beyond the directly illuminated surfaces."
             }
           ]
         },
@@ -1003,8 +1003,8 @@
             {
               "kind": "image",
               "media": "media-14b2474f07e33ad97b4c4a0f9a4cbde6f833d6c96e23c3eae541b6792bbff85a",
-              "alt": "Original Cozy Tabletop Still Life",
-              "caption": "Original Cozy Tabletop Still Life"
+              "alt": "A mug, bowl, glass decanter, metal tin and candle on a wooden tabletop.",
+              "caption": "Compare the different materials and the shallow depth of field."
             }
           ]
         },
@@ -1035,8 +1035,8 @@
             {
               "kind": "image",
               "media": "media-ce67ab8882fbdc8b4ee85adef3db2651df8956be2243cc1b0a3d770d87fcbbe1",
-              "alt": "CAD Preview and Cycles Final Twin",
-              "caption": "CAD Preview and Cycles Final Twin"
+              "alt": "A valve-like CAD component with a central bore and a perforated flange.",
+              "caption": "Compare the preview geometry with the final path-traced appearance."
             }
           ]
         },
@@ -1067,14 +1067,14 @@
             {
               "kind": "image",
               "media": "media-208b49f7ce4977570f19222f20a2f2e32d5c5d688851dfaf9d2e75e9dffd91f3",
-              "alt": "Original Poisson Botanical Meadow",
-              "caption": "Original Poisson Botanical Meadow"
+              "alt": "A grassy meadow containing flowers and pebbles on uneven terrain.",
+              "caption": "The repeated plant clumps follow the slope of the ground."
             },
             {
               "kind": "image",
               "media": "media-6bd014510c6b478d67720b8a2e03a725372eb527a1dac7d3d31114fb08eb8571",
-              "alt": "Original Poisson Botanical Meadow",
-              "caption": "Original Poisson Botanical Meadow"
+              "alt": "A grassy meadow containing flowers and pebbles on uneven terrain.",
+              "caption": "The repeated plant clumps follow the slope of the ground."
             }
           ]
         },
@@ -1105,14 +1105,14 @@
             {
               "kind": "image",
               "media": "media-2cf2f51f3d20204da44f50f22e011827889631d6a4bd65e30bb457eb16358ede",
-              "alt": "Original Recursive Menger Sculpture",
-              "caption": "Original Recursive Menger Sculpture"
+              "alt": "A bronze cube sculpture with repeated square tunnels.",
+              "caption": "Look through the nested openings and compare their internal shadows."
             },
             {
               "kind": "image",
               "media": "media-af64e92de2e1c4a65a4672a04ac3a45dc3f97e618c603117f1fb7dd1cef0266c",
-              "alt": "Original Recursive Menger Sculpture",
-              "caption": "Original Recursive Menger Sculpture"
+              "alt": "A bronze cube sculpture with repeated square tunnels.",
+              "caption": "Look through the nested openings and compare their internal shadows."
             }
           ]
         },
@@ -1143,14 +1143,14 @@
             {
               "kind": "image",
               "media": "media-8a9a6a34bc4c6daa33b494458fdb4ffe7dd301ca3cc36437f8b7b8b608e4d5bb",
-              "alt": "Prescribed Elastic Deformation Clip",
-              "caption": "Prescribed Elastic Deformation Clip"
+              "alt": "An elastic-looking mesh deforming above a shadowed floor.",
+              "caption": "The animation uses prescribed mesh states rather than a physics simulation."
             },
             {
               "kind": "image",
               "media": "media-9a44544e9b17ccbf99f10dba41cc752bc9c6e036309cd1a7a0c9f58cb8dcab31",
-              "alt": "Prescribed Elastic Deformation Clip",
-              "caption": "Prescribed Elastic Deformation Clip"
+              "alt": "Video frame: an elastic-looking mesh deforming above a shadowed floor.",
+              "caption": "This frame is used as the poster for the video below."
             },
             {
               "kind": "video",
@@ -1192,8 +1192,8 @@
             {
               "kind": "image",
               "media": "media-c0f5c8137a09ce8f86f736926636768c2896ed5c93522f6b4f86d4f6918fb273",
-              "alt": "Original Heterogeneous Worley Smoke Plume",
-              "caption": "Original Heterogeneous Worley Smoke Plume"
+              "alt": "A tall wispy smoke plume with a warm illuminated base.",
+              "caption": "Compare the dense base with the thinner lit edges of the plume."
             }
           ]
         },
@@ -1224,20 +1224,20 @@
             {
               "kind": "image",
               "media": "media-920b2430f3cb533b6b91932e0c817fdec2c26bfd462bd350c47634cbd56e16a9",
-              "alt": "Multi-Domain Orbital Story",
-              "caption": "Multi-Domain Orbital Story"
+              "alt": "An orbital scene composed with telemetry overlays and scientific plots.",
+              "caption": "The rendered scene, projected labels and plots follow one timeline."
             },
             {
               "kind": "image",
               "media": "media-d9015a75a40d2b28002faebe52acb8ec15edcf3315936384631798e8fdc8fab2",
-              "alt": "Multi-Domain Orbital Story",
-              "caption": "Multi-Domain Orbital Story"
+              "alt": "Video frame: an orbital scene composed with telemetry overlays and scientific plots.",
+              "caption": "This frame is used as the poster for the video below."
             },
             {
               "kind": "image",
               "media": "media-32e3485bb5f31217a52689f37f4d0830204f2c7bba57dcc5a064fbe66d017417",
-              "alt": "Multi-Domain Orbital Story",
-              "caption": "Multi-Domain Orbital Story"
+              "alt": "A path-traced view of the orbital scene and its accretion structure.",
+              "caption": "A CPU Cycles hero view of the scene used in the animation."
             },
             {
               "kind": "video",
@@ -1265,7 +1265,7 @@
           "blocks": [
             {
               "kind": "text",
-              "text": "Raster is the fast preview path. The same scene can use CPU Cycles for final lighting, reflections and roughness. A Cycles-enabled lmvideo binary and matching module must be installed locally; this candidate is not a published installable release."
+              "text": "Raster is the fast preview path. The same scene can use CPU Cycles for final lighting, reflections and roughness. Use the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "text",
@@ -1290,8 +1290,8 @@
             {
               "kind": "image",
               "media": "media-1d6af34e565c5531a6f9903034b881f4965aa3cb97b73e89afd8fc826bb923b4",
-              "alt": "A 960 by 540 CPU Cycles still with denoising.",
-              "caption": "A 960 by 540 CPU Cycles still with denoising."
+              "alt": "A gold sphere lit against a dark background.",
+              "caption": "A CPU Cycles still shows lighting and reflections on a curved surface."
             },
             {
               "kind": "code",
