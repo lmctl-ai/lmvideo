@@ -5,7 +5,7 @@
   "title": "lmvideo books",
   "description": "Learn to draw images, build scenes and render video with authored examples and locally verified showcases.",
   "licence": "MIT",
-  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "publication_status": "RELEASED",
   "groups": [
     {
       "id": "getting-started",
@@ -152,7 +152,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -184,7 +184,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -216,7 +216,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -248,7 +248,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -280,7 +280,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -312,7 +312,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -344,7 +344,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -376,7 +376,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -408,7 +408,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -440,7 +440,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -472,7 +472,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -504,7 +504,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -553,7 +553,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -585,7 +585,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -617,7 +617,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -666,7 +666,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -698,7 +698,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -730,7 +730,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -762,7 +762,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -794,7 +794,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -826,7 +826,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -858,7 +858,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -890,7 +890,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -922,7 +922,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -954,7 +954,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -986,7 +986,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -1018,7 +1018,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -1050,7 +1050,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -1088,7 +1088,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -1126,7 +1126,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -1175,7 +1175,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
@@ -1207,7 +1207,7 @@
             },
             {
               "kind": "text",
-              "text": "Locally verified acceptance capture. This source candidate and its required renderer are not yet a public release."
+              "text": "Verified acceptance capture, reproducible with the released lmvideo 0.1.36 runtime."
             },
             {
               "kind": "code",
