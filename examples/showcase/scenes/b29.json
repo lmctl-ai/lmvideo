@@ -29,7 +29,7 @@
     ]
   },
   "status": "CONTENT_ONLY",
-  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "publication_status": "RELEASED",
   "assets": [
     {
       "kind": "original-procedural-source",

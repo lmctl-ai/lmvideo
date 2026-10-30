@@ -44,5 +44,5 @@
   ],
   "rights_note": "All geometry, environment values, lighting and materials are authored procedurally; no borrowed model or reference render is copied.",
   "script_sha256": "0d703d844fb4251563cea096786140723885cdd8181344ab075f23d69d014c96",
-  "publication_status": "PENDING_RUNTIME_RELEASE"
+  "publication_status": "RELEASED"
 }

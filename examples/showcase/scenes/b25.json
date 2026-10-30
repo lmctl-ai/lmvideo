@@ -42,6 +42,6 @@
   ],
   "script_sha256": "7614aac83a6d3fb6df019c315cc7a3150bfb3139e8a12c8bdac73136ff220fc9",
   "rights_note": "All room, furniture, materials and lighting are authored procedurally; no external model, HDRI or reference render is copied.",
-  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "publication_status": "RELEASED",
   "publication_note": "Enclosed original room, one real window aperture, matched-sample direct/indirect controls and original grain. Target acceptance awaits the final exact source run and visual gate."
 }

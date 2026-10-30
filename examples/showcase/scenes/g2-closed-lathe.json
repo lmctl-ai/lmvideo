@@ -23,7 +23,7 @@
     "color": 2
   },
   "status": "LOCAL_PASS",
-  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "publication_status": "RELEASED",
   "assets": [
     {
       "kind": "original-procedural-source",

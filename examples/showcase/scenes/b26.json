@@ -41,7 +41,7 @@
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
   "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
-  "publication_status": "PENDING_RUNTIME_RELEASE",
+  "publication_status": "RELEASED",
   "limitations": [
     "Authored original scene; no spectral or measured-physical-material claim.",
     "Candle glow is an authored area emitter; no external flame image is used.",
