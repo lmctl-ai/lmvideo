@@ -13,7 +13,7 @@ lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/d
 
 ## Install lmvideo
 
-v0.1.36 CPU binaries include Cycles for Linux x86_64/arm64, macOS x86_64/arm64 (13 or newer), and Windows x86_64 (10 or newer). Linux requires glibc2.35 or newer; each platform needs its standard tar utility. FFmpeg/ffprobe are user-supplied for video output. The release page includes `SHA256SUMS` and the required license and third-party notice files.
+v0.1.36 CPU binaries include Cycles for Linux x86_64/arm64, macOS x86_64/arm64 (13 or newer), and Windows x86_64 (10 or newer). From the next release onward lmvideo ships Linux x86_64/arm64 only. Linux requires glibc2.35 or newer; each platform needs its standard tar utility. FFmpeg/ffprobe are user-supplied for video output. The release page includes `SHA256SUMS` and the required license and third-party notice files.
 
 ```lms
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
