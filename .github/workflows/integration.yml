@@ -1,0 +1,88 @@
+name: Integration (all OS)
+
+# Installs the released lmvideo (and the hosts the examples pin) on every
+# supported OS and runs every public example end to end. Manual only.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref (release tag) whose examples are run; its pinned hosts are installed
+        required: true
+        default: v0.1.36
+        type: string
+      lmctl_version:
+        description: "@lmctl-ai/lmctl npm version (latest if empty)"
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: linux-x64,   os: ubuntu-24.04 }
+          - { name: linux-arm64, os: ubuntu-24.04-arm }
+          - { name: macos-x64,   os: macos-15-intel }
+          - { name: macos-arm64, os: macos-15 }
+          - { name: windows-x64, os: windows-2022 }
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install lmctl
+        run: npm install --global "@lmctl-ai/lmctl${{ inputs.lmctl_version && format('@{0}', inputs.lmctl_version) || '' }}"
+
+      - name: Install ffmpeg (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Install ffmpeg (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ffmpeg
+
+      - name: Install ffmpeg (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg -y --no-progress
+
+      - name: Install the hosts pinned by the examples
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/install-hosts.sh
+
+      - name: Show installed versions
+        run: |
+          lmscript --version
+          lmvideo --version || true
+
+      - name: Run every example
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/integration-run.py --report out/integration-report.json --summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload report and outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-${{ matrix.name }}
+          path: |
+            out/integration-report.json
+            build/**
+            images/**
+          if-no-files-found: warn
+          retention-days: 14
