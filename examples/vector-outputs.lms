@@ -9,4 +9,4 @@ let restored=picture_file(${skp_path});if(restored.width()!=960||restored.height
 let roundtrip=surface(960,540);roundtrip.canvas().clear("#ffffff");roundtrip.canvas().svg(svg_file(${svg_path}),0.0,0.0,960.0,540.0);roundtrip.png(${roundtrip_path});roundtrip.svg(${surface_svg});roundtrip.pdf(${surface_pdf});
 video.size(960,540);video.frames(1);video.output(${mp4});video.begin();video.frame();canvas.clear("#f5f7fa");canvas.image(roundtrip.image(),0.0,0.0);video.save_frame(${png});video.end();
 end _lmcode_
-mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--dsl",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}
+mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--lmcode",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}

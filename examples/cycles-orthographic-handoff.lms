@@ -16,4 +16,4 @@ landscape.save("build/cycles-orthographic-landscape.png");
 portrait.save("build/cycles-orthographic-portrait.png");
 out.print("GLB orthographic camera: equal physical scale across depths and vertical span across aspect ratios.");
 end _lmcode_
-savedsl(p,"build/cycles-orthographic-handoff.dslb");r=system(concat(dsl_cli(p),["--dsl","build/cycles-orthographic-handoff.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(p,"build/cycles-orthographic-handoff.dslb");r=system(concat(dsl_cli(p),["--lmcode","build/cycles-orthographic-handoff.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

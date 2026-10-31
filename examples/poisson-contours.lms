@@ -3,4 +3,4 @@ mkdir("images");standalone=ARGV.len()==0;dslout=ARGV.len()>0?ARGV[0]:"build/pois
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.26";
 video.size(960,540);video.frames(1);video.output(${mp4});video.begin();video.frame();canvas.clear("#f5f7fa");fn phi(x: float, y: float) -> float { return x*(1.0-x)*y*(1.0-y)*(1.0+2.0*x+3.0*y); }let p=canvas.plot(215.0,20.0,530.0,500.0).title("Poisson potential · analytic 41×41 grid").xlabel("x").ylabel("y").x_range(0.0,1.0).y_range(0.0,1.0).legend("none").background("#ffffff");let h=p.heatmap("potential",41,41).palette("viridis").range(0.0,0.09).contours(8,"#17202a",1.2);for(j in range(0,41)){for(i in range(0,41)){let x=float(i)/40.0;let y=float(j)/40.0;h.cell(40-j,i,phi(x,y));}}p.draw();video.save_frame(${png});video.end();
 end _lmcode_
-mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--dsl",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}
+mkdir(dirname(dslout));savedsl(program,dslout);if(standalone){r=system(concat(dsl_cli(program),["--lmcode",dslout]),600000);if(r.code!=0){println(r.stderr+r.stdout);}assert(r.code==0);}

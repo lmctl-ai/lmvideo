@@ -20,4 +20,4 @@ image_assert_true(image.width()==900&&image.height()==560&&image.stddev(0)>0.03&
 image.save("build/bench-17-glass-goblets-volume.png");
 out.print("B17 solid glass goblets | IOR 1.52 | transmission 1 | amber/emerald homogeneous absorption | 96 spp | 8 bounces | seed 20261028 | OIDN");
 end _lmcode_
-savedsl(program,"build/bench-17-glass-goblets-volume.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-17-glass-goblets-volume.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(program,"build/bench-17-glass-goblets-volume.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-17-glass-goblets-volume.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

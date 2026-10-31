@@ -16,5 +16,5 @@ __lmvideo_scene.directional_light(0.4, 1.0, 0.5, "#ffffff", 0.9);
 __lmvideo_scene.render_image(480, 360, 2).save("images/magnum-scene.png");
 end _lmcode_
 savedsl(p, out);
-r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+r = system(concat(dsl_cli(p), ["--lmcode", out]), 600000);
 assert(r.code == 0);

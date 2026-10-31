@@ -17,5 +17,5 @@ let box_mesh = mesh_box(1.0, 2.0, 1.0);
 s.render_image(320, 240, 2).save("images/filament-scene.png");
 end _lmcode_
 savedsl(p, out);
-r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+r = system(concat(dsl_cli(p), ["--lmcode", out]), 600000);
 assert(r.code == 0);

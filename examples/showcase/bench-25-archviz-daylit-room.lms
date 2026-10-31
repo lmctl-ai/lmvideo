@@ -24,4 +24,4 @@ let direct_sum=0.0;let gi_sum=0.0;for(y in range(-2,3)){for(x in range(-2,3)){le
 let direct_mean=direct_sum/75.0;let gi_mean=gi_sum/75.0;image_assert_true(gi_mean>direct_mean*1.25+0.001);out.print("B25 alcove probe x="+str(px)+" y="+str(py)+" direct_linear="+str(direct_mean)+" gi_linear="+str(gi_mean)+" ratio="+str(gi_mean/max(0.000001,direct_mean)));
 gi.save("build/bench-25-archviz-daylit-room.png");out.print("B25 original enclosed room | left window aperture | Hosek 35deg azimuth 200 | 128 spp OIDN | measured alcove GI");
 end _lmcode_
-savedsl(program,"build/bench-25-archviz-daylit-room.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-25-archviz-daylit-room.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(program,"build/bench-25-archviz-daylit-room.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-25-archviz-daylit-room.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

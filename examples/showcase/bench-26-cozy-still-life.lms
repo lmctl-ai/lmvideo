@@ -31,4 +31,4 @@ let tone=image_curve().point(0.0,0.0).point(0.45,0.40).point(0.78,0.67).point(1.
 let grade=raw.curves(tone).vignette(390.0,0.45);grade.save("build/bench-26-cozy-still-life.png");
 out.print("B26 original cozy still life | ceramic wood glass metal | six-blade physical DoF | curves/vignette");
 end _lmcode_
-savedsl(program,"build/bench-26-cozy-still-life.dslb");r=system(concat(["env","OIDN_NUM_THREADS=1"],concat(dsl_cli(program),["--dsl","build/bench-26-cozy-still-life.dslb"])),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(program,"build/bench-26-cozy-still-life.dslb");r=system(concat(["env","OIDN_NUM_THREADS=1"],concat(dsl_cli(program),["--lmcode","build/bench-26-cozy-still-life.dslb"])),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

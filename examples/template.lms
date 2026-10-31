@@ -43,7 +43,7 @@ mkdir(dirname(dslout));
 savedsl(program, dslout);
 # No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000);
   if (r.code != 0) { println(r.stderr + r.stdout); }
   assert(r.code == 0);
 }

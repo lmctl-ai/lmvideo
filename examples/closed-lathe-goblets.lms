@@ -13,4 +13,4 @@ scene.directional_light(-2.0,4.0,3.0,"#fff4de",1.8).directional_light(3.0,2.0,-1
 let image=scene.render_image(900,560,2);image_assert_true(image.stddev(0)>0.03);image.save("build/closed-lathe-goblets.png");
 out.print("closed lathe annular, hollow bowl and axis-capped goblet; reversed contours normalize outward volume");
 end _lmcode_
-savedsl(program,"build/closed-lathe-goblets.dslb");r=system(concat(dsl_cli(program),["--dsl","build/closed-lathe-goblets.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(program,"build/closed-lathe-goblets.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/closed-lathe-goblets.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

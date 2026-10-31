@@ -64,6 +64,6 @@ video.end();
 end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
 }
 println(f"wrote {dslout} ({png})");

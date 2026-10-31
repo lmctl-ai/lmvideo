@@ -18,4 +18,4 @@ scene.area_light(2.6,1.6,4.5,0.0,-0.12,-1.0,1.4,0.6,"#ffffff",18.0,30.0);
 let image=scene.render_image(900,560,"cycles",64,8,20261031,true);image_assert_true(image.width()==900&&image.height()==560);image.save("build/bench-20-car-paint-anisotropy.png");
 out.print("B20 CPU Cycles 64 spp/OIDN: original speed-form dual-lobe paint + brushed anisotropic rotor");
 end _lmcode_
-savedsl(program,"build/bench-20-car-paint-anisotropy.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-20-car-paint-anisotropy.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(program,"build/bench-20-car-paint-anisotropy.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-20-car-paint-anisotropy.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

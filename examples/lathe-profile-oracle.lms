@@ -16,5 +16,5 @@ image_assert_true(image.stddev(0)>0.02);
 image.save("build/lathe-profile-oracle.png");
 end _lmcode_
 savedsl(program,"build/lathe-profile-oracle.dslb");
-r=system(concat(dsl_cli(program),["--dsl","build/lathe-profile-oracle.dslb"]),600000);
+r=system(concat(dsl_cli(program),["--lmcode","build/lathe-profile-oracle.dslb"]),600000);
 assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

@@ -5,7 +5,7 @@ let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shinin
 let housing=scene.box(120.0,70.0,80.0,alloy);let bore=scene.cylinder(15.0,80.0,alloy);
 housing.cut(bore);bore.visible(false);scene.export_stl("build/cad-final-housing.stl");
 end _lmcode_
-savedsl(cad,"build/cad-final-geometry.dslb");r=system(concat(dsl_cli(cad),["--dsl","build/cad-final-geometry.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);
+savedsl(cad,"build/cad-final-geometry.dslb");r=system(concat(dsl_cli(cad),["--lmcode","build/cad-final-geometry.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);
 p=_lmcode_ cli="lmvideo";
 let mesh=mesh_load("build/cad-final-housing.stl");image_assert_true(mesh.triangles()>100);image_assert_close(mesh.bound(3)-mesh.bound(0),120.0,0.01);
 let scene=scene3d().threads(4).background("#edf3f8").ambient(0.15).tonemap("aces",1.0);
@@ -31,4 +31,4 @@ for(frame in range(0,video.count())) {
 video.end();timeline.save("build/cad-final-timeline.gif");image_assert_true(timeline.size()==8);image_assert_close(timeline.duration(),2.0,0.000001);
 out.print("Real CAD STL, shared preview/final camera, projected labels, eight CPU-denoised frames and Timeline.");
 end _lmcode_
-savedsl(p,"build/cad-final-render.dslb");r=system(concat(dsl_cli(p),["--dsl","build/cad-final-render.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(p,"build/cad-final-render.dslb");r=system(concat(dsl_cli(p),["--lmcode","build/cad-final-render.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

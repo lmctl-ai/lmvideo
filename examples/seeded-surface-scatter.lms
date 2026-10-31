@@ -14,5 +14,5 @@ image.save("build/seeded-surface-scatter.png");
 scene.export_gltf("build/seeded-surface-scatter.glb",true);
 end _lmcode_
 savedsl(program,"build/seeded-surface-scatter.dslb");
-r=system(concat(dsl_cli(program),["--dsl","build/seeded-surface-scatter.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);
+r=system(concat(dsl_cli(program),["--lmcode","build/seeded-surface-scatter.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);
 println(r.stdout);

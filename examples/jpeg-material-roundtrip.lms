@@ -18,5 +18,5 @@ image_assert_true(first.rgba()==second.rgba());
 first.save("build/jpeg-material-roundtrip.png");
 end _lmcode_
 savedsl(program,"build/jpeg-material-roundtrip.dslb");
-r=system(concat(dsl_cli(program),["--dsl","build/jpeg-material-roundtrip.dslb"]),600000);
+r=system(concat(dsl_cli(program),["--lmcode","build/jpeg-material-roundtrip.dslb"]),600000);
 assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

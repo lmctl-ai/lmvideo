@@ -13,4 +13,4 @@ image_assert_true(image.pixel(30,128,0)>0.95);image.save("build/volume-absorptio
 out.print("G9 volume candidate: homogeneous Beer-Lambert; B17 geometry pending");
 end _lmcode_
 savedsl(program,"build/volume-absorption.dslb");
-r=system(concat(dsl_cli(program),["--dsl","build/volume-absorption.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+r=system(concat(dsl_cli(program),["--lmcode","build/volume-absorption.dslb"]),900000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);

@@ -10,4 +10,4 @@ let sphere=mesh_sphere(0.52,18,32);
 for(row in range(0,5)){for(col in range(0,5)){let metallic=float(row)/4.0;let roughness=0.05+0.95*float(col)/4.0;scene.add(sphere,material("#cda87d",metallic,roughness)).position((float(col)-2.0)*1.5,(2.0-float(row))*1.4,0.0);}}
 scene.save_job("build/cycles-target.lmjob",900,560,"cycles",32,4,42,true);let image=scene.render_image(900,560,"cycles",32,4,42,true);image_assert_true(image.width()==900&&image.height()==560&&image.stddev(0)>0.08);image.save("build/bench-01-pbr-metallic-roughness.png");
 end _lmcode_
-savedsl(program,"build/bench-01-pbr-metallic-roughness.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-01-pbr-metallic-roughness.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/bench-01-pbr-metallic-roughness.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-01-pbr-metallic-roughness.dslb"]),600000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

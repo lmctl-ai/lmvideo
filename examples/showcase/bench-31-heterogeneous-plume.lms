@@ -36,4 +36,4 @@ scene.save_job("build/bench-31-heterogeneous-plume.lmjob",900,560,"cycles",96,8,
 scene.render_image(900,560,"cycles",96,8,20261105,true).save("build/bench-31-heterogeneous-plume.png");
 out.print("B31: original24-point3D WorleyF1 density;32x32x32 spatial samples; grounded internal fire and external sun;96sppOIDN; authored field, no fluid solver");
 end _lmcode_
-savedsl(program,"build/bench-31-heterogeneous-plume.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-31-heterogeneous-plume.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/bench-31-heterogeneous-plume.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-31-heterogeneous-plume.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

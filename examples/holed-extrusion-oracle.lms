@@ -15,5 +15,5 @@ image.save("build/holed-extrusion-oracle.png");
 scene.export_gltf("build/holed-extrusion-oracle.glb",true);
 end _lmcode_
 savedsl(program,"build/holed-extrusion-oracle.dslb");
-r=system(concat(dsl_cli(program),["--dsl","build/holed-extrusion-oracle.dslb"]),600000);
+r=system(concat(dsl_cli(program),["--lmcode","build/holed-extrusion-oracle.dslb"]),600000);
 assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

@@ -1,7 +1,7 @@
 # lmvideo video example (EXPERIMENTAL _dsl_): the DSL owns both the frame loop and
 # the per-frame drawing loop; the host owns the surface and encoder.
 # Run from the repo root: $LMSCRIPT_BIN examples/video.lms [OUT.dslb] [OUT.mp4] [FRAMES] [FPS]
-#   (no arguments: also runs it with the released lmvideo host; with arguments it only compiles, then run: lmvideo --dsl OUT.dslb)
+#   (no arguments: also runs it with the released lmvideo host; with arguments it only compiles, then run: lmvideo --lmcode OUT.dslb)
 standalone = ARGV.len() == 0;
 dslout = ARGV.len() > 0 ? ARGV[0] : "build/video.dslb";
 mp4 = ARGV.len() > 1 ? ARGV[1] : "images/video.mp4";
@@ -39,7 +39,7 @@ mkdir(dirname(dslout));
 savedsl(program, dslout);
 # No arguments: run the compiled chunk with the released host (lmctl autorun). With arguments: compile only.
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000);
+  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000);
   if (r.code != 0) { println(r.stderr + r.stdout); }
   assert(r.code == 0);
 }

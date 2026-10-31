@@ -30,7 +30,7 @@ With a Cycles-enabled `lmvideo` on PATH, save the source as
 
 ```sh
 lmscript sphere-cycles.lms
-lmvideo --dsl output/sphere-cycles.dslb
+lmvideo --lmcode output/sphere-cycles.dslb
 ```
 
 The five arguments after the dimensions are, in order, the renderer name,

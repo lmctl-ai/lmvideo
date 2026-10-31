@@ -35,7 +35,7 @@ video.end();
 end _lmcode_
 mkdir(dirname(dslout)); savedsl(program, dslout);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--dsl", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/quarterly-revenue.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/quarterly-revenue.gif;
     assert(g.code == 0);

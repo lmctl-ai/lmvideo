@@ -8,4 +8,4 @@ image_assert_true(cubes.size()==1024);
 scene.directional_light(1.0,3.0,4.0,"#ffffff",0.95);
 let image=scene.render_image(900,560,2); image_assert_true(image.stddev(0)>0.05); image.save("build/bench-11-dynamic-matrix-instancing.png");
 end _lmcode_
-savedsl(program,"build/bench-11-dynamic-matrix-instancing.dslb"); r=system(concat(dsl_cli(program),["--dsl","build/bench-11-dynamic-matrix-instancing.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/bench-11-dynamic-matrix-instancing.dslb"); r=system(concat(dsl_cli(program),["--lmcode","build/bench-11-dynamic-matrix-instancing.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

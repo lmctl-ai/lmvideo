@@ -24,4 +24,4 @@ image_assert_true(image.width()==900&&image.height()==560);
 image.save("build/bench-21-window-god-rays.png");
 out.print("B21: original opaque window mullions, homogeneous 0.12/m HG g=0.6, 128spp CPU OIDN, ACES curve");
 end _lmcode_
-savedsl(program,"build/volume-god-rays.dslb");r=system(concat(dsl_cli(program),["--dsl","build/volume-god-rays.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/volume-god-rays.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/volume-god-rays.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

@@ -25,4 +25,4 @@ scene.render_image(900,560,2).save("build/b29-preview.png");
 scene.render_image(900,560,"cycles",64,8,20261105,true).save("build/bench-29-recursive-menger.png");
 out.print("B29: level3 original Menger predicate; 20^3 = 8000 shared cube instances, 6.75m bounds and 125m^3 occupied voxel volume; no boolean union or solver claim");
 end _lmcode_
-savedsl(program,"build/bench-29-recursive-menger.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-29-recursive-menger.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/bench-29-recursive-menger.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-29-recursive-menger.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

@@ -8,4 +8,4 @@ video.end();
 for(frame in range(0,video.count())) { let t=float(frame)/30.0; let angle=6.283185307*t/4.0; let ox=0.22*sin(angle); let oy=0.4+0.18*cos(angle); oxygen.position(ox,oy,0.0); h1.position(ox-0.95,oy+0.25,0.0); h2.position(ox+0.95,oy+0.25,0.0); b1.position(ox-0.475,oy+0.125,0.0).rotation(0.0,0.0,75.256); b2.position(ox+0.475,oy+0.125,0.0).rotation(0.0,0.0,-75.256); cache.render(scene,820,560,2,destination); }
 image_assert_true(cache.misses()==120&&cache.hits()==120); out.print("B15: projected trajectory labels, world orbital path, live energy plot, frame_cache 120 misses + 120 hits");
 end _lmcode_
-savedsl(program,"build/bench-15-molecular-trajectory.dslb"); r=system(concat(dsl_cli(program),["--dsl","build/bench-15-molecular-trajectory.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/bench-15-molecular-trajectory.dslb"); r=system(concat(dsl_cli(program),["--lmcode","build/bench-15-molecular-trajectory.dslb"]),600000); assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

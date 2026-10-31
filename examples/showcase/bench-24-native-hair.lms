@@ -49,4 +49,4 @@ image_assert_true(image.width()==900&&image.height()==560);
 image.save("build/bench-24-native-hair.png");
 out.print("B24: 512 original guides / 4096 child strands / 24576 tapered native keys; Chiang pigment hair, warm key and cool rim");
 end _lmcode_
-savedsl(program,"build/bench-24-native-hair.dslb");r=system(concat(dsl_cli(program),["--dsl","build/bench-24-native-hair.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+savedsl(program,"build/bench-24-native-hair.dslb");r=system(concat(dsl_cli(program),["--lmcode","build/bench-24-native-hair.dslb"]),900000);assert(r.code==0,r.stdout+r.stderr);println(r.stdout);

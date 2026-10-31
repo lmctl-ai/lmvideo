@@ -18,5 +18,5 @@ t.set_attr("font-weight", "700");
 canvas.redraw(); canvas.png("images/draw-basics.png", 320, 200, 1);
 end _lmcode_
 savedsl(p, out);
-r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+r = system(concat(dsl_cli(p), ["--lmcode", out]), 600000);
 assert(r.code == 0);

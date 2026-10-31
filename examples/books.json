@@ -1282,7 +1282,7 @@
                 ],
                 [
                   "lmvideo",
-                  "--dsl",
+                  "--lmcode",
                   "build/sphere-cycles.dslb"
                 ]
               ]
@@ -1304,7 +1304,7 @@
                 ],
                 [
                   "lmvideo",
-                  "--dsl",
+                  "--lmcode",
                   "build/turntable.dslb"
                 ]
               ]

@@ -21,4 +21,4 @@ image.save("build/cycles-product-still.png");
 image.copy().vignette(270.0,0.9).text(16.0,466.0,"CPU Cycles | 32 spp | 4 bounces | seed 42 | OIDN",16.0,1.0,1.0,1.0,1.0).save("build/cycles-product-still-captioned.png");
 out.print("GLB data imported; canonical Image returned by in-process CPU Cycles with source-built OIDN.");
 end _lmcode_
-savedsl(p,"build/cycles-product-still.dslb");r=system(concat(dsl_cli(p),["--dsl","build/cycles-product-still.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
+savedsl(p,"build/cycles-product-still.dslb");r=system(concat(dsl_cli(p),["--lmcode","build/cycles-product-still.dslb"]),600000);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
