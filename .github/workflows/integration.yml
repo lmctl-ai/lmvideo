@@ -41,6 +41,14 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
+      - name: Checkout the integration tooling from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: _ci
+          sparse-checkout: scripts/integration-run.py
+          sparse-checkout-cone-mode: false
+
       - uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -76,7 +84,7 @@ jobs:
       - name: Run every example
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python3 scripts/integration-run.py --report out/integration-report.json --summary "$GITHUB_STEP_SUMMARY"
+        run: python3 _ci/scripts/integration-run.py --report out/integration-report.json --summary "$GITHUB_STEP_SUMMARY"
 
       - name: Upload report and outputs
         if: always()
