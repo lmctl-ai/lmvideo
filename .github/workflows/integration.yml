@@ -46,7 +46,9 @@ jobs:
         with:
           ref: main
           path: _ci
-          sparse-checkout: scripts/integration-run.py
+          sparse-checkout: |
+            scripts/integration-run.py
+            scripts/install-hosts.sh
           sparse-checkout-cone-mode: false
 
       - uses: actions/setup-node@v4
@@ -74,7 +76,7 @@ jobs:
         run: |
           # scripts/install-hosts.sh needs bash >= 4 (globstar, associative arrays); macOS ships 3.2.
           if [ "$RUNNER_OS" = macOS ]; then BASH5="$(brew --prefix)/bin/bash"; else BASH5=bash; fi
-          "$BASH5" scripts/install-hosts.sh
+          "$BASH5" _ci/scripts/install-hosts.sh
 
       - name: Show installed versions
         run: |
