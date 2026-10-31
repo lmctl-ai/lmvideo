@@ -10,6 +10,11 @@ on:
         required: true
         default: v0.1.36
         type: string
+      lmvideo_tag:
+        description: "lmvideo release tag to test instead of the host pinned by the examples (e.g. v0.1.37); empty = pinned"
+        required: false
+        default: ''
+        type: string
       lmctl_version:
         description: "@lmctl-ai/lmctl npm version (latest if empty); 0.2.426 matches the v0.1.36 release gate"
         required: false
@@ -77,6 +82,24 @@ jobs:
           # scripts/install-hosts.sh needs bash >= 4 (globstar, associative arrays); macOS ships 3.2.
           if [ "$RUNNER_OS" = macOS ]; then BASH5="$(brew --prefix)/bin/bash"; else BASH5=bash; fi
           "$BASH5" _ci/scripts/install-hosts.sh
+
+      - name: Override lmvideo with the release under test
+        if: ${{ inputs.lmvideo_tag != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LMVIDEO_TAG: ${{ inputs.lmvideo_tag }}
+          MATRIX_NAME: ${{ matrix.name }}
+        run: |
+          set -euo pipefail
+          ext=""; if [ "$RUNNER_OS" = Windows ]; then ext=".exe"; fi
+          mkdir -p dl && gh release download "$LMVIDEO_TAG" -R lmctl-ai/lmvideo -p "lmvideo-$MATRIX_NAME$ext" -p SHA256SUMS -D dl
+          (cd dl && expected="$(awk -v f="lmvideo-$MATRIX_NAME$ext" '$2 == f {print $1}' SHA256SUMS)" && \
+            if command -v sha256sum >/dev/null 2>&1; then actual="$(sha256sum "lmvideo-$MATRIX_NAME$ext" | awk '{print $1}')"; else actual="$(shasum -a 256 "lmvideo-$MATRIX_NAME$ext" | awk '{print $1}')"; fi && \
+            test -n "$expected" && test "$actual" = "$expected")
+          target="$(command -v lmvideo || true)"
+          [ -n "$target" ] || target="$(dirname "$(command -v lmscript)")/lmvideo$ext"
+          cp "dl/lmvideo-$MATRIX_NAME$ext" "$target"; chmod +x "$target"
+          echo "overrode $target"
 
       - name: Show installed versions
         run: |
