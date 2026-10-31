@@ -1347,6 +1347,34 @@
             {
               "kind": "text",
               "text": "Highlights: lmdraw diagrams map one-to-one (scene.X -> canvas.X); lmimg image operations keep names, units and centisecond GIF delays; lmmagnum keeps vertical-FOV cameras, negates light directions into lmvideo's toward-the-source convention and converts float colors to sRGB hex; lmfilament's .filamat material compilation is a deliberate diagnostic, not a fake. See the docs/book/migrating-from-legacy-hosts.md chapter for the complete tables."
+            },
+            {
+              "kind": "text",
+              "text": "Worked example, lmmagnum to lmvideo: the first script runs on the pinned legacy host; the second is the migration tool's reviewed output running on lmvideo (declared-equivalent geometry, camera and colors; the GGX PBR lighting differs from the Blinn-Phong preview by design)."
+            },
+            {
+              "kind": "code",
+              "script": "docs/book/migration-fixtures/magnum-scene.before.lms",
+              "script_sha256": "b2155b714a5ecb0e5def912df774f36ac400c159af6680ed62103637543dd6f4",
+              "commands": [
+                [
+                  "lmctl",
+                  "autorun",
+                  "docs/book/migration-fixtures/magnum-scene.before.lms"
+                ]
+              ]
+            },
+            {
+              "kind": "code",
+              "script": "docs/book/migration-fixtures/magnum-scene.after.lms",
+              "script_sha256": "d091b5319828261fad00b1b307c6b3ee718780eb9691d7c9347e9af0b66af38d",
+              "commands": [
+                [
+                  "lmctl",
+                  "autorun",
+                  "docs/book/migration-fixtures/magnum-scene.after.lms"
+                ]
+              ]
             }
           ]
         }
