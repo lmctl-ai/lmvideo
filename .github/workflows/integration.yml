@@ -11,9 +11,9 @@ on:
         default: v0.1.36
         type: string
       lmctl_version:
-        description: "@lmctl-ai/lmctl npm version (latest if empty)"
+        description: "@lmctl-ai/lmctl npm version (latest if empty); 0.2.426 matches the v0.1.36 release gate"
         required: false
-        default: ''
+        default: '0.2.426'
         type: string
 
 permissions:
