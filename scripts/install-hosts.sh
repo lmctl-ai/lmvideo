@@ -161,5 +161,7 @@ if [[ -n "${GITHUB_ENV:-}" ]]; then
   printf 'LMCTL_UNAVAILABLE_EXAMPLES_FILE=%s\n' "$skip_file" >> "$GITHUB_ENV"
 fi
 export PATH="$host_bin:$PATH"
-if [[ -n "${GITHUB_PATH:-}" ]]; then printf '%s\n' "$host_bin" >> "$GITHUB_PATH"; fi
+if [[ -n "${GITHUB_PATH:-}" ]]; then
+  if command -v cygpath >/dev/null 2>&1; then cygpath -w "$host_bin" >> "$GITHUB_PATH"; else printf '%s\n' "$host_bin" >> "$GITHUB_PATH"; fi
+fi
 echo "install-hosts: host directory prepended to PATH: $host_bin"

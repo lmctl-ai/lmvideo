@@ -41,6 +41,7 @@ def main():
         if rel in skips:
             results.append({'example': rel, 'status': 'SKIP', 'reason': skips[rel]})
             continue
+        shutil.rmtree(root / 'build', ignore_errors=True)  # examples must not depend on, or collide with, another example's outputs
         start = time.time()
         try:
             r = subprocess.run([lmscript, rel], cwd=root, capture_output=True, text=True,
@@ -58,7 +59,7 @@ def main():
     a.report.parent.mkdir(parents=True, exist_ok=True)
     a.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     lines = [f'### {report["platform"]}: {counts["PASS"]} pass, {counts["FAIL"]} fail, {counts["SKIP"]} skip', '']
-    lines += [f'- FAIL `{r["example"]}`: {r.get("detail", "")[-200:]!r}' for r in results if r['status'] == 'FAIL']
+    lines += [f'- FAIL `{r["example"]}`: {r.get("detail", "")[-700:]!r}' for r in results if r['status'] == 'FAIL']
     lines += [f'- SKIP `{r["example"]}`: {r["reason"]}' for r in results if r['status'] == 'SKIP']
     text = '\n'.join(lines) + '\n'
     print(text)
