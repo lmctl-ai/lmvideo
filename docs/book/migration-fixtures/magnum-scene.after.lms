@@ -15,6 +15,6 @@ __lmvideo_scene.camera(camera3d().perspective(40.0, 0.05, 10000.0).look_at(4.0, 
 __lmvideo_scene.directional_light(0.4, 1.0, 0.5, "#ffffff", 0.9);
 __lmvideo_scene.render_image(480, 360, 2).save("images/magnum-scene.png");
 end _lmcode_
-
-r = run_lmcode(p);
-assert(r.ok, "lmcode host failed");
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--lmcode", out]), 600000);
+assert(r.code == 0);

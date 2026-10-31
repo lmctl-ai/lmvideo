@@ -13,6 +13,6 @@ scene.camera(40.0, 4.0, 3.0, 6.0, 0.0, 0.0, 0.0);
 scene.directional_light(-0.4, -1.0, -0.5, 0.9);
 scene.render_png("images/magnum-scene.png", 480, 360);
 end _lmcode_
-
-r = run_lmcode(p);
-assert(r.ok, "lmcode host failed");
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--lmcode", out]), 600000);
+assert(r.code == 0);
