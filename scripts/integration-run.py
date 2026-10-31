@@ -5,7 +5,7 @@ Cross-platform (Linux, macOS, Windows). Runs from the repository root so the
 examples' relative output paths (build/, images/) resolve as documented.
 Exit status is non-zero if any example fails or is skipped, unless --allow-skips.
 """
-import argparse, json, os, platform, subprocess, sys, time
+import argparse, json, os, platform, shutil, subprocess, sys, time
 from pathlib import Path
 
 
@@ -29,6 +29,10 @@ def main():
     p.add_argument('--only', help='substring filter for example paths')
     a = p.parse_args()
     root = Path.cwd()
+    lmscript = shutil.which('lmscript')  # resolves lmscript.cmd on Windows
+    if not lmscript:
+        print('lmscript not found on PATH', file=sys.stderr)
+        return 2
     skips = skip_table()
     examples = sorted(x for x in (root / 'examples').rglob('*.lms') if not a.only or a.only in x.as_posix())
     results = []
@@ -39,9 +43,9 @@ def main():
             continue
         start = time.time()
         try:
-            r = subprocess.run(['lmscript', rel], cwd=root, capture_output=True, text=True,
+            r = subprocess.run([lmscript, rel], cwd=root, capture_output=True, text=True,
                                timeout=a.timeout, encoding='utf-8', errors='replace')
-            status, code, tail = ('PASS' if r.returncode == 0 else 'FAIL'), r.returncode, (r.stderr or r.stdout)[-600:]
+            status, code, tail = ('PASS' if r.returncode == 0 else 'FAIL'), r.returncode, (r.stdout + r.stderr)[-1200:]
         except subprocess.TimeoutExpired:
             status, code, tail = 'FAIL', 124, f'timeout after {a.timeout}s'
         rec = {'example': rel, 'status': status, 'exit_code': code, 'seconds': round(time.time() - start, 1)}

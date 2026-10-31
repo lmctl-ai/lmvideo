@@ -7,6 +7,15 @@ if [[ ! -d examples ]]; then
   exit 0
 fi
 
+case "$(uname -s)-$(uname -m)" in
+  Linux-x86_64) plat=linux-x64; ext="" ;;
+  Linux-aarch64|Linux-arm64) plat=linux-arm64; ext="" ;;
+  Darwin-x86_64) plat=macos-x64; ext="" ;;
+  Darwin-arm64) plat=macos-arm64; ext="" ;;
+  MINGW*|MSYS*|CYGWIN*) plat=windows-x64; ext=".exe" ;;
+  *) echo "install-hosts: unsupported platform $(uname -s)-$(uname -m)" >&2; exit 1 ;;
+esac
+
 host_cache="${XDG_CACHE_HOME:-${HOME:-.}/.cache}/lmctl"
 runner_scratch="${RUNNER_TEMP:-${TMPDIR:-$host_cache/tmp}}"
 host_bin="${LMCTL_HOST_BIN_DIR:-$host_cache/hosts}"
@@ -106,19 +115,19 @@ for full_repo in "${!tags_by_repo[@]}"; do
   fi
 
   tmp="$(mktemp -d "$runner_scratch/lmctl-host-download.XXXXXX")"
-  if ! gh release download "$tag" -R "$full_repo" --pattern "$repo-linux-x64" --dir "$tmp"; then
+  if ! gh release download "$tag" -R "$full_repo" --pattern "$repo-$plat$ext" --dir "$tmp"; then
     rm -rf "$tmp"
-    echo "install-hosts: release exists but $repo-linux-x64 could not be downloaded from $full_repo@$tag" >&2
+    echo "install-hosts: release exists but $repo-$plat$ext could not be downloaded from $full_repo@$tag" >&2
     exit 1
   fi
-  asset="$tmp/$repo-linux-x64"
+  asset="$tmp/$repo-$plat$ext"
   if [[ ! -s "$asset" ]]; then
     rm -rf "$tmp"
-    echo "install-hosts: release exists but has no non-empty $repo-linux-x64 asset: $full_repo@$tag" >&2
+    echo "install-hosts: release exists but has no non-empty $repo-$plat$ext asset: $full_repo@$tag" >&2
     exit 1
   fi
-  cp "$asset" "$host_bin/$repo"
-  chmod +x "$host_bin/$repo"
+  cp "$asset" "$host_bin/$repo$ext"
+  chmod +x "$host_bin/$repo$ext"
   rm -rf "$tmp"
   echo "install-hosts: installed $repo from $full_repo@$tag for declared pins: ${tags_by_repo[$full_repo]}"
 done
