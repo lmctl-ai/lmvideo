@@ -2,7 +2,7 @@
   "id": "G2-holed-solid",
   "title": "Watertight holed polygon extrusion",
   "script": "examples/holed-extrusion-oracle.lms",
-  "script_sha256": "7ce9beba9ac8b38b359359fc91b20844adb1d9746f39c3f0344da6154e3cda74",
+  "script_sha256": "11bd709b70b3bfdfedf370e86fe8ce654fa83e56af5a50a975ee86bc85db94f4",
   "required_feature_witnesses": [
     "one through-hole with explicit depth",
     "aligned cap/wall edge subdivisions",
@@ -24,7 +24,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project; authors in Git history",
       "source": "examples/holed-extrusion-oracle.lms",
-      "sha256": "7ce9beba9ac8b38b359359fc91b20844adb1d9746f39c3f0344da6154e3cda74",
+      "sha256": "11bd709b70b3bfdfedf370e86fe8ce654fa83e56af5a50a975ee86bc85db94f4",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

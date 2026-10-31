@@ -2,7 +2,7 @@
   "id": "G2-closed-lathe",
   "title": "Closed-lathe rims, hollow bowls and goblet solids",
   "script": "examples/closed-lathe-goblets.lms",
-  "script_sha256": "994aa416670f58cbd97842c8fc2d8d33fcc87487ddadc30400c916ee9c6eb247",
+  "script_sha256": "727e23c291a6e1c0bdcdcc55ff78be56de2b4130a56c99771e6feffeec4064ec",
   "visual_specification": "900x560 original separated annular ring, genuinely hollow bowl and stemmed goblet with open cavities and real rims.",
   "required_feature_witnesses": [
     "closed contour with outer and inner returns",
@@ -29,7 +29,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project; first-party profiles and geometry",
       "source": "examples/closed-lathe-goblets.lms",
-      "sha256": "994aa416670f58cbd97842c8fc2d8d33fcc87487ddadc30400c916ee9c6eb247",
+      "sha256": "727e23c291a6e1c0bdcdcc55ff78be56de2b4130a56c99771e6feffeec4064ec",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

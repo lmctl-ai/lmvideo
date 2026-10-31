@@ -2,7 +2,7 @@
   "id": "B29",
   "title": "Original Recursive Menger Sculpture",
   "script": "examples/showcase/bench-29-recursive-menger.lms",
-  "script_sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+  "script_sha256": "8b1e7934f816a33d341cbde3e2f30f790f245aae4f1835ac93db77baee28df34",
   "visual_specification": "900x560 level-three original Menger sculpture with 8000 shared bronze cubes, true hierarchical tunnels, native self-shadowing, a separate raster preview and CPU Cycles final.",
   "required_feature_witnesses": [
     "three base3-level Menger occupancy predicate",
@@ -35,7 +35,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-29-recursive-menger.lms",
-      "sha256": "677ad0c46010a2a3b58b8c23961790ae4ecc2aee086eff4344b9b3d2d1e27ec2",
+      "sha256": "8b1e7934f816a33d341cbde3e2f30f790f245aae4f1835ac93db77baee28df34",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

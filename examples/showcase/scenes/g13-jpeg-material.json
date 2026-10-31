@@ -2,7 +2,7 @@
   "id": "G13-jpeg-material",
   "title": "JPEG data URI to canonical GLB material round trip",
   "script": "examples/jpeg-material-roundtrip.lms",
-  "script_sha256": "be485975b0e2a985c5576bd07e50f67601aa375a80876dd4744e62c81bbeab3f",
+  "script_sha256": "30612b60c57199f48b6f35c06d5b129cbcf43c6b6273c33f17806a87bf4b57a4",
   "visual_specification": "900x560 original red textured triangle on a dark background; JPEG data URI import and normalized PNG-in-GLB export retain identical raster pixels.",
   "required_feature_witnesses": [
     "generated first-party JPEG data URI",
@@ -24,7 +24,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project; original geometry and generated solid-red JPEG fixture",
       "source": "examples/jpeg-material-roundtrip.lms",
-      "sha256": "be485975b0e2a985c5576bd07e50f67601aa375a80876dd4744e62c81bbeab3f",
+      "sha256": "30612b60c57199f48b6f35c06d5b129cbcf43c6b6273c33f17806a87bf4b57a4",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",

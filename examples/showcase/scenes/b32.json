@@ -2,7 +2,7 @@
   "id": "B32",
   "title": "Multi-Domain Orbital Story",
   "script": "examples/showcase/bench-32-multidomain-orbit-video.lms",
-  "script_sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af",
+  "script_sha256": "5750fa35d0f2a0acd8534f5830fa9def834cfcde972878f8d993ac187b06796a",
   "visual_specification": "1280x720 30fps150-frame original orbital/accretion scene with actual per-frame Image blur bloom and3D Hald LUT, projectedHUD, and live Plot/VectorField in one reusable Layout. Separate64spp/OIDN Cycles hero.",
   "required_feature_witnesses": [
     "150 exact raster/post frames",
@@ -51,7 +51,7 @@
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-      "sha256": "844fae9629df47a62132aaf47389a032de24a0bc1ccc1e9b619baeae09a7f2af"
+      "sha256": "5750fa35d0f2a0acd8534f5830fa9def834cfcde972878f8d993ac187b06796a"
     }
   ],
   "rights_note": "All geometry, post-processing, HUD and telemetry are authored procedural content; no external assets are included.",

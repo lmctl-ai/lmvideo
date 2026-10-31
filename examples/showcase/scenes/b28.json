@@ -2,7 +2,7 @@
   "id": "B28",
   "title": "Original Poisson Botanical Meadow",
   "script": "examples/showcase/bench-28-botanical-meadow.lms",
-  "script_sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+  "script_sha256": "e18580cb81add214bb26d96dc2346d6d4bf48b3c2c79efe38a85860436862dd6",
   "visual_specification": "Original8m undulating terrain with10200 surface-normal-aligned shared clumps, each containing3 baked-bend grass blades, a closed octahedral pebble and a five-petal flower.",
   "required_feature_witnesses": [
     "10200 bounded shared botanical-clump instances",
@@ -36,7 +36,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-28-botanical-meadow.lms",
-      "sha256": "c9d65af7e4acb8bb8c9929b9b46834552304b2c900072bf3f99243a475fcb7f4",
+      "sha256": "e18580cb81add214bb26d96dc2346d6d4bf48b3c2c79efe38a85860436862dd6",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

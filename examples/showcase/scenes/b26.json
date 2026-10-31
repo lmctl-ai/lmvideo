@@ -33,14 +33,14 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-26-cozy-still-life.lms",
-      "sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
+      "sha256": "19d8fc243462290360ad9ce7ab6ab01e40149019706a75f49759a31b7114e124",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "100% original procedural scene; no Splash, Cozy Kitchen, CC-BY-SA, HDRI, texture, font or borrowed model asset.",
-  "script_sha256": "7fd9d790d5d5af6dcaed4d617531a2a46ce196e2d14885a66f4b26dd6873c35c",
+  "script_sha256": "19d8fc243462290360ad9ce7ab6ab01e40149019706a75f49759a31b7114e124",
   "publication_status": "RELEASED",
   "limitations": [
     "Authored original scene; no spectral or measured-physical-material claim.",

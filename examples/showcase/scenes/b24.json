@@ -33,7 +33,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-24-native-hair.lms",
-      "sha256": "cdde772baa63f4219fe2db84c318fd40d89e41ad923dfeaaead624e84954c1a9",
+      "sha256": "3fe63a9de6f969af6ba755a31e5d01e36263212f44f0f119adc93f433f410b9f",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -44,5 +44,5 @@
     "no swept-mesh fallback",
     "no animated strands in this profile"
   ],
-  "script_sha256": "cdde772baa63f4219fe2db84c318fd40d89e41ad923dfeaaead624e84954c1a9"
+  "script_sha256": "3fe63a9de6f969af6ba755a31e5d01e36263212f44f0f119adc93f433f410b9f"
 }

@@ -32,7 +32,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-23-macro-chess-dof.lms",
-      "sha256": "a452b156f412849477f9e7c27c2a7ae0e133c3cb60f41967cb3765c94085934d",
+      "sha256": "9e396d61b5e1193f7eea660d7c17723c0a260e4fdb35bb15ca5d10dd947535d8",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -40,7 +40,7 @@
   ],
   "rights_note": "Original procedural board, pieces, materials and area light; no borrowed model or image.",
   "publication_status": "RELEASED",
-  "script_sha256": "a452b156f412849477f9e7c27c2a7ae0e133c3cb60f41967cb3765c94085934d",
+  "script_sha256": "9e396d61b5e1193f7eea660d7c17723c0a260e4fdb35bb15ca5d10dd947535d8",
   "camera_profile": {
     "focal_length_mm": 85,
     "sensor_height_mm": 24,
