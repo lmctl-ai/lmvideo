@@ -54,7 +54,7 @@ jobs:
 
       - name: Install ffmpeg (macOS)
         if: runner.os == 'macOS'
-        run: brew install ffmpeg
+        run: brew install ffmpeg bash
 
       - name: Install ffmpeg (Windows)
         if: runner.os == 'Windows'
@@ -63,7 +63,10 @@ jobs:
       - name: Install the hosts pinned by the examples
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash scripts/install-hosts.sh
+        run: |
+          # scripts/install-hosts.sh needs bash >= 4 (globstar, associative arrays); macOS ships 3.2.
+          if [ "$RUNNER_OS" = macOS ]; then BASH5="$(brew --prefix)/bin/bash"; else BASH5=bash; fi
+          "$BASH5" scripts/install-hosts.sh
 
       - name: Show installed versions
         run: |
