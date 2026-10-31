@@ -1,0 +1,6 @@
+# Negative fixture (lmdraw): an undeclared Scene method is an unknown-call
+# error, not a silent pass-through.
+p = _lmcode_ cli="lmdraw";
+scene.canvas(64, 64, "#ffffff");
+scene.no_such_thing(1.0);
+end _lmcode_

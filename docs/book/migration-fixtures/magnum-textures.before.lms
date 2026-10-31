@@ -1,0 +1,23 @@
+# Migration fixture (lmmagnum): checker texture bound to a material, plus a
+# procedural pixel-built texture saved as PNG. Runs on lmmagnum.
+out = ARGV.len() > 0 ? ARGV[0] : "build/magnum-textures.dslb";
+mkdir("images");
+mkdir("build");
+p = _lmcode_ cli="lmmagnum" install="github:lmctl-ai/lmmagnum@latest";
+scene.background(0.15, 0.15, 0.18);
+let tex = scene.texture_checker(64, 16, 0.9, 0.9, 0.9, 0.15, 0.15, 0.2);
+let m = material().color(0.8, 0.8, 0.8).texture(tex);
+scene.cube(1.5, m);
+let px = scene.texture(4, 4);
+px.pixel(0, 0, 1.0, 0.0, 0.0);
+px.pixel(1, 1, 0.0, 1.0, 0.0);
+px.pixel(2, 2, 0.0, 0.0, 1.0);
+px.pixel(3, 3, 1.0, 1.0, 0.0);
+px.save_png("images/magnum-textures-pixels.png");
+scene.camera(35.0, 2.5, 2.0, 3.5, 0.0, 0.0, 0.0);
+scene.directional_light(-0.4, -1.0, -0.5, 0.9);
+scene.render_png("images/magnum-textures.png", 320, 240);
+end _lmcode_
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+assert(r.code == 0);

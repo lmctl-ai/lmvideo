@@ -1,0 +1,206 @@
+{
+  "format": 1,
+  "note": "Positive before/after pairs: each before runs on its legacy host, each after (tool output, drift-checked) on lmvideo. Comparators are declared per output; 3D renders compare by geometry probes because the lighting model change is a declared, warned delta (LMV7310/LMV7312/LMV7426).",
+  "cases": [
+    {
+      "name": "draw-basics",
+      "host": "lmdraw",
+      "before": "draw-basics.before.lms",
+      "after": "draw-basics.after.lms",
+      "outputs": [
+        {
+          "path": "images/draw-basics.png",
+          "comparator": "ssim",
+          "threshold": 0.97,
+          "measured": 0.9986,
+          "note": "LunaSVG vs Skia rasterization differ in antialiasing only"
+        }
+      ]
+    },
+    {
+      "name": "img-ops",
+      "host": "lmimg",
+      "before": "img-ops.before.lms",
+      "after": "img-ops.after.lms",
+      "outputs": [
+        {
+          "path": "images/img-ops-sheet.png",
+          "comparator": "ssim",
+          "threshold": 0.96,
+          "measured": 0.9876,
+          "note": "ImageMagick rotate/levels vs lmvideo's reimplementation"
+        },
+        {
+          "path": "images/img-ops.gif",
+          "comparator": "gif-meta",
+          "facts": [
+            160,
+            120,
+            2
+          ],
+          "note": "same dimensions, frame count; centisecond delays on both"
+        }
+      ]
+    },
+    {
+      "name": "magnum-scene",
+      "host": "lmmagnum",
+      "before": "magnum-scene.before.lms",
+      "after": "magnum-scene.after.lms",
+      "outputs": [
+        {
+          "path": "images/magnum-scene.png",
+          "comparator": "probes",
+          "measured_ssim": 0.4771,
+          "note": "geometry and pose are identical; lmvideo is darker overall because lmmagnum's hardcoded 0.22 fill light and Blinn-Phong specular do not migrate (warnings LMV7310/LMV7312)",
+          "probes": [
+            {
+              "x": 178,
+              "y": 130,
+              "expect": "object"
+            },
+            {
+              "x": 250,
+              "y": 130,
+              "expect": "object"
+            },
+            {
+              "x": 10,
+              "y": 10,
+              "expect": "bg"
+            },
+            {
+              "x": 34,
+              "y": 10,
+              "expect": "bg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "magnum-textures",
+      "host": "lmmagnum",
+      "before": "magnum-textures.before.lms",
+      "after": "magnum-textures.after.lms",
+      "outputs": [
+        {
+          "path": "images/magnum-textures-pixels.png",
+          "comparator": "exact",
+          "note": "procedural pixel texture; legacy hosts start opaque white (mapped to image_create(w,h,#ffffff))"
+        },
+        {
+          "path": "images/magnum-textures.png",
+          "comparator": "probes",
+          "measured_ssim": 0.1316,
+          "note": "checker cell phase inverts on the box UV convention (warning LMV7333); probes assert checker scale/presence and object placement, not phase",
+          "probes": [
+            {
+              "x": 106,
+              "y": 58,
+              "expect": "object"
+            },
+            {
+              "x": 130,
+              "y": 82,
+              "expect": "object"
+            },
+            {
+              "x": 10,
+              "y": 10,
+              "expect": "bg"
+            },
+            {
+              "x": 34,
+              "y": 10,
+              "expect": "bg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "filament-scene",
+      "host": "lmfilament",
+      "before": "filament-scene.before.lms",
+      "after": "filament-scene.after.lms",
+      "outputs": [
+        {
+          "path": "images/filament-scene.png",
+          "comparator": "exact",
+          "note": "skybox-only frame: the linear->sRGB background conversion is pixel-exact"
+        }
+      ]
+    }
+  ],
+  "negatives": [
+    {
+      "before": "negative-lmdraw.before.lms",
+      "expected_errors": [
+        [
+          "LMV7002",
+          5
+        ]
+      ]
+    },
+    {
+      "before": "negative-lmimg.before.lms",
+      "expected_errors": [
+        [
+          "LMV7201",
+          4
+        ],
+        [
+          "LMV7202",
+          5
+        ],
+        [
+          "LMV7203",
+          6
+        ]
+      ]
+    },
+    {
+      "before": "negative-lmmagnum.before.lms",
+      "expected_errors": [
+        [
+          "LMV7324",
+          4
+        ],
+        [
+          "LMV7317",
+          5
+        ],
+        [
+          "LMV7307",
+          6
+        ],
+        [
+          "LMV7314",
+          7
+        ]
+      ]
+    },
+    {
+      "before": "negative-lmfilament.before.lms",
+      "expected_errors": [
+        [
+          "LMV7402",
+          4
+        ],
+        [
+          "LMV7410",
+          6
+        ],
+        [
+          "LMV7411",
+          7
+        ],
+        [
+          "LMV7415",
+          8
+        ]
+      ]
+    }
+  ]
+}

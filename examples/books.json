@@ -1326,6 +1326,31 @@
           ]
         }
       ]
+    },
+    {
+      "id": "migration",
+      "title": "Migrating from the legacy hosts",
+      "summary": "Move lmdraw, lmmagnum, lmfilament and lmimg scripts to the canonical lmvideo schema with the structured migration tool: mechanical rewrites where the mapping is exact, located diagnostics where it is not.",
+      "chapters": [
+        {
+          "id": "migrating-from-legacy-hosts",
+          "title": "Migrating from lmdraw, lmmagnum, lmfilament and lmimg",
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "The legacy hosts are maintenance-only. The migration tool rewrites their _lmcode_ blocks to canonical lmvideo, or prints path:line:col diagnostics with stable LMV7xxx codes for what cannot migrate. Nothing is rewritten silently: every transformation is recorded in the JSON report, and approximate mappings are warnings, not surprises."
+            },
+            {
+              "kind": "text",
+              "text": "Run: python3 scripts/migrate-legacy.py old-script.lms -o migrated.lms --report report.json. Blocks with errors stay byte-identical and keep running on their pinned legacy host; --keep-going writes the partially migrated file. The full per-method rule table is --list-rules."
+            },
+            {
+              "kind": "text",
+              "text": "Highlights: lmdraw diagrams map one-to-one (scene.X -> canvas.X); lmimg image operations keep names, units and centisecond GIF delays; lmmagnum keeps vertical-FOV cameras, negates light directions into lmvideo's toward-the-source convention and converts float colors to sRGB hex; lmfilament's .filamat material compilation is a deliberate diagnostic, not a fake. See the docs/book/migrating-from-legacy-hosts.md chapter for the complete tables."
+            }
+          ]
+        }
+      ]
     }
   ],
   "media": [

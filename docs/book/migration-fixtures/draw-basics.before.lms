@@ -1,0 +1,17 @@
+# Migration fixture (lmdraw): canvas, anchored boxes, one elbow connector,
+# styled text, render_png. Runs on lmdraw; the tool migrates it to lmvideo.
+out = ARGV.len() > 0 ? ARGV[0] : "build/draw-basics.dslb";
+mkdir("images");
+mkdir("build");
+p = _lmcode_ cli="lmdraw" install="github:lmctl-ai/lmdraw@latest";
+scene.canvas(320, 200, "#ffffff");
+let a = scene.box(80.0, 60.0, 90.0, 44.0, "in", "#eef2ff", "#3730a3", 6.0, 13.0);
+let b = scene.box(240.0, 60.0, 90.0, 44.0, "out", "#ecfdf5", "#065f46", 6.0, 13.0);
+scene.connector(a, "e", b, "w", "elbow", "none", "arrow", "none", "#334155", 2.0, "go", 0.5, 0.0, -10.0);
+let t = scene.text(16.0, 180.0, 12.0, "legend", "#334155");
+t.set_attr("font-weight", "700");
+scene.render_png("images/draw-basics.png", 320, 200, 1);
+end _lmcode_
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+assert(r.code == 0);

@@ -1,0 +1,20 @@
+# Migration fixture (lmmagnum): background, material, primitives with
+# transform chains, camera, directional light, render_png. Runs on lmmagnum.
+out = ARGV.len() > 0 ? ARGV[0] : "build/magnum-scene.dslb";
+mkdir("images");
+mkdir("build");
+p = _lmcode_ cli="lmvideo";
+let __lmvideo_scene = scene3d();
+
+__lmvideo_scene.background("#33333d");
+let m = material().base_color("#cc4d4d");
+__lmvideo_scene.add(mesh_box(1.0, 1.0, 1.0), m).position(-1.2, 0.0, 0.0);
+__lmvideo_scene.add(mesh_sphere(0.7, 24, 48), m).position(0.0, 0.2, 0.0);
+__lmvideo_scene.add(mesh_cylinder(0.3, 1.4, 48), m).position(1.4, 0.0, 0.0).rotation(0.0, 0.0, 20.0);
+__lmvideo_scene.camera(camera3d().perspective(40.0, 0.05, 10000.0).look_at(4.0, 3.0, 6.0, 0.0, 0.0, 0.0));
+__lmvideo_scene.directional_light(0.4, 1.0, 0.5, "#ffffff", 0.9);
+__lmvideo_scene.render_image(480, 360, 2).save("images/magnum-scene.png");
+end _lmcode_
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+assert(r.code == 0);

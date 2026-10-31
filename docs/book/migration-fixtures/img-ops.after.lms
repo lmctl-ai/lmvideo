@@ -1,0 +1,29 @@
+# Migration fixture (lmimg): pattern, rect, rotate with background, crop,
+# levels, blend, montage sheet, GIF animation, asserts. Runs on lmimg.
+out = ARGV.len() > 0 ? ARGV[0] : "build/img-ops.dslb";
+mkdir("images");
+mkdir("build");
+p = _lmcode_ cli="lmvideo";
+
+let base = image_pattern(160, 120, "0.2+0.6*x", "0.3+0.4*y", "0.5", "1");
+base.rect(10.0, 10.0, 40.0, 30.0, 0.9, 0.2, 0.2, 1.0);
+let rot = base.copy().rotate(15.0, 0.1, 0.1, 0.1, 1.0);
+let crop = rot.crop(10, 10, 120, 90);
+crop.levels(0.05, 1.2, 0.95);
+let over = image_create(120, 90, 0.0, 0.0, 0.4, 0.5);
+crop.blend(over, "over", 1.0, 0, 0);
+let sheet = layout_sheet();
+sheet.add(base);
+sheet.add(crop);
+let grid = sheet.render(2, 4, 0.05, 0.05, 0.05, 1.0);
+grid.save("images/img-ops-sheet.png");
+let anim = timeline_create();
+anim.add(base, 20);
+anim.add(base.copy().flip(true), 20);
+anim.save("images/img-ops.gif");
+image_assert_close(crop.mean(0), crop.mean(0), 0.0);
+out.print("img-ops done");
+end _lmcode_
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+assert(r.code == 0);

@@ -1,0 +1,21 @@
+# Migration fixture (lmfilament): scene, skybox, camera, directional light,
+# shadows, mesh producers, render_png. Deliberately material-free: filamat
+# material compilation is a diagnostic, not a migration. Runs on lmfilament.
+out = ARGV.len() > 0 ? ARGV[0] : "build/filament-scene.dslb";
+mkdir("images");
+mkdir("build");
+p = _lmcode_ cli="lmvideo";
+
+let s = scene3d();
+s.background("#596389");
+s.camera(camera3d().perspective(45.0, 0.1, 1000.0).look_at(0.0, 0.0, 3.0, 0.0, 0.0, 0.0));
+s.directional_light(0.5, 1.0, 0.6, "#ffffff", 1.0);
+s.shadows(2048, 0.0003, 0.001, 1);
+let mesh = mesh_sphere(1.0, 24, (2 * (24)));
+let n = mesh.vertices();
+let box_mesh = mesh_box(1.0, 2.0, 1.0);
+s.render_image(320, 240, 2).save("images/filament-scene.png");
+end _lmcode_
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+assert(r.code == 0);

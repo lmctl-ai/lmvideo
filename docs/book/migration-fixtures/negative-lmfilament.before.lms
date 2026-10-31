@@ -1,0 +1,9 @@
+# Negative fixture (lmfilament): filamat material compilation, package save,
+# point lights and noop frame pumping are diagnosed, never faked.
+p = _lmcode_ cli="lmfilament";
+let m = fil.material("lit", "material { ... }");
+let s = fil.scene();
+s.point_light(1.0, 2.0, 3.0, 500.0, 10.0);
+s.render_frames(5);
+m.save("m.filamat");
+end _lmcode_

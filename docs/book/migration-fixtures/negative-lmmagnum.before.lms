@@ -1,0 +1,8 @@
+# Negative fixture (lmmagnum): Phong specular, capsule, scene OBJ export and
+# the accumulate() motion-blur idiom have no exact canonical mapping.
+p = _lmcode_ cli="lmmagnum";
+let m = material().color(0.5, 0.5, 0.5).specular(0.5);
+scene.capsule(0.5, 2.0, m);
+scene.export_obj("x.obj");
+scene.accumulate(64, 64);
+end _lmcode_

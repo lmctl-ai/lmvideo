@@ -1,0 +1,25 @@
+# Migration fixture (lmmagnum): checker texture bound to a material, plus a
+# procedural pixel-built texture saved as PNG. Runs on lmmagnum.
+out = ARGV.len() > 0 ? ARGV[0] : "build/magnum-textures.dslb";
+mkdir("images");
+mkdir("build");
+p = _lmcode_ cli="lmvideo";
+let __lmvideo_scene = scene3d();
+
+__lmvideo_scene.background("#26262e");
+let tex = texture_checker("#e6e6e6", "#262633", 4).bake(64, 64, "srgb");
+let m = material().base_color("#cccccc").albedo(tex);
+__lmvideo_scene.add(mesh_box(1.5, 1.5, 1.5), m);
+let px = image_create(4, 4, "#ffffff");
+px.set_pixel(0, 0, 1.0, 0.0, 0.0, 1.0);
+px.set_pixel(1, 1, 0.0, 1.0, 0.0, 1.0);
+px.set_pixel(2, 2, 0.0, 0.0, 1.0, 1.0);
+px.set_pixel(3, 3, 1.0, 1.0, 0.0, 1.0);
+px.save("images/magnum-textures-pixels.png");
+__lmvideo_scene.camera(camera3d().perspective(35.0, 0.05, 10000.0).look_at(2.5, 2.0, 3.5, 0.0, 0.0, 0.0));
+__lmvideo_scene.directional_light(0.4, 1.0, 0.5, "#ffffff", 0.9);
+__lmvideo_scene.render_image(320, 240, 2).save("images/magnum-textures.png");
+end _lmcode_
+savedsl(p, out);
+r = system(concat(dsl_cli(p), ["--dsl", out]), 600000);
+assert(r.code == 0);

@@ -1,0 +1,7 @@
+# Negative fixture (lmimg): constructs with no canonical lmvideo mapping.
+p = _lmcode_ cli="lmimg";
+let raw = img.open("in.png");
+let v = img.eval("1+2");
+let meta = raw.property("exif:DateTime");
+raw.metadata("k", "v");
+end _lmcode_
