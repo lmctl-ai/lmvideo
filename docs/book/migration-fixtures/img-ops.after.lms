@@ -24,6 +24,6 @@ anim.save("images/img-ops.gif");
 image_assert_close(crop.mean(0), crop.mean(0), 0.0);
 out.print("img-ops done");
 end _lmcode_
-savedsl(p, out);
-r = system(concat(dsl_cli(p), ["--lmcode", out]), 600000);
-assert(r.code == 0);
+
+r = run_lmcode(p);
+assert(r.ok, "lmcode host failed");
