@@ -5,7 +5,7 @@
   "visual_specification": "Original filleted valve block, coaxial Z-axis through-bore and four-hole flange, shown with matched camera and shared modest HDR/direct illumination in raster preview and CPU Cycles.",
   "script_sha256": "3f6cf3f0237bcd281e7a2d911c6b68f6cf8fa442761228e07b16a10b75cbcdc6",
   "required_feature_witnesses": [
-    "pinned lmcad v0.1.72 external producer",
+    "pinned lmcad v0.1.5 external producer",
     "original flanged valve STL",
     "shared STL geometry hash across preview/final/mask jobs",
     "matched raster/Cycles camera",

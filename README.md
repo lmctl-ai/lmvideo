@@ -4,6 +4,10 @@ Examples use the current lmcode result-frame protocol: `lmscript` 0.2.456 and
 lmvideo 0.1.38 or later (0.1.38 is the forthcoming host cutover). They execute
 opaque programs with `run_lmcode()` and check `r.ok`; bytecode stays internal.
 After that release, run `lmscript examples/video.lms images/video.mp4 60 30`.
+CAD examples require the migrated `lmcad v0.1.5` release (the older
+`v0.1.72` tag uses the retired protocol). Install it with
+`lmscript install github:lmctl-ai/lmcad@v0.1.5`.
+
 The manual all-OS integration workflow defaults to compiler 0.2.456 and main's
 examples; choose the lmvideo release tag when dispatching.
 
