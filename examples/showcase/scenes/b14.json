@@ -7,11 +7,16 @@
     {
       "name": "lmcad",
       "install": "github:lmctl-ai/lmcad@v0.1.5",
-      "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.72",
+      "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.5",
       "asset": "lmcad-linux-x64",
-      "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
+      "asset_sha256": "d30fd436b513c3b2dfefe84fe8b223420f2a05b33331bfdc472482656917387e",
       "purpose": "External CAD producer for the authored STL; not bundled with lmvideo.",
-      "licence_notice": "The generated STL is authored procedural output under the example licence; lmcad and OCCT retain their own release licences."
+      "licence_notice": "The generated STL is authored procedural output under the example licence; lmcad and OCCT retain their own release licences.",
+      "previous_release_provenance": {
+        "install": "github:lmctl-ai/lmcad@v0.1.72",
+        "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.72",
+        "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4"
+      }
     }
   ],
   "visual_specification": "900x560 still; real pinned lmcad B-Rep housing exported in millimetres, consumed at 0.001 m/mm in one scene across three orthographic views and one perspective uncapped clip-plane section, with dimensions.",
