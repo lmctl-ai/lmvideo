@@ -24,7 +24,7 @@
   "cpu_budget_seconds": 15,
   "backend": "raster",
   "status": "LOCAL_PASS",
-  "script_sha256": "567867d91ae5c93f764191a0529094937b2fd57988a767f71eee6e17f69dd012",
+  "script_sha256": "529b36c14cd15413692b2e65b3fe471ba6d2112ef5e9535f5e93ffabee4b2ba9",
   "dimensions": {
     "still": [
       640,

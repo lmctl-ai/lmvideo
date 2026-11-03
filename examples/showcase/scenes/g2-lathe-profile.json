@@ -18,7 +18,7 @@
     ]
   },
   "status": "LOCAL_PASS",
-  "script_sha256": "fceeee790b23fd5911559737a4aafd673f91794f93494cdf0e9ddde8dba0a8be",
+  "script_sha256": "3ab944cff31981fcbadf464998f503f82199c55a1e77cee937b6727a15d48da6",
   "assets": [
     {
       "kind": "original-procedural-source",

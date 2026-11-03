@@ -40,7 +40,7 @@
     }
   ],
   "rights_note": "No human scan, borrowed model, or third-party render; all bust parts and lighting are authored procedural geometry.",
-  "script_sha256": "d14beffd8e84f685549f4c9f5e5fb9a0c7b936fe535527a146ac05a1f0b32ce3",
+  "script_sha256": "503e1ed46caa2d73ab1095530edc27dc8a718554dc7384fdc25e100ba5bcce87",
   "reference_url": "https://threejs.org/examples/#webgl_materials_subsurface_scattering",
   "publication_status": "RELEASED"
 }

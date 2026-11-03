@@ -34,7 +34,7 @@
     }
   ],
   "publication_note": "Candidate only; no borrowed car model or external art. Runtime evidence is pending the integrated material-quality host.",
-  "script_sha256": "e2171b77f3b183853fc58b9b2a28de27dccde6e53d16e85978bf239f49ca9f31",
+  "script_sha256": "aa749ba82b133345381b0d81ea4114f906f3de223a6c3b3059b72f55c71b3c60",
   "cycles_profile": {
     "threads": 4,
     "samples": 64,

@@ -2,7 +2,7 @@
   "id": "B29",
   "title": "Original Recursive Menger Sculpture",
   "script": "examples/showcase/bench-29-recursive-menger.lms",
-  "script_sha256": "8b1e7934f816a33d341cbde3e2f30f790f245aae4f1835ac93db77baee28df34",
+  "script_sha256": "784d38a82b785e69bb0648af8da4be5eeac2bd069d547c73b4bfcfbf3c9b1726",
   "visual_specification": "900x560 level-three original Menger sculpture with 8000 shared bronze cubes, true hierarchical tunnels, native self-shadowing, a separate raster preview and CPU Cycles final.",
   "required_feature_witnesses": [
     "three base3-level Menger occupancy predicate",

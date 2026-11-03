@@ -2,7 +2,7 @@
   "id": "B21",
   "title": "Volumetric Fog & Window God-Rays",
   "script": "examples/showcase/bench-21-window-god-rays.lms",
-  "script_sha256": "2ed6f9c17c4374f7e29ece79ca95e4a71e221b8f70c179c6cb7c6d1d71c9fcd9",
+  "script_sha256": "89876ef34e859523ca31f5fdc0831921c12c2507b40e1e7c61a9cf2ce9e2844c",
   "visual_specification": "900x560 original enclosed chamber with a real left-wall opening, three opaque mullions, diagonal sunlight and a procedural stone sculpture.",
   "required_feature_witnesses": [
     "homogeneous participating scatter, not absorption alone",
