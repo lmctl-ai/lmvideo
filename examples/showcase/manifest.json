@@ -2,7 +2,7 @@
   "format": 2,
   "product": "lmvideo",
   "status": "PUBLIC_CONTENT_CANDIDATE",
-  "publication_status": "PRERELEASE_AVAILABLE",
+  "publication_status": "RELEASED",
   "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
   "media_policy": "Content-addressed local blobs only; no HTML, uploaded media, reference renders or bulk media in Git.",
   "execution_note": "These future-API examples require the matching local candidate binary; no installable release tag is claimed.",
@@ -15,7 +15,7 @@
       "script_sha256": "2e4c59a681a4df3a3a16ac507d1de686fd6aff524a141d1a39b8e1f7d9d1ccbb",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -54,7 +54,7 @@
       "script_sha256": "de58067eba098d195b70894b1fcc02b0d0ed350aba2f81b407d5f54447d22ec5",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -93,7 +93,7 @@
       "script_sha256": "b76ffbf3358251142712a2125a1ce804908c6d519eb48e3a44075c5e38827afe",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -130,7 +130,7 @@
       "script_sha256": "080c8159c2c5171da6620f09545f7090587c7e90d82d91e73c7ae5f387c0a755",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -171,7 +171,7 @@
       "script_sha256": "cf0d794e8889a8b1a98521d8b601fd7d44c4c09a3532f8d0aba123e01516bd03",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -208,7 +208,7 @@
       "script_sha256": "065407b1a46a803de4b61bce3fde56b00588a213dcb9117eaed8041632cfae91",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -252,7 +252,7 @@
       "script_sha256": "7f8bbb28840850375eebc99ffc4753620e32d955939f92c49555ce9cb17cb0f4",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -315,7 +315,7 @@
       "script_sha256": "ad6d16ee7ade408fb49111a81bfe4f0cdf4756de3cd4a54146438e8707e507e1",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -358,7 +358,7 @@
       "script_sha256": "9f5d57eb23b19a7b172b64046de6469d5d88da6ffde108dbbeecd681785d5e42",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -420,7 +420,7 @@
       "script_sha256": "f84e16465a48b635e8ded9b2ebefa1cce574c17124eb78cbf7c0893a27098991",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -484,7 +484,7 @@
       "script_sha256": "ec196c20f6086836c89b23165e00d13fb14bfa2fdf2d6cd4a70f857fe3371e40",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -521,7 +521,7 @@
       "script_sha256": "5055d85ceadd2213652266952d4eee8ff091c5266970bf589201421ccbb2b2af",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -571,7 +571,7 @@
       "script_sha256": "05dc8b062cf6e6a56306fee116f2152f85fffce98dbcf881b5db22af75f06bfb",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster+img",
       "reference": {
@@ -620,7 +620,7 @@
       "script_sha256": "f680ead29094377c07a84ff6e79d79271925d827030d415be89c934ffbddfade",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cad+raster",
       "reference": {
@@ -688,7 +688,7 @@
       "script_sha256": "817273ea09b87a4b292e8b1265418322c1ee98fbefe531cdacd877075738e822",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster",
       "reference": {
@@ -740,7 +740,7 @@
       "script_sha256": "4f8ae26ce630e32bb8107cba85b9f6082e2a130023815afd7c55599c4609a9e4",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b16.json",
       "required_feature_witnesses": [
@@ -782,7 +782,7 @@
       "script_sha256": "e4d8eb4ea015a2ce0b8e7ad3d9673be83fb3d8c3ed171a9ad11d46d46b5c3a0f",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b17.json",
       "required_feature_witnesses": [
@@ -825,7 +825,7 @@
       "script_sha256": "00a198988990c6e3722ee20facbdf3fde23d78da31be3a90d0b257695dddf4e1",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b18.json",
       "required_feature_witnesses": [
@@ -865,7 +865,7 @@
       "script_sha256": "31748ac524b980fb9b83093c4869e233c93b72d69b5488d0fc5903e68dfb5ce5",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "backend": "cycles",
       "metadata": "examples/showcase/scenes/b19.json",
       "required_feature_witnesses": [
@@ -907,7 +907,7 @@
       "script_sha256": "198945ad97a1969e608acd991ea3b7fb93e016f716489e33ba6ab90a87d5b153",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -947,7 +947,7 @@
       "script_sha256": "6f02c5e94c8b299825bdc9ce81b43a2c0b9ef7a956e9eb736c775fde308a0d6b",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -986,7 +986,7 @@
       "script_sha256": "19dc4b9ad6822a06213b5f41ae6d022133ce30ec61b34eb01f09004825dcacee",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -1036,7 +1036,7 @@
       "script_sha256": "8e7c0b2e976f8770d7df2e5ac531a4f882639a26ca8d8b8e4a355b0d4051b4e7",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -1074,7 +1074,7 @@
       "script_sha256": "19a70b080c4a5d7d3396bc572635a5be3accd9729f5e55aff07c0edbd30b7649",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -1113,7 +1113,7 @@
       "script_sha256": "fda78d270d3fa13e4676dbb3be900ecc65fb0658e61e7e5a5916ddaa7a94c0dd",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -1153,7 +1153,7 @@
       "script_sha256": "816f42b04e7f4531cc21ff2e873d78d134c2ee9556108729ccc435a047211213",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -1202,10 +1202,10 @@
       "slug": "bench-27-cad-preview-cycles-twin",
       "title": "CAD Preview and Cycles Final Twin",
       "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
-      "script_sha256": "380e00b11196715d08c96da94febb8d0cd5dc17d9d28fd1a98b9298bb10268b4",
+      "script_sha256": "968fa8f0e59522a4fa30c33fd261532a4fd0b79a1c17d60deda3136e022bb32c",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "reference": {
@@ -1232,7 +1232,7 @@
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-          "sha256": "380e00b11196715d08c96da94febb8d0cd5dc17d9d28fd1a98b9298bb10268b4"
+          "sha256": "968fa8f0e59522a4fa30c33fd261532a4fd0b79a1c17d60deda3136e022bb32c"
         },
         {
           "kind": "font",
@@ -1314,7 +1314,7 @@
       "script_sha256": "15369af8b4ce3bf44311a5485afe73235ba8cf3b757978e379e0d15545af9cb0",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "visual_specification": "Original8m undulating terrain with10200 surface-normal-aligned shared clumps, each containing3 baked-bend grass blades, a closed octahedral pebble and a five-petal flower.",
@@ -1357,7 +1357,7 @@
       "script_sha256": "60f5a0a79838e1fe0c5d18fd9da6e578426d6164492158ca933310a305f8decb",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "visual_specification": "900x560 level-three original Menger sculpture with 8000 shared bronze cubes, true hierarchical tunnels, native self-shadowing, a separate raster preview and CPU Cycles final.",
@@ -1400,7 +1400,7 @@
       "script_sha256": "d1e1abf4b124fa43f338a71b8e3eb97921ce9c81db89d992be26237e04e86158",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster+img",
       "visual_specification": "1280x720 30fps 90-frame original prescribed elastic mesh-state deformation clip with deterministic bounded geometry changes, floor shadow and explicit no-physics-solver wording.",
@@ -1464,7 +1464,7 @@
       "script_sha256": "1ebdddd1e296e21bd5e4606d59a7e8c0403fe2be5726f3628c07519abfd840e8",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "cycles",
       "visual_specification": "A tall wispy authored smoke field from a32\u00b3 grid of original3D nearest-feature-point Worley noise, grounded warm internal fire, directional sun and side/back lighting; no borrowed art or fluid simulator.",
@@ -1507,7 +1507,7 @@
       "script_sha256": "21e6f91637aeb7077f2ebbf5d997df93efc30ae23db6ff0d1c08e5743d1af05f",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
-      "publication_status": "PRERELEASE_AVAILABLE",
+      "publication_status": "RELEASED",
       "featured": false,
       "backend": "raster+img",
       "visual_specification": "1280x720 30fps150-frame original orbital/accretion scene with actual per-frame Image blur bloom and3D Hald LUT, projectedHUD, and live Plot/VectorField in one reusable Layout. Separate64spp/OIDN Cycles hero.",
@@ -2207,7 +2207,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
-              "script_sha256": "380e00b11196715d08c96da94febb8d0cd5dc17d9d28fd1a98b9298bb10268b4"
+              "script_sha256": "968fa8f0e59522a4fa30c33fd261532a4fd0b79a1c17d60deda3136e022bb32c"
             },
             {
               "type": "image",

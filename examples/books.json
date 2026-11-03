@@ -1023,7 +1023,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
-              "script_sha256": "380e00b11196715d08c96da94febb8d0cd5dc17d9d28fd1a98b9298bb10268b4",
+              "script_sha256": "968fa8f0e59522a4fa30c33fd261532a4fd0b79a1c17d60deda3136e022bb32c",
               "commands": [
                 [
                   "lmctl",
@@ -3137,5 +3137,5 @@
     }
   ],
   "runtime_release": "v0.1.38",
-  "release_channel": "prerelease"
+  "release_channel": "latest"
 }

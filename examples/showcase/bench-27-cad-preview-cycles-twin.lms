@@ -20,8 +20,14 @@ let mask=scene3d().threads(4).background("#000000").ambient(0.0);mask.camera(cam
 mask.save_job("build/b27-mask-raster.lmjob",435,540,2);mask.save_job("build/b27-mask-cycles.lmjob",435,540,"cycles",16,2,20261104,false);
 end _lmcode_
 r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));
-tp=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"preview\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-preview.lmjob","--renderer","raster","--output","build/b27-preview.png"]);assert(tp.code==0,tp.stdout+tp.stderr);println(tp.stderr);
-tf=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"final\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-final.lmjob","--renderer","cycles","--output","build/b27-final.png"]);assert(tf.code==0,tf.stdout+tf.stderr);println(tf.stderr);
+tp_start=now();
+tp=system(["lmvideo","render-job","build/b27-preview.lmjob","--renderer","raster","--output","build/b27-preview.png"]);
+tp_wall_s=(now()-tp_start)/1000.0;assert(tp.code==0,tp.stdout+tp.stderr);
+println(json_stringify({"benchmark_stage":"preview","wall_s":tp_wall_s}));
+tf_start=now();
+tf=system(["lmvideo","render-job","build/b27-final.lmjob","--renderer","cycles","--output","build/b27-final.png"]);
+tf_wall_s=(now()-tf_start)/1000.0;assert(tf.code==0,tf.stdout+tf.stderr);
+println(json_stringify({"benchmark_stage":"final","wall_s":tf_wall_s}));
 mr=system(["lmvideo","render-job","build/b27-mask-raster.lmjob","--renderer","raster","--output","build/b27-mask-raster.png"]);assert(mr.code==0,mr.stdout+mr.stderr);
 mc=system(["lmvideo","render-job","build/b27-mask-cycles.lmjob","--renderer","cycles","--output","build/b27-mask-cycles.png"]);assert(mc.code==0,mc.stdout+mc.stderr);
 post=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
