@@ -6,4 +6,3 @@ for(frame in range(0,video.count())){video.frame();canvas.clear("#f5f7fa");let p
 video.end();
 end _lmcode_
 r=run_lmcode(program);if(!r.ok){println((r.ok ? "" : r.message));}assert(r.ok);
-

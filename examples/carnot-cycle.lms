@@ -35,10 +35,10 @@ for (frame in range(0, video.count())) {
 }
 video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 if (standalone) {
-  
+
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/carnot-cycle.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/carnot-cycle.gif;
     assert(g.code == 0);

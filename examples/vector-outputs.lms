@@ -10,4 +10,3 @@ let roundtrip=surface(960,540);roundtrip.canvas().clear("#ffffff");roundtrip.can
 video.size(960,540);video.frames(1);video.output(${mp4});video.begin();video.frame();canvas.clear("#f5f7fa");canvas.image(roundtrip.image(),0.0,0.0);video.save_frame(${png});video.end();
 end _lmcode_
 r=run_lmcode(program);if(!r.ok){println((r.ok ? "" : r.message));}assert(r.ok);
-

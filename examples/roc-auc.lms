@@ -22,4 +22,3 @@ let roc=p.series("classifier","line","#2878b5").width(3.0);for(k in range(0,101)
 p.draw();video.save_frame(${png});video.end();
 end _lmcode_
 r=run_lmcode(program);if(!r.ok){println((r.ok ? "" : r.message));}assert(r.ok);
-

@@ -44,7 +44,7 @@ canvas.text("response", 750.0, 74.0, font(12.0), paint().color("#9db4c8"));
 canvas.draw_diagram();
 video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 
 println(f"wrote lmvideo result ({png})");

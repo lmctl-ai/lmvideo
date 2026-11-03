@@ -49,7 +49,7 @@ canvas.connector(reject, "s", closed, "n", "straight", "none", "arrow", "none", 
 canvas.draw_diagram();
 video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 
 println(f"wrote lmvideo result ({png})");

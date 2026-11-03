@@ -74,7 +74,7 @@ canvas.connector(platform, "e", vp_prod, "w", "elbow", "none", "arrow", "5 5", "
 canvas.draw_diagram();
 video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 
 println(f"wrote lmvideo result ({png})");

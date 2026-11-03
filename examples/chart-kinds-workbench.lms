@@ -11,4 +11,3 @@ let time=board.add_plot().grid(2,1,1,1).fill("both").plot().title("Date ticks ·
 board.draw();video.save_frame(${png});video.end();
 end _lmcode_
 r=run_lmcode(program);if(!r.ok){println((r.ok ? "" : r.message));}assert(r.ok);
-

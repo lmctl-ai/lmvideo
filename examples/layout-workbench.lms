@@ -39,7 +39,7 @@ signal.add(0.0, 0.0).add(1.0, 0.7).add(2.0, 1.0).add(3.0, 0.7).add(4.0, 0.0).add
 let footer = figure.add_text("Canvas panel → explicit manager → constrained children").border("south").preferred_size(896.0, 26.0).text().size(12.0).color("#667085");
 figure.draw(); video.save_frame(${png}); video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 
 println(f"wrote lmvideo result ({mp4}, {png})");

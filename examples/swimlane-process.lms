@@ -62,7 +62,7 @@ canvas.text("retry", 857.0 - font(12.0).measure("retry") / 2.0, 92.0, font(12.0)
 
 video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 
 println(f"wrote lmvideo result ({png})");

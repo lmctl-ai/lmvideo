@@ -14,4 +14,3 @@ let beauty = scene.render_image(
 beauty.save("build/sphere-cycles.png");
 
 end _lmcode_
-

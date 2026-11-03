@@ -82,7 +82,7 @@ canvas.text("lock / 30 s timeout", 295.0 - mid_font.measure("lock / 30 s timeout
 
 video.end();
 end _lmcode_
- 
+
 r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 
 println(f"wrote lmvideo result ({png})");
