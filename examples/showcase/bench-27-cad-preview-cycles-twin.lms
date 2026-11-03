@@ -1,6 +1,6 @@
 # B27 / G.9-G.13: one authored CAD STL, one camera, raster preview and Cycles twin.
 # lmcad is an external producer; the generated STL is original example content.
-mkdir("build"); cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.72";
+mkdir("build"); cad=_lmcode_ cli="lmcad" install="github:lmctl-ai/lmcad@v0.1.5";
 let alloy=material().color(0.72,0.78,0.84).roughness(0.55).specular(0.22).shininess(48.0);
 let body=scene.box(120.0,70.0,80.0,alloy).fillet(2.0);let bore=scene.cylinder(16.0,100.0,alloy).rotate(1.5707963267948966,0.0,0.0);body.cut(bore);bore.visible(false);
 let flange=scene.cylinder(35.0,12.0,alloy).rotate(1.5707963267948966,0.0,0.0).position(0.0,0.0,46.0);let flange_bore=scene.cylinder(16.0,16.0,alloy).rotate(1.5707963267948966,0.0,0.0).position(0.0,0.0,46.0);flange.cut(flange_bore);flange_bore.visible(false);
@@ -22,8 +22,8 @@ end _lmcode_
 r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));
 tp=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"preview\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-preview.lmjob","--renderer","raster","--output","build/b27-preview.png"]);assert(tp.code==0,tp.stdout+tp.stderr);println(tp.stderr);
 tf=system(["/usr/bin/time","-f","{\"benchmark_stage\":\"final\",\"wall_s\":%e,\"user_s\":%U,\"sys_s\":%S,\"max_rss_kib\":%M}","lmvideo","render-job","build/b27-final.lmjob","--renderer","cycles","--output","build/b27-final.png"]);assert(tf.code==0,tf.stdout+tf.stderr);println(tf.stderr);
-mr=run_lmcode(program);assert(mr.code==0,mr.stdout+mr.stderr);
-mc=run_lmcode(program);assert(mc.code==0,mc.stdout+mc.stderr);
+mr=system(["lmvideo","render-job","build/b27-mask-raster.lmjob","--renderer","raster","--output","build/b27-mask-raster.png"]);assert(mr.code==0,mr.stdout+mr.stderr);
+mc=system(["lmvideo","render-job","build/b27-mask-cycles.lmjob","--renderer","cycles","--output","build/b27-mask-cycles.png"]);assert(mc.code==0,mc.stdout+mc.stderr);
 post=_lmcode_ cli="lmvideo";
 let preview=image_file("build/b27-preview.png");let final=image_file("build/b27-final.png");image_assert_true(preview.stddev(0)>0.02&&final.stddev(0)>0.02);
 let postmesh=mesh_load("build/b27-flanged-valve.stl");let postscene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);postscene.add(postmesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);postscene.camera(camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0));let label=postscene.projection(435,540).at(0.0,0.0,0.053);let rim=postscene.projection(435,540).at(0.0,0.0,0.04);image_assert_true(label.visible()&&rim.visible());let depth=postscene.render_depth_image(435,540);image_assert_true(depth.stddev(0)>0.01);
@@ -34,6 +34,4 @@ let iou=float(inter)/float(max(1,union));image_assert_true(iou>0.98);out.print("
 let sheet=layout_sheet().add(preview).add(final);let composed=sheet.render(2,10,0.94,0.96,0.98,1.0);composed.text(24.0,32.0,"CAD preview / Cycles final · one imported mesh and matched camera",20.0,0.09,0.21,0.30,1.0);composed.text(24.0,548.0,"Body 120 × 70 × 80 mm · coaxial 12 mm flange · STL scale 0.001 m/mm",17.0,0.09,0.21,0.30,1.0);composed.save("build/bench-27-cad-preview-cycles-twin.png");out.print("B27 original CAD preview/Cycles twin | one STL mesh | matched camera | projected through-bore label | 64 spp OIDN");
 end _lmcode_
 
-r=run_lmcode(post);assert(r.code==0,r.stderr+r.stdout);println(r.stdout);
-
-gify(r.result));
+r=run_lmcode(post);assert(r.ok,(r.ok ? "" : r.message));println(json_stringify(r.result));

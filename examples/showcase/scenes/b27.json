@@ -3,7 +3,7 @@
   "title": "CAD Preview and Cycles Final Twin",
   "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
   "visual_specification": "Original filleted valve block, coaxial Z-axis through-bore and four-hole flange, shown with matched camera and shared modest HDR/direct illumination in raster preview and CPU Cycles.",
-  "script_sha256": "1b9abe934367417f7f84bae7c11e34b81f3e7cda95d834cd6495b7517a1c5d8e",
+  "script_sha256": "3f6cf3f0237bcd281e7a2d911c6b68f6cf8fa442761228e07b16a10b75cbcdc6",
   "required_feature_witnesses": [
     "pinned lmcad v0.1.72 external producer",
     "original flanged valve STL",
@@ -33,7 +33,7 @@
   "external_tools": [
     {
       "name": "lmcad",
-      "install": "github:lmctl-ai/lmcad@v0.1.72",
+      "install": "github:lmctl-ai/lmcad@v0.1.5",
       "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.72",
       "asset": "lmcad-linux-x64",
       "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",

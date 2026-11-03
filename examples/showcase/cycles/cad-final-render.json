@@ -2,7 +2,7 @@
   "format": 1,
   "status": "CONTENT_ONLY",
   "script": "examples/cad-final-render.lms",
-  "script_sha256": "360144084ada5e7c6dc934bc26063299eafa15df3bce1b43bc8ebbeaff397c2c",
+  "script_sha256": "a4a59e893b6c2f1d0c65a986b93b8a38fcd23ac79a314d552a5dd70124b043b9",
   "hosts": {
     "lmcad": "v0.1.72",
     "lmvideo": "matching private development implementation"

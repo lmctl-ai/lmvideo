@@ -662,7 +662,7 @@
       "external_tools": [
         {
           "name": "lmcad",
-          "install": "github:lmctl-ai/lmcad@v0.1.72",
+          "install": "github:lmctl-ai/lmcad@v0.1.5",
           "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.72",
           "asset": "lmcad-linux-x64",
           "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
@@ -1244,7 +1244,7 @@
       "external_tools": [
         {
           "name": "lmcad",
-          "install": "github:lmctl-ai/lmcad@v0.1.72",
+          "install": "github:lmctl-ai/lmcad@v0.1.5",
           "release_url": "https://github.com/lmctl-ai/lmcad/releases/tag/v0.1.72",
           "asset": "lmcad-linux-x64",
           "asset_sha256": "20652f356495fc9f2813e972f9b3502b5b844eec4fb5b7c7d8fed973b1ada3c4",
