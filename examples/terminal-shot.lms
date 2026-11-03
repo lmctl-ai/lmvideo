@@ -4,10 +4,8 @@
 in_txt = ARGV.len() > 0 ? ARGV[0] : "examples/terminal-shot.txt";
 out_png = ARGV.len() > 1 ? ARGV[1] : "docs/images/terminal-shot.png";
 title = ARGV.len() > 2 ? ARGV[2] : "Terminal";
-dslout = ARGV.len() > 3 ? ARGV[3] : "build/terminal-shot.dslb";
 
 mkdir(dirname(out_png));
-mkdir(dirname(dslout));
 
 raw_text = file_exists(in_txt) ? read_file(in_txt) : "$ echo 'No input provided'\nNo input provided";
 raw_lines = lines(raw_text);
