@@ -3,9 +3,9 @@
 # (Kepler's equation in the DSL), burns again at apogee and settles into GEO. Known answers: dv1 = 2.40 km/s, dv2 = 1.46 km/s, total 3.85 km/s, coast 5.3 h.
 # Writes images/hohmann-transfer.mp4 (8 s, 960x540), images/hohmann-transfer.png (frame 170) and, with ffmpeg, a GIF.
 standalone = ARGV.len() == 0;
-dslout = ARGV.len() > 0 ? ARGV[0] : "build/hohmann-transfer.dslb";
-mp4 = ARGV.len() > 1 ? ARGV[1] : "images/hohmann-transfer.mp4";
-png = ARGV.len() > 2 ? ARGV[2] : "images/hohmann-transfer.png";
+
+mp4 = ARGV.len() > 0 ? ARGV[0] : "images/hohmann-transfer.mp4";
+png = ARGV.len() > 1 ? ARGV[1] : "images/hohmann-transfer.png";
 mkdir("images");
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(960, 540);
@@ -125,16 +125,17 @@ for (f in range(0, video.count())) {
 }
 video.end();
 end _lmcode_
-mkdir(dirname(dslout));
-savedsl(program, dslout);
+
+
+r = run_lmcode(program);
+  if (!r.ok) { println((r.ok ? "" : r.message)); }
+  assert(r.ok);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000);
-  if (r.code != 0) { println(r.stderr + r.stdout); }
-  assert(r.code == 0);
+  
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/hohmann-transfer.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/hohmann-transfer.gif;
     assert(g.code == 0);
     println("wrote images/hohmann-transfer.gif");
   }
 }
-println(f"wrote {dslout} ({mp4}, {png})");
+println(f"wrote lmvideo result ({mp4}, {png})");

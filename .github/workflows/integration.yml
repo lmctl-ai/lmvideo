@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: Git ref (release tag) whose examples are run; its pinned hosts are installed
+        description: Source Git ref whose examples are run; its declared hosts are installed
         required: true
-        default: v0.1.36
+        default: main
         type: string
       lmvideo_tag:
         description: "lmvideo release tag to test instead of the host pinned by the examples (e.g. v0.1.37); empty = pinned"
@@ -16,7 +16,7 @@ on:
         default: ''
         type: string
       lmctl_version:
-        description: "@lmctl-ai/lmctl npm version (latest if empty); 0.2.426 matches the v0.1.36 release gate"
+        description: "@lmctl-ai/lmctl npm version (latest if empty); 0.2.456 is required for the lmcode result-frame examples"
         required: false
         default: '0.2.426'
         type: string

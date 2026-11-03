@@ -3,9 +3,9 @@
 # The two bars at the right stack d1 and d2 to the same total length every frame. Foci at c = sqrt(a^2 - b^2) = 183.3 from the centre; eccentricity e = c/a = 0.733.
 # Writes images/geometry-ellipse.mp4 (8 s, 960x540), images/geometry-ellipse.png (frame 170) and, with ffmpeg, a GIF.
 standalone = ARGV.len() == 0;
-dslout = ARGV.len() > 0 ? ARGV[0] : "build/geometry-ellipse.dslb";
-mp4 = ARGV.len() > 1 ? ARGV[1] : "images/geometry-ellipse.mp4";
-png = ARGV.len() > 2 ? ARGV[2] : "images/geometry-ellipse.png";
+
+mp4 = ARGV.len() > 0 ? ARGV[0] : "images/geometry-ellipse.mp4";
+png = ARGV.len() > 1 ? ARGV[1] : "images/geometry-ellipse.png";
 mkdir("images");
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(960, 540);
@@ -105,16 +105,17 @@ for (f in range(0, video.count())) {
 }
 video.end();
 end _lmcode_
-mkdir(dirname(dslout));
-savedsl(program, dslout);
+
+
+r = run_lmcode(program);
+  if (!r.ok) { println((r.ok ? "" : r.message)); }
+  assert(r.ok);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000);
-  if (r.code != 0) { println(r.stderr + r.stdout); }
-  assert(r.code == 0);
+  
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/geometry-ellipse.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/geometry-ellipse.gif;
     assert(g.code == 0);
     println("wrote images/geometry-ellipse.gif");
   }
 }
-println(f"wrote {dslout} ({mp4}, {png})");
+println(f"wrote lmvideo result ({mp4}, {png})");

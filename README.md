@@ -1,5 +1,12 @@
 # lmvideo
 
+Examples use the current lmcode result-frame protocol: `lmscript` 0.2.456 and
+lmvideo 0.1.38 or later (0.1.38 is the forthcoming host cutover). They execute
+opaque programs with `run_lmcode()` and check `r.ok`; bytecode stays internal.
+After that release, run `lmscript examples/video.lms images/video.mp4 60 30`.
+The manual all-OS integration workflow defaults to compiler 0.2.456 and main's
+examples; choose the lmvideo release tag when dispatching.
+
 Skia-powered plots, diagrams, image processing and video, driven by short lmscript programs. Every picture below links to an example you can run directly from the public repository.
 
 ## Install lmctl

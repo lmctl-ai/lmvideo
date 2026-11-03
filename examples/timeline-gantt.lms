@@ -5,9 +5,9 @@
 # are host shapes so dependencies can address their anchors; week
 # mapping and the summary bracket stay in-script. Port of lmdraw's
 # timeline-gantt to lmvideo.
-standalone = ARGV.len() == 0;
-dslout = ARGV.len() > 0 ? ARGV[0] : "build/timeline-gantt.dslb";
-png = ARGV.len() > 1 ? ARGV[1] : "images/timeline-gantt.png";
+
+
+png = ARGV.len() > 0 ? ARGV[0] : "images/timeline-gantt.png";
 mkdir("images");
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(1100, 640); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
@@ -82,8 +82,7 @@ canvas.connector(docs, "e", launch, "n", "straight", "none", "arrow", "none", "#
 canvas.draw_diagram();
 video.end();
 end _lmcode_
-mkdir(dirname(dslout)); savedsl(program, dslout);
-if (standalone) {
-  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
-}
-println(f"wrote {dslout} ({png})");
+ 
+r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
+
+println(f"wrote lmvideo result ({png})");

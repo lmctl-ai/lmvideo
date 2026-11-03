@@ -1,6 +1,5 @@
 # lmvideo terminal-shot example: render captured terminal text into a 1000px dark-window PNG screenshot.
 # Usage:
-#   lmscript examples/terminal-shot.lms [IN.txt] [OUT.png] [TITLE] [OUT.dslb]
 
 in_txt = ARGV.len() > 0 ? ARGV[0] : "examples/terminal-shot.txt";
 out_png = ARGV.len() > 1 ? ARGV[1] : "docs/images/terminal-shot.png";
@@ -236,10 +235,10 @@ row(${l39}, y0 + 39.0 * line_h, ${c39});
 video.end();
 end _lmcode_
 
-savedsl(program, dslout);
-r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000);
-if (r.code != 0) {
-  println(r.stderr + r.stdout);
+
+r = run_lmcode(program);
+if (!r.ok) {
+  println((r.ok ? "" : r.message));
 }
-assert(r.code == 0);
+assert(r.ok);
 println("wrote " + out_png + " (1000x" + str(canvas_height) + ")");

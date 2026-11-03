@@ -17,6 +17,6 @@ let second=warm.render_image(900,560,2);
 image_assert_true(first.rgba()==second.rgba());
 first.save("build/jpeg-material-roundtrip.png");
 end _lmcode_
-savedsl(program,"build/jpeg-material-roundtrip.dslb");
-r=system(concat(dsl_cli(program),["--lmcode","build/jpeg-material-roundtrip.dslb"]),600000);
-assert(r.code==0,r.stdout+r.stderr);println(r.stdout);
+
+r=run_lmcode(program);
+assert(r.ok,(r.ok ? "" : r.message));println(json_stringify(r.result));

@@ -4,9 +4,9 @@
 # vertical stubs); one dotted-line report runs from Platform to the VP of
 # Product. The grid and shapes come from the host diagram API; the tree
 # connector layout stays in-script. Port of lmdraw's org-chart-grid.
-standalone = ARGV.len() == 0;
-dslout = ARGV.len() > 0 ? ARGV[0] : "build/org-chart-grid.dslb";
-png = ARGV.len() > 1 ? ARGV[1] : "images/org-chart-grid.png";
+
+
+png = ARGV.len() > 0 ? ARGV[0] : "images/org-chart-grid.png";
 mkdir("images");
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(1000, 640); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
@@ -74,8 +74,7 @@ canvas.connector(platform, "e", vp_prod, "w", "elbow", "none", "arrow", "5 5", "
 canvas.draw_diagram();
 video.end();
 end _lmcode_
-mkdir(dirname(dslout)); savedsl(program, dslout);
-if (standalone) {
-  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
-}
-println(f"wrote {dslout} ({png})");
+ 
+r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
+
+println(f"wrote lmvideo result ({png})");

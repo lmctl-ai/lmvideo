@@ -3,9 +3,9 @@
 # and label land). Demonstrates updating retained connector attributes per
 # video frame; the diagram layer redraws in creation order after each clear.
 standalone = ARGV.len() == 0;
-dslout = ARGV.len() > 0 ? ARGV[0] : "build/etl-pipeline-draw.dslb";
-mp4 = ARGV.len() > 1 ? ARGV[1] : "images/etl-pipeline-draw.mp4";
-png = ARGV.len() > 2 ? ARGV[2] : "images/etl-pipeline-draw.png";
+
+mp4 = ARGV.len() > 0 ? ARGV[0] : "images/etl-pipeline-draw.mp4";
+png = ARGV.len() > 1 ? ARGV[1] : "images/etl-pipeline-draw.png";
 mkdir("images");
 program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(1000, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
@@ -78,12 +78,13 @@ for (frame in range(0, video.count())) {
 }
 video.end();
 end _lmcode_
-mkdir(dirname(dslout)); savedsl(program, dslout);
+ 
+r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/etl-pipeline-draw.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/etl-pipeline-draw.gif;
     assert(g.code == 0);
   }
 }
-println(f"wrote {dslout} ({mp4}, {png})");
+println(f"wrote lmvideo result ({mp4}, {png})");

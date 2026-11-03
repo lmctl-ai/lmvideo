@@ -1,10 +1,10 @@
 # A logistic forecast area with observed samples.
 standalone = ARGV.len() == 0;
-dslout = ARGV.len() > 0 ? ARGV[0] : "build/forecast-area.dslb";
-mp4 = ARGV.len() > 1 ? ARGV[1] : "images/forecast-area.mp4";
-png = ARGV.len() > 2 ? ARGV[2] : "images/forecast-area.png";
+
+mp4 = ARGV.len() > 0 ? ARGV[0] : "images/forecast-area.mp4";
+png = ARGV.len() > 1 ? ARGV[1] : "images/forecast-area.png";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.23";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 let figure = canvas.panel(24.0, 20.0, 912.0, 500.0).manager("pack").padding(12.0, 12.0, 12.0, 12.0).gap(8.0).background("#f5f7fa").edge("#cbd5e1", 1.0);
 let heading = figure.add_text("A logistic adoption forecast").pack("top", "x", false).preferred_size(850.0, 30.0).text().size(18.0).bold(true);
@@ -43,12 +43,13 @@ for (frame in range(0, video.count())) {
 }
 video.end();
 end _lmcode_
-mkdir(dirname(dslout)); savedsl(program, dslout);
+ 
+r = run_lmcode(program); if (!r.ok) { println((r.ok ? "" : r.message)); } assert(r.ok);
 if (standalone) {
-  r = system(concat(dsl_cli(program), ["--lmcode", dslout]), 600000); if (r.code != 0) { println(r.stderr + r.stdout); } assert(r.code == 0);
+  
   if (which("ffmpeg") != null) {
     g = system ffmpeg -y -loglevel error -i images/forecast-area.mp4 -vf "fps=12,scale=480:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=64[p];[b][p]paletteuse=dither=none" -loop 0 images/forecast-area.gif;
     assert(g.code == 0);
   }
 }
-println(f"wrote {dslout} ({mp4}, {png})");
+println(f"wrote lmvideo result ({mp4}, {png})");
