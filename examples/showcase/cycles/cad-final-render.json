@@ -4,7 +4,7 @@
   "script": "examples/cad-final-render.lms",
   "script_sha256": "c82cb66f4c493cba0bc359064527be8da0be3e154c07e58e9045a14ab817bd22",
   "hosts": {
-    "lmcad": "v0.1.4",
+    "lmcad": "v0.1.72",
     "lmvideo": "matching private development implementation"
   },
   "units": "STL millimetres scaled0.001 to metres; coordinates unchanged",
