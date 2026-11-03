@@ -1,0 +1,9 @@
+mkdir("build/physics");
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+let w=physics_world(0.008333333,111).gravity(0.0,-9.81,0.0).planar(true);w.box(10.0,0.35,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.1));
+for(i in range(0,8)){w.sphere(0.3,-2.0+float(i)*0.55,2.5,0.0,0.5,physics_material(0.35,0.7));}let take=w.bake(180,1);
+video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/contact-sweep.mp4");video.begin();let s=scene3d().background("#111827").ambient(0.3);let c=camera3d().look_at(6.0,3.5,9.0,0.0,0.7,0.0).perspective(42.0,0.1,36.0);
+for(f in range(0,video.count())){video.frame();let q=sin(3.1415926535*float(f)/96.0);let t=q*q;s.clear().camera(c).shadows(256,0.0004,0.001,1).directional_light(-2.0,6.0,4.0,"#fff1d6",1.4);s.add(mesh_box(10.0,0.35,4.0),"#c69e75").position(0.0,-0.2,0.0);for(i in range(0,8)){let n=s.add(mesh_sphere(0.3,18,24),"#ef8f8f");take.pose(t,i+1).sync(n);}let im=s.render_image(512,384,2);canvas.clear("#101827");canvas.image(im,0.0,0.0);canvas.text("time-replayed physics",16.0,28.0,font(15.0),paint().color("#fff1d6"));if(f==40){video.save_frame("build/physics/contact-sweep.png");}}
+video.end();
+end _lmcode_
+r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));

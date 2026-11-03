@@ -1,0 +1,18 @@
+# Physics motion: a real impulse travels through a domino wave.
+mkdir("build/physics");
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+let world=physics_world(0.008333333,9001).gravity(0.0,-9.81,0.0).planar(true);
+world.box(12.0,0.4,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.12));
+let mat=physics_material(0.6,0.18);for(i in range(0,18)){world.box(0.22,1.2,0.5,-4.0+float(i)*0.48,0.6,0.0,1.0,mat);}
+world.body(1).angular_velocity(0.0,0.0,-2.8);let take=world.bake(180,1);
+fn palette(i: int) -> string { let c="#9fa5dc"; if(i%3==0){c="#ef8f8f";} if(i%3==1){c="#79c7c0";} return c; }
+video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/domino-wave.mp4");video.begin();
+let scene=scene3d().background("#171827").ambient(0.2);let camera=camera3d().look_at(7.0,3.4,9.0,0.0,0.7,0.0).perspective(40.0,0.1,40.0);
+for(frame in range(0,video.count())){
+video.frame();let phase=sin(3.1415926535*float(frame)/96.0);let t=phase*phase;scene.clear();scene.camera(camera).shadows(256,0.0004,0.001,1);scene.directional_light(-2.0,5.0,5.0,"#ffe5cc",1.5);scene.add(mesh_box(12.0,0.4,4.0),"#c8a37c").position(0.0,-0.2,0.0);
+ for(i in range(0,18)){let node=scene.add(mesh_box(0.22,1.2,0.5),palette(i));take.pose(t,i+1).sync(node);}
+ let rendered=scene.render_image(512,384,2);canvas.clear("#101827");canvas.image(rendered,0.0,0.0);canvas.text("time-replayed physics",16.0,28.0,font(15.0),paint().color("#fff1d6"));if(frame==40){rendered.save("build/physics/domino-wave.png");}
+}
+video.end();
+end _lmcode_
+r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));

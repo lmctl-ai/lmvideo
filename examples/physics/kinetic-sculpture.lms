@@ -1,0 +1,10 @@
+# Kinetic sculpture: sixteen seeded spheres orbit a collision floor and settle.
+mkdir("build/physics");
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+let w=physics_world(0.008333333,101).gravity(0.0,-9.81,0.0).planar(true);w.box(10.0,0.35,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.1));
+for(i in range(0,16)){let a=6.2831853*float(i)/16.0;w.sphere(0.22,cos(a)*2.0,1.2+sin(a)*0.8,sin(a)*0.8,0.55,physics_material(0.4,0.65));}let take=w.bake(180,1);
+video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/kinetic-sculpture.mp4");video.begin();let s=scene3d().background("#12182a").ambient(0.27);let c=camera3d().look_at(7.0,4.5,10.0,0.0,1.0,0.0).perspective(43.0,0.1,40.0);
+for(f in range(0,video.count())){video.frame();let q=sin(3.1415926535*float(f)/96.0);let t=q*q;s.clear().camera(c).shadows(256,0.0004,0.001,1).directional_light(-3.0,6.0,5.0,"#ffefd5",1.4);s.add(mesh_box(10.0,0.35,4.0),"#c39a72").position(0.0,-0.2,0.0);for(i in range(0,16)){let n=s.add(mesh_sphere(0.22,16,24),"#79c7c0");take.pose(t,i+1).sync(n);}let im=s.render_image(512,384,2);canvas.clear("#101827");canvas.image(im,0.0,0.0);canvas.text("time-replayed physics",16.0,28.0,font(15.0),paint().color("#fff1d6"));if(f==40){video.save_frame("build/physics/kinetic-sculpture.png");}}
+video.end();
+end _lmcode_
+r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));

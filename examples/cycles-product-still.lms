@@ -1,6 +1,6 @@
 # Phase 6 CPU prototype: one canonical Scene, glTF data handoff, in-process Cycles/OIDN Image.
 # Uses a matching local candidate binary; no unreleased install tag is invented.
-mkdir("build");p=_lmcode_ cli="lmvideo";
+mkdir("build");p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 image_assert_true(render_available("cycles"));
 let source=scene3d().threads(4).background("#000000").ambient(0.0).tonemap("aces",1.0);
 source.camera(camera3d().look_at(0.0,1.5,5.5,0.0,1.1,0.0).perspective(42.0,0.1,100.0));

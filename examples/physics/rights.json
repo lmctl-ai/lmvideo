@@ -1,0 +1,62 @@
+{
+  "ballpit-impact": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "bar-stack": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "boxes-collapse": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "bullet-container": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "contact-sweep": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "domino-wave": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "impact-rings": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "kinetic-sculpture": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "kpi-42": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "letter-drop": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "plinko": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "pyramid-collapse": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "rolling-ramp": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "slide-tumble": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  },
+  "title-drop": {
+    "geometry": "procedural-original",
+    "font": "bundled-DejaVuSans-notice"
+  }
+}

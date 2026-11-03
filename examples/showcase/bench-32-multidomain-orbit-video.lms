@@ -1,5 +1,5 @@
 # B32 / P.7: original orbital accretion scene plus Image grading, projected HUD and live Plot/quiver telemetry.
-mkdir("build");mkdir("build/bench-32-frames"); program=_lmcode_ cli="lmvideo";
+mkdir("build");mkdir("build/bench-32-frames"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 video.size(1280,720);video.fps(30);video.frames(150);video.crf(20);video.output("build/bench-32-multidomain-orbit-video.mp4");video.begin();
 let scene=scene3d().threads(4).background("#050914").ambient(0.02).tonemap("aces",1.0);scene.camera(camera3d().look_at(0.0,2.4,7.2,0.0,0.4,0.0).perspective(38.0,0.1,40.0));scene.directional_light(-2.0,4.0,3.0,"#9fc8ff",1.2);
 let star=scene.add(mesh_sphere(0.55,24,40),material("#f2c86b",0.0,0.35).emissive("#ffb347",1.5));let planet=scene.add(mesh_sphere(0.28,20,32),material("#5aa2c8",0.0,0.45));let moon=scene.add(mesh_sphere(0.10,16,24),material("#d1d8e0",0.0,0.7));let accretion=point_cloud();for(k in range(0,720)){let a=float(k)*2.399963;let r=0.9+0.003*float(k%180);accretion.add(r*cos(a),0.02*sin(a*3.0),r*sin(a),0.018,"#d8884a",0.75,true);}scene.points(accretion);

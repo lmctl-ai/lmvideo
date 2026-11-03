@@ -6,7 +6,7 @@ mp4 = ARGV.len() > 0 ? ARGV[0] : "images/video.mp4";
 frames = ARGV.len() > 1 ? num(ARGV[1]) : 60;
 fps = ARGV.len() > 2 ? num(ARGV[2]) : 30;
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 video.size(320, 180);
 video.fps(${fps});
 video.frames(${frames});

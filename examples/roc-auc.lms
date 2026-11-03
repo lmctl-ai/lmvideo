@@ -14,7 +14,7 @@ for(k in range(0,n)){
   let x=num(fp)/num(neg);let y=num(tp)/num(pos);auc=auc+(x-prevx)*(y+prevy)/2.0;prevx=x;prevy=y;
 }
 mkdir("images");let mp4=ARGV.len() > 0?ARGV[0]:"images/roc-auc.mp4";let png=ARGV.len() > 1?ARGV[1]:"images/roc-auc.png";
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 video.size(960,540);video.frames(1);video.output(${mp4});video.begin();video.frame();canvas.clear("#f5f7fa");
 let p=canvas.plot(30.0,20.0,900.0,500.0).title("ROC curve · AUC "+${str(round(auc*1000.0)/1000.0)}).xlabel("false positive rate").ylabel("true positive rate").x_range(0.0,1.0).y_range(0.0,1.0).background("#ffffff");
 let random=p.series("random baseline","line","#94a3b8").dash("dashed");random.add(0.0,0.0).add(1.0,1.0);

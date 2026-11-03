@@ -1,0 +1,20 @@
+# Physics motion: a pastel stack caught during its collapse.
+mkdir("build/physics");
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+let world=physics_world(0.008333333,4242).gravity(0.0,-9.81,0.0).planar(true);
+let mat=physics_material(0.55,0.22);
+world.box(12.0,0.5,7.0,0.0,-0.25,0.0,0.0,physics_material(0.8,0.12));
+for(i in range(0,12)){ world.box(0.85,0.85,0.85,-2.5+float(i%4)*1.0,0.5+float(i/4)*0.9,0.0,1.0,mat); }
+world.body(1).impulse(2.6,0.0,0.0);
+let take=world.bake(180,1);
+fn palette(i: int) -> string { let c="#f2c86d"; if(i%4==0){c="#ef8f8f";} if(i%4==1){c="#79c7c0";} if(i%4==2){c="#9fa5dc";} return c; }
+video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/boxes-collapse.mp4");video.begin();
+let scene=scene3d().background("#151a2a").ambient(0.22);let camera=camera3d().look_at(7.0,5.0,10.0,0.0,1.3,0.0).perspective(42.0,0.1,40.0);
+for(frame in range(0,video.count())){
+video.frame();let phase=sin(3.1415926535*float(frame)/96.0);let t=phase*phase;scene.clear();scene.camera(camera).shadows(256,0.0004,0.001,1);scene.directional_light(-2.0,5.0,4.0,"#ffe8cf",1.4);scene.add(mesh_box(12.0,0.5,7.0),"#d8b58f").position(0.0,-0.25,0.0);
+ for(i in range(0,12)){let node=scene.add(mesh_box(0.85,0.85,0.85),palette(i));take.pose(t,i+1).sync(node);}
+ let rendered=scene.render_image(512,384,2);canvas.clear("#101827");canvas.image(rendered,0.0,0.0);canvas.text("time-replayed physics",16.0,28.0,font(15.0),paint().color("#fff1d6"));if(frame==40){rendered.save("build/physics/boxes-collapse.png");}
+}
+video.end();
+end _lmcode_
+r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));

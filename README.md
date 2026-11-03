@@ -1,56 +1,63 @@
 # lmvideo
 
-Examples use the current lmcode result-frame protocol: `lmscript` 0.2.456 and
-lmvideo 0.1.38 or later (0.1.38 is the forthcoming host cutover). They execute
-opaque programs with `run_lmcode()` and check `r.ok`; bytecode stays internal.
-After that release, run `lmscript examples/video.lms images/video.mp4 60 30`.
-CAD examples require the migrated `lmcad v0.1.5` release (the older
-`v0.1.72` tag uses the retired protocol). Install it with
-`lmscript install github:lmctl-ai/lmcad@v0.1.5`.
+Plots, diagrams, image processing, rigid-body motion and video from short
+LMScript programs. Each preview links to its runnable source.
 
-The manual all-OS integration workflow defaults to compiler 0.2.456 and main's
-examples; choose the lmvideo release tag when dispatching.
+## Install
 
-Skia-powered plots, diagrams, image processing and video, driven by short lmscript programs. Every picture below links to an example you can run directly from the public repository.
+The **[v0.1.38 prerelease](https://github.com/lmctl-ai/lmvideo/releases/tag/v0.1.38)**
+contains the current lmcode host and physics API. It has binaries for five
+platforms: **Linux x86_64 and arm64, macOS x86_64 and arm64 (13+), and
+Windows x86_64 (10+)**. Linux requires glibc 2.35+. Video output requires
+user-supplied FFmpeg/ffprobe; each platform needs its standard tar utility.
+Release assets include checksums, binary licence and third-party notices.
 
-## Install lmctl
-
-Install the lmctl command-line tool, then autorun an example:
-
-```bash
-npm install -g @lmctl-ai/lmctl
-lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/damped-oscillator.lms
+```sh
+npm install -g @lmctl-ai/lmctl@0.2.456
+lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/physics/plinko.lms
 ```
 
-## Install lmvideo
+Examples explicitly select `github:lmctl-ai/lmvideo@v0.1.38`, because the
+prerelease has not yet been promoted to `latest`. They use `run_lmcode()` and
+check `r.ok`; bytecode stays internal. CAD examples select
+`github:lmctl-ai/lmcad@v0.1.5`, the current migrated CAD release line.
+Read downloaded scripts before running them and use a fresh output directory.
 
-v0.1.36 CPU binaries include Cycles for Linux x86_64/arm64, macOS x86_64/arm64 (13 or newer), and Windows x86_64 (10 or newer). From the next release onward lmvideo ships Linux x86_64/arm64 only. Linux requires glibc2.35 or newer; each platform needs its standard tar utility. FFmpeg/ffprobe are user-supplied for video output. The release page includes `SHA256SUMS` and the required license and third-party notice files.
+## Physics in motion
 
-```lms
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
-// Canvas, Plot, Panel, image, and video calls go here.
-end _lmcode_
-```
 
-## Examples
+CPU rigid bodies turn pastel geometry and presentation content into motion.
+These six studies use fixed forward simulation and explicitly labeled periodic
+replay. Their posters show action frames, with depth-tested afterimages in the
+Plinko and ballpit studies. [Run all 15 chapters](examples/physics/README.md)
+or read [the physics API](docs/physics.md).
 
-| Example | Preview | Run |
+| Plinko | Ballpit | 42 ideas |
 | --- | --- | --- |
-| Damped oscillator | ![Damped oscillator](docs/images/damped-oscillator.png) | `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/damped-oscillator.lms` |
-| Lotka–Volterra | ![Lotka–Volterra](docs/images/lotka-volterra.png) | `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/lotka-volterra.lms` |
-| Confusion matrix | ![Confusion matrix](docs/images/confusion-matrix.png) | `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/confusion-matrix.lms` |
-| Order approval flowchart | ![Order approval flowchart](docs/images/flowchart-order-approval.png) | `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/flowchart-order-approval.lms` |
-| Standing-wave field | ![Standing-wave field](docs/images/standing-wave-field.png) | `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/standing-wave-field.lms` |
-| Vector outputs | ![Vector outputs](docs/images/vector-outputs.png) | `lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/vector-outputs.lms` |
+| [![Plinko afterimages](docs/images/physics/gallery/plinko-f8b494cf6636bd358d67c093f86e70ca459028a580ed7c69c7b633491db9b2e0.png)](examples/physics/plinko.lms) | [![Ballpit impact trails](docs/images/physics/gallery/ballpit-impact-645fa1804a76104946087199d7f85cfe44aaa05c3a45f44ee28677019e160a07.png)](examples/physics/ballpit-impact.lms) | [![42 ideas in flight](docs/images/physics/gallery/kpi-42-127391ecafbb1d6322029b4e740c2e39d0d88181d7955811aabf4448949e2fc3.png)](examples/physics/kpi-42.lms) |
+| [![BUILD and SHIP tumble](docs/images/physics/gallery/bar-stack-c2048d4e9173ea9d6af789cde553cc8d24c164b24c1c6ee53ab8cf26246f696c.png)](examples/physics/bar-stack.lms) | [![A slide turns over](docs/images/physics/gallery/slide-tumble-28d96e18b84080e3cd7e67983e1d2b6e47705568bf91fd516c8d1a4fc8849a5c.png)](examples/physics/slide-tumble.lms) | [![Three ideas gain weight](docs/images/physics/gallery/bullet-container-6a2d8ee4d2796dd64d0fffc07fd3d45f60663fedc1df4f6dfe68e201d87be877.png)](examples/physics/bullet-container.lms) |
 
-The curated [example manifest](examples/manifest.json) locks selected example and picture hashes. [Render Cycles](docs/book/render-cycles.md) explains the CPU rendering mode and its limits.
+The [physics book catalog](examples/books.json) contains all 15 chapters, source
+hashes, measured loop evidence and media. Earlier plots and diagrams remain
+available in the [example manifest](examples/manifest.json).
 
-The full example set includes APIs newer than the current v0.1.35 release. The six featured examples above pass against that release; publish the remaining examples only after the matching runtime update is available and the public-content checks pass.
+
+## More examples
+
+Run `lmscript examples/damped-oscillator.lms`, or explore the
+[plots and diagrams](examples/manifest.json), [full book catalog](examples/books.json),
+[physics API](docs/physics.md) and [CPU Cycles guide](docs/book/render-cycles.md).
+The [physics example guide](examples/physics/README.md) explains the 15 studies.
+The manual five-OS integration workflow tests actual release binaries; release
+promotion follows the owner's integration gate.
 
 ## License and support
 
-The README, docs, pictures, and examples are MIT-licensed under [LICENSE-examples](LICENSE-examples). Binary releases use [LICENSE](LICENSE); third-party components retain their own licenses and notices in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and `docs/third-party-licenses/`.
-
-Releases up to and including v0.1.35 were published under the MIT License (see the LICENSE asset of that release). Releases after v0.1.35 are published under the Lattice Systems Binary License 1.0 (this file).
-
-Implementation sources and their development history are maintained separately from this public content repository. Please use GitHub Issues for questions. Documentation and example pull requests are welcome; this repository does not accept implementation-source pull requests.
+Examples, documentation and pictures are MIT-licensed under
+[LICENSE-examples](LICENSE-examples). Binary releases use the Lattice Systems
+Binary License in [LICENSE](LICENSE); dependencies retain their notices in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [third-party licences](docs/third-party-licenses/).
+Releases through v0.1.35 used MIT; later binary releases use the separate binary licence.
+Please use [GitHub Issues](https://github.com/lmctl-ai/lmvideo/issues) for questions.
+This public repository accepts content contributions; implementation sources
+are maintained separately.

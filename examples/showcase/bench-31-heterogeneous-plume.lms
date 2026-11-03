@@ -1,5 +1,5 @@
 # Original 3D Worley-density smoke still. This is an authored field, not a fluid solver.
-mkdir("build");program=_lmcode_ cli="lmvideo";
+mkdir("build");program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 let csv="";
 # Twenty-four original deterministic feature points define nearest-point (F1) Worley noise.
 for(z in range(0,32)){for(y in range(0,32)){for(x in range(0,32)){

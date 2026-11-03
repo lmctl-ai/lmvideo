@@ -1,6 +1,6 @@
 # B16 / G.9: authored Cornell box with solid Cycles transmission and IOR.
 # Every mesh, colour and label is procedural and MIT under LICENSE-examples.
-mkdir("build"); program=_lmcode_ cli="lmvideo";
+mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 let scene=scene3d().threads(4).background("#050608").ambient(0.0).tonemap("aces",1.0);
 scene.camera(camera3d().look_at(0.0,1.55,7.7,0.0,1.4,-0.1).perspective(40.0,0.1,30.0));
 let white=material("#d9d6ce",0.0,0.82);

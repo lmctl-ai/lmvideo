@@ -1,5 +1,5 @@
 # B15 / P.7: projected molecular orbit with native disk frame cache.
-mkdir("build"); mkdir("build/bench-15-frames"); program=_lmcode_ cli="lmvideo";
+mkdir("build"); mkdir("build/bench-15-frames"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 video.size(1280,720); video.fps(30); video.frames(120); video.crf(20); video.output("build/bench-15-molecular-trajectory.mp4"); video.begin();
 let scene=scene3d().threads(4).background("#09111f").ambient(0.18).threads(4); scene.camera(camera3d().look_at(0.0,1.6,5.0,0.0,0.4,0.0).perspective(40.0,0.1,20.0)); let oxygen=scene.add(mesh_sphere(0.52,24,32),"#d95356"); let h1=scene.add(mesh_sphere(0.32,16,24),"#c9e2f1"); let h2=scene.add(mesh_sphere(0.32,16,24),"#c9e2f1"); let b1=scene.add(mesh_cylinder(0.10,0.9823,20),"#778d9d"); let b2=scene.add(mesh_cylinder(0.10,0.9823,20),"#778d9d"); scene.directional_light(1.0,3.0,4.0,"#ffffff",1.0);
 let cache=frame_cache("build/bench-15-frame-cache",67108864); let destination=image_create(820,560,"#00000000");let composed_buffer=image_create(1280,720,"#00000000");let projection_buffer=scene.projection(820,560); let plot=canvas.plot(860.0,90.0,360.0,500.0).title("Live potential energy").xlabel("time (s)").ylabel("E").x_range(0.0,4.0).y_range(-1.2,1.2).background("#ffffff"); let trace=plot.series("E","line","#e76f51");

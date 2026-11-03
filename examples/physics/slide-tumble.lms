@@ -1,0 +1,9 @@
+mkdir("build/physics");
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+let p=physics_presentation(512,384,20261106).title("OLD SLIDE",70.0,60.0,"#ef91b1").bar("PAST",6.0,10.0,110.0,270.0,"#9fa5dc");let cache=timeline_create(512,384);
+for(i in range(0,180)){if(i==140){p.tumble();}cache.add(p.render(),1);p.step(1);}
+video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/slide-tumble.mp4");video.begin();
+for(f in range(0,video.count())){video.frame();let q=sin(3.1415926535*float(f)/96.0);let im=cache.frame(int(q*q*179.0+0.5));canvas.clear("#101827");canvas.image(im,0.0,0.0);canvas.text("time-replayed physics",16.0,28.0,font(15.0),paint().color("#fff1d6"));if(f==32){video.save_frame("build/physics/slide-tumble.png");}}
+video.end();
+end _lmcode_
+r=run_lmcode(program);assert(r.ok,(r.ok ? "" : r.message));

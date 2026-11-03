@@ -1,6 +1,6 @@
 # Original Phase-6 camera witness: equal cubes at different depths, landscape + portrait.
 # Requires the matching development lmvideo recorded in the content manifest.
-mkdir("build"); p=_lmcode_ cli="lmvideo";
+mkdir("build"); p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 image_assert_true(render_available("cycles"));
 let source=scene3d().threads(4).background("#000000").ambient(0.0);
 source.camera(camera3d().look_at(0.0,0.0,5.0,0.0,0.0,0.0).ortho(4.0,0.1,100.0));

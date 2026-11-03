@@ -33,7 +33,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-18-caustic-ball-lens.lms",
-      "sha256": "9caf4b2f5b9e48aab6db8fc52bc6f52d88cc739b40ddce286c17de7b8bd9e593",
+      "sha256": "00a198988990c6e3722ee20facbdf3fde23d78da31be3a90d0b257695dddf4e1",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -41,5 +41,5 @@
   ],
   "rights_note": "Original procedural lens, floor, materials and analytic light; no borrowed model or reference render is copied.",
   "publication_status": "RELEASED",
-  "script_sha256": "83597e77c7411c42a29b9093573660b4fee2a6697fe2305711252223a127dd76"
+  "script_sha256": "00a198988990c6e3722ee20facbdf3fde23d78da31be3a90d0b257695dddf4e1"
 }

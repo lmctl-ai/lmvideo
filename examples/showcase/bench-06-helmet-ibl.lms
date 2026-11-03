@@ -1,5 +1,5 @@
 # B06 original helmet analogue with authored PBR maps and GLB round trip.
-mkdir("build");program=_lmcode_ cli="lmvideo";
+mkdir("build");program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 let albedo=texture_checker("#33495f","#617a8e",9).mix(texture_noise("perlin",1717,7),0.16).bake(128,128,"srgb").wrap("repeat","repeat").filter("trilinear");
 let orm=texture_from_image(image_pattern(128,128,"1","0.28+0.28*x/128","0.65+0.25*y/128","1"),"linear"); let normal=texture_from_image(image_pattern(128,128,"0.5+0.04*sin(x/4)","0.5+0.04*cos(y/5)","1","1"),"linear");
 let sky="";for(j in range(0,16)){for(i in range(0,32)){let x=float(i)/31.0;let y=float(j)/15.0;let key=12.0*pow(2.718281828459045,-120.0*(x-0.28)*(x-0.28)-30.0*(y-0.4)*(y-0.4));if(sky!=""){sky=sky+",";}sky=sky+str(0.15+key)+","+str(0.20+key*0.92)+","+str(0.30+key*0.78);}}

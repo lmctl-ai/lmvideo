@@ -135,7 +135,7 @@ let c38 = all_cmds.len() > 38 ? all_cmds[38] : false;
 let l39 = all_lines.len() > 39 ? all_lines[39] : "";
 let c39 = all_cmds.len() > 39 ? all_cmds[39] : false;
 
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 video.size(1000, ${canvas_height});
 video.frames(1);
 video.output(${out_png});

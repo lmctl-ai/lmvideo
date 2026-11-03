@@ -4,7 +4,7 @@
 mp4 = ARGV.len() > 0 ? ARGV[0] : "images/layout-workbench.mp4";
 png = ARGV.len() > 1 ? ARGV[1] : "images/layout-workbench.png";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@latest";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
 video.size(960, 540); video.fps(30); video.frames(1); video.crf(20); video.output(${mp4}); video.begin(); video.frame(); canvas.clear("#f5f7fa");
 let thumbnail = surface(120, 80); let thumb_canvas = thumbnail.canvas();
 thumb_canvas.clear("#dbeafe"); thumb_canvas.circle(34.0, 40.0, 20.0, paint().color("#2878b5"));
