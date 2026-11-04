@@ -22,15 +22,15 @@ let beauty = scene.render_image(
 beauty.save("output/sphere-cycles.png");
 
 end _lmcode_
-savedsl(program, "output/sphere-cycles.dslb");
+r = run_lmcode(program);
+require(r.ok, json_stringify(r));
 ```
 
 With a Cycles-enabled `lmvideo` on PATH, save the source as
-`sphere-cycles.lms`, compile it, then run the saved bytecode:
+`sphere-cycles.lms` and run it; `run_lmcode` runs the block on `lmvideo`:
 
 ```sh
 lmscript sphere-cycles.lms
-lmvideo --lmcode output/sphere-cycles.dslb
 ```
 
 The five arguments after the dimensions are, in order, the renderer name,
@@ -84,7 +84,8 @@ for (frame in range(0, video.count())) {
 }
 video.end();
 end _lmcode_
-savedsl(program, "output/turntable.dslb");
+r = run_lmcode(program);
+require(r.ok, json_stringify(r));
 ```
 
 The video source is compiled once and the host renders each frame. For a quick

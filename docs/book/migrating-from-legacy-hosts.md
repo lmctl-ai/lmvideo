@@ -2,7 +2,7 @@
 
 The four legacy authoring hosts are maintenance-only: critical fixes, no new
 features. lmvideo is the single canonical host, and `scripts/migrate-legacy.py`
-is the bridge. It rewrites `_lmcode_`/`_dsl_` blocks declared with
+is the bridge. It rewrites `_lmcode_`/`_lmcode_` blocks declared with
 `cli="lmdraw"`, `cli="lmimg"`, `cli="lmmagnum"` or `cli="lmfilament"` to the
 canonical lmvideo API, or emits precise located diagnostics for the calls that
 have no exact mapping. It never silently changes semantics, units or
