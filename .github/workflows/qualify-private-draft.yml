@@ -1,0 +1,62 @@
+name: Qualify private lmvideo draft
+run-name: Release broker ${{ inputs.tag || github.event.client_payload.tag }}
+on:
+  repository_dispatch:
+    types: [lmvideo-release-draft]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Replay a recorded candidate (older/revoked candidates are refused)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: lmvideo-qualification-${{ inputs.tag || github.event.client_payload.tag }}
+  cancel-in-progress: false
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - run: python3 -B -m unittest discover -s tests -p 'test_release*.py'
+      - run: python3 tests/mutate-release-pipeline.py
+  promote:
+    needs: regression
+    if: ${{ always() && !cancelled() && needs.regression.result == 'success' }}
+    concurrency:
+      group: lmvideo-release-mutation
+      cancel-in-progress: false
+      queue: max
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: Trusted frozen draft fetch (never executes the candidate)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRAFT_TAG: ${{ inputs.tag || github.event.client_payload.tag }}
+          SEAL_ASSET_ID: ${{ github.event.client_payload.seal_asset_id }}
+          BUNDLE_ASSET_ID: ${{ github.event.client_payload.bundle_asset_id }}
+          FREEZE_SHA: ${{ github.event.client_payload.seal_sha256 }}
+        run: python3 scripts/download-draft-candidate.py
+      - id: handoff
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lmvideo-draft-${{ github.run_id }}-${{ github.run_attempt }}
+          path: draft-assets/*
+          if-no-files-found: error
+      - name: Verify all read-only qualification legs before any release mutation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.handoff.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.handoff.outputs.artifact-digest }}
+        run: python3 scripts/qualification_broker.py

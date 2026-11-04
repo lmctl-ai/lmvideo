@@ -42,26 +42,30 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: ${{ inputs.ref }}
+          persist-credentials: false
 
       - name: Checkout the integration tooling from main
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: main
+          persist-credentials: false
           path: _ci
           sparse-checkout: |
             scripts/integration-run.py
             scripts/install-hosts.sh
           sparse-checkout-cone-mode: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
 
       - name: Install lmctl
-        run: npm install --global "@lmctl-ai/lmctl${{ inputs.lmctl_version && format('@{0}', inputs.lmctl_version) || '' }}"
+        run: |
+          npm install --prefix "$RUNNER_TEMP/compiler" --no-save --package-lock=false "@lmctl-ai/lmctl${{ inputs.lmctl_version && format('@{0}', inputs.lmctl_version) || '' }}"
+          echo "$RUNNER_TEMP/compiler/node_modules/.bin" >> "$GITHUB_PATH"
 
       - name: Install ffmpeg (Linux)
         if: runner.os == 'Linux'
@@ -113,7 +117,7 @@ jobs:
 
       - name: Upload report and outputs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: integration-${{ matrix.name }}
           path: |
