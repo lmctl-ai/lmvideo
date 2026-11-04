@@ -1,0 +1,9 @@
+{
+  "product": "lmvideo",
+  "public_repository": "lmctl-ai/lmvideo",
+  "private_repository": "lmctlhq/lmvideo",
+  "workflow": ".github/workflows/release.yml",
+  "branch": "main",
+  "payloads": ["lmvideo-linux-x64", "lmvideo-linux-arm64", "lmvideo-macos-arm64", "lmvideo-macos-x64", "lmvideo-windows-x64.exe", "LICENSE", "THIRD_PARTY_NOTICES.md", "lmvideo-third-party-licenses.tar.gz"],
+  "private_jobs": ["version", "linux-x64", "linux-arm64", "macos-arm64", "macos-x64", "windows-x64", "candidate", "private-smoke"]
+}
