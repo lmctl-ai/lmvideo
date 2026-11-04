@@ -91,6 +91,11 @@ for full_repo in "${!tags_by_repo[@]}"; do
     resolved_tag="$requested_tag"
     [[ "$requested_tag" == latest ]] && resolved_tag="$latest_tag"
     found=false
+    # A release-qualification worker has already verified this exact staged
+    # lmvideo candidate; its stable tag is not public until promotion.
+    if [[ "$full_repo" == lmctl-ai/lmvideo && -n "${LMVIDEO_QUALIFY_TAG:-}" && "$requested_tag" == "$LMVIDEO_QUALIFY_TAG" ]]; then
+      found=true
+    fi
     if [[ -n "$resolved_tag" ]]; then
       while IFS= read -r listed_tag; do
         [[ "$listed_tag" == "$resolved_tag" ]] && found=true

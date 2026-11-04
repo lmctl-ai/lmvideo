@@ -48,6 +48,6 @@ if install_info.get("source")!="PATH" or Path(install_info.get("path",""))!=bina
 if hashlib.sha256(binary.read_bytes()).hexdigest()!=checksums[a.asset]: raise SystemExit("candidate host bytes differ from the sealed draft asset")
 version=subprocess.run([str(binary),"--version"],check=True,text=True,capture_output=True,env=credential_free(os.environ)).stdout.strip()
 if version!="lmvideo "+manifest["version"]: raise SystemExit(f"candidate --version mismatch: {version!r}")
-with open(os.environ["GITHUB_ENV"],"a",encoding="utf-8") as f: f.write(f"LMOFFICE_BIN={binary}\n")
+with open(os.environ["GITHUB_ENV"],"a",encoding="utf-8") as f: f.write(f"LMVIDEO_BIN={binary}\n")
 with open(os.environ["GITHUB_PATH"],"a",encoding="utf-8") as f: f.write(str(host_dir)+"\n")
 print(f"Staged exact {a.tag} asset on the user PATH; lmscript install resolved it and its SHA-256 verified")

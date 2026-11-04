@@ -1,0 +1,25 @@
+# One XML drawing: lmvideo renders it to PNG, then lmoffice places that PNG on a slide.
+svg_data = _xml_ profile="svg-compact@1";
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100"><rect width="160" height="100" fill="#edf2f7"/><rect x="10" y="10" width="70" height="80" rx="8" fill="#123456"/><circle cx="120" cy="50" r="32" fill="#ef476f"/></svg>
+end _xml_
+svg_text = svg_data.toString();
+mkdir("build");
+video_host = load_schema(cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.72");
+video_program = _lmcode_ video_host;
+let drawing = svg(${svg_text});
+video.size(160, 100); video.frames(1); video.output("build/svg-compact.png");
+video.begin(); video.frame(); canvas.svg(drawing, 0.0, 0.0, 160.0, 100.0); video.end();
+end _lmcode_
+video_result = run_lmcode(video_program);
+require(video_result.ok, json_stringify(video_result));
+
+pptx_host = load_schema(cli="lmoffice pptx" install="github:lmctl-ai/lmoffice@v0.1.34");
+pptx_program = _lmcode_ pptx_host;
+let deck = pptx.create("build/svg-compact.pptx");
+let slide = deck.slide();
+slide.title("One XML drawing, two hosts").text(64.0, 104.0, 1050.0, 48.0, "The compact SVG is rendered by lmvideo and embedded as a PowerPoint picture.").image("build/svg-compact.png", 720.0, 190.0, 480.0, 300.0);
+deck.save();
+end _lmcode_
+pptx_result = run_lmcode(pptx_program);
+require(pptx_result.ok, json_stringify(pptx_result));
+println(json_stringify({png:video_result.result, pptx:pptx_result.result}));

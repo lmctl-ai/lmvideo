@@ -1,0 +1,18 @@
+{
+  "compiler": {
+    "package": "@lmctl-ai/lmctl",
+    "version": "0.2.460",
+    "integrity": "sha512-bmrolk15Gv8YrrHALHq+uVqfBPTw4zsPw4UVDhXxMvsl5tc5EzliVwWmG9H/NnIXpWdxJXFAehe69X8mXXmTZg=="
+  },
+  "bytecode_version": 6,
+  "sdk_commit": "93bddf1dadff84791ea90e17d81a7af85a842f40",
+  "std_sha256": "1defd1be67bf11cf1780f7d890059cd2ac6fd506a7b7fa578e31b5ef124aa221",
+  "schema_policy": "exact host bytes; recompile source after every schema-byte change; no registry dispatch by old hash",
+  "cad": {
+    "repository": "lmctl-ai/lmcad",
+    "version": "0.1.5",
+    "assets": {
+      "lmcad-linux-x64": "d30fd436b513c3b2dfefe84fe8b223420f2a05b33331bfdc472482656917387e"
+    }
+  }
+}

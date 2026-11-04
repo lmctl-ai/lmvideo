@@ -49,6 +49,9 @@ Run `lmscript examples/damped-oscillator.lms`, or explore the
 [physics API](docs/physics.md) and [CPU Cycles guide](docs/book/render-cycles.md).
 The [physics example guide](examples/physics/README.md) explains the 15 studies.
 The manual five-OS integration workflow tests actual release binaries.
+The [compact SVG to PowerPoint example](examples/svg-compact-pptx.lms) renders
+one validated SVG through lmvideo and embeds the resulting PNG in a slide;
+see the [dry-run and raster-size notes](docs/svg-compact-pptx.md).
 
 ## License and support
 

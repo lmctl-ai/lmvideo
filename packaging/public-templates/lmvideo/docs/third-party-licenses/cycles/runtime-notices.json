@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "files": [
+    {
+      "file": "cycles/OIDN-third-party-programs.txt",
+      "sha256": "43905db59c86bc1de8cee0f24878d9a127c319d87c57f53f68d904043eefe98f",
+      "source": "pinned CPU dependency source notice; see cycles/manifest.json"
+    },
+    {
+      "file": "cycles/OIDN-oneTBB-third-party-programs.txt",
+      "sha256": "1634857eb058dce5278c57a832b8974190785145f4be9acdbdb511f3a0c4091c",
+      "source": "pinned CPU dependency source notice; see cycles/manifest.json"
+    },
+    {
+      "file": "cycles/Embree-third-party-programs.txt",
+      "sha256": "29688ddc73ea2369e7e94f37f4794bf1b5ccd549b73d0debc022c4533c854a42",
+      "source": "pinned CPU dependency source notice; see cycles/manifest.json"
+    },
+    {
+      "file": "cycles/Embree-TBB-third-party-programs.txt",
+      "sha256": "12dde7e20fd8439d0b17ad2eb33a5aeb2442f7f4f1ea52692a2401e75bb513ca",
+      "source": "pinned CPU dependency source notice; see cycles/manifest.json"
+    },
+    {
+      "file": "cycles/OpenImageIO-THIRD-PARTY.md",
+      "sha256": "1e86c485c25256a807b11c6f56014acac43bdc297944c2d6b4af16fd65188c2b",
+      "source": "pinned CPU dependency source notice; see cycles/manifest.json"
+    }
+  ]
+}

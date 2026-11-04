@@ -66,6 +66,11 @@ class CredentialBoundary(unittest.TestCase):
   self.assertTrue(any(l.strip().startswith('group:') for l in workflow.splitlines()));group=next(l for l in workflow.splitlines() if l.strip().startswith('group:'))
   self.assertIn('client_payload.tag',group)
   self.assertIn('queue: max',job_blocks()['promote'])
+ def test_only_the_verified_candidate_pin_can_bypass_published_tag_lookup(self):
+  source=text('scripts/install-hosts.sh')
+  self.assertIn('LMVIDEO_QUALIFY_TAG',source)
+  self.assertIn('"$requested_tag" == "$LMVIDEO_QUALIFY_TAG"',source)
+  self.assertIn('"$full_repo" == lmctl-ai/lmvideo',source)
 
 class SealedPolicy(unittest.TestCase):
  @classmethod
