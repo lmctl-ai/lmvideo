@@ -22,6 +22,7 @@ mutations=[
  ('artifact-layout','.github/actions/qualify-platform/action.yml','merge-multiple: true','merge-multiple: false'),
  ('action-pin','.github/workflows/qualify-private-draft.yml','actions/checkout@11d5960a326750d5838078e36cf38b85af677262','actions/checkout@v4'),
  ('candidate-example-pin','scripts/install-hosts.sh','"$full_repo" == lmctl-ai/lmvideo && -n "${LMVIDEO_QUALIFY_TAG:-}" && "$requested_tag" == "$LMVIDEO_QUALIFY_TAG"','false'),
+ ('parent-artifact-name','scripts/verify-parent-handoff.py',"f'lmvideo-draft-{parent}-{attempt}'","f'lmoffice-draft-{parent}-{attempt}'"),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:

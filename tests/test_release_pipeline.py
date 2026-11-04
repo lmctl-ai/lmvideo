@@ -71,6 +71,10 @@ class CredentialBoundary(unittest.TestCase):
   self.assertIn('LMVIDEO_QUALIFY_TAG',source)
   self.assertIn('"$requested_tag" == "$LMVIDEO_QUALIFY_TAG"',source)
   self.assertIn('"$full_repo" == lmctl-ai/lmvideo',source)
+ def test_parent_handoff_matches_lmvideo_artifact_identity(self):
+  source=text('scripts/verify-parent-handoff.py')
+  self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)
+  self.assertNotIn('lmoffice-draft-',source)
 
 class SealedPolicy(unittest.TestCase):
  @classmethod
