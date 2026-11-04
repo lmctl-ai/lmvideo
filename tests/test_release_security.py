@@ -123,6 +123,24 @@ class NativeAPIGates(unittest.TestCase):
   jobs[-1]['conclusion']='skipped'
   with self.assertRaises(ValueError):validate(run,jobs,'a'*40,True)
 
+ def test_failed_native_gate_cleans_only_a_sealed_throwaway(self):
+  module=runpy.run_path(str(ROOT/'scripts/qualification_broker.py'))
+  error=ValueError('native platform gate failed')
+  with tempfile.TemporaryDirectory() as directory:
+   root=Path(directory);manifest,seal,request=candidate(root,throwaway=True)
+   calls=[]
+   def execute(args,env,check):calls.append((args,env,check))
+   with patch.object(module['subprocess'],'run',execute):
+    with self.assertRaises(SystemExit):module['cleanup_failed_throwaway'](manifest,root,456,error)
+   self.assertEqual(len(calls),1)
+   self.assertEqual(calls[0][0][2],'cleanup')
+   self.assertEqual(calls[0][1]['DRAFT_TAG'],manifest['tag'])
+  with tempfile.TemporaryDirectory() as directory:
+   root=Path(directory);manifest,seal,request=candidate(root,throwaway=False)
+   with patch.object(module['subprocess'],'run',side_effect=AssertionError('production candidate must stay for inspection')):
+    with self.assertRaisesRegex(ValueError,'native platform gate failed'):
+     module['cleanup_failed_throwaway'](manifest,root,456,error)
+
 class ProducerInputBinding(unittest.TestCase):
  def test_private_receipt_cannot_change_the_selected_tag_or_throwaway_input(self):
   with tempfile.TemporaryDirectory() as directory:

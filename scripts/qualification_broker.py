@@ -22,6 +22,14 @@ def jobs(api,run_id):
   if len(data['jobs'])<100:return out
   page+=1
 
+def cleanup_failed_throwaway(manifest,root,qualification_run_id,error):
+ if not manifest['deliberate_failure']:raise error
+ request=json.loads((root/'candidate-request.json').read_text())
+ env=dict(os.environ,DRAFT_TAG=manifest['tag'],SEAL_ASSET_ID=str(request['seal_asset_id']),BUNDLE_ASSET_ID=str(request['bundle_asset_id']),FREEZE_SHA=request['seal_sha256'],QUALIFICATION_RUN_ID=str(qualification_run_id))
+ subprocess.run(['python3','scripts/manage-qualified-draft.py','cleanup',str(root)],env=env,check=True)
+ summary('Sealed throwaway '+manifest['tag']+' failed public qualification and its own draft object was revoked and removed.')
+ raise SystemExit('Sealed throwaway candidate failed public qualification; only its owned draft object was cleaned.')
+
 def broker():
  api=API();root=Path('draft-assets');manifest,seal=validate_files(root)
  parent=positive(os.environ['GITHUB_RUN_ID']);attempt=positive(os.environ['GITHUB_RUN_ATTEMPT']);artifact=positive(os.environ['ARTIFACT_ID']);artifact_digest=os.environ['ARTIFACT_DIGEST'];tag=manifest['tag']
@@ -42,7 +50,9 @@ def broker():
   time.sleep(3)
  run_id=matches[0]['id'];summary('Qualification run: https://github.com/'+PUBLIC+'/actions/runs/'+str(run_id));print('Waiting for credential-free qualification run '+str(run_id),flush=True)
  result=subprocess.run(['gh','run','watch',str(run_id),'--repo',PUBLIC,'--exit-status'])
- run=api.request('actions/runs/'+str(run_id));validate_qualification(run,jobs(api,run_id),os.environ['GITHUB_SHA'],manifest['deliberate_failure'])
+ run=api.request('actions/runs/'+str(run_id))
+ try:validate_qualification(run,jobs(api,run_id),os.environ['GITHUB_SHA'],manifest['deliberate_failure'])
+ except ValueError as error:cleanup_failed_throwaway(manifest,root,run_id,error)
  mode='cleanup' if manifest['deliberate_failure'] else 'promote'
  request=json.loads((root/'candidate-request.json').read_text())
  env=dict(os.environ,DRAFT_TAG=tag,SEAL_ASSET_ID=str(request['seal_asset_id']),BUNDLE_ASSET_ID=str(request['bundle_asset_id']),FREEZE_SHA=request['seal_sha256'],QUALIFICATION_RUN_ID=str(run_id))
