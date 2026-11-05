@@ -30,26 +30,30 @@ def alias_external_video_tools(tools, source_path, windows=None):
         if not found:
             raise ValueError('missing external gate prerequisite on original PATH: '+name)
         binary = Path(found).resolve(strict=True)
-        alias = tools/(name+('.exe' if windows else ''))
         if windows:
-            try:
-                alias.symlink_to(binary)
-            except (OSError, NotImplementedError):
-                shutil.copy2(binary, alias)
-        else:
-            # Symlink rather than copy to preserve Homebrew loader paths.
-            alias.symlink_to(binary)
+            # Keep Chocolatey shims beside their relative target; the source PATH is sanitized below.
+            selected[name] = str(binary)
+            continue
+        # Symlink rather than copy to preserve Homebrew loader paths.
+        (tools/name).symlink_to(binary)
         selected[name] = str(binary)
     return selected
 
 
-def fresh_path_tail(environment, windows):
-    if not windows:
-        return "/usr/bin:/bin"
-    system_root = environment.get("SystemRoot")
-    if not system_root:
-        raise ValueError("Windows fresh PATH requires SystemRoot")
-    return str(Path(system_root) / "System32")
+def without_installed_host(path_value, windows=False):
+    suffixes = ("", ".com", ".exe", ".bat", ".cmd") if windows else ("",)
+    kept = []
+    for entry in path_value.split(os.pathsep):
+        if not entry:
+            continue
+        directory = Path(entry.strip('"'))
+        if any((directory / ("lmvideo" + suffix)).is_file() for suffix in suffixes):
+            continue
+        kept.append(entry)
+    filtered = os.pathsep.join(kept)
+    if windows and shutil.which("lmvideo", path=filtered):
+        raise ValueError("could not remove installed lmvideo from Windows PATH")
+    return filtered if windows else (filtered or "/usr/bin:/bin")
 
 
 def main():
@@ -106,9 +110,8 @@ def main():
         except (OSError,NotImplementedError): shutil.copy2(node_path,node_alias)
         report['external_tools']=alias_external_video_tools(tools, os.environ.get('PATH',''))
         home=work/"home with ' quote";home.mkdir();cache=work/'tool-cache'
-        path_tail=fresh_path_tail(os.environ,os.name=="nt")
-        node_path_entry="" if os.name=="nt" else str(node_path.parent)
-        env.update(HOME=str(home),XDG_CACHE_HOME=str(home/'cache'),LMSCRIPT_TOOL_CACHE=str(cache),PATH=str(tools)+(os.pathsep+node_path_entry if node_path_entry else '')+os.pathsep+path_tail,XDG_CONFIG_HOME=str(home/'config'),GH_CONFIG_DIR=str(home/'gh'),LMSCRIPT_GH=str(home/'no-gh'))
+        path_tail=without_installed_host(os.environ.get("PATH",""),windows=os.name=="nt")
+        env.update(HOME=str(home),XDG_CACHE_HOME=str(home/'cache'),LMSCRIPT_TOOL_CACHE=str(cache),PATH=str(tools)+os.pathsep+path_tail,XDG_CONFIG_HOME=str(home/'config'),GH_CONFIG_DIR=str(home/'gh'),LMSCRIPT_GH=str(home/'no-gh'))
         if os.name=='nt': env.update(USERPROFILE=str(home),LOCALAPPDATA=str(home/'localappdata'),APPDATA=str(home/'appdata'))
         if shutil.which('lmvideo',path=env['PATH']):raise ValueError('fresh PATH unexpectedly contains lmvideo')
         requests=[]

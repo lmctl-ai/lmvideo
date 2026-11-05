@@ -31,8 +31,8 @@ mutations=[
  ('schema-line-ending-checkout','.gitattributes','schema/lmvideo.dsl.json -text',''),
  ('windows-default-text-encoding','scripts/stage-public-content.py','path.read_text(encoding="utf-8", errors="replace")','path.read_text(encoding="cp1252", errors="replace")'),
  ('windows-stage-default-encoding','scripts/stage-public-content.py','original = read_utf8(path)','original = path.read_text(errors="replace")'),
- ('windows-fresh-installer-path','scripts/check-local-release.py','return str(Path(system_root) / "System32")','return environment.get("PATH", "")'),
- ('windows-private-external-tool-alias','scripts/check-local-release.py','alias.symlink_to(binary)','pass'),
+ ('windows-fresh-installer-path','scripts/check-local-release.py','return filtered if windows else (filtered or "/usr/bin:/bin")','return path_value'),
+ ('windows-copy-chocolatey-shim','scripts/check-local-release.py','if windows:\n            # Keep Chocolatey shims beside their relative target; the source PATH is sanitized below.\n            selected[name] = str(binary)\n            continue','if windows:\n            shutil.copy2(binary, tools/(name+".exe"))\n            selected[name] = str(binary)\n            continue'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:

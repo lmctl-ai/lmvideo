@@ -93,14 +93,18 @@ class CredentialBoundary(unittest.TestCase):
    self.assertEqual(stage['read_utf8'](sample),'München — café\n')
  def test_fresh_installer_path_excludes_product_binary_directories(self):
   source=text('scripts/check-local-release.py')
-  self.assertIn('path_tail=fresh_path_tail(os.environ,os.name=="nt")',source)
-  self.assertIn('node_path_entry="" if os.name=="nt" else str(node_path.parent)',source)
+  self.assertIn('path_tail=without_installed_host(os.environ.get("PATH",""),windows=os.name=="nt")',source)
   check=runpy.run_path(str(ROOT/'scripts/check-local-release.py'),run_name='check_local_release_test')
   with tempfile.TemporaryDirectory() as temporary:
-   root=Path(temporary);system=root/'Windows';system.mkdir()
-   self.assertEqual(check['fresh_path_tail']({'SystemRoot':str(system)},True),str(system/'System32'))
-   self.assertEqual(check['fresh_path_tail']({},False),'/usr/bin:/bin')
- def test_windows_private_tools_path_contains_external_video_tools(self):
+   root=Path(temporary);candidate=root/'candidate';legacy=root/'legacy';choco=root/'chocolatey'/'bin';system=root/'Windows'/'System32'
+   for directory in (candidate,legacy,choco,system):directory.mkdir(parents=True)
+   (candidate/'lmvideo.exe').write_bytes(b'candidate')
+   (legacy/'lmvideo.cmd').write_text('@echo off\n')
+   (choco/'ffmpeg.exe').write_bytes(b'Chocolatey shim')
+   path=os.pathsep.join(str(p) for p in (candidate,legacy,choco,system))
+   kept=check['without_installed_host'](path,windows=True).split(os.pathsep)
+   self.assertEqual(kept,[str(choco),str(system)])
+ def test_windows_external_tools_use_original_runner_shims(self):
   check=runpy.run_path(str(ROOT/'scripts/check-local-release.py'),run_name='check_external_tools_test')
   with tempfile.TemporaryDirectory() as temporary:
    root=Path(temporary);original=root/'original';tools=root/'tools';original.mkdir();tools.mkdir()
@@ -108,9 +112,7 @@ class CredentialBoundary(unittest.TestCase):
     binary=original/name;binary.write_text('#!/bin/sh\nexit 0\n');binary.chmod(0o755)
    check['alias_external_video_tools'](tools,str(original),windows=True)
    for name in ('ffmpeg','ffprobe'):
-    alias=tools/(name+'.exe')
-    self.assertTrue(alias.is_file(),name)
-    self.assertEqual(alias.read_bytes(),(original/name).read_bytes())
+    self.assertFalse((tools/(name+'.exe')).exists(),name)
  def test_parent_handoff_matches_lmvideo_artifact_identity(self):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)
