@@ -28,6 +28,8 @@ mutations=[
  ('windows-svg-compiler-launch','tests/svg-dry-validation.py','["cmd.exe", "/d", "/s", "/c", subprocess.list2cmdline(command)]','["bash", "/c", subprocess.list2cmdline(command)]'),
  ('candidate-mode-restore','scripts/check-local-candidate.py','binary.chmod(binary.stat().st_mode | 0o111)','binary.chmod(binary.stat().st_mode)'),
  ('legal-line-ending-checkout','.gitattributes','packaging/public-templates/lmvideo/docs/third-party-licenses/** -text',''),
+ ('windows-default-text-encoding','scripts/stage-public-content.py','path.read_text(encoding="utf-8", errors="replace")','path.read_text(encoding="cp1252", errors="replace")'),
+ ('windows-stage-default-encoding','scripts/stage-public-content.py','original = read_utf8(path)','original = path.read_text(errors="replace")'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:

@@ -83,6 +83,13 @@ class CredentialBoundary(unittest.TestCase):
             'packaging/public-templates/lmvideo/THIRD_PARTY_NOTICES.md -text',
             'packaging/public-templates/lmvideo/docs/third-party-licenses/** -text'}
   self.assertTrue(required.issubset(set(attributes)),attributes)
+ def test_public_stage_text_uses_utf8_not_windows_locale(self):
+  source=text('scripts/stage-public-content.py')
+  self.assertIn('original = read_utf8(path)',source)
+  stage=runpy.run_path(str(ROOT/'scripts/stage-public-content.py'),run_name='stage_public_content_test')
+  with tempfile.TemporaryDirectory() as temporary:
+   sample=Path(temporary)/'unicode.lms';sample.write_bytes('München — café\n'.encode('utf-8'))
+   self.assertEqual(stage['read_utf8'](sample),'München — café\n')
  def test_parent_handoff_matches_lmvideo_artifact_identity(self):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)

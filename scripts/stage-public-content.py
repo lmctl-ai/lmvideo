@@ -22,6 +22,10 @@ def write_lf(path: Path, text: str) -> None:
         stream.write(text)
 
 
+def read_utf8(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
 TEXT = {".json", ".lms", ".md", ".txt", ".yml", ".yaml", ".sh", ".svg"}
 
 
@@ -185,7 +189,7 @@ def main() -> int:
             private[path.relative_to(args.stage).as_posix()] = original
             write_lf(path, json.dumps(scrub(original), indent=2) + "\n")
         elif path.suffix.lower() in TEXT:
-            original = path.read_text(errors="replace")
+            original = read_utf8(path)
             private[path.relative_to(args.stage).as_posix()] = original if PRIVATE.search(original) else None
             relative = path.relative_to(args.stage).as_posix()
             # Upstream licence/NOTICE texts are legal source material; preserve
