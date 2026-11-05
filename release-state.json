@@ -132,6 +132,18 @@
         "tag": "v0.1.119"
       }
     },
+    "v0.1.120": {
+      "outcome": "revoked-throwaway",
+      "private_run": "https://github.com/lmctlhq/lmvideo/actions/runs/42046112167",
+      "public_run": "https://github.com/lmctl-ai/lmvideo/actions/runs/42050904478",
+      "qualification_run": "https://github.com/lmctl-ai/lmvideo/actions/runs/42051087667",
+      "request": {
+        "bundle_asset_id": 713785417,
+        "seal_asset_id": 713785193,
+        "seal_sha256": "d411661fcc41e3b8f3d021d7e8c2c41d0f64778619a8e8e7597e4186e01ff88c",
+        "tag": "v0.1.120"
+      }
+    },
     "v0.1.59": {
       "outcome": "revoked-throwaway",
       "private_run": "https://github.com/lmctlhq/lmoffice/actions/runs/41902128327",
