@@ -71,6 +71,11 @@ class CredentialBoundary(unittest.TestCase):
   self.assertIn('LMVIDEO_QUALIFY_TAG',source)
   self.assertIn('"$requested_tag" == "$LMVIDEO_QUALIFY_TAG"',source)
   self.assertIn('"$full_repo" == lmctl-ai/lmvideo',source)
+ def test_native_executable_bits_are_restored_only_after_hash_validation(self):
+  source=text('scripts/check-local-candidate.py')
+  self.assertLess(source.index('validate_files(root)'),source.index('binary.chmod'))
+  self.assertIn('0o111',source)
+  self.assertIn('root / name',source)
  def test_parent_handoff_matches_lmvideo_artifact_identity(self):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)

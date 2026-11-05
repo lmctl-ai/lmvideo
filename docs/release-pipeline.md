@@ -34,6 +34,9 @@ and dispatches only asset IDs and digests. Retries may reuse matching frozen
 bytes; they cannot clobber a changed candidate. Public verification checks live
 revocations, release freshness and all asset identities before promotion. A
 throwaway failure is revoked before its own draft release object is removed.
+Artifact ZIPs do not preserve POSIX executable bits; the read-only worker
+revalidates sealed bytes before restoring the executable mode in its private
+workspace.
 
 ## Public gates
 
