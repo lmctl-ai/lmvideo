@@ -27,6 +27,7 @@ mutations=[
  ('compact-office-private-cache','tests/svg-compact-pptx.py','if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe", "lmoffice", "lmoffice.exe")):', 'if False:'),
  ('windows-svg-compiler-launch','tests/svg-dry-validation.py','["cmd.exe", "/d", "/s", "/c", subprocess.list2cmdline(command)]','["bash", "/c", subprocess.list2cmdline(command)]'),
  ('candidate-mode-restore','scripts/check-local-candidate.py','binary.chmod(binary.stat().st_mode | 0o111)','binary.chmod(binary.stat().st_mode)'),
+ ('legal-line-ending-checkout','.gitattributes','packaging/public-templates/lmvideo/docs/third-party-licenses/** -text',''),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
@@ -34,6 +35,7 @@ with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
  for name in ['scripts','tests','.github','docs']:
   shutil.copytree(ROOT/name,root/name,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
  shutil.copy2(ROOT/'release-policy.json',root/'release-policy.json')
+ shutil.copy2(ROOT/'.gitattributes',root/'.gitattributes')
  command=[sys.executable,'-B','-m','unittest','discover','-s','tests','-p','test_release*.py']
  baseline=subprocess.run(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
  if baseline.returncode:sys.stdout.buffer.write(baseline.stdout);raise SystemExit('mutation baseline is not green')

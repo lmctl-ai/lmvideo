@@ -1,0 +1,4 @@
+packaging/public-templates/lmvideo/LICENSE -text
+packaging/public-templates/lmvideo/LICENSE-examples -text
+packaging/public-templates/lmvideo/THIRD_PARTY_NOTICES.md -text
+packaging/public-templates/lmvideo/docs/third-party-licenses/** -text

@@ -76,6 +76,13 @@ class CredentialBoundary(unittest.TestCase):
   self.assertLess(source.index('validate_files(root)'),source.index('binary.chmod'))
   self.assertIn('0o111',source)
   self.assertIn('root / name',source)
+ def test_hashed_legal_payloads_keep_committed_bytes_on_windows(self):
+  attributes=text('.gitattributes').splitlines()
+  required={'packaging/public-templates/lmvideo/LICENSE -text',
+            'packaging/public-templates/lmvideo/LICENSE-examples -text',
+            'packaging/public-templates/lmvideo/THIRD_PARTY_NOTICES.md -text',
+            'packaging/public-templates/lmvideo/docs/third-party-licenses/** -text'}
+  self.assertTrue(required.issubset(set(attributes)),attributes)
  def test_parent_handoff_matches_lmvideo_artifact_identity(self):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)
