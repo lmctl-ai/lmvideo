@@ -36,16 +36,13 @@ def alias_external_video_tools(tools, source_path):
     return selected
 
 
-def without_installed_host(path_value):
-    entries = []
-    for entry in path_value.split(os.pathsep):
-        if not entry:
-            continue
-        directory = Path(entry.strip('"'))
-        if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe")):
-            continue
-        entries.append(entry)
-    return os.pathsep.join(entries)
+def fresh_path_tail(environment, windows):
+    if not windows:
+        return "/usr/bin:/bin"
+    system_root = environment.get("SystemRoot")
+    if not system_root:
+        raise ValueError("Windows fresh PATH requires SystemRoot")
+    return str(Path(system_root) / "System32")
 
 
 def main():
@@ -102,8 +99,8 @@ def main():
         except (OSError,NotImplementedError): shutil.copy2(node_path,node_alias)
         report['external_tools']=alias_external_video_tools(tools, os.environ.get('PATH',''))
         home=work/"home with ' quote";home.mkdir();cache=work/'tool-cache'
-        path_tail=without_installed_host(os.environ.get("PATH","")) if os.name=="nt" else "/usr/bin:/bin"
-        node_path_entry=str(node_path.parent) if os.name=='nt' else ''
+        path_tail=fresh_path_tail(os.environ,os.name=="nt")
+        node_path_entry="" if os.name=="nt" else str(node_path.parent)
         env.update(HOME=str(home),XDG_CACHE_HOME=str(home/'cache'),LMSCRIPT_TOOL_CACHE=str(cache),PATH=str(tools)+(os.pathsep+node_path_entry if node_path_entry else '')+os.pathsep+path_tail,XDG_CONFIG_HOME=str(home/'config'),GH_CONFIG_DIR=str(home/'gh'),LMSCRIPT_GH=str(home/'no-gh'))
         if os.name=='nt': env.update(USERPROFILE=str(home),LOCALAPPDATA=str(home/'localappdata'),APPDATA=str(home/'appdata'))
         if shutil.which('lmvideo',path=env['PATH']):raise ValueError('fresh PATH unexpectedly contains lmvideo')
