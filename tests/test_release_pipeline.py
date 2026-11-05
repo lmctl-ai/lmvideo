@@ -86,6 +86,11 @@ class CredentialBoundary(unittest.TestCase):
   self.assertIn('host_path).startswith(str(work)',source)
   self.assertIn('"lmoffice.exe"',source)
   self.assertIn('directory.resolve() == candidate_path.parent.resolve()',source)
+ def test_windows_svg_compiler_launches_use_cmd_shims(self):
+  for filename in ['tests/svg-dry-validation.py','tests/svg-compact-pptx.py']:
+   source=text(filename)
+   self.assertIn('cmd.exe',source)
+   self.assertNotIn('cygpath',source)
 
 class SealedPolicy(unittest.TestCase):
  @classmethod

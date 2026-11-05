@@ -20,17 +20,10 @@ VIDEO_PIN = "github:lmctl-ai/lmvideo@" + VIDEO_TAG
 OFFICE_PIN = "github:lmctl-ai/lmoffice@v0.1.34"
 EXAMPLE = ROOT / "examples" / "svg-compact-pptx.lms"
 
-if os.name == "nt":
-    COMPILER = subprocess.check_output(
-        ["bash", "-c", 'cygpath -u "$1"', "svg-pptx", COMPILER], encoding="utf-8"
-    ).strip()
-
-
 def run_compiler(args, cwd, env):
-    if os.name == "nt":
-        command = ["bash", "-c", 'exec "$@"', "svg-pptx", COMPILER, *map(str, args)]
-    else:
-        command = [COMPILER, *map(str, args)]
+    command = [COMPILER, *map(str, args)]
+    if os.name == "nt" and Path(COMPILER).suffix.lower() in {".cmd", ".bat"}:
+        command = ["cmd.exe", "/d", "/s", "/c", subprocess.list2cmdline(command)]
     return subprocess.run(command, cwd=cwd, env=env, text=True, capture_output=True)
 
 

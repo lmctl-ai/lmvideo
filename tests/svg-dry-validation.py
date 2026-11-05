@@ -6,8 +6,13 @@ import json, os, subprocess, sys, tempfile
 root = Path(__file__).resolve().parents[1]
 host = str(Path(sys.argv[1]).resolve())
 compiler = sys.argv[2]
-if os.name == "nt":
-    compiler = subprocess.check_output(["bash", "-c", 'cygpath -u "$1"', "svg-dry", compiler], encoding="utf-8").strip()
+
+def compiler_command(args):
+    command = [compiler, *map(str, args)]
+    if os.name == "nt" and Path(compiler).suffix.lower() in {".cmd", ".bat"}:
+        return ["cmd.exe", "/d", "/s", "/c", subprocess.list2cmdline(command)]
+    return command
+
 schema = Path(os.environ.get("LMVIDEO_QUALIFY_SCHEMA", root / "schema" / "lmvideo.dsl.json"))
 valid = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>'
 invalid = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><foreignObject width="1" height="1"/></svg>'
@@ -27,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix="lmvideo-svg-dry-") as temporary:
         script = work / f"{label}.lms"
         script.write_text(source, encoding="utf-8")
         result = subprocess.run(
-            ["bash", "-c", 'exec "$@"', "svg-dry", compiler, "--dry-run", "--plan-format", "json", str(script)],
+            compiler_command(["--dry-run", "--plan-format", "json", script]),
             cwd=work, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8",
         )
         assert result.returncode == 0, (label, result.stdout)

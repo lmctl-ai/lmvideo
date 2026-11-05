@@ -25,6 +25,7 @@ mutations=[
  ('parent-artifact-name','scripts/verify-parent-handoff.py',"f'lmvideo-draft-{parent}-{attempt}'","f'lmoffice-draft-{parent}-{attempt}'"),
  ('throwaway-failed-gate-cleanup','scripts/qualification_broker.py',"if not manifest['deliberate_failure']:raise error","if False:raise error"),
  ('compact-office-private-cache','tests/svg-compact-pptx.py','if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe", "lmoffice", "lmoffice.exe")):', 'if False:'),
+ ('windows-svg-compiler-launch','tests/svg-dry-validation.py','["cmd.exe", "/d", "/s", "/c", subprocess.list2cmdline(command)]','["bash", "/c", subprocess.list2cmdline(command)]'),
  ('candidate-mode-restore','scripts/check-local-candidate.py','binary.chmod(binary.stat().st_mode | 0o111)','binary.chmod(binary.stat().st_mode)'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
