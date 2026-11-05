@@ -20,18 +20,25 @@ def ensure_compiler(requested, work):
     if run([compiler,'--version'],work).strip()!='lmscript 0.2.460':raise ValueError('exact compiler0.2.460 required')
     return compiler
 
-def alias_external_video_tools(tools, source_path):
+def alias_external_video_tools(tools, source_path, windows=None):
     """Keep video tools reachable while excluding existing product binaries."""
+    if windows is None:
+        windows = os.name == 'nt'
     selected = {}
     for name in ('ffmpeg', 'ffprobe'):
         found = shutil.which(name, path=source_path)
         if not found:
             raise ValueError('missing external gate prerequisite on original PATH: '+name)
         binary = Path(found).resolve(strict=True)
-        if os.name != 'nt':
-            # Windows retains the runner PATH; POSIX excludes Homebrew bins.
+        alias = tools/(name+('.exe' if windows else ''))
+        if windows:
+            try:
+                alias.symlink_to(binary)
+            except (OSError, NotImplementedError):
+                shutil.copy2(binary, alias)
+        else:
             # Symlink rather than copy to preserve Homebrew loader paths.
-            (tools/name).symlink_to(binary)
+            alias.symlink_to(binary)
         selected[name] = str(binary)
     return selected
 

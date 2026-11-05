@@ -100,6 +100,17 @@ class CredentialBoundary(unittest.TestCase):
    root=Path(temporary);system=root/'Windows';system.mkdir()
    self.assertEqual(check['fresh_path_tail']({'SystemRoot':str(system)},True),str(system/'System32'))
    self.assertEqual(check['fresh_path_tail']({},False),'/usr/bin:/bin')
+ def test_windows_private_tools_path_contains_external_video_tools(self):
+  check=runpy.run_path(str(ROOT/'scripts/check-local-release.py'),run_name='check_external_tools_test')
+  with tempfile.TemporaryDirectory() as temporary:
+   root=Path(temporary);original=root/'original';tools=root/'tools';original.mkdir();tools.mkdir()
+   for name in ('ffmpeg','ffprobe'):
+    binary=original/name;binary.write_text('#!/bin/sh\nexit 0\n');binary.chmod(0o755)
+   check['alias_external_video_tools'](tools,str(original),windows=True)
+   for name in ('ffmpeg','ffprobe'):
+    alias=tools/(name+'.exe')
+    self.assertTrue(alias.is_file(),name)
+    self.assertEqual(alias.read_bytes(),(original/name).read_bytes())
  def test_parent_handoff_matches_lmvideo_artifact_identity(self):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)
