@@ -90,6 +90,15 @@ class CredentialBoundary(unittest.TestCase):
   with tempfile.TemporaryDirectory() as temporary:
    sample=Path(temporary)/'unicode.lms';sample.write_bytes('München — café\n'.encode('utf-8'))
    self.assertEqual(stage['read_utf8'](sample),'München — café\n')
+ def test_fresh_installer_path_excludes_product_binary_directories(self):
+  source=text('scripts/check-local-release.py')
+  self.assertIn('path_tail=without_installed_host(os.environ.get("PATH","")) if os.name=="nt" else "/usr/bin:/bin"',source)
+  check=runpy.run_path(str(ROOT/'scripts/check-local-release.py'),run_name='check_local_release_test')
+  with tempfile.TemporaryDirectory() as temporary:
+   root=Path(temporary);product=root/'candidate';clean=root/'tools';product.mkdir();clean.mkdir()
+   (product/'lmvideo.exe').write_bytes(b'candidate')
+   filtered=check['without_installed_host'](str(product)+os.pathsep+str(clean))
+   self.assertEqual(filtered,str(clean))
  def test_parent_handoff_matches_lmvideo_artifact_identity(self):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)

@@ -30,6 +30,7 @@ mutations=[
  ('legal-line-ending-checkout','.gitattributes','packaging/public-templates/lmvideo/docs/third-party-licenses/** -text',''),
  ('windows-default-text-encoding','scripts/stage-public-content.py','path.read_text(encoding="utf-8", errors="replace")','path.read_text(encoding="cp1252", errors="replace")'),
  ('windows-stage-default-encoding','scripts/stage-public-content.py','original = read_utf8(path)','original = path.read_text(errors="replace")'),
+ ('windows-fresh-installer-path','scripts/check-local-release.py','return os.pathsep.join(entries)','return path_value'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
@@ -38,6 +39,9 @@ with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
   shutil.copytree(ROOT/name,root/name,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
  shutil.copy2(ROOT/'release-policy.json',root/'release-policy.json')
  shutil.copy2(ROOT/'.gitattributes',root/'.gitattributes')
+ shutil.copy2(ROOT/'toolchain.lock.json',root/'toolchain.lock.json')
+ (root/'packaging').mkdir()
+ shutil.copy2(ROOT/'packaging/release-examples.lock.json',root/'packaging/release-examples.lock.json')
  command=[sys.executable,'-B','-m','unittest','discover','-s','tests','-p','test_release*.py']
  baseline=subprocess.run(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
  if baseline.returncode:sys.stdout.buffer.write(baseline.stdout);raise SystemExit('mutation baseline is not green')

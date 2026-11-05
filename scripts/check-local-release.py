@@ -36,6 +36,18 @@ def alias_external_video_tools(tools, source_path):
     return selected
 
 
+def without_installed_host(path_value):
+    entries = []
+    for entry in path_value.split(os.pathsep):
+        if not entry:
+            continue
+        directory = Path(entry.strip('"'))
+        if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe")):
+            continue
+        entries.append(entry)
+    return os.pathsep.join(entries)
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True);g.add_argument('--asset',type=Path);g.add_argument('--assets',type=Path)
     p.add_argument('--github',action='store_true',help='test the genuine published prerelease; implied by --assets');p.add_argument('--version',required=True);p.add_argument('--work',required=True,type=Path);p.add_argument('--stage',type=Path);p.add_argument('--cad',type=Path);p.add_argument('--compiler',type=Path);p.add_argument('--platform',choices=('auto','linux','macos','windows'),default='auto');a=p.parse_args()
@@ -90,7 +102,7 @@ def main():
         except (OSError,NotImplementedError): shutil.copy2(node_path,node_alias)
         report['external_tools']=alias_external_video_tools(tools, os.environ.get('PATH',''))
         home=work/"home with ' quote";home.mkdir();cache=work/'tool-cache'
-        path_tail=os.environ.get('PATH','') if os.name=='nt' else '/usr/bin:/bin'
+        path_tail=without_installed_host(os.environ.get("PATH","")) if os.name=="nt" else "/usr/bin:/bin"
         node_path_entry=str(node_path.parent) if os.name=='nt' else ''
         env.update(HOME=str(home),XDG_CACHE_HOME=str(home/'cache'),LMSCRIPT_TOOL_CACHE=str(cache),PATH=str(tools)+(os.pathsep+node_path_entry if node_path_entry else '')+os.pathsep+path_tail,XDG_CONFIG_HOME=str(home/'config'),GH_CONFIG_DIR=str(home/'gh'),LMSCRIPT_GH=str(home/'no-gh'))
         if os.name=='nt': env.update(USERPROFILE=str(home),LOCALAPPDATA=str(home/'localappdata'),APPDATA=str(home/'appdata'))
