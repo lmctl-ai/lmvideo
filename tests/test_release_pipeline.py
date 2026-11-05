@@ -81,7 +81,8 @@ class CredentialBoundary(unittest.TestCase):
   required={'packaging/public-templates/lmvideo/LICENSE -text',
             'packaging/public-templates/lmvideo/LICENSE-examples -text',
             'packaging/public-templates/lmvideo/THIRD_PARTY_NOTICES.md -text',
-            'packaging/public-templates/lmvideo/docs/third-party-licenses/** -text'}
+            'packaging/public-templates/lmvideo/docs/third-party-licenses/** -text',
+            'schema/lmvideo.dsl.json -text'}
   self.assertTrue(required.issubset(set(attributes)),attributes)
  def test_public_stage_text_uses_utf8_not_windows_locale(self):
   source=text('scripts/stage-public-content.py')
