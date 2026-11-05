@@ -64,7 +64,10 @@ with tempfile.TemporaryDirectory(prefix="lmvideo-svg-pptx-") as temporary:
     cache = work / "xdg-cache"
     for directory in (private, tools, cache):
         directory.mkdir(parents=True)
+    private_home = private / "home"
+    private_home.mkdir()
     env = dict(os.environ)
+    env["HOME"] = str(private_home)
     env["LMCTL_HOME"] = str(private / "lmctl-home")
     env["LMSCRIPT_TOOL_CACHE"] = str(tools)
     env["XDG_CACHE_HOME"] = str(cache)
@@ -84,6 +87,19 @@ with tempfile.TemporaryDirectory(prefix="lmvideo-svg-pptx-") as temporary:
         if os.name != "nt":
             candidate_path.chmod(0o755)
         env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+    # The public workflow preinstalls pinned hosts for the full example suite.
+    # Remove those host directories in this fresh-install subtest so lmoffice
+    # is resolved into the private cache, while retaining candidate lmvideo.
+    cleaned_path = []
+    for entry in env.get("PATH", "").split(os.pathsep):
+        directory = Path(entry or ".")
+        if candidate_path and directory.resolve() == candidate_path.parent.resolve():
+            cleaned_path.append(entry)
+            continue
+        if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe", "lmoffice", "lmoffice.exe")):
+            continue
+        cleaned_path.append(entry)
+    env["PATH"] = os.pathsep.join(cleaned_path)
     for name, pin in (("lmvideo", VIDEO_PIN), ("lmoffice", OFFICE_PIN)):
         if name == "lmvideo" and candidate_path:
             host_path = candidate_path

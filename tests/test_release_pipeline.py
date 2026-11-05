@@ -75,6 +75,12 @@ class CredentialBoundary(unittest.TestCase):
   source=text('scripts/verify-parent-handoff.py')
   self.assertIn("f'lmvideo-draft-{parent}-{attempt}'",source)
   self.assertNotIn('lmoffice-draft-',source)
+ def test_svg_compact_installs_office_in_a_private_cache(self):
+  source=text('tests/svg-compact-pptx.py')
+  self.assertIn('private_home = private / "home"',source)
+  self.assertIn('host_path).startswith(str(work)',source)
+  self.assertIn('"lmoffice.exe"',source)
+  self.assertIn('directory.resolve() == candidate_path.parent.resolve()',source)
 
 class SealedPolicy(unittest.TestCase):
  @classmethod

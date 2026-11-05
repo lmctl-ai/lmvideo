@@ -24,6 +24,7 @@ mutations=[
  ('candidate-example-pin','scripts/install-hosts.sh','"$full_repo" == lmctl-ai/lmvideo && -n "${LMVIDEO_QUALIFY_TAG:-}" && "$requested_tag" == "$LMVIDEO_QUALIFY_TAG"','false'),
  ('parent-artifact-name','scripts/verify-parent-handoff.py',"f'lmvideo-draft-{parent}-{attempt}'","f'lmoffice-draft-{parent}-{attempt}'"),
  ('throwaway-failed-gate-cleanup','scripts/qualification_broker.py',"if not manifest['deliberate_failure']:raise error","if False:raise error"),
+ ('compact-office-private-cache','tests/svg-compact-pptx.py','if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe", "lmoffice", "lmoffice.exe")):', 'if False:'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
