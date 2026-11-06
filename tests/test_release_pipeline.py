@@ -65,6 +65,11 @@ class CredentialBoundary(unittest.TestCase):
   self.assertIn('env -u GITHUB_TOKEN -u GH_TOKEN lmscript -e',workflow)
   for cli in ['lmvideo','lmcad','lmoffice pptx']:
    self.assertIn(f'load_schema(cli="{cli}")',workflow)
+ def test_compact_pptx_example_uses_string_svg_input(self):
+  source=text('examples/svg-compact-pptx.lms')
+  self.assertNotIn('_xml_',source)
+  self.assertIn('svg_text = "<svg ',source)
+  self.assertIn('os.environ.get("LMVIDEO_QUALIFY_TAG", "v0.1.122")',text('tests/svg-compact-pptx.py'))
  def test_cancel_guard(self):
   self.assertIn('promote',job_blocks());body=job_blocks()['promote'];line=next(l for l in body.splitlines() if l.strip().startswith('if:'))
   self.assertIn('!cancelled()',line)

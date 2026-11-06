@@ -15,7 +15,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPILER = sys.argv[1]
-VIDEO_TAG = os.environ.get("LMVIDEO_QUALIFY_TAG", "v0.1.107")
+VIDEO_TAG = os.environ.get("LMVIDEO_QUALIFY_TAG", "v0.1.122")
 VIDEO_PIN = "github:lmctl-ai/lmvideo@" + VIDEO_TAG
 OFFICE_PIN = "github:lmctl-ai/lmoffice@v0.1.34"
 EXAMPLE = ROOT / "examples" / "svg-compact-pptx.lms"
@@ -33,12 +33,11 @@ def require(ok, message):
 
 
 def prepare_source(text):
-    pattern = r'(?ms)^svg_data = _xml_ profile="svg-compact@1";\r?\n(.*?)\r?\nend _xml_'
-    match = re.search(pattern, text)
-    require(match is not None, "example must keep one svg-compact@1 XML block")
-    markup = match.group(1)
-    text = re.sub(pattern, "svg_data = " + json.dumps(markup) + ";", text, count=1)
-    text = text.replace("svg_text = svg_data.toString();", "svg_text = svg_data;")
+    line = next((line for line in text.splitlines() if line.startswith("svg_text = ")), None)
+    require(line is not None, "example must pass one SVG string to svg(string)")
+    literal = line[len("svg_text = "):].removesuffix(";")
+    markup = json.loads(literal)
+    require(markup.startswith("<svg ") and markup.endswith("</svg>"), "example must keep one complete SVG document")
     return text, markup
 
 
@@ -119,7 +118,7 @@ with tempfile.TemporaryDirectory(prefix="lmvideo-svg-pptx-") as temporary:
     require(discovered.returncode == 0, discovered.stdout + discovered.stderr)
 
     original = EXAMPLE.read_text(encoding="utf-8")
-    original = re.sub(r'github:lmctl-ai/lmvideo@[^"]+', VIDEO_PIN, original)
+    original = original.replace("github:lmctl-ai/lmvideo@v0.1.122", VIDEO_PIN)
     source, markup = prepare_source(original)
     script = work / "svg-compact-pptx.lms"
     script.write_text(source, encoding="utf-8")

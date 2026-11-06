@@ -42,6 +42,8 @@ with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
  shutil.copy2(ROOT/'release-policy.json',root/'release-policy.json')
  shutil.copy2(ROOT/'.gitattributes',root/'.gitattributes')
  shutil.copy2(ROOT/'toolchain.lock.json',root/'toolchain.lock.json')
+ (root/'examples').mkdir()
+ shutil.copy2(ROOT/'examples/svg-compact-pptx.lms',root/'examples/svg-compact-pptx.lms')
  (root/'packaging').mkdir()
  shutil.copy2(ROOT/'packaging/release-examples.lock.json',root/'packaging/release-examples.lock.json')
  command=[sys.executable,'-B','-m','unittest','discover','-s','tests','-p','test_release*.py']
