@@ -1,5 +1,5 @@
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let p=physics_presentation(512,384,20261104).title("THREE IDEAS",60.0,55.0,"#ef91b1").bullet("ONE",120.0,150.0,"#f2c86d").bullet("TWO",260.0,150.0,"#79c7c0").bullet("THREE",400.0,150.0,"#9fa5dc");let cache=timeline_create(512,384);
 for(i in range(0,180)){cache.add(p.render(),1);p.step(1);}
 video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/bullet-container.mp4");video.begin();

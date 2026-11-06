@@ -4,7 +4,7 @@
 mp4 = ARGV.len() > 0 ? ARGV[0] : "images/dashboard-grid.mp4";
 png = ARGV.len() > 1 ? ARGV[1] : "images/dashboard-grid.png";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 video.size(960, 540); video.fps(30); video.frames(1); video.crf(20); video.output(${mp4}); video.begin(); video.frame(); canvas.clear("#f5f7fa");
 let dashboard = canvas.panel(18.0, 18.0, 924.0, 504.0).manager("grid").columns(2).row_weight(0, 1.0).row_weight(1, 1.0).column_weight(0, 1.0).column_weight(1, 1.0).padding(10.0, 10.0, 10.0, 10.0).gap(12.0).background("#f5f7fa");
 let trend_item = dashboard.add_plot().grid(0, 0, 1, 1).sticky("nsew");

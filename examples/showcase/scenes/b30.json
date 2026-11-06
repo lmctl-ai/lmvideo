@@ -2,7 +2,7 @@
   "id": "B30",
   "title": "Prescribed Elastic Deformation Clip",
   "script": "examples/showcase/bench-30-prescribed-fracture.lms",
-  "script_sha256": "fa36050228bb78df29ba02b73d4e8ebdfbef42b42fa8266c891a22bde4896fdb",
+  "script_sha256": "627758d7d3137acbaedcab78551e0731fa9a79204794a76247d50206943e75c6",
   "visual_specification": "1280x720 30fps 90-frame original prescribed elastic mesh-state deformation clip with deterministic bounded geometry changes, floor shadow and explicit no-physics-solver wording.",
   "required_feature_witnesses": [
     "90 exact raster frames",
@@ -40,7 +40,7 @@
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-      "sha256": "fa36050228bb78df29ba02b73d4e8ebdfbef42b42fa8266c891a22bde4896fdb"
+      "sha256": "627758d7d3137acbaedcab78551e0731fa9a79204794a76247d50206943e75c6"
     }
   ],
   "rights_note": "All mesh states, lighting and composition are authored procedural content; this clip does not claim a physics or fracture solver.",

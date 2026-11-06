@@ -1,6 +1,6 @@
 # G.2: one closed solid with a through-hole; caps and walls share sweep edges.
 mkdir("build");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let solid=mesh_extrude("-2,0,-2,2,0,-2,2,0,2,-2,0,2;-0.8,0,-0.8,-0.8,0,0.8,0.8,0,0.8,0.8,0,-0.8",0.8);
 image_assert_close(solid.bound(0),-2.0,0.000001);
 image_assert_close(solid.bound(1),-0.4,0.000001);

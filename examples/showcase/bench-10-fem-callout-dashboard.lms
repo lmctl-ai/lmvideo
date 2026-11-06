@@ -1,5 +1,5 @@
 # B10: analytic cantilever bending-stress proxy, not a finite-element solver.
-mkdir("build");p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+mkdir("build");p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let deformation=image_pattern(25,9,"0.12*x*x*(3-x)","0.12*x*x*(3-x)","0.12*x*x*(3-x)","1");let beam=mesh_heightfield(deformation,6.0,2.4,1.0);let stress="";
 for(j in range(0,9)){for(i in range(0,25)){let x=float(i)/24.0;let z=abs(float(j)/4.0-1.0);if(stress!=""){stress=stress+",";}stress=stress+str((1.0-x)*z);}}beam.set_vertex_scalars(stress,"viridis",0.0,1.0);
 let scene=scene3d().threads(4).background("#eaf0f6").ambient(0.2);scene.camera(camera3d().look_at(4.5,4.2,8.0,0.0,0.1,0.0).perspective(42.0,0.1,100.0));scene.directional_light(1.0,3.0,4.0,"#ffffff",1.8);scene.add(beam,material("#ffffff",0.0,0.9).double_sided(true).wireframe("#17364d",0.9));let image=scene.render_image(540,440,2);let projection=scene.projection(540,440);let hot=projection.at(-3.0,0.02,1.2);let fixed=projection.at(-3.0,0.02,0.0);image_assert_true(hot.visible()&&fixed.visible());

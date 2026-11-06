@@ -7,7 +7,7 @@ standalone = ARGV.len() == 0;
 mp4 = ARGV.len() > 0 ? ARGV[0] : "images/sequence-messages-reveal.mp4";
 png = ARGV.len() > 1 ? ARGV[1] : "images/sequence-messages-reveal.png";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 video.size(960, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 
 canvas.box(170.0, 84.0, 160.0, 44.0, "client", "#1e3247", "#4a6a88", 8.0, 15.0);

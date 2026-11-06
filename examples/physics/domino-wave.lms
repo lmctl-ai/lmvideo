@@ -1,6 +1,6 @@
 # Physics motion: a real impulse travels through a domino wave.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let world=physics_world(0.008333333,9001).gravity(0.0,-9.81,0.0).planar(true);
 world.box(12.0,0.4,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.12));
 let mat=physics_material(0.6,0.18);for(i in range(0,18)){world.box(0.22,1.2,0.5,-4.0+float(i)*0.48,0.6,0.0,1.0,mat);}

@@ -1,7 +1,7 @@
 # One SVG string: lmvideo renders it to PNG, then lmoffice places that PNG on a slide.
 svg_text = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 100\"><rect width=\"160\" height=\"100\" fill=\"#edf2f7\"/><rect x=\"10\" y=\"10\" width=\"70\" height=\"80\" rx=\"8\" fill=\"#123456\"/><circle cx=\"120\" cy=\"50\" r=\"32\" fill=\"#ef476f\"/></svg>";
 mkdir("build");
-video_host = load_schema(cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122");
+video_host = load_schema(cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124");
 video_program = _lmcode_ video_host;
 let drawing = svg(${svg_text});
 video.size(160, 100); video.frames(1); video.output("build/svg-compact.png");

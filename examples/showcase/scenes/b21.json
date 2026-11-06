@@ -2,7 +2,7 @@
   "id": "B21",
   "title": "Volumetric Fog & Window God-Rays",
   "script": "examples/showcase/bench-21-window-god-rays.lms",
-  "script_sha256": "20ee3bbcffcf2954f1c6bc96a2e022e6f7675adf4dcb954b0c6f2884bcc58656",
+  "script_sha256": "7bbb2e74fa0d2582503fc237fdd9ab41c093e42ca073be6957c0884dff52fd3b",
   "visual_specification": "900x560 original enclosed chamber with a real left-wall opening, three opaque mullions, diagonal sunlight and a procedural stone sculpture.",
   "required_feature_witnesses": [
     "homogeneous participating scatter, not absorption alone",
@@ -34,7 +34,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-21-window-god-rays.lms",
-      "sha256": "20ee3bbcffcf2954f1c6bc96a2e022e6f7675adf4dcb954b0c6f2884bcc58656",
+      "sha256": "7bbb2e74fa0d2582503fc237fdd9ab41c093e42ca073be6957c0884dff52fd3b",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

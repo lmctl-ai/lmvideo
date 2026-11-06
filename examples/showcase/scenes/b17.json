@@ -36,13 +36,13 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
-      "sha256": "54844b349623dabba680af87407dab3bc9399947f1f32eeacefaf8d280201102",
+      "sha256": "056054e5d6d9d2a4b1d9bc9b0da6ee0aeb151ddf8c18e10c5b40f84dad4c1810",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "All geometry, environment values, lighting and materials are authored procedurally; no borrowed model or reference render is copied.",
-  "script_sha256": "54844b349623dabba680af87407dab3bc9399947f1f32eeacefaf8d280201102",
+  "script_sha256": "056054e5d6d9d2a4b1d9bc9b0da6ee0aeb151ddf8c18e10c5b40f84dad4c1810",
   "publication_status": "RELEASED"
 }

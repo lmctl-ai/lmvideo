@@ -30,7 +30,7 @@
       "kind": "original-script-and-procedural-data",
       "license": "MIT",
       "source": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
-      "sha256": "52badb7535d55c577b1589858915ad55bdd9d5338fff518790a049557c379628"
+      "sha256": "d1855616947604d62518e8759a03f87faecb3103b4d1769cb732ee5ad0ccf499"
     }
   ]
 }

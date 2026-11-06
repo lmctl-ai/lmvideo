@@ -1,5 +1,5 @@
 # B22 candidate: original obelisk terrain, analytic Hosek dome + explicit direct sun.
-mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let sheet=layout_sheet();
 for(k in range(0,2)){
   let elevation=2.0;if(k==1){elevation=45.0;}

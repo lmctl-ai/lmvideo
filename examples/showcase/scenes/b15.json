@@ -34,7 +34,7 @@
       "kind": "original-script-and-procedural-data",
       "license": "MIT",
       "source": "examples/showcase/bench-15-molecular-trajectory.lms",
-      "sha256": "c77e0aef7d2256473f4b546a23596097745ee825fb79802a540abbfbf6d085f9"
+      "sha256": "427c7c1f8c44637b9a231e5758d643c3009912bdf43663e7e372538f3acad9cc"
     }
   ],
   "fps": 30,

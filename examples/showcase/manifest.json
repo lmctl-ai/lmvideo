@@ -12,7 +12,7 @@
       "slug": "bench-01-pbr-metallic-roughness",
       "title": "PBR Metallic/Roughness Sphere Matrix",
       "script": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
-      "script_sha256": "52badb7535d55c577b1589858915ad55bdd9d5338fff518790a049557c379628",
+      "script_sha256": "d1855616947604d62518e8759a03f87faecb3103b4d1769cb732ee5ad0ccf499",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -38,7 +38,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
-          "sha256": "52badb7535d55c577b1589858915ad55bdd9d5338fff518790a049557c379628",
+          "sha256": "d1855616947604d62518e8759a03f87faecb3103b4d1769cb732ee5ad0ccf499",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -51,7 +51,7 @@
       "slug": "bench-02-pcf-soft-shadow-pedestal",
       "title": "PCF Soft-Shadow Architectural Pedestal",
       "script": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
-      "script_sha256": "4486b49114c50ec110fa1bfc8c046af91d7ad1c3265ea9c6c8cf43556d10ab11",
+      "script_sha256": "ff690698363a2315716983930a2d097b1312a2b9dc920bd8cbc3dd5467dbe255",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -77,7 +77,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
-          "sha256": "4486b49114c50ec110fa1bfc8c046af91d7ad1c3265ea9c6c8cf43556d10ab11",
+          "sha256": "ff690698363a2315716983930a2d097b1312a2b9dc920bd8cbc3dd5467dbe255",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -90,7 +90,7 @@
       "slug": "bench-03-cube-diorama",
       "title": "Cube Diorama Low-Poly Isometric Cutaway",
       "script": "examples/showcase/bench-03-cube-diorama.lms",
-      "script_sha256": "68782999afc648db977218c52f884850b7cbf14b99c7f2c560ab1ddb39edc323",
+      "script_sha256": "402dc9c556b64be6d7f0d67796b8414a5344dfa360c094f4e566f325fa2da8f6",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -114,7 +114,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-03-cube-diorama.lms",
-          "sha256": "68782999afc648db977218c52f884850b7cbf14b99c7f2c560ab1ddb39edc323",
+          "sha256": "402dc9c556b64be6d7f0d67796b8414a5344dfa360c094f4e566f325fa2da8f6",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -127,7 +127,7 @@
       "slug": "bench-04-tiled-pbr-swatches",
       "title": "Procedural Tiled PBR Material Swatches",
       "script": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
-      "script_sha256": "8c81b4bedae055fc3578050916a8f3899b12ee74a4d683a2d5202110bdb85478",
+      "script_sha256": "240e6ceedfba1842b3056bb9f0e9b941fe0af4ffe5a7285f9d7a925797e09636",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -155,7 +155,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
-          "sha256": "8c81b4bedae055fc3578050916a8f3899b12ee74a4d683a2d5202110bdb85478",
+          "sha256": "240e6ceedfba1842b3056bb9f0e9b941fe0af4ffe5a7285f9d7a925797e09636",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -168,7 +168,7 @@
       "slug": "bench-05-tangent-relief-medallion",
       "title": "Tangent-Space Normal & Bump Mapped Relief",
       "script": "examples/showcase/bench-05-tangent-relief-medallion.lms",
-      "script_sha256": "20e92500687002823785693ae056a44d61841dce9bef98117e36831309fd4f24",
+      "script_sha256": "667b3b2a07c9732557bfccc634d6a5be191cd260aa878ed1155e7d0f6cdad7d0",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -192,7 +192,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-05-tangent-relief-medallion.lms",
-          "sha256": "20e92500687002823785693ae056a44d61841dce9bef98117e36831309fd4f24",
+          "sha256": "667b3b2a07c9732557bfccc634d6a5be191cd260aa878ed1155e7d0f6cdad7d0",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -205,7 +205,7 @@
       "slug": "bench-06-helmet-ibl",
       "title": "Original glTF Helmet Analogue with Studio IBL",
       "script": "examples/showcase/bench-06-helmet-ibl.lms",
-      "script_sha256": "dd7254b99c90d6406f6263a6c4c80665492ae240e3368ef6cf90614784e787eb",
+      "script_sha256": "005b974ba6855a19d473101b28efbe0f2999a2616de870db7a7357ff43932636",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -228,7 +228,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-06-helmet-ibl.lms",
-          "sha256": "dd7254b99c90d6406f6263a6c4c80665492ae240e3368ef6cf90614784e787eb",
+          "sha256": "005b974ba6855a19d473101b28efbe0f2999a2616de870db7a7357ff43932636",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -249,7 +249,7 @@
       "slug": "bench-07-bevel-typography",
       "title": "3D Extruded Bevel Typography & Logo Stage",
       "script": "examples/showcase/bench-07-bevel-typography.lms",
-      "script_sha256": "f1f9a123b02bdbb58bef2449a1a06f3d1e9cd1b7165eab5679bcb58334d7a119",
+      "script_sha256": "a5a9e1dc826405cb5760457b1d20cfdb4f0a3420fb461b9f0c02a954245e1313",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -273,7 +273,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-07-bevel-typography.lms",
-          "sha256": "f1f9a123b02bdbb58bef2449a1a06f3d1e9cd1b7165eab5679bcb58334d7a119",
+          "sha256": "a5a9e1dc826405cb5760457b1d20cfdb4f0a3420fb461b9f0c02a954245e1313",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -312,7 +312,7 @@
       "slug": "bench-08-lathe-closed-knot",
       "title": "Spline Tubes & Lathe Ceramic Vessels (Opaque)",
       "script": "examples/showcase/bench-08-lathe-closed-knot.lms",
-      "script_sha256": "c60ec83ee514fda31ee1a9be785a523d5eb19b90c5512faecb474d7d4240fdb7",
+      "script_sha256": "a0ebacd6889904e0996fe24e310b90c3a927bf0f873ab242b802c0666ca7176c",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -335,7 +335,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-08-lathe-closed-knot.lms",
-          "sha256": "c60ec83ee514fda31ee1a9be785a523d5eb19b90c5512faecb474d7d4240fdb7",
+          "sha256": "a0ebacd6889904e0996fe24e310b90c3a927bf0f873ab242b802c0666ca7176c",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -355,7 +355,7 @@
       "slug": "bench-09-terrain-contours",
       "title": "Procedural Terrain Heightfield & Contour Map",
       "script": "examples/showcase/bench-09-terrain-contours.lms",
-      "script_sha256": "7f36ac2b58e1e559044e3ad4b653b1e692027755d0c4dacc42ea4e557fddca3d",
+      "script_sha256": "c0b71c66bc745140ae4550607b563c908174cc6f3b6c16fc09511d20dd9ab58d",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -378,7 +378,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-09-terrain-contours.lms",
-          "sha256": "7f36ac2b58e1e559044e3ad4b653b1e692027755d0c4dacc42ea4e557fddca3d",
+          "sha256": "c0b71c66bc745140ae4550607b563c908174cc6f3b6c16fc09511d20dd9ab58d",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -417,7 +417,7 @@
       "slug": "bench-10-fem-callout-dashboard",
       "title": "FEM Stress Colormap & 2D Callout Dashboard",
       "script": "examples/showcase/bench-10-fem-callout-dashboard.lms",
-      "script_sha256": "fdfe555b11e6c1ff6dc5560c7e4e1e4f7d191d142edc962cdd3842dbccc1abf9",
+      "script_sha256": "3b443a47a7d50be90d1d6daa36f62262cc9382a44d4433702913ccd1a0d6bc18",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -442,7 +442,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-10-fem-callout-dashboard.lms",
-          "sha256": "fdfe555b11e6c1ff6dc5560c7e4e1e4f7d191d142edc962cdd3842dbccc1abf9",
+          "sha256": "3b443a47a7d50be90d1d6daa36f62262cc9382a44d4433702913ccd1a0d6bc18",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -481,7 +481,7 @@
       "slug": "bench-11-dynamic-matrix-instancing",
       "title": "Dynamic Matrix Instancing",
       "script": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
-      "script_sha256": "90d4970af7662e002ab76dd0128afb78d6fd26a0002dde0163ef0abe0d43f571",
+      "script_sha256": "b35767221f62d00cff0ebeaab0350aa6f4cc3ebe6c45ae95787fadb61c12b379",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -505,7 +505,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
-          "sha256": "90d4970af7662e002ab76dd0128afb78d6fd26a0002dde0163ef0abe0d43f571",
+          "sha256": "b35767221f62d00cff0ebeaab0350aa6f4cc3ebe6c45ae95787fadb61c12b379",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -518,7 +518,7 @@
       "slug": "bench-12-particle-wave-sprites",
       "title": "Animated Particle Wave & Point Sprites",
       "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
-      "script_sha256": "7b4468d61076c99beafbb9483c8b70de33391602fb6f655fb47a345c9287f8eb",
+      "script_sha256": "1b897624731cbdae4c4d315c9afdaefef39291449d86c92775a5cdba79526f60",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -543,7 +543,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-12-particle-wave-sprites.lms",
-          "sha256": "7b4468d61076c99beafbb9483c8b70de33391602fb6f655fb47a345c9287f8eb",
+          "sha256": "1b897624731cbdae4c4d315c9afdaefef39291449d86c92775a5cdba79526f60",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -568,7 +568,7 @@
       "slug": "bench-13-aov-post-processing",
       "title": "3D Render + 3D Hald CLUT & Post-Processing",
       "script": "examples/showcase/bench-13-aov-post-processing.lms",
-      "script_sha256": "3aa1b73cba85fa8db4df41e85ce9784a76dfdc0d92647db20b2333e8fa4a5615",
+      "script_sha256": "8933517e4f2f33dd15e3450103156b603eb7a119cf0a5852cddc7c5e375c4a46",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -593,7 +593,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-13-aov-post-processing.lms",
-          "sha256": "3aa1b73cba85fa8db4df41e85ce9784a76dfdc0d92647db20b2333e8fa4a5615",
+          "sha256": "8933517e4f2f33dd15e3450103156b603eb7a119cf0a5852cddc7c5e375c4a46",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -617,7 +617,7 @@
       "slug": "bench-14-cad-four-view-section",
       "title": "Four-View CAD Engineering Quad & Uncapped Section View",
       "script": "examples/showcase/bench-14-cad-four-view-section.lms",
-      "script_sha256": "6496b8a48949f83b1246b07da3de4c1d7ceeb44e858bb3846a8607894e6c17a3",
+      "script_sha256": "df6023ec39eb2e8395d8e32526c19038a5cb207431af10c7132f5e57c48788dc",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -642,7 +642,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-14-cad-four-view-section.lms",
-          "sha256": "6496b8a48949f83b1246b07da3de4c1d7ceeb44e858bb3846a8607894e6c17a3",
+          "sha256": "df6023ec39eb2e8395d8e32526c19038a5cb207431af10c7132f5e57c48788dc",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -685,7 +685,7 @@
       "slug": "bench-15-molecular-trajectory",
       "title": "Molecular Trajectory Video with Live 2D Plot",
       "script": "examples/showcase/bench-15-molecular-trajectory.lms",
-      "script_sha256": "c77e0aef7d2256473f4b546a23596097745ee825fb79802a540abbfbf6d085f9",
+      "script_sha256": "427c7c1f8c44637b9a231e5758d643c3009912bdf43663e7e372538f3acad9cc",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -711,7 +711,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project; authors recorded in the pinned source commit",
           "source": "examples/showcase/bench-15-molecular-trajectory.lms",
-          "sha256": "c77e0aef7d2256473f4b546a23596097745ee825fb79802a540abbfbf6d085f9",
+          "sha256": "427c7c1f8c44637b9a231e5758d643c3009912bdf43663e7e372538f3acad9cc",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -737,7 +737,7 @@
       "slug": "bench-16-cornell-transmission-ior",
       "title": "Cornell Box Transmission and IOR",
       "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
-      "script_sha256": "83fdca9abc05ea95ae95ae6705b2a73e79439aadb279fa128d0d7cd069fb17c1",
+      "script_sha256": "a5bf4a45a339b702740c1d9e3c0cecb50b540bddfb7354ab1e79593ed31dbdf4",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -757,7 +757,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-16-cornell-transmission-ior.lms",
-          "sha256": "83fdca9abc05ea95ae95ae6705b2a73e79439aadb279fa128d0d7cd069fb17c1",
+          "sha256": "a5bf4a45a339b702740c1d9e3c0cecb50b540bddfb7354ab1e79593ed31dbdf4",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -779,7 +779,7 @@
       "slug": "bench-17-glass-goblets-volume",
       "title": "Glass Goblets with Homogeneous Absorption",
       "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
-      "script_sha256": "54844b349623dabba680af87407dab3bc9399947f1f32eeacefaf8d280201102",
+      "script_sha256": "056054e5d6d9d2a4b1d9bc9b0da6ee0aeb151ddf8c18e10c5b40f84dad4c1810",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -800,7 +800,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-17-glass-goblets-volume.lms",
-          "sha256": "54844b349623dabba680af87407dab3bc9399947f1f32eeacefaf8d280201102",
+          "sha256": "056054e5d6d9d2a4b1d9bc9b0da6ee0aeb151ddf8c18e10c5b40f84dad4c1810",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -822,7 +822,7 @@
       "slug": "bench-18-caustic-ball-lens",
       "title": "Analytic Area Light Caustic Ball Lens",
       "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
-      "script_sha256": "5e0748d1aca259d39eb7b536b1bf7dc3cbb37a663656b680b690ff890f741412",
+      "script_sha256": "4427114ad9835891a325caa961acb71f6892870fd47dc1c62bac2a6bad0bc4e6",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -840,7 +840,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-18-caustic-ball-lens.lms",
-          "sha256": "5e0748d1aca259d39eb7b536b1bf7dc3cbb37a663656b680b690ff890f741412",
+          "sha256": "4427114ad9835891a325caa961acb71f6892870fd47dc1c62bac2a6bad0bc4e6",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -862,7 +862,7 @@
       "slug": "bench-19-sss-abstract-bust",
       "title": "Abstract Busts with Random-Walk Subsurface",
       "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
-      "script_sha256": "8efac737bdfefb0e4f23f9d82a85c011b1158c595aec4bcbb25bcf619cf54e12",
+      "script_sha256": "14bb27293fa14b2a5eff7830e56cab7fe5d8c09dc5b9bef5126122f0d072114b",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -883,7 +883,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-19-sss-abstract-bust.lms",
-          "sha256": "8efac737bdfefb0e4f23f9d82a85c011b1158c595aec4bcbb25bcf619cf54e12",
+          "sha256": "14bb27293fa14b2a5eff7830e56cab7fe5d8c09dc5b9bef5126122f0d072114b",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -904,7 +904,7 @@
       "slug": "bench-20-car-paint-anisotropy",
       "title": "Automotive Clearcoat, Metallic Flake & Anisotropy",
       "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-      "script_sha256": "3b6e41d8edefd431504da38ed6dd38c6a40a78dd453529a3eae0cd459978b99e",
+      "script_sha256": "997334784a864b12dcc055a9732550c13782308a0b14f193cb293ed929abd37c",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -931,7 +931,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-          "sha256": "3b6e41d8edefd431504da38ed6dd38c6a40a78dd453529a3eae0cd459978b99e",
+          "sha256": "997334784a864b12dcc055a9732550c13782308a0b14f193cb293ed929abd37c",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -944,7 +944,7 @@
       "slug": "bench-21-window-god-rays",
       "title": "Volumetric Fog & Window God-Rays",
       "script": "examples/showcase/bench-21-window-god-rays.lms",
-      "script_sha256": "20ee3bbcffcf2954f1c6bc96a2e022e6f7675adf4dcb954b0c6f2884bcc58656",
+      "script_sha256": "7bbb2e74fa0d2582503fc237fdd9ab41c093e42ca073be6957c0884dff52fd3b",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -970,7 +970,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-21-window-god-rays.lms",
-          "sha256": "20ee3bbcffcf2954f1c6bc96a2e022e6f7675adf4dcb954b0c6f2884bcc58656",
+          "sha256": "7bbb2e74fa0d2582503fc237fdd9ab41c093e42ca073be6957c0884dff52fd3b",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -983,7 +983,7 @@
       "slug": "bench-22-physical-sky",
       "title": "Physical Sky Atmosphere \u2014 Sun Elevation Sweep",
       "script": "examples/showcase/bench-22-physical-sky.lms",
-      "script_sha256": "87ad15a23697be0ffe0bf9e28c5e747d0218a8ba1aa5689ef4c1717643aefaae",
+      "script_sha256": "93f344328bab344084fe666845f297c66248f3da05a85b17b638c4ce8b248983",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1009,7 +1009,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-22-physical-sky.lms",
-          "sha256": "87ad15a23697be0ffe0bf9e28c5e747d0218a8ba1aa5689ef4c1717643aefaae",
+          "sha256": "93f344328bab344084fe666845f297c66248f3da05a85b17b638c4ce8b248983",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1033,7 +1033,7 @@
       "slug": "bench-23-macro-chess-dof",
       "title": "Original Macro Chess with Physical Camera DoF",
       "script": "examples/showcase/bench-23-macro-chess-dof.lms",
-      "script_sha256": "b0ebcc0ac325490e5ebf4533f2d6c057f744e52edadabb3c655a32c67bb1f0f2",
+      "script_sha256": "4094a99b080c6502400453e26a26dd275c3a141199243549b0ea3a0e393eaa6c",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1058,7 +1058,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-23-macro-chess-dof.lms",
-          "sha256": "b0ebcc0ac325490e5ebf4533f2d6c057f744e52edadabb3c655a32c67bb1f0f2",
+          "sha256": "4094a99b080c6502400453e26a26dd275c3a141199243549b0ea3a0e393eaa6c",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1071,7 +1071,7 @@
       "slug": "bench-24-native-hair",
       "title": "Native guide/child-strand copper groom",
       "script": "examples/showcase/bench-24-native-hair.lms",
-      "script_sha256": "1956e6fc1fc7c4fcf16fd9741c9e8d07fe6611dd96444ff21cc3aae551692c7f",
+      "script_sha256": "15da99515c44fb5bf7454d5d2c82e81bef6268161c56c7d64ba557238c774c53",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1097,7 +1097,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-24-native-hair.lms",
-          "sha256": "1956e6fc1fc7c4fcf16fd9741c9e8d07fe6611dd96444ff21cc3aae551692c7f",
+          "sha256": "15da99515c44fb5bf7454d5d2c82e81bef6268161c56c7d64ba557238c774c53",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1110,7 +1110,7 @@
       "slug": "bench-25-archviz-daylit-room",
       "title": "Archviz Daylit Pavilion",
       "script": "examples/showcase/bench-25-archviz-daylit-room.lms",
-      "script_sha256": "52a2ea89cdbd6165649fb730a9c2767d069e61fffbcb266980b819bede13d6ca",
+      "script_sha256": "40de91bb8dc02fc86198241a2db48635ccbd9fd6c088070b58cae674ad526c68",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1140,7 +1140,7 @@
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-          "sha256": "52a2ea89cdbd6165649fb730a9c2767d069e61fffbcb266980b819bede13d6ca"
+          "sha256": "40de91bb8dc02fc86198241a2db48635ccbd9fd6c088070b58cae674ad526c68"
         }
       ],
       "cpu_budget_seconds": 600
@@ -1150,7 +1150,7 @@
       "slug": "bench-26-cozy-still-life",
       "title": "Original Cozy Tabletop Still Life",
       "script": "examples/showcase/bench-26-cozy-still-life.lms",
-      "script_sha256": "bdce130da923b9b72fd9ab8f6ca28f2d9473a45263637f634903838e045cb351",
+      "script_sha256": "78e1318c63c58ac6aa41f615383abb591620eed91f538ef3df48587415549474",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1175,7 +1175,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-26-cozy-still-life.lms",
-          "sha256": "bdce130da923b9b72fd9ab8f6ca28f2d9473a45263637f634903838e045cb351",
+          "sha256": "78e1318c63c58ac6aa41f615383abb591620eed91f538ef3df48587415549474",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1202,7 +1202,7 @@
       "slug": "bench-27-cad-preview-cycles-twin",
       "title": "CAD Preview and Cycles Final Twin",
       "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
-      "script_sha256": "4da08749c1081f8497501954cb8df1c70767f4c45367566e6bcab6c4b54d3fa5",
+      "script_sha256": "46998943ff5eec5adce59584e3819d962720c6e89bb2766df10546ec3fd6be48",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1232,7 +1232,7 @@
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-          "sha256": "4da08749c1081f8497501954cb8df1c70767f4c45367566e6bcab6c4b54d3fa5"
+          "sha256": "46998943ff5eec5adce59584e3819d962720c6e89bb2766df10546ec3fd6be48"
         },
         {
           "kind": "font",
@@ -1311,7 +1311,7 @@
       "slug": "bench-28-botanical-meadow",
       "title": "Original Poisson Botanical Meadow",
       "script": "examples/showcase/bench-28-botanical-meadow.lms",
-      "script_sha256": "880c19b0fb66ebd73b7172e16f1b980f1ca508975ec12da0c6a7ea2b95a21c5e",
+      "script_sha256": "1d24f5290b6fae42bbc06e885f276ef13ed96e310ef3bf2023699154ad3f8985",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1331,7 +1331,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-28-botanical-meadow.lms",
-          "sha256": "880c19b0fb66ebd73b7172e16f1b980f1ca508975ec12da0c6a7ea2b95a21c5e",
+          "sha256": "1d24f5290b6fae42bbc06e885f276ef13ed96e310ef3bf2023699154ad3f8985",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1354,7 +1354,7 @@
       "slug": "bench-29-recursive-menger",
       "title": "Original Recursive Menger Sculpture",
       "script": "examples/showcase/bench-29-recursive-menger.lms",
-      "script_sha256": "10477d97cac6b3603d4f6ff638ef1f3eb176e6fba869d556b80d01e613487e9c",
+      "script_sha256": "7a446270a31a72836dd5f092873dcc3f7ad7c23f4a1ed32dd5694184e191a444",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1374,7 +1374,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-29-recursive-menger.lms",
-          "sha256": "10477d97cac6b3603d4f6ff638ef1f3eb176e6fba869d556b80d01e613487e9c",
+          "sha256": "7a446270a31a72836dd5f092873dcc3f7ad7c23f4a1ed32dd5694184e191a444",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1397,7 +1397,7 @@
       "slug": "bench-30-prescribed-fracture",
       "title": "Prescribed Elastic Deformation Clip",
       "script": "examples/showcase/bench-30-prescribed-fracture.lms",
-      "script_sha256": "fa36050228bb78df29ba02b73d4e8ebdfbef42b42fa8266c891a22bde4896fdb",
+      "script_sha256": "627758d7d3137acbaedcab78551e0731fa9a79204794a76247d50206943e75c6",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1419,7 +1419,7 @@
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-          "sha256": "fa36050228bb78df29ba02b73d4e8ebdfbef42b42fa8266c891a22bde4896fdb"
+          "sha256": "627758d7d3137acbaedcab78551e0731fa9a79204794a76247d50206943e75c6"
         },
         {
           "kind": "font",
@@ -1461,7 +1461,7 @@
       "slug": "bench-31-heterogeneous-plume",
       "title": "Original Heterogeneous Worley Smoke Plume",
       "script": "examples/showcase/bench-31-heterogeneous-plume.lms",
-      "script_sha256": "9f3d4b6346e97a153de7c0cabf129466cbe66fd8f885ac71770efc55309cb23d",
+      "script_sha256": "14979f99ab95e364dbd51aa0bd4766035a89afb3e8e9dc4a0be1bd764eb428f9",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1481,7 +1481,7 @@
           "kind": "original-procedural-source",
           "creator": "lmvideo project",
           "source": "examples/showcase/bench-31-heterogeneous-plume.lms",
-          "sha256": "9f3d4b6346e97a153de7c0cabf129466cbe66fd8f885ac71770efc55309cb23d",
+          "sha256": "14979f99ab95e364dbd51aa0bd4766035a89afb3e8e9dc4a0be1bd764eb428f9",
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
@@ -1504,7 +1504,7 @@
       "slug": "bench-32-multidomain-orbit-video",
       "title": "Multi-Domain Orbital Story",
       "script": "examples/showcase/bench-32-multidomain-orbit-video.lms",
-      "script_sha256": "3bbf3079eba34a1c61a18140209426f645f5284e5590bbb3c22659a5fef7e48d",
+      "script_sha256": "b05990c9db326f60011ebf3087bf6c17966e1aec47b42b3ac8c2219971962e02",
       "source_revision": "lmctl-ai/lmvideo@61ac53d9290df095677027e557a2db0b75d43f41",
       "status": "CONTENT_ONLY",
       "publication_status": "RELEASED",
@@ -1527,7 +1527,7 @@
           "license": "MIT",
           "license_file": "LICENSE-examples",
           "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-          "sha256": "3bbf3079eba34a1c61a18140209426f645f5284e5590bbb3c22659a5fef7e48d"
+          "sha256": "b05990c9db326f60011ebf3087bf6c17966e1aec47b42b3ac8c2219971962e02"
         },
         {
           "kind": "font",
@@ -1605,7 +1605,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
-              "script_sha256": "52badb7535d55c577b1589858915ad55bdd9d5338fff518790a049557c379628"
+              "script_sha256": "d1855616947604d62518e8759a03f87faecb3103b4d1769cb732ee5ad0ccf499"
             },
             {
               "type": "image",
@@ -1627,7 +1627,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
-              "script_sha256": "4486b49114c50ec110fa1bfc8c046af91d7ad1c3265ea9c6c8cf43556d10ab11"
+              "script_sha256": "ff690698363a2315716983930a2d097b1312a2b9dc920bd8cbc3dd5467dbe255"
             },
             {
               "type": "image",
@@ -1649,7 +1649,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-03-cube-diorama.lms",
-              "script_sha256": "68782999afc648db977218c52f884850b7cbf14b99c7f2c560ab1ddb39edc323"
+              "script_sha256": "402dc9c556b64be6d7f0d67796b8414a5344dfa360c094f4e566f325fa2da8f6"
             },
             {
               "type": "image",
@@ -1671,7 +1671,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
-              "script_sha256": "8c81b4bedae055fc3578050916a8f3899b12ee74a4d683a2d5202110bdb85478"
+              "script_sha256": "240e6ceedfba1842b3056bb9f0e9b941fe0af4ffe5a7285f9d7a925797e09636"
             },
             {
               "type": "image",
@@ -1693,7 +1693,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-05-tangent-relief-medallion.lms",
-              "script_sha256": "20e92500687002823785693ae056a44d61841dce9bef98117e36831309fd4f24"
+              "script_sha256": "667b3b2a07c9732557bfccc634d6a5be191cd260aa878ed1155e7d0f6cdad7d0"
             },
             {
               "type": "image",
@@ -1715,7 +1715,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-06-helmet-ibl.lms",
-              "script_sha256": "dd7254b99c90d6406f6263a6c4c80665492ae240e3368ef6cf90614784e787eb"
+              "script_sha256": "005b974ba6855a19d473101b28efbe0f2999a2616de870db7a7357ff43932636"
             },
             {
               "type": "image",
@@ -1737,7 +1737,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-07-bevel-typography.lms",
-              "script_sha256": "f1f9a123b02bdbb58bef2449a1a06f3d1e9cd1b7165eab5679bcb58334d7a119"
+              "script_sha256": "a5a9e1dc826405cb5760457b1d20cfdb4f0a3420fb461b9f0c02a954245e1313"
             },
             {
               "type": "image",
@@ -1759,7 +1759,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-08-lathe-closed-knot.lms",
-              "script_sha256": "c60ec83ee514fda31ee1a9be785a523d5eb19b90c5512faecb474d7d4240fdb7"
+              "script_sha256": "a0ebacd6889904e0996fe24e310b90c3a927bf0f873ab242b802c0666ca7176c"
             },
             {
               "type": "image",
@@ -1781,7 +1781,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-09-terrain-contours.lms",
-              "script_sha256": "7f36ac2b58e1e559044e3ad4b653b1e692027755d0c4dacc42ea4e557fddca3d"
+              "script_sha256": "c0b71c66bc745140ae4550607b563c908174cc6f3b6c16fc09511d20dd9ab58d"
             },
             {
               "type": "image",
@@ -1803,7 +1803,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-10-fem-callout-dashboard.lms",
-              "script_sha256": "fdfe555b11e6c1ff6dc5560c7e4e1e4f7d191d142edc962cdd3842dbccc1abf9"
+              "script_sha256": "3b443a47a7d50be90d1d6daa36f62262cc9382a44d4433702913ccd1a0d6bc18"
             },
             {
               "type": "image",
@@ -1825,7 +1825,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
-              "script_sha256": "90d4970af7662e002ab76dd0128afb78d6fd26a0002dde0163ef0abe0d43f571"
+              "script_sha256": "b35767221f62d00cff0ebeaab0350aa6f4cc3ebe6c45ae95787fadb61c12b379"
             },
             {
               "type": "image",
@@ -1847,7 +1847,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
-              "script_sha256": "7b4468d61076c99beafbb9483c8b70de33391602fb6f655fb47a345c9287f8eb"
+              "script_sha256": "1b897624731cbdae4c4d315c9afdaefef39291449d86c92775a5cdba79526f60"
             },
             {
               "type": "image",
@@ -1881,7 +1881,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-13-aov-post-processing.lms",
-              "script_sha256": "3aa1b73cba85fa8db4df41e85ce9784a76dfdc0d92647db20b2333e8fa4a5615"
+              "script_sha256": "8933517e4f2f33dd15e3450103156b603eb7a119cf0a5852cddc7c5e375c4a46"
             },
             {
               "type": "image",
@@ -1903,7 +1903,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-14-cad-four-view-section.lms",
-              "script_sha256": "6496b8a48949f83b1246b07da3de4c1d7ceeb44e858bb3846a8607894e6c17a3"
+              "script_sha256": "df6023ec39eb2e8395d8e32526c19038a5cb207431af10c7132f5e57c48788dc"
             },
             {
               "type": "image",
@@ -1925,7 +1925,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-15-molecular-trajectory.lms",
-              "script_sha256": "c77e0aef7d2256473f4b546a23596097745ee825fb79802a540abbfbf6d085f9"
+              "script_sha256": "427c7c1f8c44637b9a231e5758d643c3009912bdf43663e7e372538f3acad9cc"
             },
             {
               "type": "image",
@@ -1965,7 +1965,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
-              "script_sha256": "83fdca9abc05ea95ae95ae6705b2a73e79439aadb279fa128d0d7cd069fb17c1"
+              "script_sha256": "a5bf4a45a339b702740c1d9e3c0cecb50b540bddfb7354ab1e79593ed31dbdf4"
             },
             {
               "type": "image",
@@ -1987,7 +1987,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
-              "script_sha256": "54844b349623dabba680af87407dab3bc9399947f1f32eeacefaf8d280201102"
+              "script_sha256": "056054e5d6d9d2a4b1d9bc9b0da6ee0aeb151ddf8c18e10c5b40f84dad4c1810"
             },
             {
               "type": "image",
@@ -2009,7 +2009,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
-              "script_sha256": "5e0748d1aca259d39eb7b536b1bf7dc3cbb37a663656b680b690ff890f741412"
+              "script_sha256": "4427114ad9835891a325caa961acb71f6892870fd47dc1c62bac2a6bad0bc4e6"
             }
           ]
         },
@@ -2025,7 +2025,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
-              "script_sha256": "8efac737bdfefb0e4f23f9d82a85c011b1158c595aec4bcbb25bcf619cf54e12"
+              "script_sha256": "14bb27293fa14b2a5eff7830e56cab7fe5d8c09dc5b9bef5126122f0d072114b"
             },
             {
               "type": "image",
@@ -2047,7 +2047,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-              "script_sha256": "3b6e41d8edefd431504da38ed6dd38c6a40a78dd453529a3eae0cd459978b99e"
+              "script_sha256": "997334784a864b12dcc055a9732550c13782308a0b14f193cb293ed929abd37c"
             },
             {
               "type": "image",
@@ -2075,7 +2075,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-21-window-god-rays.lms",
-              "script_sha256": "20ee3bbcffcf2954f1c6bc96a2e022e6f7675adf4dcb954b0c6f2884bcc58656"
+              "script_sha256": "7bbb2e74fa0d2582503fc237fdd9ab41c093e42ca073be6957c0884dff52fd3b"
             },
             {
               "type": "image",
@@ -2097,7 +2097,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-22-physical-sky.lms",
-              "script_sha256": "87ad15a23697be0ffe0bf9e28c5e747d0218a8ba1aa5689ef4c1717643aefaae"
+              "script_sha256": "93f344328bab344084fe666845f297c66248f3da05a85b17b638c4ce8b248983"
             },
             {
               "type": "image",
@@ -2119,7 +2119,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-23-macro-chess-dof.lms",
-              "script_sha256": "b0ebcc0ac325490e5ebf4533f2d6c057f744e52edadabb3c655a32c67bb1f0f2"
+              "script_sha256": "4094a99b080c6502400453e26a26dd275c3a141199243549b0ea3a0e393eaa6c"
             },
             {
               "type": "image",
@@ -2141,7 +2141,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-24-native-hair.lms",
-              "script_sha256": "1956e6fc1fc7c4fcf16fd9741c9e8d07fe6611dd96444ff21cc3aae551692c7f"
+              "script_sha256": "15da99515c44fb5bf7454d5d2c82e81bef6268161c56c7d64ba557238c774c53"
             },
             {
               "type": "image",
@@ -2163,7 +2163,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-25-archviz-daylit-room.lms",
-              "script_sha256": "52a2ea89cdbd6165649fb730a9c2767d069e61fffbcb266980b819bede13d6ca"
+              "script_sha256": "40de91bb8dc02fc86198241a2db48635ccbd9fd6c088070b58cae674ad526c68"
             },
             {
               "type": "image",
@@ -2185,7 +2185,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-26-cozy-still-life.lms",
-              "script_sha256": "bdce130da923b9b72fd9ab8f6ca28f2d9473a45263637f634903838e045cb351"
+              "script_sha256": "78e1318c63c58ac6aa41f615383abb591620eed91f538ef3df48587415549474"
             },
             {
               "type": "image",
@@ -2207,7 +2207,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
-              "script_sha256": "4da08749c1081f8497501954cb8df1c70767f4c45367566e6bcab6c4b54d3fa5"
+              "script_sha256": "46998943ff5eec5adce59584e3819d962720c6e89bb2766df10546ec3fd6be48"
             },
             {
               "type": "image",
@@ -2235,7 +2235,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-28-botanical-meadow.lms",
-              "script_sha256": "880c19b0fb66ebd73b7172e16f1b980f1ca508975ec12da0c6a7ea2b95a21c5e"
+              "script_sha256": "1d24f5290b6fae42bbc06e885f276ef13ed96e310ef3bf2023699154ad3f8985"
             },
             {
               "type": "image",
@@ -2257,7 +2257,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-29-recursive-menger.lms",
-              "script_sha256": "10477d97cac6b3603d4f6ff638ef1f3eb176e6fba869d556b80d01e613487e9c"
+              "script_sha256": "7a446270a31a72836dd5f092873dcc3f7ad7c23f4a1ed32dd5694184e191a444"
             },
             {
               "type": "image",
@@ -2285,7 +2285,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-30-prescribed-fracture.lms",
-              "script_sha256": "fa36050228bb78df29ba02b73d4e8ebdfbef42b42fa8266c891a22bde4896fdb"
+              "script_sha256": "627758d7d3137acbaedcab78551e0731fa9a79204794a76247d50206943e75c6"
             },
             {
               "type": "image",
@@ -2319,7 +2319,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-31-heterogeneous-plume.lms",
-              "script_sha256": "9f3d4b6346e97a153de7c0cabf129466cbe66fd8f885ac71770efc55309cb23d"
+              "script_sha256": "14979f99ab95e364dbd51aa0bd4766035a89afb3e8e9dc4a0be1bd764eb428f9"
             },
             {
               "type": "image",
@@ -2341,7 +2341,7 @@
             {
               "type": "code",
               "script": "examples/showcase/bench-32-multidomain-orbit-video.lms",
-              "script_sha256": "3bbf3079eba34a1c61a18140209426f645f5284e5590bbb3c22659a5fef7e48d"
+              "script_sha256": "b05990c9db326f60011ebf3087bf6c17966e1aec47b42b3ac8c2219971962e02"
             },
             {
               "type": "image",

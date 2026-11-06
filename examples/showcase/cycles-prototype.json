@@ -2,7 +2,7 @@
   "format": 1,
   "status": "CONTENT_ONLY",
   "source": "examples/cycles-product-still.lms",
-  "source_sha256": "8f5c0866eaa3b387a14450cbe4da51c32d3c4bfbc09ff7dd2713bb96a8e3daf4",
+  "source_sha256": "eb2b4db3945c8f5116d4801515d2ac7dba7f6439431aa8f608a64029f89caef1",
   "schema_sha256": "3f3465c86f719339444aafb6abcd15466dc6cd61982ed06dfb4f67448d2195e7",
   "cycles_commit": "3eb35f85996baa6c1b2e19bf297b22745c85e321",
   "samples": 32,

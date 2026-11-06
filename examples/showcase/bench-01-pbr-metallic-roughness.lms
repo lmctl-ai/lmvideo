@@ -1,6 +1,6 @@
 # B01: original procedural 5x5 PBR matrix, exact 900x560 still.
 mkdir("build");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let studio=image_pattern(128,64,"0.18+0.72*exp(-180*(x-0.28)^2-35*(y-0.4)^2)","0.22+0.68*exp(-180*(x-0.28)^2-35*(y-0.4)^2)","0.3+0.64*exp(-180*(x-0.28)^2-35*(y-0.4)^2)","1");
 let scene=scene3d().threads(4).background("#edf2f7").ambient(0.02).environment(environment_image(studio),1.2,25.0,false).tonemap("aces",1.0);
 scene.camera(camera3d().look_at(0.0,0.0,18.0,0.0,0.0,0.0).ortho(7.6,0.1,100.0));

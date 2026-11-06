@@ -1,6 +1,6 @@
 # G.1 witness: deterministic surface scatter keeps one shared source mesh.
 mkdir("build");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let scene = scene3d().threads(4).background("#15202b").ambient(0.18);
 scene.camera(camera3d().look_at(5.0,4.0,7.0,0.0,0.0,0.0).perspective(42.0,0.1,40.0));
 let ground = mesh_plane(5.0,5.0);

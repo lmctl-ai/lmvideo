@@ -1,5 +1,5 @@
 mkdir("build");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 video.size(960, 540); video.fps(24); video.frames(48);
 video.output("build/turntable.mp4"); video.begin();
 let scene = scene3d().background("#09111f");

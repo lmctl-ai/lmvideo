@@ -27,7 +27,7 @@
             {
               "kind": "code",
               "script": "examples/org-chart-grid.lms",
-              "script_sha256": "3aaa4cea5ef18eafc61a9ac06cb37461758d5cd28b61fadb9cee6cb617f87e0a",
+              "script_sha256": "fcb1a83c3ce117a9ab8944d4eadf61968f36d08820a4e947f41ab5365d67a1dd",
               "commands": [
                 [
                   "lmctl",
@@ -62,7 +62,7 @@
             {
               "kind": "code",
               "script": "examples/org-chart-grid.lms",
-              "script_sha256": "3aaa4cea5ef18eafc61a9ac06cb37461758d5cd28b61fadb9cee6cb617f87e0a",
+              "script_sha256": "fcb1a83c3ce117a9ab8944d4eadf61968f36d08820a4e947f41ab5365d67a1dd",
               "commands": [
                 [
                   "lmctl",
@@ -90,7 +90,7 @@
             {
               "kind": "code",
               "script": "examples/confusion-matrix.lms",
-              "script_sha256": "e03d568f855a6489fb1d180f57184dbf12feefbadc2ae8e4ccfc396959fca05b",
+              "script_sha256": "a6c11e9123782ed1ff4d187410d8b0d6e6a0e1b1d2404a25d873cc337ff262fe",
               "commands": [
                 [
                   "lmctl",
@@ -118,7 +118,7 @@
             {
               "kind": "code",
               "script": "examples/symlog-outlier.lms",
-              "script_sha256": "b330d4a9ca61d5fcedce3ecac6916ec832add86f30f33fab8896639a026c0fa1",
+              "script_sha256": "9ac470d73b638d90a7aa900c5a37d762be91b56a17590ffaa6d00cd45c6fca4b",
               "commands": [
                 [
                   "lmctl",
@@ -157,7 +157,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-01-pbr-metallic-roughness.lms",
-              "script_sha256": "52badb7535d55c577b1589858915ad55bdd9d5338fff518790a049557c379628",
+              "script_sha256": "d1855616947604d62518e8759a03f87faecb3103b4d1769cb732ee5ad0ccf499",
               "commands": [
                 [
                   "lmctl",
@@ -189,7 +189,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-02-pcf-soft-shadow-pedestal.lms",
-              "script_sha256": "4486b49114c50ec110fa1bfc8c046af91d7ad1c3265ea9c6c8cf43556d10ab11",
+              "script_sha256": "ff690698363a2315716983930a2d097b1312a2b9dc920bd8cbc3dd5467dbe255",
               "commands": [
                 [
                   "lmctl",
@@ -221,7 +221,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-03-cube-diorama.lms",
-              "script_sha256": "68782999afc648db977218c52f884850b7cbf14b99c7f2c560ab1ddb39edc323",
+              "script_sha256": "402dc9c556b64be6d7f0d67796b8414a5344dfa360c094f4e566f325fa2da8f6",
               "commands": [
                 [
                   "lmctl",
@@ -253,7 +253,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
-              "script_sha256": "8c81b4bedae055fc3578050916a8f3899b12ee74a4d683a2d5202110bdb85478",
+              "script_sha256": "240e6ceedfba1842b3056bb9f0e9b941fe0af4ffe5a7285f9d7a925797e09636",
               "commands": [
                 [
                   "lmctl",
@@ -285,7 +285,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-05-tangent-relief-medallion.lms",
-              "script_sha256": "20e92500687002823785693ae056a44d61841dce9bef98117e36831309fd4f24",
+              "script_sha256": "667b3b2a07c9732557bfccc634d6a5be191cd260aa878ed1155e7d0f6cdad7d0",
               "commands": [
                 [
                   "lmctl",
@@ -317,7 +317,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-06-helmet-ibl.lms",
-              "script_sha256": "dd7254b99c90d6406f6263a6c4c80665492ae240e3368ef6cf90614784e787eb",
+              "script_sha256": "005b974ba6855a19d473101b28efbe0f2999a2616de870db7a7357ff43932636",
               "commands": [
                 [
                   "lmctl",
@@ -349,7 +349,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-07-bevel-typography.lms",
-              "script_sha256": "f1f9a123b02bdbb58bef2449a1a06f3d1e9cd1b7165eab5679bcb58334d7a119",
+              "script_sha256": "a5a9e1dc826405cb5760457b1d20cfdb4f0a3420fb461b9f0c02a954245e1313",
               "commands": [
                 [
                   "lmctl",
@@ -381,7 +381,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-08-lathe-closed-knot.lms",
-              "script_sha256": "c60ec83ee514fda31ee1a9be785a523d5eb19b90c5512faecb474d7d4240fdb7",
+              "script_sha256": "a0ebacd6889904e0996fe24e310b90c3a927bf0f873ab242b802c0666ca7176c",
               "commands": [
                 [
                   "lmctl",
@@ -413,7 +413,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-09-terrain-contours.lms",
-              "script_sha256": "7f36ac2b58e1e559044e3ad4b653b1e692027755d0c4dacc42ea4e557fddca3d",
+              "script_sha256": "c0b71c66bc745140ae4550607b563c908174cc6f3b6c16fc09511d20dd9ab58d",
               "commands": [
                 [
                   "lmctl",
@@ -445,7 +445,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-10-fem-callout-dashboard.lms",
-              "script_sha256": "fdfe555b11e6c1ff6dc5560c7e4e1e4f7d191d142edc962cdd3842dbccc1abf9",
+              "script_sha256": "3b443a47a7d50be90d1d6daa36f62262cc9382a44d4433702913ccd1a0d6bc18",
               "commands": [
                 [
                   "lmctl",
@@ -477,7 +477,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-11-dynamic-matrix-instancing.lms",
-              "script_sha256": "90d4970af7662e002ab76dd0128afb78d6fd26a0002dde0163ef0abe0d43f571",
+              "script_sha256": "b35767221f62d00cff0ebeaab0350aa6f4cc3ebe6c45ae95787fadb61c12b379",
               "commands": [
                 [
                   "lmctl",
@@ -509,7 +509,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-12-particle-wave-sprites.lms",
-              "script_sha256": "7b4468d61076c99beafbb9483c8b70de33391602fb6f655fb47a345c9287f8eb",
+              "script_sha256": "1b897624731cbdae4c4d315c9afdaefef39291449d86c92775a5cdba79526f60",
               "commands": [
                 [
                   "lmctl",
@@ -558,7 +558,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-13-aov-post-processing.lms",
-              "script_sha256": "3aa1b73cba85fa8db4df41e85ce9784a76dfdc0d92647db20b2333e8fa4a5615",
+              "script_sha256": "8933517e4f2f33dd15e3450103156b603eb7a119cf0a5852cddc7c5e375c4a46",
               "commands": [
                 [
                   "lmctl",
@@ -590,7 +590,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-14-cad-four-view-section.lms",
-              "script_sha256": "6496b8a48949f83b1246b07da3de4c1d7ceeb44e858bb3846a8607894e6c17a3",
+              "script_sha256": "df6023ec39eb2e8395d8e32526c19038a5cb207431af10c7132f5e57c48788dc",
               "commands": [
                 [
                   "lmctl",
@@ -622,7 +622,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-15-molecular-trajectory.lms",
-              "script_sha256": "c77e0aef7d2256473f4b546a23596097745ee825fb79802a540abbfbf6d085f9",
+              "script_sha256": "427c7c1f8c44637b9a231e5758d643c3009912bdf43663e7e372538f3acad9cc",
               "commands": [
                 [
                   "lmctl",
@@ -671,7 +671,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-16-cornell-transmission-ior.lms",
-              "script_sha256": "83fdca9abc05ea95ae95ae6705b2a73e79439aadb279fa128d0d7cd069fb17c1",
+              "script_sha256": "a5bf4a45a339b702740c1d9e3c0cecb50b540bddfb7354ab1e79593ed31dbdf4",
               "commands": [
                 [
                   "lmctl",
@@ -703,7 +703,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-17-glass-goblets-volume.lms",
-              "script_sha256": "54844b349623dabba680af87407dab3bc9399947f1f32eeacefaf8d280201102",
+              "script_sha256": "056054e5d6d9d2a4b1d9bc9b0da6ee0aeb151ddf8c18e10c5b40f84dad4c1810",
               "commands": [
                 [
                   "lmctl",
@@ -735,7 +735,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-18-caustic-ball-lens.lms",
-              "script_sha256": "5e0748d1aca259d39eb7b536b1bf7dc3cbb37a663656b680b690ff890f741412",
+              "script_sha256": "4427114ad9835891a325caa961acb71f6892870fd47dc1c62bac2a6bad0bc4e6",
               "commands": [
                 [
                   "lmctl",
@@ -767,7 +767,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-19-sss-abstract-bust.lms",
-              "script_sha256": "8efac737bdfefb0e4f23f9d82a85c011b1158c595aec4bcbb25bcf619cf54e12",
+              "script_sha256": "14bb27293fa14b2a5eff7830e56cab7fe5d8c09dc5b9bef5126122f0d072114b",
               "commands": [
                 [
                   "lmctl",
@@ -799,7 +799,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-20-car-paint-anisotropy.lms",
-              "script_sha256": "3b6e41d8edefd431504da38ed6dd38c6a40a78dd453529a3eae0cd459978b99e",
+              "script_sha256": "997334784a864b12dcc055a9732550c13782308a0b14f193cb293ed929abd37c",
               "commands": [
                 [
                   "lmctl",
@@ -831,7 +831,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-21-window-god-rays.lms",
-              "script_sha256": "20ee3bbcffcf2954f1c6bc96a2e022e6f7675adf4dcb954b0c6f2884bcc58656",
+              "script_sha256": "7bbb2e74fa0d2582503fc237fdd9ab41c093e42ca073be6957c0884dff52fd3b",
               "commands": [
                 [
                   "lmctl",
@@ -863,7 +863,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-22-physical-sky.lms",
-              "script_sha256": "87ad15a23697be0ffe0bf9e28c5e747d0218a8ba1aa5689ef4c1717643aefaae",
+              "script_sha256": "93f344328bab344084fe666845f297c66248f3da05a85b17b638c4ce8b248983",
               "commands": [
                 [
                   "lmctl",
@@ -895,7 +895,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-23-macro-chess-dof.lms",
-              "script_sha256": "b0ebcc0ac325490e5ebf4533f2d6c057f744e52edadabb3c655a32c67bb1f0f2",
+              "script_sha256": "4094a99b080c6502400453e26a26dd275c3a141199243549b0ea3a0e393eaa6c",
               "commands": [
                 [
                   "lmctl",
@@ -927,7 +927,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-24-native-hair.lms",
-              "script_sha256": "1956e6fc1fc7c4fcf16fd9741c9e8d07fe6611dd96444ff21cc3aae551692c7f",
+              "script_sha256": "15da99515c44fb5bf7454d5d2c82e81bef6268161c56c7d64ba557238c774c53",
               "commands": [
                 [
                   "lmctl",
@@ -959,7 +959,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-25-archviz-daylit-room.lms",
-              "script_sha256": "52a2ea89cdbd6165649fb730a9c2767d069e61fffbcb266980b819bede13d6ca",
+              "script_sha256": "40de91bb8dc02fc86198241a2db48635ccbd9fd6c088070b58cae674ad526c68",
               "commands": [
                 [
                   "lmctl",
@@ -991,7 +991,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-26-cozy-still-life.lms",
-              "script_sha256": "bdce130da923b9b72fd9ab8f6ca28f2d9473a45263637f634903838e045cb351",
+              "script_sha256": "78e1318c63c58ac6aa41f615383abb591620eed91f538ef3df48587415549474",
               "commands": [
                 [
                   "lmctl",
@@ -1023,7 +1023,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-27-cad-preview-cycles-twin.lms",
-              "script_sha256": "4da08749c1081f8497501954cb8df1c70767f4c45367566e6bcab6c4b54d3fa5",
+              "script_sha256": "46998943ff5eec5adce59584e3819d962720c6e89bb2766df10546ec3fd6be48",
               "commands": [
                 [
                   "lmctl",
@@ -1055,7 +1055,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-28-botanical-meadow.lms",
-              "script_sha256": "880c19b0fb66ebd73b7172e16f1b980f1ca508975ec12da0c6a7ea2b95a21c5e",
+              "script_sha256": "1d24f5290b6fae42bbc06e885f276ef13ed96e310ef3bf2023699154ad3f8985",
               "commands": [
                 [
                   "lmctl",
@@ -1093,7 +1093,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-29-recursive-menger.lms",
-              "script_sha256": "10477d97cac6b3603d4f6ff638ef1f3eb176e6fba869d556b80d01e613487e9c",
+              "script_sha256": "7a446270a31a72836dd5f092873dcc3f7ad7c23f4a1ed32dd5694184e191a444",
               "commands": [
                 [
                   "lmctl",
@@ -1131,7 +1131,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-30-prescribed-fracture.lms",
-              "script_sha256": "fa36050228bb78df29ba02b73d4e8ebdfbef42b42fa8266c891a22bde4896fdb",
+              "script_sha256": "627758d7d3137acbaedcab78551e0731fa9a79204794a76247d50206943e75c6",
               "commands": [
                 [
                   "lmctl",
@@ -1180,7 +1180,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-31-heterogeneous-plume.lms",
-              "script_sha256": "9f3d4b6346e97a153de7c0cabf129466cbe66fd8f885ac71770efc55309cb23d",
+              "script_sha256": "14979f99ab95e364dbd51aa0bd4766035a89afb3e8e9dc4a0be1bd764eb428f9",
               "commands": [
                 [
                   "lmctl",
@@ -1212,7 +1212,7 @@
             {
               "kind": "code",
               "script": "examples/showcase/bench-32-multidomain-orbit-video.lms",
-              "script_sha256": "3bbf3079eba34a1c61a18140209426f645f5284e5590bbb3c22659a5fef7e48d",
+              "script_sha256": "b05990c9db326f60011ebf3087bf6c17966e1aec47b42b3ac8c2219971962e02",
               "commands": [
                 [
                   "lmctl",
@@ -1274,7 +1274,7 @@
             {
               "kind": "code",
               "script": "examples/book/cycles-still.lms",
-              "script_sha256": "667b66d00b150accdc6dec8ef086f4d7b70c2419b12e7b2a9d0b9a2e8d6b3e06",
+              "script_sha256": "91a8733e4e08491441babf98a3a58101e0939268b35f1cb747046b9f37d984ae",
               "commands": [
                 [
                   "lmscript",
@@ -1296,7 +1296,7 @@
             {
               "kind": "code",
               "script": "examples/book/cycles-turntable.lms",
-              "script_sha256": "b15814c91ac0daf2a439d64728a764ca6f31d230bf7a05cf99f73ede67070f50",
+              "script_sha256": "b227315ef18c0e9a4f6bee8b94d3f06df3b8f354b67c981a84b83312abce4016",
               "commands": [
                 [
                   "lmscript",
@@ -1396,7 +1396,7 @@
             {
               "kind": "code",
               "script": "examples/physics/ballpit-impact.lms",
-              "script_sha256": "47c297a03de089316aed433bd4d1778e6994f421a5d3feaf98c69b3fc8052d78",
+              "script_sha256": "1bbc28b836fa697fdca853a05a82ddadc7db77801bed096fac17471e5fb32d5c",
               "commands": [
                 [
                   "lmctl",
@@ -1444,7 +1444,7 @@
             {
               "kind": "code",
               "script": "examples/physics/bar-stack.lms",
-              "script_sha256": "9d7fc904bd03e6d4a081127f2ec43bba3d3bfd7c93b0fa796dee631c2d2369aa",
+              "script_sha256": "b0c8e16fa0023e6a115b32148efda8511fe8fe38dd4ab279916858d5e99b01ca",
               "commands": [
                 [
                   "lmctl",
@@ -1492,7 +1492,7 @@
             {
               "kind": "code",
               "script": "examples/physics/boxes-collapse.lms",
-              "script_sha256": "fa34a5e322d34856ca5635bfedc9a8de70ba5877fc0f763c9402b04a079bed5a",
+              "script_sha256": "b0733f77cb5a4da8910e2173b5d7a0f720e65e84216a5e8b8a4fe39a9caf1d4c",
               "commands": [
                 [
                   "lmctl",
@@ -1540,7 +1540,7 @@
             {
               "kind": "code",
               "script": "examples/physics/bullet-container.lms",
-              "script_sha256": "35c6524a2ecd2190a7ddfb31ef4e0d8867c017eec4119cff3f46f49e5535159a",
+              "script_sha256": "d9617077f5bdac76f615445d0da100181c4a6a843bdfed5c0d36a886b077177d",
               "commands": [
                 [
                   "lmctl",
@@ -1588,7 +1588,7 @@
             {
               "kind": "code",
               "script": "examples/physics/contact-sweep.lms",
-              "script_sha256": "ec1c8932679f7d1e19f3dc90bcac8623acc48c4cd0d8ede34c0a423c5fb4cfa1",
+              "script_sha256": "6a663e41e09e1d0c1094a55ee4cd380f209f77f9e6b7e35c64e2e11965ed77e6",
               "commands": [
                 [
                   "lmctl",
@@ -1636,7 +1636,7 @@
             {
               "kind": "code",
               "script": "examples/physics/domino-wave.lms",
-              "script_sha256": "db78ffe21da50eaf3a4742029fa4b679abea7a574f39bf734a25050bb9e4ffe4",
+              "script_sha256": "5e80108c960dc79b9aea72e60a6053dfff8bec2138425c2beef57ad2e995abdf",
               "commands": [
                 [
                   "lmctl",
@@ -1684,7 +1684,7 @@
             {
               "kind": "code",
               "script": "examples/physics/impact-rings.lms",
-              "script_sha256": "11c2e1a1587c52ead5bc77fb5f83f126e827b37c9e901bf0541e0acc8e27c7fc",
+              "script_sha256": "90f2e34767d3f1947d30ca215862fb773327ab5c96900692737a006393509f00",
               "commands": [
                 [
                   "lmctl",
@@ -1732,7 +1732,7 @@
             {
               "kind": "code",
               "script": "examples/physics/kinetic-sculpture.lms",
-              "script_sha256": "ccab1f5c957794192d6663751b8e2d04d5d4de855bc154776d2da7511b0dadcf",
+              "script_sha256": "82294470c6ed0014eaec4b81937d9873de8ca5a82b932fa178bc82b935de6baa",
               "commands": [
                 [
                   "lmctl",
@@ -1780,7 +1780,7 @@
             {
               "kind": "code",
               "script": "examples/physics/kpi-42.lms",
-              "script_sha256": "0a4e426e1c2150b2f05cb5eedf235435239590d8397188b45433da28ff328e18",
+              "script_sha256": "a90d58fc7c241f50251628ec82fc5bd26c16440cc5753e6a7478a952d1af1ffa",
               "commands": [
                 [
                   "lmctl",
@@ -1828,7 +1828,7 @@
             {
               "kind": "code",
               "script": "examples/physics/letter-drop.lms",
-              "script_sha256": "93d326613abd22b21d377a7464c1b22440e94a9a0450ef8d771d12ac3560dee2",
+              "script_sha256": "191b557f1ea5c0a369dddeea827335c267813429c5785656b54ca00764e37657",
               "commands": [
                 [
                   "lmctl",
@@ -1876,7 +1876,7 @@
             {
               "kind": "code",
               "script": "examples/physics/plinko.lms",
-              "script_sha256": "ec5ee90c54dcd92814c226bff756614801bde97c1941f024d9a20f728d045991",
+              "script_sha256": "9536ea2736174f4d537f33ff642eacec12f8400d3adc7ea5d460b826d6998bb0",
               "commands": [
                 [
                   "lmctl",
@@ -1924,7 +1924,7 @@
             {
               "kind": "code",
               "script": "examples/physics/pyramid-collapse.lms",
-              "script_sha256": "85073948cc97c0faff9aa7e0a86b4b6029e5f1c0b8cfd6915e27aa0e3eabad06",
+              "script_sha256": "722b904b99dc114b4aec0b33ecccbc97d2386d686d212305ed3cade444be9f9d",
               "commands": [
                 [
                   "lmctl",
@@ -1972,7 +1972,7 @@
             {
               "kind": "code",
               "script": "examples/physics/rolling-ramp.lms",
-              "script_sha256": "b8804f304737c2f3fe899214ac078cd55aa1adc31924cb3d0a44f127a23aea23",
+              "script_sha256": "be37635930e4d8013a5a7a067c0093d40de5e23bd4ddd68c552744681c22a677",
               "commands": [
                 [
                   "lmctl",
@@ -2020,7 +2020,7 @@
             {
               "kind": "code",
               "script": "examples/physics/slide-tumble.lms",
-              "script_sha256": "320c630656f7c6d1f4a600387159e4ea47ce050c52e6e6f98d5d5f93ca81e474",
+              "script_sha256": "0c8c9373da18a3a63b530fcb25ddc3adacc00bb56ea8c07465fe15569be1e119",
               "commands": [
                 [
                   "lmctl",
@@ -2068,7 +2068,7 @@
             {
               "kind": "code",
               "script": "examples/physics/title-drop.lms",
-              "script_sha256": "b02c8f09087909ed06c143c0fd5310e17a27c9e6962ec78c59aff2de7e691cd0",
+              "script_sha256": "ba5a9d16fa687a37467ed7d47fa2e47dfaff73932fc444d49d16cbd7400ab65e",
               "commands": [
                 [
                   "lmctl",
@@ -3136,6 +3136,6 @@
       }
     }
   ],
-  "runtime_release": "v0.1.122",
+  "runtime_release": "v0.1.124",
   "release_channel": "latest"
 }

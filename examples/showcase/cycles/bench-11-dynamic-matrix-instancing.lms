@@ -1,6 +1,6 @@
 # CPU Cycles/OIDN companion; original scene geometry/assets unchanged.
 # B11 / G.1: one shared beveled cube mesh, 32x32 = 1,024 wave instances.
-mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let scene=scene3d().threads(4).background("#edf3f8").ambient(0.24).threads(4);
 scene.camera(camera3d().look_at(31.0,28.0,40.0,0.0,0.0,0.0).perspective(43.0,0.1,120.0));
 let cubes=scene.add_instances(mesh_beveled_box(0.62,0.62,0.62,0.06),"#359b9a");

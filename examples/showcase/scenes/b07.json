@@ -28,7 +28,7 @@
       "kind": "original-script-and-procedural-data",
       "license": "MIT",
       "source": "examples/showcase/bench-07-bevel-typography.lms",
-      "sha256": "f1f9a123b02bdbb58bef2449a1a06f3d1e9cd1b7165eab5679bcb58334d7a119"
+      "sha256": "a5a9e1dc826405cb5760457b1d20cfdb4f0a3420fb461b9f0c02a954245e1313"
     }
   ],
   "warm_budget_seconds": 10

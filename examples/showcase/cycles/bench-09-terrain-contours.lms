@@ -1,6 +1,6 @@
 # CPU Cycles/OIDN companion; original scene geometry/assets unchanged.
 # B09: original seeded four-octave Perlin FBM; the same samples drive mesh and contours.
-mkdir("build");p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+mkdir("build");p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let heights=texture_noise("perlin",14159,3).mix(texture_noise("perlin",2718,6),0.35).mix(texture_noise("perlin",31415,12),0.18).mix(texture_noise("perlin",16180,24),0.08).bake(128,128,"linear").image(0);
 let terrain=mesh_heightfield(heights,5.0,5.0,2.0);let scalars="";
 for(j in range(0,128)){for(i in range(0,128)){let left=i-1;if(left<0){left=0;}let right=i+1;if(right>127){right=127;}let top=j-1;if(top<0){top=0;}let bottom=j+1;if(bottom>127){bottom=127;}let dx=(heights.pixel(right,j,0)-heights.pixel(left,j,0))*25.4;let dz=(heights.pixel(i,bottom,0)-heights.pixel(i,top,0))*25.4;let slope=sqrt(dx*dx+dz*dz);if(slope>1.0){slope=1.0;}let value=0.82*heights.pixel(i,j,0)+0.18*slope;if(scalars!=""){scalars=scalars+",";}scalars=scalars+str(value);}}

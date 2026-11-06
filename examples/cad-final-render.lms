@@ -6,7 +6,7 @@ let housing=scene.box(120.0,70.0,80.0,alloy);let bore=scene.cylinder(15.0,80.0,a
 housing.cut(bore);bore.visible(false);scene.export_stl("build/cad-final-housing.stl");
 end _lmcode_
 r=run_lmcode(cad);assert(r.ok,(r.ok ? "" : r.message));
-p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+p=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let mesh=mesh_load("build/cad-final-housing.stl");image_assert_true(mesh.triangles()>100);image_assert_close(mesh.bound(3)-mesh.bound(0),120.0,0.01);
 let scene=scene3d().threads(4).background("#edf3f8").ambient(0.15).tonemap("aces",1.0);
 scene.add(mesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);

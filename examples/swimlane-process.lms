@@ -8,7 +8,7 @@
 
 png = ARGV.len() > 0 ? ARGV[0] : "images/swimlane-process.png";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 video.size(1300, 660); video.fps(30); video.frames(1); video.crf(20); video.output(${png}); video.begin(); video.frame();
 canvas.clear("#101820");
 

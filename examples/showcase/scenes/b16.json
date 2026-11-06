@@ -35,7 +35,7 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-16-cornell-transmission-ior.lms",
-      "sha256": "83fdca9abc05ea95ae95ae6705b2a73e79439aadb279fa128d0d7cd069fb17c1",
+      "sha256": "a5bf4a45a339b702740c1d9e3c0cecb50b540bddfb7354ab1e79593ed31dbdf4",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

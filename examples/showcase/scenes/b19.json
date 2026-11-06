@@ -33,14 +33,14 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-19-sss-abstract-bust.lms",
-      "sha256": "8efac737bdfefb0e4f23f9d82a85c011b1158c595aec4bcbb25bcf619cf54e12",
+      "sha256": "14bb27293fa14b2a5eff7830e56cab7fe5d8c09dc5b9bef5126122f0d072114b",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
   "rights_note": "No human scan, borrowed model, or third-party render; all bust parts and lighting are authored procedural geometry.",
-  "script_sha256": "8efac737bdfefb0e4f23f9d82a85c011b1158c595aec4bcbb25bcf619cf54e12",
+  "script_sha256": "14bb27293fa14b2a5eff7830e56cab7fe5d8c09dc5b9bef5126122f0d072114b",
   "reference_url": "https://threejs.org/examples/#webgl_materials_subsurface_scattering",
   "publication_status": "RELEASED"
 }

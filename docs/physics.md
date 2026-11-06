@@ -63,6 +63,6 @@ a periodic phase. Explicitly paint each Image with `canvas.image(image,0,0)` whe
 encoding video. Rendering an Image alone does not paint the active video frame.
 
 The [physics examples](../examples/physics/README.md) and
-[book catalog](../examples/books.json) target the v0.1.122 release, with
-compiler 0.2.456. The scripts explicitly pin the host release for reproducible runs. No implementation sources
+[book catalog](../examples/books.json) target the v0.1.124 release, with
+compiler 0.2.460. The scripts explicitly pin the host release for reproducible runs. No implementation sources
 are needed to run these chapters.

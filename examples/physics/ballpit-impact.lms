@@ -1,6 +1,6 @@
 # Physics motion: pastel balls arriving in a shallow pit, with depth-tested afterimages at impact.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.124";
 let world=physics_world(0.008333333,1337).gravity(0.0,-9.81,0.0).planar(true);
 world.box(10.0,0.4,5.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.12));
 for(i in range(0,24)){world.sphere(0.22,-2.5+float(i%8)*0.7,2.0+float(i/8)*0.65,0.0,0.35,physics_material(0.42,0.58));}

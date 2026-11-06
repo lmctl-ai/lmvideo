@@ -2,7 +2,7 @@
   "format": 1,
   "status": "CONTENT_ONLY",
   "script": "examples/cycles-orthographic-handoff.lms",
-  "script_sha256": "459febc4c62dc258a2b7dbfaf3736aa69fc3f6f9386657824a07d72186796558",
+  "script_sha256": "00a64e0d25e11e45217123c36951b11af049ddabbb284de4e06d8434f79d0fc9",
   "schema_sha256": "3f3465c86f719339444aafb6abcd15466dc6cd61982ed06dfb4f67448d2195e7",
   "samples": 8,
   "bounces": 0,
