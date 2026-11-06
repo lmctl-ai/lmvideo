@@ -58,6 +58,8 @@ class CredentialBoundary(unittest.TestCase):
     if ref.startswith('./'):continue
     pin=ref.rsplit('@',1)[-1]
     self.assertEqual(len(pin),40,(f,ref));self.assertTrue(all(c in '0123456789abcdef' for c in pin))
+ def test_public_content_check_uses_compiler_with_run_lmcode(self):
+  self.assertIn('@lmctl-ai/lmctl@0.2.458',text('.github/workflows/public-ci.yml'))
  def test_cancel_guard(self):
   self.assertIn('promote',job_blocks());body=job_blocks()['promote'];line=next(l for l in body.splitlines() if l.strip().startswith('if:'))
   self.assertIn('!cancelled()',line)

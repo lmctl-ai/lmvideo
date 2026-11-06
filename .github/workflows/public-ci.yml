@@ -21,7 +21,7 @@ jobs:
 
       - name: Install the compiler that accepts _lmcode_
         run: |
-          npm install --prefix "$RUNNER_TEMP/compiler" --no-save --package-lock=false @lmctl-ai/lmctl@0.2.420
+          npm install --prefix "$RUNNER_TEMP/compiler" --no-save --package-lock=false @lmctl-ai/lmctl@0.2.458
           echo "$RUNNER_TEMP/compiler/node_modules/.bin" >> "$GITHUB_PATH"
 
       - name: Install released hosts referenced by public examples
