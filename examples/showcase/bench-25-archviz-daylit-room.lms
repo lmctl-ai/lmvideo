@@ -1,6 +1,6 @@
 # B25 / G.9-G.10: original enclosed daylit room with a real left window.
 # All geometry, materials and lighting are procedural and MIT under LICENSE-examples.
-mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let scene=scene3d().threads(4).background("#1a2430").ambient(0.0).sky_hosek(35.0,200.0,2.2,0.3,2.0,true).tonemap("aces",2.5);
 let camera=camera3d().look_at(2.4,1.7,2.5,-0.4,1.2,-0.8).perspective(62.0,0.05,30.0);scene.camera(camera);
 let plaster=material("#d6d0c4",0.0,0.88);let concrete=material("#737b82",0.0,0.92);

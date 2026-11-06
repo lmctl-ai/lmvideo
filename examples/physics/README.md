@@ -1,6 +1,6 @@
 # Physics examples
 
-These examples are motion-first art studies for the physics book in the v0.1.38 release. They
+These examples are motion-first art studies for the physics book in the v0.1.122 release. They
 use a fixed Jolt trajectory baked forward once, then replay its poses with the
 smooth `sin²(pi*f/N)` phase. That is explicitly time-replayed physics; the
 examples do not reverse-integrate a simulation or splice in a last-frame reset.
@@ -35,13 +35,13 @@ The artifact gate compares each still with that MP4 frame (allowing encoding
 noise and the reserved caption band), and the catalog records the frame index,
 movie hash and match error. Choosing a new poster does not re-time the movie.
 
-Run a chapter with compiler 0.2.456 and the v0.1.38 release host:
+Run a chapter with compiler 0.2.456 and the v0.1.122 release host:
 
 ```sh
 lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/physics/plinko.lms
 ```
 
-Each source pins v0.1.38 for reproducible runs. The [book catalog](../books.json)
+Each source pins v0.1.122 for reproducible runs. The [book catalog](../books.json)
 records source hashes, measured loop evidence, media and rights; the
 [physics API](../../docs/physics.md) explains units and limits.
 

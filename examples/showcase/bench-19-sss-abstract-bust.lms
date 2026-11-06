@@ -1,6 +1,6 @@
 # B19 / G.9: original abstract busts with random-walk subsurface scattering.
 # All geometry is assembled from project-authored closed primitives.
-mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let studio="";for(j in range(0,16)){for(i in range(0,32)){let x=float(i)/31.0;let y=float(j)/15.0;let key=10.0*pow(2.718281828459045,-100.0*(x-0.3)*(x-0.3)-24.0*(y-0.4)*(y-0.4));if(studio!=""){studio=studio+",";}studio=studio+str(0.08+key)+","+str(0.10+key*0.9)+","+str(0.16+key*0.7);}}
 let env=environment_linear(32,16,studio);let scene=scene3d().threads(4).background("#101722").ambient(0.0).environment(env,0.25,16.0,false).tonemap("aces",1.0);
 scene.camera(camera3d().look_at(4.2,2.2,7.4,0.0,1.0,0.0).perspective(38.0,0.1,30.0));

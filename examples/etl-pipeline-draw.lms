@@ -7,7 +7,7 @@ standalone = ARGV.len() == 0;
 mp4 = ARGV.len() > 0 ? ARGV[0] : "images/etl-pipeline-draw.mp4";
 png = ARGV.len() > 1 ? ARGV[1] : "images/etl-pipeline-draw.png";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 video.size(1000, 540); video.fps(30); video.frames(240); video.crf(20); video.output(${mp4}); video.begin();
 
 let crm = canvas.cylinder(105.0, 190.0, 130.0, 96.0, "CRM db", "#1e3247", "#6fbdb4", 14.0);

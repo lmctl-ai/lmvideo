@@ -2,10 +2,10 @@
   "format": 1,
   "status": "CONTENT_ONLY",
   "script": "examples/cad-final-render.lms",
-  "script_sha256": "37c7c691ede766820d6e46ccbc6f3d674d17e9f242b1c7be72ea904dde0a142f",
+  "script_sha256": "ebcc097477ad70c2ced75aafec11afeebbd816090edbdcec5b3ea852a5c26c74",
   "hosts": {
     "lmcad": "v0.1.5",
-    "lmvideo": "lmvideo v0.1.38 prerelease"
+    "lmvideo": "lmvideo v0.1.122 release"
   },
   "units": "STL millimetres scaled0.001 to metres; coordinates unchanged",
   "frames": 8,

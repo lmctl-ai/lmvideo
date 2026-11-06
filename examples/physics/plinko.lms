@@ -1,6 +1,6 @@
 # Plinko: seeded spheres, a mid-flight witness, and a time-replayed loop.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let w=physics_world(0.008333333,77).gravity(0.0,-9.81,0.0).planar(true);
 let ball=physics_material(0.35,0.7);let peg=physics_material(0.6,0.2);
 w.box(9.0,0.4,5.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.1));

@@ -16,7 +16,7 @@
       "creator": "lmvideo project; original example authors in Git history",
       "source": "examples/seeded-surface-scatter.lms",
       "license": "MIT",
-      "sha256": "10a746c9b24c8661f26e4453e0084b327847bf5d280a46aade7c61684b9ed01f",
+      "sha256": "86aceefde3f7e2b9fe394e02c1fc06e0763e5ca5bc5fd669df54080da49199b5",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
@@ -24,7 +24,7 @@
   "cpu_budget_seconds": 15,
   "backend": "raster",
   "status": "LOCAL_PASS",
-  "script_sha256": "10a746c9b24c8661f26e4453e0084b327847bf5d280a46aade7c61684b9ed01f",
+  "script_sha256": "86aceefde3f7e2b9fe394e02c1fc06e0763e5ca5bc5fd669df54080da49199b5",
   "dimensions": {
     "still": [
       640,

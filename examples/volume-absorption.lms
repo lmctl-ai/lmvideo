@@ -1,7 +1,7 @@
 # G.9 candidate: homogeneous Beer-Lambert absorption through a closed solid.
 # The volume profile is CPU Cycles only; thin-wall absorption is rejected.
 mkdir("build");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let scene=scene3d().threads(4).background("#101820").ambient(0.0);
 scene.camera(camera3d().look_at(0.0,0.0,4.0,0.0,0.0,0.0).ortho(3.0,0.1,30.0));
 let medium=material("#ffffff",0.0,0.0).transmission(1.0).ior(1.0).volume_absorption("#8040cc",1.0);

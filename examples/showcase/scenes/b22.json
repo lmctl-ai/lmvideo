@@ -26,13 +26,13 @@
       "kind": "original-procedural-source",
       "creator": "lmvideo project",
       "source": "examples/showcase/bench-22-physical-sky.lms",
-      "sha256": "19dc4b9ad6822a06213b5f41ae6d022133ce30ec61b34eb01f09004825dcacee",
+      "sha256": "87ad15a23697be0ffe0bf9e28c5e747d0218a8ba1aa5689ef4c1717643aefaae",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"
     }
   ],
-  "script_sha256": "19dc4b9ad6822a06213b5f41ae6d022133ce30ec61b34eb01f09004825dcacee",
+  "script_sha256": "87ad15a23697be0ffe0bf9e28c5e747d0218a8ba1aa5689ef4c1717643aefaae",
   "cycles_profile": {
     "threads": 4,
     "samples": 64,

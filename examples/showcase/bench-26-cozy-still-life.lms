@@ -1,6 +1,6 @@
 # B26 / G.2-G.9-G.10: original cozy tabletop still life.
 # Every object, grain texture, flame and light is procedural; no external asset is used.
-mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+mkdir("build"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let scene=scene3d().threads(4).ambient(0.0).background("#0a0d14").tonemap("aces",0.8);
 let camera=camera3d().look_at(0.7,0.35,0.9,0.0,0.10,0.0).perspective(42.0,0.1,3.0).lens(85.0,36.0).dof(1.4,1.1,6);scene.camera(camera);scene.environment(environment_linear(1,1,"0.15,0.17,0.22"),0.45,0.0,false);
 scene.area_light(-0.5,1.8,0.8,0.2,-0.85,-0.3,1.1,0.8,"#fff0d6",40.0,6.0);

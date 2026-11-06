@@ -4,7 +4,7 @@ svg_data = _xml_ profile="svg-compact@1";
 end _xml_
 svg_text = svg_data.toString();
 mkdir("build");
-video_host = load_schema(cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.72");
+video_host = load_schema(cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122");
 video_program = _lmcode_ video_host;
 let drawing = svg(${svg_text});
 video.size(160, 100); video.frames(1); video.output("build/svg-compact.png");

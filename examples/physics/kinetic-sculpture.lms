@@ -1,6 +1,6 @@
 # Kinetic sculpture: sixteen seeded spheres orbit a collision floor and settle.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let w=physics_world(0.008333333,101).gravity(0.0,-9.81,0.0).planar(true);w.box(10.0,0.35,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.1));
 for(i in range(0,16)){let a=6.2831853*float(i)/16.0;w.sphere(0.22,cos(a)*2.0,1.2+sin(a)*0.8,sin(a)*0.8,0.55,physics_material(0.4,0.65));}let take=w.bake(180,1);
 video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/kinetic-sculpture.mp4");video.begin();let s=scene3d().background("#12182a").ambient(0.27);let c=camera3d().look_at(7.0,4.5,10.0,0.0,1.0,0.0).perspective(43.0,0.1,40.0);

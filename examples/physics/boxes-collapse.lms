@@ -1,6 +1,6 @@
 # Physics motion: a pastel stack caught during its collapse.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let world=physics_world(0.008333333,4242).gravity(0.0,-9.81,0.0).planar(true);
 let mat=physics_material(0.55,0.22);
 world.box(12.0,0.5,7.0,0.0,-0.25,0.0,0.0,physics_material(0.8,0.12));

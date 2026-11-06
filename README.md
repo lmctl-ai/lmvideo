@@ -5,7 +5,7 @@ LMScript programs. Each preview links to its runnable source.
 
 ## Install
 
-The **[v0.1.38 release](https://github.com/lmctl-ai/lmvideo/releases/tag/v0.1.38)**
+The **[v0.1.122 release](https://github.com/lmctl-ai/lmvideo/releases/tag/v0.1.122)**
 contains the current lmcode host and physics API. It has binaries for five
 platforms: **Linux x86_64 and arm64, macOS x86_64 and arm64 (13+), and
 Windows x86_64 (10+)**. Linux requires glibc 2.35+. Video output requires
@@ -17,7 +17,7 @@ npm install -g @lmctl-ai/lmctl@0.2.456
 lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/physics/plinko.lms
 ```
 
-Examples explicitly select `github:lmctl-ai/lmvideo@v0.1.38` for reproducible
+Examples explicitly select `github:lmctl-ai/lmvideo@v0.1.122` for reproducible
 runs. They use `run_lmcode()` and
 check `r.ok`; bytecode stays internal. CAD examples select
 `github:lmctl-ai/lmcad@v0.1.5`, the current migrated CAD release line.

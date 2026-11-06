@@ -8,7 +8,7 @@ for(i in range(0,4)){let angle=float(i)*1.5707963267948966;let hole=scene.cylind
 scene.export_stl("build/b27-flanged-valve.stl");
 end _lmcode_
 r=run_lmcode(cad);assert(r.ok,(r.ok ? "" : r.message));
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let mesh=mesh_load("build/b27-flanged-valve.stl");image_assert_true(mesh.triangles()>100);image_assert_close(mesh.bound(3)-mesh.bound(0),120.0,0.01);
 let scene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);
 scene.environment(environment_linear(1,1,"0.08,0.10,0.13"),0.4,0.0,false);
@@ -30,7 +30,7 @@ tf_wall_s=(now()-tf_start)/1000.0;assert(tf.code==0,tf.stdout+tf.stderr);
 println(json_stringify({"benchmark_stage":"final","wall_s":tf_wall_s}));
 mr=system(["lmvideo","render-job","build/b27-mask-raster.lmjob","--renderer","raster","--output","build/b27-mask-raster.png"]);assert(mr.code==0,mr.stdout+mr.stderr);
 mc=system(["lmvideo","render-job","build/b27-mask-cycles.lmjob","--renderer","cycles","--output","build/b27-mask-cycles.png"]);assert(mc.code==0,mc.stdout+mc.stderr);
-post=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+post=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let preview=image_file("build/b27-preview.png");let final=image_file("build/b27-final.png");image_assert_true(preview.stddev(0)>0.02&&final.stddev(0)>0.02);
 let postmesh=mesh_load("build/b27-flanged-valve.stl");let postscene=scene3d().threads(4).background("#dbe6ef").ambient(0.0).tonemap("aces",1.0);postscene.add(postmesh,material("#b8c5d1",0.35,0.55)).scale(0.001,0.001,0.001);postscene.camera(camera3d().look_at(0.24,0.14,0.24,0.0,0.0,0.0).perspective(40.0,0.001,2.0));let label=postscene.projection(435,540).at(0.0,0.0,0.053);let rim=postscene.projection(435,540).at(0.0,0.0,0.04);image_assert_true(label.visible()&&rim.visible());let depth=postscene.render_depth_image(435,540);image_assert_true(depth.stddev(0)>0.01);
 preview.line(label.x(),label.y(),label.x()+88.0,label.y()-42.0,0.77,0.32,0.18,1.0,2.0);preview.text(label.x()+90.0,label.y()-44.0,"through bore",15.0,0.62,0.18,0.10,1.0);

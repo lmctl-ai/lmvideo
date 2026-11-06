@@ -1,6 +1,6 @@
 # Impact ring: collision motion and a soft graphic accent from the renderer.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let w=physics_world(0.008333333,93).gravity(0.0,-9.81,0.0).planar(true);w.box(8.0,0.35,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.15));w.sphere(0.48,0.0,3.0,0.0,1.0,physics_material(0.25,0.85)).impulse(1.0,-1.5,0.0);let take=w.bake(180,1);
 video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/impact-rings.mp4");video.begin();let s=scene3d().background("#111827").ambient(0.3);let c=camera3d().look_at(6.0,3.5,8.0,0.0,0.8,0.0).perspective(40.0,0.1,30.0);
 for(f in range(0,video.count())){video.frame();let q=sin(3.1415926535*float(f)/96.0);let t=q*q;s.clear().camera(c).shadows(256,0.0004,0.001,1).directional_light(-2.0,6.0,4.0,"#fff0d0",1.5);s.add(mesh_box(8.0,0.35,4.0),"#c59e75").position(0.0,-0.2,0.0);let n=s.add(mesh_sphere(0.48,20,28),"#ef8f8f");let hit=take.pose(t,1);hit.sync(n);let im=s.render_image(512,384,2);canvas.clear("#101827");canvas.image(im,0.0,0.0);if(hit.y()<0.55&&hit.vy()<0.0){canvas.circle(256.0,300.0,28.0+abs(hit.vy())*5.0,paint().color("#ffe0a6").stroke().stroke_width(3.0));}canvas.text("time-replayed physics",16.0,28.0,font(15.0),paint().color("#fff1d6"));if(f==22){video.save_frame("build/physics/impact-rings.png");}}

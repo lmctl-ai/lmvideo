@@ -33,7 +33,7 @@
       "kind": "original-script-and-procedural-data",
       "license": "MIT",
       "source": "examples/showcase/bench-12-particle-wave-sprites.lms",
-      "sha256": "5055d85ceadd2213652266952d4eee8ff091c5266970bf589201421ccbb2b2af"
+      "sha256": "7b4468d61076c99beafbb9483c8b70de33391602fb6f655fb47a345c9287f8eb"
     }
   ],
   "fps": 30,

@@ -18,13 +18,13 @@
     ]
   },
   "status": "LOCAL_PASS",
-  "script_sha256": "37a32d336f4d4d4ca31aaf969d64238be526fe8af6a68f362d6dbc3c85804069",
+  "script_sha256": "5ea44e33b88e531d1579896ff1ea99b2b20bfb95cd8b899aecac54c9aeadac98",
   "assets": [
     {
       "kind": "original-procedural-source",
       "creator": "lmvideo project; original example authors in Git history",
       "source": "examples/lathe-profile-oracle.lms",
-      "sha256": "37a32d336f4d4d4ca31aaf969d64238be526fe8af6a68f362d6dbc3c85804069",
+      "sha256": "5ea44e33b88e531d1579896ff1ea99b2b20bfb95cd8b899aecac54c9aeadac98",
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3"

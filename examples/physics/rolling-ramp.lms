@@ -1,6 +1,6 @@
 # Rolling ramp: one sphere, one real ramp, and no scripted trajectory.
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let w=physics_world(0.008333333,91).gravity(0.0,-9.81,0.0).planar(true);
 w.box(12.0,0.35,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.1));w.box(4.0,0.35,2.0,-2.4,1.0,0.0,0.0,physics_material(0.8,0.1)).rotation(0.0,0.0,-18.0);
 w.sphere(0.4,-3.4,2.4,0.0,1.0,physics_material(0.28,0.72));let take=w.bake(180,1);

@@ -37,10 +37,10 @@
       "license": "MIT",
       "license_file": "LICENSE-examples",
       "license_sha256": "949eb9b711d9b64ae472b87b94916e8427575a75d0d218f6c4cbccf8c48d46f3",
-      "sha256": "fda78d270d3fa13e4676dbb3be900ecc65fb0658e61e7e5a5916ddaa7a94c0dd"
+      "sha256": "52a2ea89cdbd6165649fb730a9c2767d069e61fffbcb266980b819bede13d6ca"
     }
   ],
-  "script_sha256": "fda78d270d3fa13e4676dbb3be900ecc65fb0658e61e7e5a5916ddaa7a94c0dd",
+  "script_sha256": "52a2ea89cdbd6165649fb730a9c2767d069e61fffbcb266980b819bede13d6ca",
   "rights_note": "All room, furniture, materials and lighting are authored procedurally; no external model, HDRI or reference render is copied.",
   "publication_status": "RELEASED",
   "publication_note": "Enclosed original room, one real window aperture, matched-sample direct/indirect controls and original grain. Target acceptance awaits the final exact source run and visual gate."

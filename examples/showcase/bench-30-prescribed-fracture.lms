@@ -1,5 +1,5 @@
 # B30 / G.14: deterministic authored mesh-state clip; this is prescribed motion, not a physics solver.
-mkdir("build");mkdir("build/bench-30-frames"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+mkdir("build");mkdir("build/bench-30-frames"); program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 video.size(1280,720);video.fps(30);video.frames(90);video.crf(20);video.output("build/bench-30-prescribed-fracture.mp4");video.begin();
 let scene=scene3d().threads(4).background("#0b1320").ambient(0.08).tonemap("aces",1.0);scene.camera(camera3d().look_at(2.7,1.9,4.2,0.0,0.8,0.0).perspective(42.0,0.1,30.0));scene.directional_light(2.0,4.0,3.0,"#fff4d6",1.8);scene.shadows(1024,0.0015,0.008,1);
 let base=mesh_lathe("0,0,0,0.34,0.228,0,0.58,0.457,0,0.7,0.685,0,0.7,0.914,0,0.58,1.143,0,0.34,1.371,0,0,1.6,0",32);let state=base.copy();let node=scene.add(state,material("#b84f45",0.0,0.62));scene.add(mesh_plane(8.0,8.0),material("#293544",0.0,0.9)).position(0.0,0.0,0.0);

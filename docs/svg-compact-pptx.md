@@ -8,4 +8,4 @@ The SVG keeps one explicit default namespace on the root and a `viewBox`; width 
 
 The PowerPoint copy is a raster picture, not editable vector artwork. It uses the PNG's 160×100 pixels and is enlarged to 480×300 on the slide, so edges can soften when zoomed or printed. To keep the picture sharper, increase the video canvas dimensions and matching SVG drawing size together.
 
-Run with lmscript 0.2.460 or the current private latest compiler. The example pins lmvideo v0.1.72 and lmoffice v0.1.34. `--dry-run --plan-format json` validates both reached host programs but creates neither output file. Real mode writes `build/svg-compact.png` and `build/svg-compact.pptx`.
+Run with lmscript 0.2.460 or the current private latest compiler. The example pins lmvideo v0.1.122 and lmoffice v0.1.34. `--dry-run --plan-format json` validates both reached host programs but creates neither output file. Real mode writes `build/svg-compact.png` and `build/svg-compact.pptx`.

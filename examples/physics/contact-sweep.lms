@@ -1,5 +1,5 @@
 mkdir("build/physics");
-program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let w=physics_world(0.008333333,111).gravity(0.0,-9.81,0.0).planar(true);w.box(10.0,0.35,4.0,0.0,-0.2,0.0,0.0,physics_material(0.8,0.1));
 for(i in range(0,8)){w.sphere(0.3,-2.0+float(i)*0.55,2.5,0.0,0.5,physics_material(0.35,0.7));}let take=w.bake(180,1);
 video.size(512,384);video.fps(24);video.frames(96);video.output("build/physics/contact-sweep.mp4");video.begin();let s=scene3d().background("#111827").ambient(0.3);let c=camera3d().look_at(6.0,3.5,9.0,0.0,0.7,0.0).perspective(42.0,0.1,36.0);

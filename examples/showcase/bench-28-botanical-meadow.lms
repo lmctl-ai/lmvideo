@@ -1,5 +1,5 @@
 # B28: original normal-aligned Poisson meadow; static clump phase geometry.
-mkdir("build");program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+mkdir("build");program=_lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 let scene=scene3d().threads(4).background("#b8d8ec").ambient(0.0).environment(environment_linear(1,1,"0.35,0.45,0.65"),0.55,0.0,false).tonemap("aces",1.0);
 scene.camera(camera3d().look_at(6.6,4.08,8.16,0.0,0.35,0.0).perspective(43.0,0.1,50.0));
 let heights=image_pattern(25,25,"0.35+0.18*sin(6.2831853*x)*cos(6.2831853*y)","0.35+0.18*sin(6.2831853*x)*cos(6.2831853*y)","0.35+0.18*sin(6.2831853*x)*cos(6.2831853*y)","1");

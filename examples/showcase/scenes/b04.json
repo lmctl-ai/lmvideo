@@ -32,7 +32,7 @@
       "kind": "original-script-and-procedural-data",
       "license": "MIT",
       "source": "examples/showcase/bench-04-tiled-pbr-swatches.lms",
-      "sha256": "080c8159c2c5171da6620f09545f7090587c7e90d82d91e73c7ae5f387c0a755"
+      "sha256": "8c81b4bedae055fc3578050916a8f3899b12ee74a4d683a2d5202110bdb85478"
     }
   ],
   "warm_budget_seconds": 8

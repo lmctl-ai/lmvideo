@@ -7,7 +7,7 @@ width = ARGV.len() > 1 ? num(ARGV[1]) : 640;
 height = ARGV.len() > 2 ? num(ARGV[2]) : 360;
 title = ARGV.len() > 3 ? ARGV[3] : "Hello lmvideo";
 mkdir("images");
-program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.38";
+program = _lmcode_ cli="lmvideo" install="github:lmctl-ai/lmvideo@v0.1.122";
 video.size(${width}, ${height});
 video.frames(1);
 video.output(${png});
