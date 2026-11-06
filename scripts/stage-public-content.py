@@ -92,7 +92,8 @@ def main() -> int:
     # only an existing peer chapter, then refresh every catalog hash below.
     for relative in ("examples/showcase/bench-27-cad-preview-cycles-twin.lms",
                      "examples/showcase/scenes/b27.json"):
-        current = Path(__file__).resolve().parents[1] / relative
+        template_relative = relative.removeprefix("examples/")
+        current = (template / template_relative) if (template / template_relative).is_file() else (Path(__file__).resolve().parents[1] / relative)
         if (args.stage / relative).is_file():
             shutil.copyfile(current, args.stage / relative)
     readme=args.stage / "README.md"
@@ -105,7 +106,7 @@ def main() -> int:
     # form; the already-published standalone copy keeps its current spelling.
     example = args.stage / "examples/svg.lms"
     if example.exists() and "tests/" in example.read_text(encoding="utf-8"):
-        fixed = Path(__file__).resolve().parents[1] / "examples/svg.lms"
+        fixed = (template / "svg.lms") if (template / "svg.lms").is_file() else (Path(__file__).resolve().parents[1] / "examples/svg.lms")
         if not fixed.is_file():
             raise SystemExit("missing fixed public SVG example")
         shutil.copyfile(fixed, example)

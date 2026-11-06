@@ -82,7 +82,7 @@ gh workflow run qualify-private-draft.yml -f tag=v0.1.<N> -R lmctl-ai/lmvideo --
 ```
 
 A source or build change requires a new private manual run and a new derived
-version (`0.1.<100 + run_number>`).
+version (`0.1.<72 + run_number>`).
 
 ### Operator rollback
 

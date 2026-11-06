@@ -44,6 +44,7 @@ mutations=[
  ('windows-fresh-installer-path','scripts/check-local-release.py','return filtered if windows else (filtered or "/usr/bin:/bin")','return path_value'),
  ('windows-copy-chocolatey-shim','scripts/check-local-release.py','if windows:\n            # Keep Chocolatey shims beside their relative target; the source PATH is sanitized below.\n            selected[name] = str(binary)\n            continue','if windows:\n            shutil.copy2(binary, tools/(name+".exe"))\n            selected[name] = str(binary)\n            continue'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
+ ('stage-b27-template','scripts/stage-public-content.py','current = (template / template_relative)','current = (Path(__file__).resolve().parents[1] / relative)'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
  root=Path(temporary)
@@ -59,6 +60,7 @@ with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
  shutil.copy2(ROOT/'examples/svg-compact-pptx.lms',root/'examples/svg-compact-pptx.lms')
  (root/'packaging').mkdir()
  shutil.copy2(ROOT/'packaging/release-examples.lock.json',root/'packaging/release-examples.lock.json')
+ shutil.copytree(ROOT/'packaging/public-templates',root/'packaging/public-templates')
  command=[sys.executable,'-B','-m','unittest','discover','-s','tests','-p','test_release*.py']
  baseline=subprocess.run(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
  if baseline.returncode:sys.stdout.buffer.write(baseline.stdout);raise SystemExit('mutation baseline is not green')

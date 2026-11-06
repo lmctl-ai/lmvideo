@@ -194,6 +194,18 @@ class CredentialBoundary(unittest.TestCase):
   pub_ci=text('.github/workflows/public-ci.yml')
   self.assertNotIn('GITHUB_TOKEN: ${{ github.token }}',pub_ci)
   self.assertFalse((ROOT/'scripts/__pycache__/integration-run.cpython-310.pyc').exists())
+ def test_stage_public_content_templates_match_release_example_lock(self):
+  import hashlib
+  stage_script=text('scripts/stage-public-content.py')
+  self.assertIn('current = (template / template_relative)',stage_script)
+  self.assertIn('fixed = (template / "svg.lms")',stage_script)
+  lock=json.loads(text('packaging/release-examples.lock.json'))['examples']
+  b27=ROOT/'packaging/public-templates/lmvideo/showcase/bench-27-cad-preview-cycles-twin.lms'
+  svg=ROOT/'packaging/public-templates/lmvideo/svg.lms'
+  self.assertTrue(b27.is_file())
+  self.assertTrue(svg.is_file())
+  self.assertEqual(hashlib.sha256(b27.read_bytes()).hexdigest(),lock['examples/showcase/bench-27-cad-preview-cycles-twin.lms'])
+  self.assertEqual(hashlib.sha256(svg.read_bytes()).hexdigest(),lock['examples/svg.lms'])
 
 class SealedPolicy(unittest.TestCase):
  @classmethod
