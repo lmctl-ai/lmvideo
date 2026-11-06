@@ -174,6 +174,7 @@ class CredentialBoundary(unittest.TestCase):
   hosts=text('scripts/install-hosts.sh')
   self.assertIn('--pattern SHA256SUMS',hosts)
   self.assertIn('PINNED_HOST_SHA256',hosts)
+  self.assertIn('sha256sum < "$asset"',hosts)
   self.assertNotIn('\n  tag="$latest_tag"',hosts)
  def test_runbook_and_workflow_hygiene(self):
   doc=text('docs/release-pipeline.md')

@@ -45,6 +45,7 @@ mutations=[
  ('windows-copy-chocolatey-shim','scripts/check-local-release.py','if windows:\n            # Keep Chocolatey shims beside their relative target; the source PATH is sanitized below.\n            selected[name] = str(binary)\n            continue','if windows:\n            shutil.copy2(binary, tools/(name+".exe"))\n            selected[name] = str(binary)\n            continue'),
  ('doc-permissions','docs/release-pipeline.md','| promote | contents:write; actions:read |','| promote | contents:read; actions:read |'),
  ('stage-b27-template','scripts/stage-public-content.py','current = (template / template_relative)','current = (Path(__file__).resolve().parents[1] / relative)'),
+ ('windows-sha256sum-stdin','scripts/install-hosts.sh','sha256sum < "$asset"','sha256sum "$asset"'),
 ]
 with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
  root=Path(temporary)

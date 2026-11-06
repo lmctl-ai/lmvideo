@@ -156,11 +156,11 @@ for full_repo in "${!tags_by_repo[@]}"; do
     exit 1
   fi
   if command -v sha256sum >/dev/null 2>&1; then
-    actual_sha="$(sha256sum "$asset" | awk '{print $1}')"
+    actual_sha="$(sha256sum < "$asset" | awk '{print $1}' | tr -d '\r\\')"
   else
-    actual_sha="$(shasum -a 256 "$asset" | awk '{print $1}')"
+    actual_sha="$(shasum -a 256 < "$asset" | awk '{print $1}' | tr -d '\r\\')"
   fi
-  expected_sha="$(awk -v name="$repo-$plat$ext" '$2 == name || $2 == "*" name {print $1}' "$tmp/SHA256SUMS")"
+  expected_sha="$(tr -d '\r' < "$tmp/SHA256SUMS" | awk -v name="$repo-$plat$ext" '$2 == name || $2 == "*" name {print $1; exit}')"
   if [[ -z "$expected_sha" || "$actual_sha" != "$expected_sha" ]]; then
     rm -rf "$tmp"
     echo "install-hosts: SHA256SUMS verification failed for $full_repo@$tag:$repo-$plat$ext" >&2
