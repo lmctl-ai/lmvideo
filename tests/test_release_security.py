@@ -123,23 +123,48 @@ class NativeAPIGates(unittest.TestCase):
   jobs[-1]['conclusion']='skipped'
   with self.assertRaises(ValueError):validate(run,jobs,'a'*40,True)
 
- def test_failed_native_gate_cleans_only_a_sealed_throwaway(self):
+ def test_throwaway_cleanup_never_runs_on_native_or_foreign_failure(self):
+  source=(ROOT/'scripts/qualification_broker.py').read_text(encoding='utf-8')
+  self.assertNotIn('cleanup_failed_throwaway',source)
   module=runpy.run_path(str(ROOT/'scripts/qualification_broker.py'))
-  error=ValueError('native platform gate failed')
+  self.assertNotIn('cleanup_failed_throwaway',module)
   with tempfile.TemporaryDirectory() as directory:
    root=Path(directory);manifest,seal,request=candidate(root,throwaway=True)
-   calls=[]
-   def execute(args,env,check):calls.append((args,env,check))
-   with patch.object(module['subprocess'],'run',execute):
-    with self.assertRaises(SystemExit):module['cleanup_failed_throwaway'](manifest,root,456,error)
-   self.assertEqual(len(calls),1)
-   self.assertEqual(calls[0][0][2],'cleanup')
-   self.assertEqual(calls[0][1]['DRAFT_TAG'],manifest['tag'])
-  with tempfile.TemporaryDirectory() as directory:
-   root=Path(directory);manifest,seal,request=candidate(root,throwaway=False)
-   with patch.object(module['subprocess'],'run',side_effect=AssertionError('production candidate must stay for inspection')):
-    with self.assertRaisesRegex(ValueError,'native platform gate failed'):
-     module['cleanup_failed_throwaway'](manifest,root,456,error)
+   base_run={'id':456,'path':'.github/workflows/qualify-platforms.yml','head_branch':'main','head_sha':'a'*40,'event':'repository_dispatch','status':'completed','conclusion':'failure','display_title':f"Qualify artifact 111.1 {manifest['tag']}"}
+   base_jobs=[{'name':n,'status':'completed','conclusion':'success'} for n in ['candidate','Qualify macos-arm64','Qualify macos-x64','Qualify linux-x64','Qualify linux-arm64','Qualify windows-x64']]+[{'name':'deliberate-failure-test','status':'completed','conclusion':'failure'}]
+   def run_broker(run_obj,jobs_list):
+    calls=[]
+    class FakeAPI:
+     def request(self,path,method='GET',data=None):
+      if path=='dispatches':return {}
+      if path.startswith('actions/workflows/qualify-platforms.yml/runs'):return {'workflow_runs':[run_obj]}
+      if path==f'actions/runs/{run_obj["id"]}':return run_obj
+      if path.startswith(f'actions/runs/{run_obj["id"]}/jobs'):return {'jobs':jobs_list}
+      raise AssertionError('unexpected API path '+path)
+    class FakeSubprocess:
+     @staticmethod
+     def run(args,env=None,check=False):
+      calls.append((args,env,check))
+      class R:returncode=1
+      return R()
+    env={'GITHUB_RUN_ID':'111','GITHUB_RUN_ATTEMPT':'1','ARTIFACT_ID':'222','ARTIFACT_DIGEST':'sha256:'+'b'*64,'GITHUB_SHA':'a'*40}
+    with patch.dict(os.environ,env),patch.dict(module['broker'].__globals__,{'API':FakeAPI,'Path':lambda p:root if p=='draft-assets' else Path(p),'validate_files':lambda r:(manifest,seal),'subprocess':FakeSubprocess,'summary':lambda msg:None}):
+     module['broker']()
+    return calls
+   # 1. Native platform failure on a throwaway run MUST raise ValueError and NEVER invoke cleanup.
+   native_fail_jobs=copy.deepcopy(base_jobs)
+   native_fail_jobs[1]['conclusion']='failure'
+   native_fail_jobs[-1]['conclusion']='skipped'
+   with self.assertRaises(ValueError):
+    run_broker(base_run,native_fail_jobs)
+   # 2. Incomplete deliberate-failure-test job MUST raise ValueError and NEVER invoke cleanup.
+   incomplete_control_jobs=copy.deepcopy(base_jobs)
+   incomplete_control_jobs[-1]['status']='in_progress'
+   with self.assertRaises(ValueError):
+    run_broker(base_run,incomplete_control_jobs)
+   # 3. Only when all 5 native platform gates pass and deliberate-failure-test fails does cleanup run.
+   with self.assertRaises(SystemExit):
+    run_broker(base_run,base_jobs)
 
 class ProducerInputBinding(unittest.TestCase):
  def test_private_receipt_cannot_change_the_selected_tag_or_throwaway_input(self):

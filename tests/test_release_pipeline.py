@@ -140,6 +140,60 @@ class CredentialBoundary(unittest.TestCase):
    source=text(filename)
    self.assertIn('cmd.exe',source)
    self.assertNotIn('cygpath',source)
+ def test_replay_state_has_no_copied_pilot_records(self):
+  revoked_text=text('REVOKED')
+  self.assertNotIn('v0.1.59',revoked_text)
+  self.assertNotIn('v0.1.60',revoked_text)
+  state=json.loads(text('release-state.json'))
+  candidates=state.get('candidates',{})
+  self.assertNotIn('v0.1.59',candidates)
+  self.assertNotIn('v0.1.60',candidates)
+  for tag,entry in candidates.items():
+   self.assertTrue(entry['private_run'].startswith('https://github.com/lmctlhq/lmvideo/'),tag)
+   self.assertTrue(entry['public_run'].startswith('https://github.com/lmctl-ai/lmvideo/'),tag)
+   self.assertTrue(entry['qualification_run'].startswith('https://github.com/lmctl-ai/lmvideo/'),tag)
+ def test_all_always_predicates_are_cancel_safe(self):
+  files=['.github/workflows/qualify-private-draft.yml','.github/workflows/qualify-platforms.yml','.github/workflows/integration.yml','.github/workflows/public-ci.yml','.github/actions/qualify-platform/action.yml']
+  for f in files:
+   for line in text(f).splitlines():
+    if line.strip().startswith('if:') and 'always()' in line:
+     self.assertIn('!cancelled()',line,(f,line))
+ def test_qualify_platforms_passes_qualify_tag_and_pins_peer_tools(self):
+  blocks=job_blocks()
+  self.assertNotIn('needs.candidate',blocks['candidate'])
+  self.assertIn('LMVIDEO_QUALIFY_TAG: ${{ needs.candidate.outputs.tag }}',blocks['qualify-macos-arm64'])
+  self.assertIn('LMVIDEO_QUALIFY_TAG: ${{ needs.candidate.outputs.tag }}',blocks['integration'])
+  self.assertIn('needs: [candidate, qualify-macos-arm64, integration]',blocks['deliberate-failure-test'])
+  self.assertIn("needs.qualify-macos-arm64.result == 'success'",blocks['deliberate-failure-test'])
+  for wf in ['.github/workflows/qualify-platforms.yml','.github/workflows/integration.yml']:
+   s=text(wf)
+   self.assertNotIn('choco install ffmpeg',s,wf)
+   self.assertIn('scripts/install-windows-ffmpeg.py',s,wf)
+  self.assertTrue((ROOT/'scripts/install-windows-ffmpeg.py').is_file())
+  self.assertTrue((ROOT/'scripts/windows-ffmpeg.lock.json').is_file())
+  hosts=text('scripts/install-hosts.sh')
+  self.assertIn('--pattern SHA256SUMS',hosts)
+  self.assertIn('PINNED_HOST_SHA256',hosts)
+  self.assertNotIn('\n  tag="$latest_tag"',hosts)
+ def test_runbook_and_workflow_hygiene(self):
+  doc=text('docs/release-pipeline.md')
+  self.assertIn('REVOKED',doc)
+  self.assertIn('gh release edit',doc)
+  self.assertIn('gh run rerun',doc)
+  self.assertIn('qualify-private-draft.yml -f tag=',doc)
+  readme=text('README.md')
+  self.assertIn('docs/release-pipeline.md',readme)
+  self.assertIn('FROZEN-CANDIDATE.json',readme)
+  self.assertIn('PROVENANCE.jsonl',readme)
+  self.assertIn('@lmctl-ai/lmctl@0.2.460',readme)
+  self.assertNotIn('@lmctl-ai/lmctl@0.2.456',readme)
+  integ=text('.github/workflows/integration.yml')
+  self.assertIn("default: '0.2.460'",integ)
+  self.assertNotIn('@lmctl-ai/lmctl${{',integ)
+  self.assertNotIn('GITHUB_TOKEN: ${{ github.token }}',integ)
+  pub_ci=text('.github/workflows/public-ci.yml')
+  self.assertNotIn('GITHUB_TOKEN: ${{ github.token }}',pub_ci)
+  self.assertFalse((ROOT/'scripts/__pycache__/integration-run.cpython-310.pyc').exists())
 
 class SealedPolicy(unittest.TestCase):
  @classmethod
@@ -156,6 +210,13 @@ class SealedPolicy(unittest.TestCase):
   check=self.required('allow_promotion')
   with self.assertRaises(ValueError):check('v0.1.20','v0.1.58',[])
   with self.assertRaises(ValueError):check('v0.1.59','v0.1.58',['v0.1.59'])
+  revoked=[l.split()[0] for l in text('REVOKED').splitlines() if l.strip() and not l.startswith('#')]
+  state=json.loads(text('release-state.json'))
+  published=[k for k,v in state.get('candidates',{}).items() if v.get('outcome')=='published' and v.get('public_run','').startswith('https://github.com/lmctl-ai/lmvideo/')]
+  latest=max(published,key=self.required('version'))
+  self.assertIn('v0.1.121',revoked)
+  with self.assertRaises(ValueError):check('v0.1.121',latest,revoked)
+  with self.assertRaises(ValueError):check('v0.1.107',latest,revoked)
  def test_cleanup_requires_sealed_throwaway(self):
   check=self.required('allow_cleanup')
   with self.assertRaises(ValueError):check({'deliberate_failure':False})

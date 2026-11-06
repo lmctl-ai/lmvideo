@@ -113,7 +113,7 @@ runs:
         PYTHON: ${{ inputs.python }}
       run: "$PYTHON scripts/integration-run.py --report \"$RUNNER_TEMP/integration-${{ inputs.name }}.json\" --summary \"$GITHUB_STEP_SUMMARY\""
     - name: Upload platform evidence
-      if: always()
+      if: always() && !cancelled()
       uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: lmvideo-qualification-${{ inputs.name }}

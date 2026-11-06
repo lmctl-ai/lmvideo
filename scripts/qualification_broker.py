@@ -11,7 +11,7 @@ def validate_qualification(run,jobs,source_sha,throwaway):
   matches=[j for j in jobs if j['name']==name]
   if len(matches)!=1 or matches[0]['status']!='completed' or matches[0]['conclusion']!='success':raise ValueError('required native qualification did not pass: '+name)
  control=[j for j in jobs if j['name']=='deliberate-failure-test']
- if len(control)!=1:raise ValueError('missing deliberate-test result')
+ if len(control)!=1 or control[0].get('status')!='completed':raise ValueError('missing deliberate-test result')
  expected='failure' if throwaway else 'skipped'
  if control[0]['conclusion']!=expected or run.get('conclusion')!=('failure' if throwaway else 'success'):raise ValueError('unexpected failure/control result')
 
@@ -21,14 +21,6 @@ def jobs(api,run_id):
   data=api.request('actions/runs/'+str(run_id)+'/jobs?per_page=100&page='+str(page));out+=data['jobs']
   if len(data['jobs'])<100:return out
   page+=1
-
-def cleanup_failed_throwaway(manifest,root,qualification_run_id,error):
- if not manifest['deliberate_failure']:raise error
- request=json.loads((root/'candidate-request.json').read_text())
- env=dict(os.environ,DRAFT_TAG=manifest['tag'],SEAL_ASSET_ID=str(request['seal_asset_id']),BUNDLE_ASSET_ID=str(request['bundle_asset_id']),FREEZE_SHA=request['seal_sha256'],QUALIFICATION_RUN_ID=str(qualification_run_id))
- subprocess.run(['python3','scripts/manage-qualified-draft.py','cleanup',str(root)],env=env,check=True)
- summary('Sealed throwaway '+manifest['tag']+' failed public qualification and its own draft object was revoked and removed.')
- raise SystemExit('Sealed throwaway candidate failed public qualification; only its owned draft object was cleaned.')
 
 def broker():
  api=API();root=Path('draft-assets');manifest,seal=validate_files(root)
@@ -51,8 +43,7 @@ def broker():
  run_id=matches[0]['id'];summary('Qualification run: https://github.com/'+PUBLIC+'/actions/runs/'+str(run_id));print('Waiting for credential-free qualification run '+str(run_id),flush=True)
  result=subprocess.run(['gh','run','watch',str(run_id),'--repo',PUBLIC,'--exit-status'])
  run=api.request('actions/runs/'+str(run_id))
- try:validate_qualification(run,jobs(api,run_id),os.environ['GITHUB_SHA'],manifest['deliberate_failure'])
- except ValueError as error:cleanup_failed_throwaway(manifest,root,run_id,error)
+ validate_qualification(run,jobs(api,run_id),os.environ['GITHUB_SHA'],manifest['deliberate_failure'])
  mode='cleanup' if manifest['deliberate_failure'] else 'promote'
  request=json.loads((root/'candidate-request.json').read_text())
  env=dict(os.environ,DRAFT_TAG=tag,SEAL_ASSET_ID=str(request['seal_asset_id']),BUNDLE_ASSET_ID=str(request['bundle_asset_id']),FREEZE_SHA=request['seal_sha256'],QUALIFICATION_RUN_ID=str(run_id))

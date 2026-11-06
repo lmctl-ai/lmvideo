@@ -16,9 +16,9 @@ on:
         default: ''
         type: string
       lmctl_version:
-        description: "@lmctl-ai/lmctl npm version (latest if empty); 0.2.456 is required for the lmcode result-frame examples"
+        description: "@lmctl-ai/lmctl npm version (latest if empty); 0.2.460 is the current release compiler"
         required: false
-        default: '0.2.426'
+        default: '0.2.460'
         type: string
 
 permissions:
@@ -56,6 +56,8 @@ jobs:
           sparse-checkout: |
             scripts/integration-run.py
             scripts/install-hosts.sh
+            scripts/install-windows-ffmpeg.py
+            scripts/windows-ffmpeg.lock.json
           sparse-checkout-cone-mode: false
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -63,8 +65,10 @@ jobs:
           node-version: 24
 
       - name: Install lmctl
+        env:
+          LMCTL_VERSION: ${{ inputs.lmctl_version }}
         run: |
-          npm install --prefix "$RUNNER_TEMP/compiler" --no-save --package-lock=false "@lmctl-ai/lmctl${{ inputs.lmctl_version && format('@{0}', inputs.lmctl_version) || '' }}"
+          npm install --prefix "$RUNNER_TEMP/compiler" --no-save --package-lock=false "@lmctl-ai/lmctl${LMCTL_VERSION:+@$LMCTL_VERSION}"
           echo "$RUNNER_TEMP/compiler/node_modules/.bin" >> "$GITHUB_PATH"
 
       - name: Install ffmpeg (Linux)
@@ -77,7 +81,7 @@ jobs:
 
       - name: Install ffmpeg (Windows)
         if: runner.os == 'Windows'
-        run: choco install ffmpeg -y --no-progress
+        run: python _ci/scripts/install-windows-ffmpeg.py --lock _ci/scripts/windows-ffmpeg.lock.json --output-dir "$RUNNER_TEMP/lmvideo-ffmpeg"
 
       - name: Install the hosts pinned by the examples
         env:
@@ -111,12 +115,10 @@ jobs:
           lmvideo --version || true
 
       - name: Run every example
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         run: python3 _ci/scripts/integration-run.py --report out/integration-report.json --summary "$GITHUB_STEP_SUMMARY"
 
       - name: Upload report and outputs
-        if: always()
+        if: always() && !cancelled()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: integration-${{ matrix.name }}

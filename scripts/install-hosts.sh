@@ -29,6 +29,28 @@ declare -A cli_names=()
 declare -A cli_repo=()
 declare -A unavailable_reason=()
 declare -A resolved_latest=()
+declare -A PINNED_HOST_SHA256=(
+  ["lmctl-ai/lmcad@v0.1.5:lmcad-linux-arm64"]="d303235dd040c94331cd714380ddfbc0cfffed34130bd99785b1aab9e58465a0"
+  ["lmctl-ai/lmcad@v0.1.5:lmcad-linux-x64"]="d30fd436b513c3b2dfefe84fe8b223420f2a05b33331bfdc472482656917387e"
+  ["lmctl-ai/lmcad@v0.1.5:lmcad-macos-arm64"]="3a8923251b415132dbd082b8aa4206d66f806c741ade33b0e254056f7c55e03e"
+  ["lmctl-ai/lmcad@v0.1.5:lmcad-macos-x64"]="a9a7091bd41d7012ecf9d2bb8093d279f22f29ed4948dc7a3bb26e952995ca64"
+  ["lmctl-ai/lmcad@v0.1.5:lmcad-windows-x64.exe"]="3ff7348876dd32f247eef83078a4bc44fea9b95ff786bc8524071118254eb015"
+  ["lmctl-ai/lmoffice@v0.1.34:lmoffice-linux-arm64"]="4f02cc436055a7a11eeceb1236c3e85dc5e5ea71ea454f76cfdd3510d06e24c2"
+  ["lmctl-ai/lmoffice@v0.1.34:lmoffice-linux-x64"]="2b67e76f84bb267d77c5b01b832fc6be5da80ece716331fe525ff37b559f18b4"
+  ["lmctl-ai/lmoffice@v0.1.34:lmoffice-macos-arm64"]="b99bcadfa538318050c797ea0b3f3738d3989d7e5387ec0fe21617e907a64e89"
+  ["lmctl-ai/lmoffice@v0.1.34:lmoffice-macos-x64"]="f4f56677b3512d7a7a15f2a818d61825ddd7686df02b5dbd467bcbaaa00fb2c3"
+  ["lmctl-ai/lmoffice@v0.1.34:lmoffice-windows-x64.exe"]="7d499ee96a13687d33b9efde4c442661f4762e64cf23e0583dd5ca127b9847f6"
+  ["lmctl-ai/lmoffice@v0.1.58:lmoffice-linux-arm64"]="72d50e524d179ea5549f3cd5870d3b7e8b05bc8ad6bfe1e52b94403253ebf12c"
+  ["lmctl-ai/lmoffice@v0.1.58:lmoffice-linux-x64"]="b1bb094b110456f11784064492074a5e9636787dd8965c93d02f99ea4fb4c478"
+  ["lmctl-ai/lmoffice@v0.1.58:lmoffice-macos-arm64"]="ab212d3e6c435d27947015b7558ff6549945f447ee39331e1be4e91793a8023c"
+  ["lmctl-ai/lmoffice@v0.1.58:lmoffice-macos-x64"]="7f79c90f131656bb27ab9fe40e6f9c8e87056ea6e8af1619d37b22cdcedc09d2"
+  ["lmctl-ai/lmoffice@v0.1.58:lmoffice-windows-x64.exe"]="36bc61d36ea211b230b81e4fdc646d3853192c4f1e4915a4f6a31127ea379057"
+  ["lmctl-ai/lmoffice@v0.1.60:lmoffice-linux-arm64"]="942f6924ac60c30db4fb7e83738704df97ba2960452168a72bbc640b1eab0ff5"
+  ["lmctl-ai/lmoffice@v0.1.60:lmoffice-linux-x64"]="638c8c1c95b8fb433b0be44c66d46bad7bbe19d55c99bc52680fab1ad375611f"
+  ["lmctl-ai/lmoffice@v0.1.60:lmoffice-macos-arm64"]="571dc587cf2fb4f8d01b8ec40f521d3e92d9e690d93533cd74772f6398254590"
+  ["lmctl-ai/lmoffice@v0.1.60:lmoffice-macos-x64"]="a3b05dc71fbb05ecbc5b30e908b5f7bfdad141b7ac976ee168ce4c6bbfd27b89"
+  ["lmctl-ai/lmoffice@v0.1.60:lmoffice-windows-x64.exe"]="39265f2389e6a2fcbd84c3139856c4bfd8dcab44cd1853f812ad09ca3ef3fc96"
+)
 install_re="install[[:space:]]*=[[:space:]]*[\"'](github:[^\"']+)[\"']"
 cli_re="cli[[:space:]]*=[[:space:]]*[\"']([^\"']+)[\"']"
 examples=(examples/**/*.lms)
@@ -110,31 +132,53 @@ for full_repo in "${!tags_by_repo[@]}"; do
     fi
   done
 
-  # CLI lookup uses one PATH entry per executable name. Use the newest public
-  # release binary for that name after verifying every pinned release exists.
-  tag="$latest_tag"
-  if [[ -z "$tag" && ${#available_tags[@]} -gt 0 ]]; then tag="${available_tags[-1]}"; fi
-  if [[ -z "$tag" ]]; then
-    echo "install-hosts: no released binary is available for $full_repo"
+  if [[ "$full_repo" == lmctl-ai/lmvideo && -n "${LMVIDEO_QUALIFY_TAG:-}" ]]; then
+    echo "install-hosts: deferring $full_repo to the verified candidate step ($LMVIDEO_QUALIFY_TAG)"
     continue
   fi
 
+  if [[ ${#available_tags[@]} -eq 0 ]]; then
+    echo "install-hosts: no released binary is available for $full_repo"
+    continue
+  fi
+  tag="${available_tags[-1]}"
+
   tmp="$(mktemp -d "$runner_scratch/lmctl-host-download.XXXXXX")"
-  if ! gh release download "$tag" -R "$full_repo" --pattern "$repo-$plat$ext" --dir "$tmp"; then
+  if ! gh release download "$tag" -R "$full_repo" --pattern "$repo-$plat$ext" --pattern SHA256SUMS --dir "$tmp"; then
     rm -rf "$tmp"
-    echo "install-hosts: release exists but $repo-$plat$ext could not be downloaded from $full_repo@$tag" >&2
+    echo "install-hosts: release exists but $repo-$plat$ext or SHA256SUMS could not be downloaded from $full_repo@$tag" >&2
     exit 1
   fi
   asset="$tmp/$repo-$plat$ext"
-  if [[ ! -s "$asset" ]]; then
+  if [[ ! -s "$asset" || ! -s "$tmp/SHA256SUMS" ]]; then
     rm -rf "$tmp"
-    echo "install-hosts: release exists but has no non-empty $repo-$plat$ext asset: $full_repo@$tag" >&2
+    echo "install-hosts: release exists but has no non-empty $repo-$plat$ext or SHA256SUMS asset: $full_repo@$tag" >&2
     exit 1
+  fi
+  if command -v sha256sum >/dev/null 2>&1; then
+    actual_sha="$(sha256sum "$asset" | awk '{print $1}')"
+  else
+    actual_sha="$(shasum -a 256 "$asset" | awk '{print $1}')"
+  fi
+  expected_sha="$(awk -v name="$repo-$plat$ext" '$2 == name || $2 == "*" name {print $1}' "$tmp/SHA256SUMS")"
+  if [[ -z "$expected_sha" || "$actual_sha" != "$expected_sha" ]]; then
+    rm -rf "$tmp"
+    echo "install-hosts: SHA256SUMS verification failed for $full_repo@$tag:$repo-$plat$ext" >&2
+    exit 1
+  fi
+  pin_key="$full_repo@$tag:$repo-$plat$ext"
+  if [[ "$full_repo" != lmctl-ai/lmvideo ]]; then
+    pinned_sha="${PINNED_HOST_SHA256[$pin_key]-}"
+    if [[ -z "$pinned_sha" || "$actual_sha" != "$pinned_sha" ]]; then
+      rm -rf "$tmp"
+      echo "install-hosts: pinned SHA-256 verification failed for $pin_key (got $actual_sha)" >&2
+      exit 1
+    fi
   fi
   cp "$asset" "$host_bin/$repo$ext"
   chmod +x "$host_bin/$repo$ext"
   rm -rf "$tmp"
-  echo "install-hosts: installed $repo from $full_repo@$tag for declared pins: ${tags_by_repo[$full_repo]}"
+  echo "install-hosts: installed $repo from $full_repo@$tag (sha256=$actual_sha) for declared pins: ${tags_by_repo[$full_repo]}"
 done
 
 for cli in "${!cli_names[@]}"; do

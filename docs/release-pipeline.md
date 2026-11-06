@@ -54,21 +54,51 @@ API gate and public physics examples; it does not require a GPU.
 
 ## Observe and recover
 
+Dispatch a production release or a sealed throwaway failure-path check from private `main`:
+
 ```sh
 gh workflow run release.yml -R lmctlhq/lmvideo --ref main -f only_os=all -f deliberate_public_failure=false
+gh workflow run release.yml -R lmctlhq/lmvideo --ref main -f only_os=all -f deliberate_public_failure=true
 gh run list -R lmctlhq/lmvideo --workflow release.yml --limit 5
 gh run list -R lmctl-ai/lmvideo --workflow qualify-private-draft.yml --limit 10
+gh run list -R lmctl-ai/lmvideo --workflow qualify-platforms.yml --limit 10
 ```
 
 For one native diagnostic, choose one of `linux-x64`, `linux-arm64`,
 `macos-x64`, `macos-arm64`, or `windows-x64`; that run does not publish. For a
 throwaway failure-path run, set `deliberate_public_failure=true` before
 candidate sealing. Public failure keeps an ordinary draft unpublished; only
-the sealed throwaway control is eligible for cleanup. A public retry should
-redrive the original private `publish-draft` job so it reuses the original
-build attempt and frozen asset IDs. A source or build change requires a new
-private manual run and a new derived version.
+the sealed throwaway control is eligible for cleanup, and only when all five
+native platform gates pass and the `deliberate-failure-test` job fails.
 
-The public release includes five native executables, the license, notices,
-license archive, `RELEASE-MANIFEST.json`, and `SHA256SUMS`. Verify downloaded
-assets with `sha256sum --check SHA256SUMS` (or `shasum -a 256` on macOS).
+If the private build succeeded and only the public handoff or runner queue
+failed transiently, redrive the original private `publish-draft` job so it
+reuses the original build attempt and frozen asset IDs, or replay a recorded
+tag in the public broker:
+
+```sh
+gh run rerun <PRIVATE_RUN_ID> -R lmctlhq/lmvideo --failed
+gh workflow run qualify-private-draft.yml -f tag=v0.1.<N> -R lmctl-ai/lmvideo --ref main
+```
+
+A source or build change requires a new private manual run and a new derived
+version (`0.1.<100 + run_number>`).
+
+### Operator rollback
+
+If a published release must be rolled back, append the tag and reason to
+`REVOKED` and push to `lmctl-ai/lmvideo` `main` **first** so any concurrent or
+subsequent replay of that tag is refused immediately, then move `Latest` back
+to the last known-good release:
+
+```sh
+printf 'v0.1.<BAD> operator rollback: <reason>\n' >> REVOKED
+git add REVOKED && git commit -m "Revoke v0.1.<BAD>" && git push origin main
+gh release edit v0.1.<GOOD> -R lmctl-ai/lmvideo --latest
+```
+
+The public release includes five native executables, `LICENSE`,
+`THIRD_PARTY_NOTICES.md`, `lmvideo-third-party-licenses.tar.gz`,
+`RELEASE-MANIFEST.json`, `SHA256SUMS`, `FROZEN-CANDIDATE.json`, and
+`PROVENANCE.jsonl`. Verify downloaded assets with
+`sha256sum --check SHA256SUMS` (or `shasum -a 256` on macOS).

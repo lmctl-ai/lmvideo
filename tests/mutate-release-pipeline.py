@@ -23,7 +23,17 @@ mutations=[
  ('action-pin','.github/workflows/qualify-private-draft.yml','actions/checkout@11d5960a326750d5838078e36cf38b85af677262','actions/checkout@v4'),
  ('candidate-example-pin','scripts/install-hosts.sh','"$full_repo" == lmctl-ai/lmvideo && -n "${LMVIDEO_QUALIFY_TAG:-}" && "$requested_tag" == "$LMVIDEO_QUALIFY_TAG"','false'),
  ('parent-artifact-name','scripts/verify-parent-handoff.py',"f'lmvideo-draft-{parent}-{attempt}'","f'lmoffice-draft-{parent}-{attempt}'"),
- ('throwaway-failed-gate-cleanup','scripts/qualification_broker.py',"if not manifest['deliberate_failure']:raise error","if False:raise error"),
+ ('throwaway-failed-gate-cleanup','scripts/qualification_broker.py',"validate_qualification(run,jobs(api,run_id),os.environ['GITHUB_SHA'],manifest['deliberate_failure'])","None"),
+ ('copied-pilot-revoked','REVOKED','v0.1.121 sealed throwaway qualification failure','v0.1.59 deliberate_public_failure qualification test\nv0.1.121 sealed throwaway qualification failure'),
+ ('copied-pilot-state','release-state.json','https://github.com/lmctl-ai/lmvideo/actions/runs/','https://github.com/lmctl-ai/lmoffice/actions/runs/'),
+ ('action-cancel','.github/actions/qualify-platform/action.yml','if: always() && !cancelled()','if: always()'),
+ ('deliberate-failure-needs-macos-arm64','.github/workflows/qualify-platforms.yml','needs: [candidate, qualify-macos-arm64, integration]','needs: [candidate, integration]'),
+ ('qualify-tag-integration','.github/workflows/qualify-platforms.yml','          LMVIDEO_QUALIFY_TAG: ${{ needs.candidate.outputs.tag }}\n        run: |\n          set -euo pipefail\n          if [ "$RUNNER_OS" = Linux ]','        run: |\n          set -euo pipefail\n          if [ "$RUNNER_OS" = Linux ]'),
+ ('peer-host-sha256','scripts/install-hosts.sh','--pattern SHA256SUMS',''),
+ ('windows-ffmpeg-pin','.github/workflows/qualify-platforms.yml','python scripts/install-windows-ffmpeg.py --output-dir "$RUNNER_TEMP/lmvideo-ffmpeg"','choco install ffmpeg -y --no-progress'),
+ ('runbook-rollback','docs/release-pipeline.md','gh release edit v0.1.<GOOD> -R lmctl-ai/lmvideo --latest',''),
+ ('readme-runbook-link','README.md','docs/release-pipeline.md',''),
+ ('integration-direct-interp','.github/workflows/integration.yml','@lmctl-ai/lmctl${LMCTL_VERSION:+@$LMCTL_VERSION}','@lmctl-ai/lmctl${{ inputs.lmctl_version }}'),
  ('compact-office-private-cache','tests/svg-compact-pptx.py','if any((directory / name).is_file() for name in ("lmvideo", "lmvideo.exe", "lmoffice", "lmoffice.exe")):', 'if False:'),
  ('windows-svg-compiler-launch','tests/svg-dry-validation.py','["cmd.exe", "/d", "/s", "/c", subprocess.list2cmdline(command)]','["bash", "/c", subprocess.list2cmdline(command)]'),
  ('candidate-mode-restore','scripts/check-local-candidate.py','binary.chmod(binary.stat().st_mode | 0o111)','binary.chmod(binary.stat().st_mode)'),
@@ -40,6 +50,9 @@ with tempfile.TemporaryDirectory(prefix='release-mutations-') as temporary:
  for name in ['scripts','tests','.github','docs']:
   shutil.copytree(ROOT/name,root/name,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
  shutil.copy2(ROOT/'release-policy.json',root/'release-policy.json')
+ shutil.copy2(ROOT/'REVOKED',root/'REVOKED')
+ shutil.copy2(ROOT/'release-state.json',root/'release-state.json')
+ shutil.copy2(ROOT/'README.md',root/'README.md')
  shutil.copy2(ROOT/'.gitattributes',root/'.gitattributes')
  shutil.copy2(ROOT/'toolchain.lock.json',root/'toolchain.lock.json')
  (root/'examples').mkdir()

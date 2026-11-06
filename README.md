@@ -10,10 +10,14 @@ contains the current lmcode host and physics API. It has binaries for five
 platforms: **Linux x86_64 and arm64, macOS x86_64 and arm64 (13+), and
 Windows x86_64 (10+)**. Linux requires glibc 2.35+. Video output requires
 user-supplied FFmpeg/ffprobe; each platform needs its standard tar utility.
-Release assets include checksums, binary licence and third-party notices.
+Release assets include the five native binaries, `SHA256SUMS`,
+`RELEASE-MANIFEST.json`, `FROZEN-CANDIDATE.json`, `PROVENANCE.jsonl`, `LICENSE`,
+`THIRD_PARTY_NOTICES.md`, and `lmvideo-third-party-licenses.tar.gz`. See the
+[release qualification runbook](docs/release-pipeline.md) for the private-draft
+to public-qualification promotion pipeline.
 
 ```sh
-npm install -g @lmctl-ai/lmctl@0.2.456
+npm install -g @lmctl-ai/lmctl@0.2.460
 lmctl autorun https://raw.githubusercontent.com/lmctl-ai/lmvideo/main/examples/physics/plinko.lms
 ```
 
