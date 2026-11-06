@@ -60,6 +60,11 @@ class CredentialBoundary(unittest.TestCase):
     self.assertEqual(len(pin),40,(f,ref));self.assertTrue(all(c in '0123456789abcdef' for c in pin))
  def test_public_content_check_uses_compiler_with_run_lmcode(self):
   self.assertIn('@lmctl-ai/lmctl@0.2.458',text('.github/workflows/public-ci.yml'))
+ def test_public_content_primes_installed_host_schemas_without_credentials(self):
+  workflow=text('.github/workflows/public-ci.yml')
+  self.assertIn('env -u GITHUB_TOKEN -u GH_TOKEN lmscript -e',workflow)
+  for cli in ['lmvideo','lmcad','lmoffice pptx']:
+   self.assertIn(f'load_schema(cli="{cli}")',workflow)
  def test_cancel_guard(self):
   self.assertIn('promote',job_blocks());body=job_blocks()['promote'];line=next(l for l in body.splitlines() if l.strip().startswith('if:'))
   self.assertIn('!cancelled()',line)

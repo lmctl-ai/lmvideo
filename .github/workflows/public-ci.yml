@@ -30,6 +30,14 @@ jobs:
         shell: bash
         run: bash scripts/install-hosts.sh
 
+      - name: Prime installed host schemas for static checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          env -u GITHUB_TOKEN -u GH_TOKEN lmscript -e 'schema = load_schema(cli="lmvideo"); println("lmvideo schema ready");'
+          env -u GITHUB_TOKEN -u GH_TOKEN lmscript -e 'schema = load_schema(cli="lmcad"); println("lmcad schema ready");'
+          env -u GITHUB_TOKEN -u GH_TOKEN lmscript -e 'schema = load_schema(cli="lmoffice pptx"); println("lmoffice pptx schema ready");'
+
       - name: Check README links, images, and autorun targets
         shell: bash
         run: |
