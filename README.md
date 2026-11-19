@@ -3,6 +3,13 @@
 Plots, diagrams, image processing, rigid-body motion and video from short
 LMScript programs. Each preview links to its runnable source.
 
+## Documentation
+
+The [lmvideo documentation](https://www.lmctl.com/tools/lmvideo/) on lmctl.com has a
+quick reference, the [skill](https://www.lmctl.com/tools/lmvideo/skill.html),
+a [guide](https://www.lmctl.com/tools/lmvideo/guide.html) and the full
+[reference](https://www.lmctl.com/tools/lmvideo/reference.html).
+
 ## Install
 
 The **[v0.1.124 release](https://github.com/lmctl-ai/lmvideo/releases/tag/v0.1.124)**
